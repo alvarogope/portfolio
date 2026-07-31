@@ -1,0 +1,114 @@
+@import "tailwindcss";
+
+/* ============================================
+   DESIGN TOKENS — the whole visual system.
+   In Tailwind v4, @theme both defines the
+   tokens AND generates utilities (bg-void,
+   text-moonlight, etc.) automatically.
+   ============================================ */
+
+@theme {
+/* — Moon-Knight palette: the alchemical system — */
+--color-void:       #0B0E14;  /* page background, blue-black */
+--color-nightfall:  #141B28;  /* panels, raised surfaces */
+--color-moonlight:  #E8E6DF;  /* primary text, warm silver-white */
+--color-mist:       #7A8699;  /* secondary text, borders */
+
+/* Silver: the moon. The everyday accent (links, rules, most UI). */
+--color-silver:     #B8C4D4;
+
+/* Gold: the sun, alchemy. Rare. Transformation and the arcane. */
+--color-gold:       #C9A961;
+
+/* Ritual accents, rarest, each with a fixed meaning. */
+--color-scarlet:    #8E2F3C;  /* blood, roses, danger, enemy-only */
+--color-emerald:    #3B7A5E;  /* life, plants, the arcane green */
+
+/* Back-compat: components still reference --color-lunar-gold and
+   --color-rose-blood. Point them at the new system so nothing breaks. */
+--color-lunar-gold: var(--color-silver);
+--color-rose-blood: var(--color-scarlet);
+
+--font-display: var(--font-cinzel), serif;
+--font-body:    var(--font-spectral), Georgia, serif;
+--font-mono:    var(--font-jetbrains-mono), monospace;
+
+--text-hero: clamp(2.75rem, 1.8rem + 4.5vw, 5.5rem);
+--text-2xl:  clamp(2rem, 1.5rem + 2.5vw, 3.5rem);
+--text-xl:   clamp(1.5rem, 1.2rem + 1.5vw, 2.25rem);
+--text-lg:   clamp(1.125rem, 1rem + 0.6vw, 1.375rem);
+}
+
+/* ============================================
+   BASE DEFAULTS
+   ============================================ */
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--color-void);
+  color: var(--color-moonlight);
+  font-family: var(--font-body);
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1, h2, h3 {
+  font-family: var(--font-display);
+  line-height: 1.15;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.mono {
+  font-family: var(--font-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+a   { color: inherit; text-decoration: none; }
+img { max-width: 100%; display: block; }
+
+/* ============================================
+   ACCESSIBILITY FLOOR
+   ============================================ */
+
+:focus-visible {
+  outline: 2px solid var(--color-lunar-gold);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@media (max-width: 800px) {
+  .project-hero {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* ============================================
+   MATERIAL — subtle texture for panels.
+   A faint noise + vignette so surfaces read as
+   aged stone/parchment rather than flat fills.
+   No image files: pure CSS, near-zero cost.
+   ============================================ */
+
+   .panel {
+    background-color: var(--color-nightfall);
+    background-image:
+      radial-gradient(
+        ellipse at 30% 0%,
+        color-mix(in srgb, var(--color-silver) 6%, transparent),
+        transparent 60%
+      ),
+      url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    position: relative;
+  }

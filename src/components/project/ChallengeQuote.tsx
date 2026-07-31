@@ -13,8 +13,8 @@ export default function ChallengeQuote({ challenge }: { challenge: DesignChallen
 
   return (
     <div
+      className="panel"
       style={{
-        background: "var(--color-nightfall)",
         border: "1px solid color-mix(in srgb, var(--color-gold) 35%, transparent)",
         borderLeft: "3px solid var(--color-gold)",
         padding: "clamp(1.5rem, 4vw, 2.5rem)",

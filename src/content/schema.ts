@@ -121,10 +121,9 @@ export interface Contribution {
       engineeringYear: string;
       repoUrl?: string;
       currentStatus: string;
-
-    roles?: Role[];
     };
 
+    roles?: Role[];
     endings?: Ending[];
     worlds?: World[];
   }

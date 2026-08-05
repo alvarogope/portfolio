@@ -5,6 +5,7 @@ import SectionHeading from "@/components/layout/SectionHeading";
 import ProjectHero from "@/components/project/ProjectHero";
 import ChallengeQuote from "@/components/project/ChallengeQuote";
 import Reveal from "@/components/layout/Reveal";
+import SeedsAudio from "@/components/project/SeedsAudio";
 
 export const metadata: Metadata = {
   title: `${p.title} | Álvaro Gómez`,
@@ -28,26 +29,11 @@ export default function SeedsOfTomorrowPage() {
         {/* The Score — signature section */}
         <Reveal>
           <div style={{ marginTop: "5rem" }}>
-            <SectionHeading kicker="02 · Original Score" title="Eleven Tracks" />
-            <div
-              className="panel"
-              style={{
-                marginTop: "1.5rem",
-                border: "1px solid color-mix(in srgb, var(--color-mist) 20%, transparent)",
-                borderLeft: "3px solid var(--color-gold)",
-                padding: "clamp(1.5rem, 4vw, 2.5rem)",
-                maxWidth: "48rem",
-              }}
-            >
-              <p style={{ margin: 0, lineHeight: 1.7 }}>
-                I composed and recorded the full soundtrack: eleven original tracks scoring the journey
-                from a poisoned world to a restored one. The music carries the emotional arc the fiction
-                promises, from the weight of a dying Earth to the quiet hope of life returning.
-              </p>
-              <p className="mono" style={{ marginTop: "1.25rem", fontSize: "0.7rem", color: "var(--color-mist)" }}>
-                Playable excerpts coming to this page.
-              </p>
-            </div>
+            <SectionHeading kicker="02 · Original Score" title="Plant a Sound" />
+            <p style={{ color: "var(--color-mist)", maxWidth: "42rem", marginTop: "1.5rem", marginBottom: "1.5rem" }}>
+              I composed and recorded eleven original tracks for the game. The main theme plays as you explore this page; the seeds below are moments from the score. Plant one to hear it.
+            </p>
+            <SeedsAudio />
           </div>
         </Reveal>
 

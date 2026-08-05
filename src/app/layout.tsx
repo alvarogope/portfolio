@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Cinzel, UnifrakturCook, Spectral, JetBrains_Mono, Rajdhani } from "next/font/google";
+import { Cinzel, UnifrakturCook, Spectral, JetBrains_Mono, Rajdhani, Fraunces } from "next/font/google";
 import MoonProgress from "@/components/layout/MoonProgress";
 import "./globals.css";
 
@@ -42,6 +42,13 @@ const rajdhani = Rajdhani({
   subsets: ["latin"],
   weight: ["500", "600", "700"],
   variable: "--font-rajdhani",
+  display: "swap",
+});
+
+const fraunces = Fraunces({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  variable: "--font-fraunces",
   display: "swap",
 });
 

@@ -54,6 +54,17 @@ export interface Contribution {
     team: string;         // "Solo" | "Team of 4" | "Team of 5"
     year: string;         // "2025"
   }
+
+  
+  /** A playable role with its tools and its interdependency. */
+  export interface Role {
+    name: string;
+    brief: string;          // one-line "what they do"
+    tools: string;          // their abilities, with cooldowns
+    dependsOn: string;      // who they need
+    neededBy: string;       // who needs them
+    accent?: "silver" | "gold" | "scarlet" | "emerald";
+  }
   
   /**
    * PILLAR projects (Moon-Knight, Break-In, Shattered Skies) use every
@@ -104,5 +115,7 @@ export interface Contribution {
       engineeringYear: string;
       repoUrl?: string;
       currentStatus: string;
+
+    roles?: Role[];
     };
   }

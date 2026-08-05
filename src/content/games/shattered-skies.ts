@@ -64,4 +64,23 @@ export const shatteredSkies: Project = {
         "Built the metroidvania progression around understanding rather than upgrades: players unlock the system by learning how it works, turning observation and deduction into the core advancement loop.",
     },
   ],
+
+  communication: [
+    {
+      label: "Distorted voice",
+      body: "Two players, two alien species, no shared language. Voice chat is run through a distortion filter so words come through as noise. Players can convey urgency and emotion, but never a clear sentence, which forces them to build a language of their own.",
+    },
+    {
+      label: "Gestures",
+      body: "The only reliable signal is non-verbal. Players perform simple gestures to coordinate timing and point at objects, and some gestures even appear differently to each player, widening the gap they have to bridge.",
+    },
+    {
+      label: "Telepathy · 5 seconds",
+      body: "A rare collectible grants one telepathic window: five seconds of perfectly clear speech. It is never enough to say everything, so players must decide what matters most, and whether to tell the truth.",
+    },
+    {
+      label: "The rule beyond the screen",
+      body: "Players are instructed not to discuss the story outside the distorted voice chat. The restriction mirrors the characters' own inability to openly share their motives, keeping every intention ambiguous.",
+    },
+  ],
 };

@@ -126,4 +126,6 @@ export interface Contribution {
     roles?: Role[];
     endings?: Ending[];
     worlds?: World[];
+
+    communication?: { label: string; body: string }[];
   }

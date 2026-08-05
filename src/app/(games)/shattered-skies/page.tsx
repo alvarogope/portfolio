@@ -26,7 +26,7 @@ export default function ShatteredSkiesPage() {
           </div>
         </Reveal>
 
-        {/* The Planetary System — signature section */}
+        {/* The Planetary System */}
         {p.worlds && (
           <Reveal>
             <div style={{ marginTop: "5rem" }}>
@@ -60,11 +60,28 @@ export default function ShatteredSkiesPage() {
           </Reveal>
         )}
 
+        {/* Communication — the signature mechanic, as transmissions */}
+        {p.communication && (
+          <Reveal>
+            <div style={{ marginTop: "5rem" }}>
+              <SectionHeading kicker="03 · The Core Mechanic" title="Communication Is the Game" />
+              <p style={{ color: "var(--color-mist)", maxWidth: "42rem", marginTop: "1.5rem", marginBottom: "1.5rem" }}>
+                Two enemies who cannot understand each other must cooperate to survive. Every channel of communication is deliberately broken, and clarity is the rarest resource in the game.
+              </p>
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "1.25rem" }}>
+                {p.communication.map((c, i) => (
+                  <TransmissionCard key={c.label} label={c.label} body={c.body} delay={i * 300} />
+                ))}
+              </div>
+            </div>
+          </Reveal>
+        )}
+
         {/* Design Challenge */}
         {p.designChallenge && (
           <Reveal>
             <div style={{ marginTop: "5rem" }}>
-              <SectionHeading kicker="03 · The Hard Part" title="Design Challenge" />
+              <SectionHeading kicker="04 · The Hard Part" title="Design Challenge" />
               <div style={{ marginTop: "1.5rem" }}>
                 <ChallengeQuote challenge={p.designChallenge} />
               </div>
@@ -76,7 +93,7 @@ export default function ShatteredSkiesPage() {
         {p.endings && (
           <Reveal>
             <div style={{ marginTop: "5rem" }}>
-              <SectionHeading kicker="04 · Consequence" title="Three Endings" />
+              <SectionHeading kicker="05 · Consequence" title="Three Endings" />
               <p style={{ color: "var(--color-mist)", maxWidth: "42rem", marginTop: "1.5rem", marginBottom: "1.5rem" }}>
                 What players say in their rare seconds of clear speech, and whether they choose truth or deception, decides which of these they reach.
               </p>
@@ -92,7 +109,7 @@ export default function ShatteredSkiesPage() {
         {/* Contributions */}
         <Reveal>
           <div style={{ marginTop: "5rem" }}>
-            <SectionHeading kicker="05 · My Role" title="My Contribution" />
+            <SectionHeading kicker="06 · My Role" title="My Contribution" />
             <div style={{ display: "grid", gap: "1.5rem" }}>
               {p.contributions.map((c) => (
                 <div key={c.label}>

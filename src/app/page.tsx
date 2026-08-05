@@ -10,6 +10,7 @@ export const metadata: Metadata = {
 // Map slugs to their poster (only Moon-Knight has one so far)
 const posters: Record<string, string> = {
   "moon-knight": "/images/moon-knight/poster.png",
+  "break-in": "/images/break-in/poster.png",
 };
 
 export default function Home() {

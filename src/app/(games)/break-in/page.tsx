@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 export default function BreakInPage() {
   return (
     <>
-      <ProjectHero project={p} posterSrc="" />
+      <ProjectHero project={p} posterSrc="/images/break-in/poster.png" />
 
       <Section>
         {/* Vision */}

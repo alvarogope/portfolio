@@ -2,10 +2,6 @@ import Image from "next/image";
 import type { Project } from "@/content/schema";
 import ProjectFactsBlock from "./ProjectFacts";
 
-/* Offset hero: poster on one side (honoured as a full poster,
-   not cropped behind text), title + tagline + facts on the other.
-   Stacks vertically on mobile. Reusable across all projects. */
-
 export default function ProjectHero({
   project: p,
   posterSrc,
@@ -37,14 +33,30 @@ export default function ProjectHero({
           boxShadow: "0 20px 60px -20px rgba(0,0,0,0.8)",
         }}
       >
-        <Image
-          src={posterSrc}
-          alt={p.posterAlt}
-          fill
-          priority
-          sizes="(max-width: 800px) 90vw, 40vw"
-          style={{ objectFit: "cover" }}
-        />
+        {posterSrc ? (
+          <Image
+            src={posterSrc}
+            alt={p.posterAlt}
+            fill
+            priority
+            sizes="(max-width: 800px) 90vw, 40vw"
+            style={{ objectFit: "cover" }}
+          />
+        ) : (
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              height: "100%",
+              background: "var(--color-nightfall)",
+            }}
+          >
+            <span className="mono" style={{ fontSize: "0.7rem", color: "var(--color-mist)" }}>
+              {p.title}
+            </span>
+          </div>
+        )}
       </div>
 
       {/* Text column */}

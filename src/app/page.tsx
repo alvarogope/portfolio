@@ -11,6 +11,7 @@ export const metadata: Metadata = {
 const posters: Record<string, string> = {
   "moon-knight": "/images/moon-knight/poster.png",
   "break-in": "/images/break-in/poster.png",
+  "shattered-skies": "/images/shattered-skies/poster.png",
 };
 
 export default function Home() {

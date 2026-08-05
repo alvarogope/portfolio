@@ -65,13 +65,19 @@ export interface Contribution {
     neededBy: string;       // who needs them
     accent?: "silver" | "gold" | "scarlet" | "emerald";
   }
+
+    /** A branching ending outcome. */
+  export interface Ending {
+    name: string;
+    outcome: string;
+  }
+
+  /** A named world/planet with its mechanical identity. */
+  export interface World {
+    name: string;
+    descriptor: string;   // one-line: what it is + its mechanic
+  }
   
-  /**
-   * PILLAR projects (Moon-Knight, Break-In, Shattered Skies) use every
-   * field. The fourth card (Seeds of Tomorrow) can leave the richer,
-   * optional fields undefined. TypeScript enforces the required core
-   * on all four, and the extras only where they earn their place.
-   */
   export interface Project {
     // Identity (required on all)
     slug: string;
@@ -118,4 +124,7 @@ export interface Contribution {
 
     roles?: Role[];
     };
+
+    endings?: Ending[];
+    worlds?: World[];
   }

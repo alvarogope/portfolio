@@ -68,7 +68,7 @@ export default function Reveal({
           : {
               opacity: shown ? 1 : 0,
               transform: shown ? "translateY(0)" : "translateY(22px)",
-              transition: `opacity 0.55s var(--ease-soft, ease), transform 0.55s var(--ease-soft, ease)`,
+              transition: `opacity 0.55s var(--ease-soft, ease), transform 1s var(--ease-soft, ease)`,
               transitionDelay: `${delay}ms`,
             }
       }

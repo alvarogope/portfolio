@@ -5,6 +5,7 @@ import SectionHeading from "@/components/layout/SectionHeading";
 import ProjectHero from "@/components/project/ProjectHero";
 import ChallengeQuote from "@/components/project/ChallengeQuote";
 import Reveal from "@/components/layout/Reveal";
+import TransmissionCard from "@/components/project/TransmissionCard";
 
 export const metadata: Metadata = {
   title: `${p.title} | Álvaro Gómez`,
@@ -81,19 +82,7 @@ export default function ShatteredSkiesPage() {
               </p>
               <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: "1.25rem" }}>
                 {p.endings.map((e, i) => (
-                  <Reveal key={e.name} delay={i * 70}>
-                    <div
-                      className="panel"
-                      style={{
-                        border: "1px solid color-mix(in srgb, var(--color-mist) 20%, transparent)",
-                        borderTop: "2px solid var(--color-silver)",
-                        padding: "1.5rem",
-                      }}
-                    >
-                      <h3 style={{ margin: "0 0 0.6rem", fontSize: "var(--text-lg)", fontFamily: "var(--font-hero)" }}>{e.name}</h3>
-                      <p style={{ margin: 0, color: "var(--color-mist)", lineHeight: 1.6, fontSize: "0.92rem" }}>{e.outcome}</p>
-                    </div>
-                  </Reveal>
+                  <TransmissionCard key={e.name} label={e.name} body={e.outcome} delay={i * 400} />
                 ))}
               </div>
             </div>

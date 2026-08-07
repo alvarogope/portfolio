@@ -6,6 +6,7 @@ import ProjectHero from "@/components/project/ProjectHero";
 import RoleCard from "@/components/project/RoleCard";
 import ChallengeQuote from "@/components/project/ChallengeQuote";
 import Reveal from "@/components/layout/Reveal";
+import RoleWeb from "@/components/project/RoleWeb";
 
 export const metadata: Metadata = {
   title: `${p.title} | Álvaro Gómez`,
@@ -32,21 +33,9 @@ export default function BreakInPage() {
             <div style={{ marginTop: "5rem" }}>
               <SectionHeading kicker="02 · Signature Systems" title="Four Roles, One Web" />
               <p style={{ color: "var(--color-mist)", maxWidth: "42rem", marginTop: "1.5rem", marginBottom: "1.5rem" }}>
-                No role can finish the heist alone. Read across the four and the dependency forms a loop: each player holds a key another player needs.
+                No role can finish the heist alone. Read across the four and the dependency forms a loop: each player holds a key another player needs. Hover any role to see the whole system light up: remove one, and the heist falls apart.
               </p>
-              <div
-                style={{
-                  display: "grid",
-                  gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
-                  gap: "1.25rem",
-                }}
-              >
-                {p.roles.map((r, i) => (
-                  <Reveal key={r.name} delay={i * 70}>
-                    <RoleCard role={r} />
-                  </Reveal>
-                ))}
-              </div>
+              <RoleWeb roles={p.roles} />
             </div>
           </Reveal>
         )}

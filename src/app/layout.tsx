@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Cinzel, UnifrakturCook, Spectral, JetBrains_Mono, Rajdhani, Fraunces } from "next/font/google";
+import { Cinzel, UnifrakturCook, Spectral, JetBrains_Mono, Rajdhani, Fraunces, Archivo } from "next/font/google";
 import MoonProgress from "@/components/layout/MoonProgress";
 import "./globals.css";
 
@@ -52,6 +52,13 @@ const fraunces = Fraunces({
   display: "swap",
 });
 
+const archivo = Archivo({
+  subsets: ["latin"],
+  weight: ["500", "600", "700"],
+  variable: "--font-archivo",
+  display: "swap",
+});
+
 /* ============================================
    METADATA — site-wide defaults. Per-page files
    override title/description later.
@@ -77,7 +84,7 @@ export default function RootLayout({
   return (
     <html
       lang="en-GB"
-      className={`${cinzel.variable} ${display.variable} ${spectral.variable} ${jetbrains.variable} ${rajdhani.variable}`}
+      className={`${cinzel.variable} ${display.variable} ${spectral.variable} ${jetbrains.variable} ${rajdhani.variable} ${archivo.variable}`}
     >
       <body>
         {/* Placeholder nav — replaced by <SiteNav /> next file */}

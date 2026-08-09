@@ -94,6 +94,14 @@ img { max-width: 100%; display: block; }
   }
 }
 
+@media (max-width: 640px) {
+  .about-header {
+    grid-template-columns: 1fr !important;
+    justify-items: center;
+    text-align: center;
+  }
+}
+
 /* ============================================
    MATERIAL — subtle texture for panels.
    A faint noise + vignette so surfaces read as

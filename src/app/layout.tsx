@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Cinzel, UnifrakturCook, Spectral, JetBrains_Mono, Rajdhani, Fraunces, Archivo } from "next/font/google";
 import MoonProgress from "@/components/layout/MoonProgress";
 import "./globals.css";
+import Link from "next/link";
 
 /* ============================================
    FONTS — next/font self-hosts these and feeds
@@ -102,9 +103,9 @@ export default function RootLayout({
             zIndex: 50,
           }}
         >
-          <span style={{ fontFamily: "var(--font-hero)", letterSpacing: "0.04em" }}>
+          <Link href="/" style={{ fontFamily: "var(--font-hero)", letterSpacing: "0.04em" }}>
             Álvaro Gómez
-          </span>
+          </Link>
           <nav className="mono" style={{ display: "flex", gap: "1.5rem", fontSize: "0.8rem" }}>
             <a href="/">Projects</a>
             <a href="/engineering">Engineering</a>

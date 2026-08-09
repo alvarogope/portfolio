@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Cinzel, UnifrakturCook, Spectral, JetBrains_Mono, Rajdhani, Fraunces, Archivo } from "next/font/google";
+import { Cinzel, UnifrakturCook, Spectral, JetBrains_Mono, Rajdhani, Fraunces, Archivo, Instrument_Serif } from "next/font/google";
 import MoonProgress from "@/components/layout/MoonProgress";
 import "./globals.css";
 import Link from "next/link";
@@ -11,20 +11,28 @@ import Link from "next/link";
    space is reserved before the font loads.
    ============================================ */
 
+/* Each loader owns a RAW font variable named after the typeface
+   (--font-cinzel, --font-archivo, …). The SEMANTIC slots that
+   components actually read (--font-hero, --font-display, --font-body,
+   --font-mono) are assigned in globals.css and re-pointed per route by
+   the scoped layouts under (games). Never give a loader a slot name:
+   next/font writes it onto <html> unlayered, which would outrank the
+   @theme default and pin that slot site-wide. */
+
 const cinzel = Cinzel({
   subsets: ["latin"],
   weight: ["500", "600"],
-  variable: "--font-hero",   // ← fills the display slot
+  variable: "--font-cinzel",   // ← Moon-Knight hero
   display: "swap",
 });
 
-const display = UnifrakturCook({
+const unifraktur = UnifrakturCook({
   subsets: ["latin"],
   weight: ["700"],
-  variable: "--font-cinzel",   // ← fills the display slot
+  variable: "--font-unifraktur",   // ← Moon-Knight headings
   display: "swap",
 });
-  
+
 const jetbrains = JetBrains_Mono({
   subsets: ["latin"],
   weight: ["400", "500"],
@@ -60,6 +68,13 @@ const archivo = Archivo({
   display: "swap",
 });
 
+const brand = Instrument_Serif({
+  subsets: ["latin"],
+  weight: ["400"],
+  style: ["normal", "italic"],
+  variable: "--font-brand",
+  display: "swap",
+});
 /* ============================================
    METADATA — site-wide defaults. Per-page files
    override title/description later.
@@ -85,7 +100,7 @@ export default function RootLayout({
   return (
     <html
       lang="en-GB"
-      className={`${cinzel.variable} ${display.variable} ${spectral.variable} ${jetbrains.variable} ${rajdhani.variable} ${archivo.variable}`}
+        className={`${cinzel.variable} ${unifraktur.variable} ${spectral.variable} ${jetbrains.variable} ${rajdhani.variable} ${fraunces.variable} ${archivo.variable} ${brand.variable}`}
     >
       <body>
         {/* Placeholder nav — replaced by <SiteNav /> next file */}

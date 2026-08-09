@@ -29,9 +29,14 @@
 --color-lunar-gold: var(--color-silver);
 --color-rose-blood: var(--color-scarlet);
 
---font-display: var(--font-cinzel), serif;
+/* — Semantic type slots — the site-wide default identity.
+   Instrument Serif is the brand face: it covers every page that has no
+   theme of its own (home, About, 404). The four game routes re-point
+   --font-display / --font-hero in their own scoped layout. — */
+--font-display: var(--font-brand), serif;
+--font-hero:    var(--font-brand), serif;
 --font-body:    var(--font-spectral), Georgia, serif;
---font-mono:    var(--font-jetbrains-mono), monospace;
+--font-mono:    var(--font-jetbrains), monospace;
 
 --text-hero: clamp(2.75rem, 1.8rem + 4.5vw, 5.5rem);
 --text-2xl:  clamp(2rem, 1.5rem + 2.5vw, 3.5rem);

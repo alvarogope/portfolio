@@ -36,13 +36,7 @@ export default function Home() {
 
       {/* Project grid */}
       <Reveal delay={80}>
-        <section
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(3, 1fr)",
-            gap: "1.5rem",
-          }}
-        >
+        <section className="project-grid">
           {games.map((p, i) => (
             <ProjectGateway
               key={p.slug}

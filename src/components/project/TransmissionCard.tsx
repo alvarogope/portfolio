@@ -69,7 +69,17 @@ export default function TransmissionCard({
     setDisplay(
       body.split("").map((ch) => (ch === " " || ch === "\n" ? ch : GLYPHS[Math.floor(Math.random() * GLYPHS.length)])).join("")
     );
-    // Decode automatically when scrolled into view
+    // Decode automatically when scrolled into view. Each card owns its
+    // own observer on its own element, so cards never trigger together.
+    //
+    // The bottom rootMargin is what keeps a *later* section from
+    // decoding early: with a bare threshold, a short card fires the
+    // moment 40% of it clears the viewport's bottom edge, which on a
+    // tall display happens while the reader is still several sections
+    // above. Pulling the bottom edge in by 22% means the card must be
+    // genuinely on screen before it starts. The threshold is lowered to
+    // 0.25 to compensate, so cards still fire reliably inside the
+    // shortened box.
     const el = ref.current;
     if (!el) return;
     const obs = new IntersectionObserver(
@@ -79,7 +89,7 @@ export default function TransmissionCard({
           obs.disconnect();
         }
       },
-      { threshold: 0.4 }
+      { threshold: 0.25, rootMargin: "0px 0px -22% 0px" }
     );
     obs.observe(el);
     return () => obs.disconnect();
@@ -111,14 +121,14 @@ export default function TransmissionCard({
       />
       {/* prompt label */}
       <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "0.9rem", position: "relative" }}>
-        <span style={{ color: TERMINAL, fontSize: "0.7rem", letterSpacing: "0.1em" }}>&gt;</span>
-        <span style={{ color: TERMINAL, fontSize: "0.7rem", letterSpacing: "0.1em", textTransform: "uppercase", opacity: 0.85 }}>
+        <span style={{ color: TERMINAL, fontSize: "0.78rem", letterSpacing: "0.1em" }}>&gt;</span>
+        <span style={{ color: TERMINAL, fontSize: "0.78rem", letterSpacing: "0.1em", textTransform: "uppercase", opacity: 0.85 }}>
           {label}
         </span>
         <span className="tc-cursor" style={{ color: TERMINAL, marginLeft: "auto" }}>▊</span>
       </div>
       {/* decoding body */}
-      <p style={{ margin: 0, color: TERMINAL, fontSize: "0.85rem", lineHeight: 1.65, position: "relative", whiteSpace: "pre-wrap" }}>
+      <p style={{ margin: 0, color: TERMINAL, fontSize: "0.95rem", lineHeight: 1.7, position: "relative", whiteSpace: "pre-wrap" }}>
         {display}
       </p>
 

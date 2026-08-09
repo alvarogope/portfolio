@@ -34,7 +34,7 @@ export default function EngineeringNote({ note }: { note: EngNote }) {
           borderTop: "1px solid color-mix(in srgb, var(--color-mist) 20%, transparent)",
         }}
       >
-        <span className="mono" style={{ fontSize: "0.65rem", color: "var(--color-mist)" }}>
+        <span className="mono" style={{ fontSize: "0.72rem", color: "var(--color-mist)" }}>
           Current status
         </span>
         <p style={{ margin: "0.5rem 0 0", maxWidth: "44rem", color: "var(--color-moonlight)" }}>

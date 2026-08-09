@@ -64,9 +64,9 @@ export default function Gallery({ items }: { items: GalleryItem[] }) {
             <figcaption
               style={{
                 marginTop: "0.6rem",
-                fontSize: "0.8rem",
+                fontSize: "0.92rem",
                 color: "var(--color-mist)",
-                lineHeight: 1.5,
+                lineHeight: 1.6,
               }}
             >
               {item.caption}
@@ -136,8 +136,8 @@ export default function Gallery({ items }: { items: GalleryItem[] }) {
               background: "none",
               border: "1px solid var(--color-mist)",
               color: "var(--color-mist)",
-              padding: "0.4rem 0.9rem",
-              fontSize: "0.7rem",
+              padding: "0.45rem 1rem",
+              fontSize: "0.78rem",
               cursor: "pointer",
             }}
           >

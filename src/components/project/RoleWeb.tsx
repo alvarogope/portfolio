@@ -21,14 +21,7 @@ import type { Role } from "@/content/schema";
 
 export default function RoleWeb({ roles }: { roles: Role[] }) {
   return (
-    <div
-      className="rw-grid"
-      style={{
-        display: "grid",
-        gridTemplateColumns: "repeat(auto-fit, minmax(245px, 1fr))",
-        gap: "1.25rem",
-      }}
-    >
+    <div className="rw-grid grid-4">
       {roles.map((role, i) => (
         <article
           key={role.name}
@@ -44,7 +37,7 @@ export default function RoleWeb({ roles }: { roles: Role[] }) {
             </p>
           </div>
 
-          <p className="rw-tools" style={{ margin: 0, fontSize: "0.9rem", lineHeight: 1.6 }}>
+          <p className="rw-tools" style={{ margin: 0, fontSize: "0.92rem", lineHeight: 1.6 }}>
             {role.tools}
           </p>
 
@@ -58,16 +51,16 @@ export default function RoleWeb({ roles }: { roles: Role[] }) {
             }}
           >
             <div style={{ display: "flex", gap: "0.6rem", alignItems: "baseline" }}>
-              <span className="mono rw-key" style={{ fontSize: "0.6rem", minWidth: "5.5rem" }}>
+              <span className="mono rw-key" style={{ fontSize: "0.72rem", minWidth: "6rem" }}>
                 Depends on
               </span>
-              <span style={{ fontSize: "0.85rem" }}>{role.dependsOn}</span>
+              <span style={{ fontSize: "0.9rem", lineHeight: 1.5 }}>{role.dependsOn}</span>
             </div>
             <div style={{ display: "flex", gap: "0.6rem", alignItems: "baseline" }}>
-              <span className="mono rw-key rw-key-out" style={{ fontSize: "0.6rem", minWidth: "5.5rem" }}>
+              <span className="mono rw-key rw-key-out" style={{ fontSize: "0.72rem", minWidth: "6rem" }}>
                 Needed by
               </span>
-              <span style={{ fontSize: "0.85rem" }}>{role.neededBy}</span>
+              <span style={{ fontSize: "0.9rem", lineHeight: 1.5 }}>{role.neededBy}</span>
             </div>
           </div>
         </article>

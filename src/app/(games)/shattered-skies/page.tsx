@@ -68,7 +68,7 @@ export default function ShatteredSkiesPage() {
               <p style={{ color: "var(--color-mist)", maxWidth: "42rem", marginTop: "1.5rem", marginBottom: "1.5rem" }}>
                 Two enemies who cannot understand each other must cooperate to survive. Every channel of communication is deliberately broken, and clarity is the rarest resource in the game.
               </p>
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "1.25rem" }}>
+              <div className="grid-4">
                 {p.communication.map((c, i) => (
                   <TransmissionCard key={c.label} label={c.label} body={c.body} delay={i * 300} />
                 ))}

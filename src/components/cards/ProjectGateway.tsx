@@ -43,7 +43,7 @@ export default function ProjectGateway({
 
       {/* Body */}
       <div style={{ padding: "1.25rem 1.4rem 1.5rem", display: "flex", flexDirection: "column", gap: "0.75rem", flex: 1 }}>
-        <span className="mono" style={{ fontSize: "0.65rem", color: "var(--color-mist)" }}>
+        <span className="mono" style={{ fontSize: "0.72rem", color: "var(--color-mist)" }}>
           {p.eyebrow}
         </span>
 
@@ -54,14 +54,14 @@ export default function ProjectGateway({
         </p>
 
         <div style={{ marginTop: "auto", paddingTop: "0.75rem", display: "flex", flexDirection: "column", gap: "0.5rem" }}>
-          <span className="mono" style={{ fontSize: "0.62rem", color: "var(--color-silver)" }}>
+          <span className="mono" style={{ fontSize: "0.78rem", color: "var(--color-silver)", lineHeight: 1.5 }}>
             {p.disciplines}
           </span>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: "1rem" }}>
-            <span className="mono" style={{ fontSize: "0.62rem", color: "var(--color-mist)" }}>
+            <span className="mono" style={{ fontSize: "0.78rem", color: "var(--color-mist)", lineHeight: 1.5 }}>
               {p.scope}
             </span>
-            <span className="mono" style={{ fontSize: "0.65rem", color: "var(--color-gold)" }}>
+            <span className="mono" style={{ fontSize: "0.75rem", color: "var(--color-gold)" }}>
               {p.routingVerb} →
             </span>
           </div>

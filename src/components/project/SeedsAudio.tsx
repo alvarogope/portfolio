@@ -265,7 +265,7 @@ export default function SeedsAudio() {
       <audio ref={ambientRef} src={AMBIENT_SRC} loop preload="none" />
       <audio ref={seedRef} preload="none" />
 
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: "1.25rem" }}>
+      <div className="grid-4">
         {SEEDS.map((seed) => {
           const playing = activeSeed === seed.id;
           return (
@@ -302,7 +302,7 @@ export default function SeedsAudio() {
                   {playing ? "❚❚" : "▶"}
                 </span>
               </div>
-              <p style={{ margin: 0, color: "var(--color-mist)", fontSize: "0.85rem" }}>{seed.mood}</p>
+              <p style={{ margin: 0, color: "var(--color-mist)", fontSize: "0.92rem", lineHeight: 1.55 }}>{seed.mood}</p>
 
               <div style={{ display: "flex", gap: "3px", height: "1.5rem", alignItems: "flex-end", opacity: playing ? 1 : 0.25 }}>
                 {[...Array(9)].map((_, i) => (

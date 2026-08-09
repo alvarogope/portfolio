@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 export default function AboutPage() {
   const cf = about.characterFile;
   const fileRows = [
-    { k: "Class", v: cf.class },
+    { k: "Class", v: cf.role },
     { k: "Origin", v: cf.origin },
     { k: "Based", v: cf.based },
     { k: "Languages", v: cf.languages },
@@ -83,10 +83,10 @@ export default function AboutPage() {
           >
             {fileRows.map((r) => (
               <div key={r.k} style={{ display: "flex", flexDirection: "column", gap: "0.35rem" }}>
-                <span className="mono" style={{ fontSize: "0.65rem", color: "var(--color-silver)" }}>
+                <span className="mono" style={{ fontSize: "0.72rem", color: "var(--color-silver)" }}>
                   {r.k}
                 </span>
-                <span style={{ fontSize: "0.95rem", lineHeight: 1.5 }}>{r.v}</span>
+                <span style={{ fontSize: "0.98rem", lineHeight: 1.55 }}>{r.v}</span>
               </div>
             ))}
           </div>

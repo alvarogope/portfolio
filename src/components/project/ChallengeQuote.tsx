@@ -22,7 +22,7 @@ export default function ChallengeQuote({ challenge }: { challenge: DesignChallen
     >
       <span
         className="mono"
-        style={{ fontSize: "0.65rem", color: "var(--color-gold)", letterSpacing: "0.14em" }}
+        style={{ fontSize: "0.72rem", color: "var(--color-gold)", letterSpacing: "0.14em" }}
       >
         Design Challenge
       </span>
@@ -43,10 +43,10 @@ export default function ChallengeQuote({ challenge }: { challenge: DesignChallen
         >
           {meta.map(({ k, v }) => (
             <div key={k} style={{ display: "flex", flexDirection: "column", gap: "0.3rem" }}>
-              <span className="mono" style={{ fontSize: "0.65rem", color: "var(--color-mist)" }}>
+              <span className="mono" style={{ fontSize: "0.72rem", color: "var(--color-mist)" }}>
                 {k}
               </span>
-              <span style={{ fontSize: "0.85rem" }}>{v}</span>
+              <span style={{ fontSize: "0.92rem", lineHeight: 1.5 }}>{v}</span>
             </div>
           ))}
         </div>

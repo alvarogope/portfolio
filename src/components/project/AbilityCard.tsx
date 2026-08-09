@@ -25,8 +25,8 @@ export default function AbilityCard({ ability }: { ability: Ability }) {
               key={who}
               className="mono"
               style={{
-                fontSize: "0.65rem",
-                padding: "0.25rem 0.6rem",
+                fontSize: "0.72rem",
+                padding: "0.28rem 0.65rem",
                 borderRadius: "999px",
                 color: who === "Enemy" && ability.availableTo.length === 1
                   ? "var(--color-rose-blood)"
@@ -50,11 +50,11 @@ export default function AbilityCard({ ability }: { ability: Ability }) {
         className="mono"
         style={{
           margin: 0,
-          fontSize: "0.68rem",
+          fontSize: "0.85rem",
           color: "var(--color-mist)",
           borderLeft: "2px solid var(--color-gold)",
-          paddingLeft: "0.75rem",
-          lineHeight: 1.5,
+          paddingLeft: "0.85rem",
+          lineHeight: 1.65,
         }}
       >
         {ability.annotation}

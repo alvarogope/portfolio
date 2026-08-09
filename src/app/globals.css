@@ -108,6 +108,51 @@ img { max-width: 100%; display: block; }
 }
 
 /* ============================================
+   GRID-4 — for sections of exactly four cards.
+   auto-fit/minmax cannot express "4 or 2, never
+   3": inside Section's ~1040px content box, four
+   280px tracks need 1180px, so auto-fit settles
+   on three and orphans the fourth. Explicit
+   counts instead: one column on mobile, a
+   balanced 2x2 through the middle range, and
+   4-across only past 1200px, where each card
+   still clears ~240px.
+   ============================================ */
+
+.grid-4 {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+}
+
+@media (min-width: 600px) {
+  .grid-4 { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (min-width: 1200px) {
+  .grid-4 { grid-template-columns: repeat(4, 1fr); }
+}
+
+/* ============================================
+   PROJECT-GRID — the homepage gateway grid.
+   The featured card spans the full row, so the
+   three that follow fill exactly three columns
+   with nothing left over. Collapses straight to
+   one column rather than to two, because two
+   would orphan one of those three.
+   ============================================ */
+
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+@media (max-width: 860px) {
+  .project-grid { grid-template-columns: 1fr; }
+}
+
+/* ============================================
    MATERIAL — subtle texture for panels.
    A faint noise + vignette so surfaces read as
    aged stone/parchment rather than flat fills.

@@ -33,7 +33,7 @@ export default function RoleCard({ role }: { role: Role }) {
         </p>
       </div>
 
-      <p style={{ margin: 0, fontSize: "0.9rem", color: "var(--color-mist)", lineHeight: 1.6 }}>
+      <p style={{ margin: 0, fontSize: "0.92rem", color: "var(--color-mist)", lineHeight: 1.6 }}>
         {role.tools}
       </p>
 
@@ -47,16 +47,16 @@ export default function RoleCard({ role }: { role: Role }) {
         }}
       >
         <div style={{ display: "flex", gap: "0.6rem", alignItems: "baseline" }}>
-          <span className="mono" style={{ fontSize: "0.6rem", color: "var(--color-mist)", minWidth: "5.5rem" }}>
+          <span className="mono" style={{ fontSize: "0.72rem", color: "var(--color-mist)", minWidth: "6rem" }}>
             Depends on
           </span>
-          <span style={{ fontSize: "0.85rem" }}>{role.dependsOn}</span>
+          <span style={{ fontSize: "0.9rem", lineHeight: 1.5 }}>{role.dependsOn}</span>
         </div>
         <div style={{ display: "flex", gap: "0.6rem", alignItems: "baseline" }}>
-          <span className="mono" style={{ fontSize: "0.6rem", color: accent, minWidth: "5.5rem" }}>
+          <span className="mono" style={{ fontSize: "0.72rem", color: accent, minWidth: "6rem" }}>
             Needed by
           </span>
-          <span style={{ fontSize: "0.85rem" }}>{role.neededBy}</span>
+          <span style={{ fontSize: "0.9rem", lineHeight: 1.5 }}>{role.neededBy}</span>
         </div>
       </div>
     </article>

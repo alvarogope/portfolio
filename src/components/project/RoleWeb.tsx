@@ -25,7 +25,7 @@ export default function RoleWeb({ roles }: { roles: Role[] }) {
       className="rw-grid"
       style={{
         display: "grid",
-        gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
+        gridTemplateColumns: "repeat(auto-fit, minmax(245px, 1fr))",
         gap: "1.25rem",
       }}
     >

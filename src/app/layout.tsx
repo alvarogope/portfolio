@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Cinzel, UnifrakturCook, Spectral, JetBrains_Mono, Rajdhani, Fraunces, Archivo, Instrument_Serif } from "next/font/google";
+import { Cinzel, UnifrakturCook, Spectral, JetBrains_Mono, Rajdhani, Fraunces, Archivo, Bricolage_Grotesque } from "next/font/google";
 import MoonProgress from "@/components/layout/MoonProgress";
 import "./globals.css";
 import Link from "next/link";
@@ -68,13 +68,13 @@ const archivo = Archivo({
   display: "swap",
 });
 
-const brand = Instrument_Serif({
+const brand = Bricolage_Grotesque({
   subsets: ["latin"],
-  weight: ["400"],
-  style: ["normal", "italic"],
+  weight: ["400", "500", "600", "700"],
   variable: "--font-brand",
   display: "swap",
 });
+
 /* ============================================
    METADATA — site-wide defaults. Per-page files
    override title/description later.

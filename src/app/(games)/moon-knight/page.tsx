@@ -8,6 +8,7 @@ import Gallery from "@/components/project/Gallery";
 import EngineeringNote from "@/components/project/EngineeringNote";
 import ChallengeQuote from "@/components/project/ChallengeQuote";
 import Reveal from "@/components/layout/Reveal";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: `${p.title} | Álvaro Gómez Pérez`,
@@ -76,12 +77,27 @@ export default function MoonKnightPage() {
           </Reveal>
         )}
         {/* Design to Engineering */}
+        {/* Design to Engineering */}
         {p.engineeringNote && (
           <Reveal>
             <div style={{ marginTop: "5rem" }}>
               <SectionHeading kicker="05 · From Design to Engineering" title="Building the Quantum" />
               <div style={{ marginTop: "1.5rem" }}>
                 <EngineeringNote note={p.engineeringNote} />
+              </div>
+              <div style={{ marginTop: "1.5rem" }}>
+                <Link
+                  href="/moon-knight/engineering"
+                  className="mono"
+                  style={{
+                    fontSize: "0.78rem",
+                    color: "var(--color-gold)",
+                    borderBottom: "1px solid color-mix(in srgb, var(--color-gold) 50%, transparent)",
+                    paddingBottom: "2px",
+                  }}
+                >
+                  Read the engineering deep-dive: the C++ quantum toolkit →
+                </Link>
               </div>
             </div>
           </Reveal>

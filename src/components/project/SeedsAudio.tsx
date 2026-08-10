@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { createPortal } from "react-dom";
 
 type Seed = { id: string; name: string; mood: string; src: string; tint: string };
@@ -17,6 +17,10 @@ const SEEDS: Seed[] = [
    capture its position: fixed. That also takes it outside the page's themed
    wrapper, so these custom properties have to be carried across by hand. */
 const THEMED_VARS = ["--color-nightfall", "--color-silver", "--color-moonlight", "--font-mono"];
+
+/* Nothing to subscribe to — this store only ever reports whether we are
+   past hydration, so the subscribe callback is a no-op. */
+const noopSubscribe = () => () => {};
 
 export default function SeedsAudio() {
   const ambientRef = useRef<HTMLAudioElement>(null);
@@ -163,10 +167,18 @@ export default function SeedsAudio() {
   const hostRef = useRef<HTMLDivElement>(null);
   const barRef = useRef<HTMLDivElement>(null);
 
-  // Built during render so the portal has a target on the very first
-  // client render; null on the server, where there is no document.
   const [portalHost] = useState<HTMLDivElement | null>(() =>
     typeof document === "undefined" ? null : document.createElement("div")
+  );
+
+  /* The portal must not render during hydration: the server emits
+     nothing for it, so portalling on the first client render is a
+     mismatch and React throws out the tree. This reports false through
+     hydration and true immediately after. */
+  const hydrated = useSyncExternalStore(
+    noopSubscribe,
+    () => true,
+    () => false
   );
 
   useEffect(() => {
@@ -204,7 +216,9 @@ export default function SeedsAudio() {
       window.removeEventListener("resize", reserve);
       document.body.style.paddingBottom = previousPadding;
     };
-  }, [portalHost]);
+    // `hydrated` gates the portal, so barRef is only populated on the
+    // commit after it flips — this has to re-run then, not just on mount.
+  }, [portalHost, hydrated]);
 
   const anythingPlaying = ambientOn || activeSeed !== null;
 
@@ -324,7 +338,7 @@ export default function SeedsAudio() {
         })}
       </div>
 
-      {portalHost && createPortal(transportBar, portalHost)}
+      {hydrated && portalHost && createPortal(transportBar, portalHost)}
 
       <style>{`
         @keyframes seedpulse { 0%, 100% { height: 30% } 50% { height: 100% } }

@@ -3,6 +3,8 @@
    green (clear) and red (alarm) held in reserve for meaning.
    Token overrides cascade to every component inside. */
 
+   import AlarmMeter from "@/components/layout/AlarmMeter";
+
    export default function BreakInLayout({
     children,
   }: {
@@ -30,6 +32,7 @@
         }
       >
         {children}
+        <AlarmMeter />
       </div>
     );
   }

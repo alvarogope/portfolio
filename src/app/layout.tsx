@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Cinzel, UnifrakturCook, Spectral, JetBrains_Mono, Rajdhani, Fraunces, Archivo, Bricolage_Grotesque } from "next/font/google";
-import MoonProgress from "@/components/layout/MoonProgress";
 import "./globals.css";
 import Link from "next/link";
 
@@ -152,7 +151,6 @@ export default function RootLayout({
             </a>
           </span>
         </footer>
-        <MoonProgress />
       </body>
     </html>
   );

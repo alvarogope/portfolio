@@ -170,3 +170,26 @@ img { max-width: 100%; display: block; }
       url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
     position: relative;
   }
+/* ============================================
+   SCROLL INDICATORS — the per-project rail.
+   Each project's indicator is portalled to
+   <body>, so it is styled here by its data
+   attribute rather than from inside the tree.
+
+   The page's text column starts at the section
+   gutter (2.5rem on narrow screens), so the rail
+   tucks closer to the edge — and the moon scales
+   down — to stay clear of it on phones.
+   ============================================ */
+
+[data-scroll-indicator] {
+  --rail-left: 1.5rem;
+  --moon-scale: 1;
+}
+
+@media (max-width: 700px) {
+  [data-scroll-indicator] {
+    --rail-left: 0.5rem;
+    --moon-scale: 0.6;
+  }
+}

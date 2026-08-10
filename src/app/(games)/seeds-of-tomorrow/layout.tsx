@@ -1,3 +1,5 @@
+import GrowthIndicator from "@/components/layout/GrowthIndicator";
+
    export default function SeedsLayout({
     children,
   }: {
@@ -25,6 +27,7 @@
         }
       >
         {children}
+        <GrowthIndicator />
       </div>
     );
   }

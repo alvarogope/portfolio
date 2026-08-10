@@ -1,3 +1,5 @@
+import Symbiochord from "@/components/layout/Symbiochord";
+
 export default function ShatteredSkiesLayout({
     children,
   }: {
@@ -27,6 +29,7 @@ export default function ShatteredSkiesLayout({
         }
       >
         {children}
+        <Symbiochord />
       </div>
     );
   }

@@ -12,7 +12,9 @@ import { useScrollProgress } from "./useScrollProgress";
    hold regardless of the palette. They match the layout's --color-emerald,
    --color-silver (amber caution) and --color-scarlet. */
 
-const TRACK = 140;
+const TRACK = 220;
+const BAR = 8;
+const TICK = 18;
 
 const GREEN = [95, 181, 132];
 const AMBER = [229, 181, 77];
@@ -41,9 +43,9 @@ export default function AlarmMeter() {
         <div
           style={{
             position: "relative",
-            width: 4,
+            width: BAR,
             height: "100%",
-            borderRadius: 2,
+            borderRadius: BAR / 2,
             background: "color-mix(in srgb, var(--color-mist) 22%, transparent)",
             overflow: "hidden",
           }}
@@ -57,9 +59,9 @@ export default function AlarmMeter() {
               left: 0,
               width: "100%",
               height: fill,
-              borderRadius: 2,
+              borderRadius: BAR / 2,
               background: reduced ? FULL_SCALE : color,
-              boxShadow: reduced ? "none" : `0 0 8px ${color}`,
+              boxShadow: reduced ? "none" : `0 0 12px ${color}`,
             }}
           />
         </div>
@@ -73,7 +75,7 @@ export default function AlarmMeter() {
               bottom: TRACK * t - 1,
               left: "50%",
               transform: "translateX(-50%)",
-              width: 10,
+              width: TICK,
               height: 1,
               background: "color-mix(in srgb, var(--color-mist) 40%, transparent)",
             }}

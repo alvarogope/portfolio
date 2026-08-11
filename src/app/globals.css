@@ -190,6 +190,8 @@ img { max-width: 100%; display: block; }
 @media (max-width: 700px) {
   [data-scroll-indicator] {
     --rail-left: 0.5rem;
-    --moon-scale: 0.6;
+    /* 64px * 0.42 = ~27px; at 8px from the edge that still ends well
+       short of the 40px text gutter. */
+    --moon-scale: 0.42;
   }
 }

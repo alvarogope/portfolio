@@ -45,7 +45,8 @@ export function railStyle(height: number): React.CSSProperties {
     top: "50%",
     transform: "translateY(-50%)",
     height,
-    width: 20,
+    // Wide enough for the widest ornament on any rail (the Seeds bloom).
+    width: 28,
     zIndex: 40,
     pointerEvents: "none",
     display: "flex",

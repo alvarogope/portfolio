@@ -7,8 +7,9 @@ import { useScrollProgress } from "./useScrollProgress";
 /* Moon-Knight's scroll indicator, and the one the others are modelled
    on. A moon fixed bottom-left that waxes from new to full as you
    scroll, echoing the moon-phase health bar. The illuminated fraction
-   is scroll progress, and the lit colour shifts silver -> scarlet
-   across the scroll (moonlight -> blood).
+   is scroll progress, and the lit colour brightens along with it, so a
+   finished page reads as a full moon at its brightest rather than
+   fading out just as the reader arrives.
 
    It stays position: fixed until the footer approaches the bottom of
    the viewport, then "docks" just above it so it scrolls away with the
@@ -16,8 +17,14 @@ import { useScrollProgress } from "./useScrollProgress";
    to the moon; the other three indicators sit mid-height on the left
    rail where the footer never reaches them. */
 
-const SIZE = 44;
+const SIZE = 64;
 const BOTTOM_OFFSET = 32; // 2rem, matches the fixed `bottom` value below
+
+/* The lit colour runs dim -> bright along a single cool hue, so every
+   step between is a clean change in brightness rather than a slide
+   through a muddy intermediate. The moon literally fills with light. */
+const DIM = [86, 98, 120];
+const MOONLIGHT = [232, 240, 252];
 
 export default function MoonProgress() {
   const { progress, reduced } = useScrollProgress();
@@ -49,21 +56,19 @@ export default function MoonProgress() {
 
   const r = SIZE / 2;
 
-  // Shadow recedes upward as progress grows: covers the moon at the
-  // top (new moon) and slides off by the bottom (full moon).
-  const shadowOffset = (1 - progress) * SIZE;
+  // The moon waxes: the shadow covers it entirely at the top of the
+  // page (new moon) and slides clear by the bottom (full moon), so the
+  // indicator is at its brightest exactly when progress is complete.
+  const shadowOffset = progress * SIZE;
 
-  // Interpolate the lit colour: silver (top) -> scarlet (bottom).
+  // Lit colour brightens along with the phase, dim -> full moonlight.
   const lerp = (a: number, b: number, t: number) => Math.round(a + (b - a) * t);
 
-  const SILVER = [220, 230, 245];
-  const SCARLET = [104, 12, 25];
-
-  const litColor = `rgb(${lerp(SILVER[0], SCARLET[0], progress)}, ${lerp(
-    SILVER[1],
-    SCARLET[1],
+  const litColor = `rgb(${lerp(DIM[0], MOONLIGHT[0], progress)}, ${lerp(
+    DIM[1],
+    MOONLIGHT[1],
     progress
-  )}, ${lerp(SILVER[2], SCARLET[2], progress)})`;
+  )}, ${lerp(DIM[2], MOONLIGHT[2], progress)})`;
 
   const placement: React.CSSProperties =
     dockedTop === null
@@ -88,14 +93,15 @@ export default function MoonProgress() {
         }}
       >
         {reduced ? (
-          // Static dot under reduced-motion
+          // Static full moon under reduced-motion, matching the other
+          // three indicators' resting state.
           <div
             style={{
               width: SIZE,
               height: SIZE,
               borderRadius: "50%",
               border: "1px solid var(--color-mist)",
-              background: "var(--color-nightfall)",
+              background: `rgb(${MOONLIGHT.join(", ")})`,
             }}
           />
         ) : (

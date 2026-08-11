@@ -15,7 +15,9 @@ import { useScrollProgress } from "./useScrollProgress";
    Greens come from --color-silver (living green in this theme) and the
    bloom from --color-gold (warm amber). */
 
-const TRACK = 160;
+const TRACK = 220;
+const STEM = 4;
+const BLOOM = 26; // svg box for the flower at the tip
 const BLOOM_STARTS = 0.7; // last 30% of the scroll
 
 export default function GrowthIndicator() {
@@ -29,12 +31,13 @@ export default function GrowthIndicator() {
 
   // Leaves appear once the stem has actually grown past them.
   const leafAt = TRACK * 0.45;
+  const lowerLeafAt = leafAt - 20;
   const leavesOut = stem > leafAt;
 
   return (
     <IndicatorPortal name="growth">
       <div aria-hidden style={railStyle(TRACK)}>
-        <div style={{ position: "relative", width: 2, height: "100%" }}>
+        <div style={{ position: "relative", width: STEM, height: "100%" }}>
           {/* the soil line the stem rises from */}
           <span
             style={{
@@ -42,9 +45,9 @@ export default function GrowthIndicator() {
               bottom: -1,
               left: "50%",
               transform: "translateX(-50%)",
-              width: 12,
-              height: 2,
-              borderRadius: 1,
+              width: 18,
+              height: 3,
+              borderRadius: 1.5,
               background: "color-mix(in srgb, var(--color-silver) 45%, transparent)",
             }}
           />
@@ -68,8 +71,9 @@ export default function GrowthIndicator() {
               left: 0,
               width: "100%",
               height: stem,
+              borderRadius: STEM / 2,
               background: "var(--color-silver)",
-              boxShadow: "0 0 6px color-mix(in srgb, var(--color-silver) 60%, transparent)",
+              boxShadow: "0 0 9px color-mix(in srgb, var(--color-silver) 60%, transparent)",
             }}
           />
 
@@ -77,15 +81,17 @@ export default function GrowthIndicator() {
           {leavesOut && (
             <>
               <span style={leafStyle(leafAt, "left")} />
-              <span style={leafStyle(leafAt - 14, "right")} />
+              <span style={leafStyle(lowerLeafAt, "right")} />
             </>
           )}
 
           {/* the bloom at the growing tip */}
           {bloom > 0 && (
             <svg
-              width="18"
-              height="18"
+              /* viewBox stays 18-square, so the whole flower scales
+                 proportionally with BLOOM without recomputing petals */
+              width={BLOOM}
+              height={BLOOM}
               viewBox="0 0 18 18"
               style={{
                 position: "absolute",
@@ -122,8 +128,8 @@ function leafStyle(bottom: number, side: "left" | "right"): React.CSSProperties 
     position: "absolute",
     bottom,
     left: "50%",
-    width: 9,
-    height: 5,
+    width: 13,
+    height: 7,
     background: "var(--color-silver)",
     opacity: 0.75,
     // a leaf shape: round on the outer edge, pointed where it meets the stem

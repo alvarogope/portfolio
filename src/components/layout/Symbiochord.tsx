@@ -12,7 +12,9 @@ import { useScrollProgress } from "./useScrollProgress";
    Accent comes from --color-silver, which this project's layout
    re-points to HUD cyan. */
 
-const TRACK = 160;
+const TRACK = 220;
+const LINE = 4;
+const NODE = 12;
 
 export default function Symbiochord() {
   const { progress, reduced } = useScrollProgress();
@@ -25,8 +27,9 @@ export default function Symbiochord() {
         <div
           style={{
             position: "relative",
-            width: 2,
+            width: LINE,
             height: "100%",
+            borderRadius: LINE / 2,
             background: "color-mix(in srgb, var(--color-silver) 18%, transparent)",
           }}
         >
@@ -38,8 +41,9 @@ export default function Symbiochord() {
               left: 0,
               width: "100%",
               height: fill,
+              borderRadius: LINE / 2,
               background: "var(--color-silver)",
-              boxShadow: "0 0 8px var(--color-silver)",
+              boxShadow: "0 0 12px var(--color-silver)",
             }}
           />
           {/* anchored end */}
@@ -58,10 +62,10 @@ function nodeStyle(top: number): React.CSSProperties {
     top,
     left: "50%",
     transform: "translate(-50%, -50%)",
-    width: 8,
-    height: 8,
+    width: NODE,
+    height: NODE,
     borderRadius: "50%",
     background: "var(--color-silver)",
-    boxShadow: "0 0 10px var(--color-silver)",
+    boxShadow: "0 0 14px var(--color-silver)",
   };
 }

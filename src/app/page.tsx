@@ -22,15 +22,12 @@ export const metadata: Metadata = {
    worlds rather than a fifth competing identity.
    ================================================================== */
 
-/* Literal of --color-void, for the gradient stops that need an alpha
-   channel. Kept next to the token so the two can't drift. */
-const VOID_RGB = "11, 14, 20";
-const rgba = (alpha: number) => `rgba(${VOID_RGB}, ${alpha})`;
-
 /* Type scale. Display sizes are fluid; everything else sits on a
    fixed 17px-based ramp so body copy never drifts between bands. */
 const T = {
-  hero: "clamp(2.5rem, 1.6rem + 5vw, 7rem)",
+  // The hero is type-only now, so the headline carries it alone and
+  // runs a step larger than it did beside artwork.
+  hero: "clamp(2.75rem, 1.7rem + 5.4vw, 7.5rem)",
   displayLg: "clamp(2.5rem, 1.8rem + 3.5vw, 4.75rem)",
   display: "clamp(2rem, 1.6rem + 2vw, 3.125rem)",
   quote: "clamp(1.75rem, 1.3rem + 2.2vw, 2.75rem)",
@@ -45,38 +42,23 @@ const T = {
 const DISPLAY_WEIGHT = 700;
 
 /* Mono label roles, separated by tracking and colour rather than by
-   size — four labels one pixel apart would read as one thing doing
-   four jobs. */
+   size. The spec roles sit deliberately larger than a caption: engine
+   and disciplines are the hard facts a reader scans for, so they are
+   set to be read, not squinted at. */
 const LABEL = {
   eyebrow: { fontSize: 12, letterSpacing: "0.26em" },
   act: { fontSize: 11, letterSpacing: "0.3em" },
-  meta: { fontSize: 11, letterSpacing: "0.14em" },
-  chip: { fontSize: 10, letterSpacing: "0.1em" },
-  note: { fontSize: 10, letterSpacing: "0.2em" },
+  spec: { fontSize: 13, letterSpacing: "0.08em" },
+  chip: { fontSize: 12, letterSpacing: "0.07em" },
 } as const;
 
 const CONTACT = "alvarogomezperez.work@gmail.com";
-
-const HERO_ART = "/images/moon-knight/poster.png";
-
-/* The veil that sits over the key art. Four layers, listed topmost
-   first: a faint raked stripe that ties the hero to the bands; a
-   left-side fall-off that buys contrast for the copy in the bottom
-   corner; a vertical fall-off that resolves to the page ground at the
-   very bottom so the hero hands off to the first band without a seam;
-   and a cool moonlight highlight in the sky. */
-const HERO_VEIL = [
-  "repeating-linear-gradient(118deg, transparent 0 22px, rgba(184,196,212,0.04) 22px 23px)",
-  `linear-gradient(90deg, ${rgba(0.9)} 0%, ${rgba(0.55)} 38%, ${rgba(0)} 78%)`,
-  `linear-gradient(180deg, ${rgba(0.28)} 0%, ${rgba(0.04)} 20%, ${rgba(0.35)} 42%, ${rgba(0.88)} 62%, ${rgba(0.985)} 78%, var(--color-void) 100%)`,
-  "radial-gradient(120% 70% at 50% 0%, rgba(184,196,212,0.10), transparent 60%)",
-].join(", ");
 
 /* Each band gets the same raked stripe, tinted with its own accent.
 
    The alphas are deliberately low: the wash lifts the ground, and
    --color-mist body copy sits on it at only ~5:1 to begin with, so a
-   heavier tint pushes the hook text below AA. These values are set
+   heavier tint pushes the spec text below AA. These values are set
    from measured contrast — the accent still identifies the band
    through its label, rule, link and seam, which carry it far more
    than the wash does. */
@@ -114,36 +96,18 @@ export default function Home() {
         className="hp-hero"
         style={{
           position: "relative",
-          height: "min(100vh, 780px)",
-          minHeight: 560,
+          height: "min(100vh, 820px)",
+          minHeight: 580,
           display: "flex",
           flexDirection: "column",
-          justifyContent: "space-between",
+          // Type-led and nothing else, so the block sits on the optical
+          // centre rather than being bottom-anchored under artwork that
+          // is no longer there.
+          justifyContent: "center",
           background: "var(--color-void)",
           overflow: "hidden",
         }}
       >
-        {/* Moon-Knight's key art, full bleed. Decorative here: the same
-            poster is presented with its real alt text in the band below,
-            so announcing it twice would only add noise. Both this and
-            the veil are absolutely positioned, so neither takes part in
-            the section's flex layout. */}
-        <Image
-          src={HERO_ART}
-          alt=""
-          fill
-          priority
-          sizes="100vw"
-          /* Cropped to 70% so the frame lands on the helmet and the
-             raised sword rather than the poster's own baked-in title
-             lettering, which sits across the top of the artwork and
-             would compete with the headline. */
-          style={{ objectFit: "cover", objectPosition: "center 70%" }}
-        />
-        <div aria-hidden className="hp-hero-veil" style={{ background: HERO_VEIL }} />
-
-        <div />
-
         <div className="hp-hero-copy">
           {/* The eyebrow sits tight to the headline — they are one
               unit, so they are spaced as one. */}
@@ -184,17 +148,6 @@ export default function Home() {
             Four worlds, four systems, one hand on both the design doc and the
             compiler. Scroll to enter them.
           </p>
-
-          <span
-            className="hp-enter"
-            style={{
-              ...mono,
-              ...LABEL.note,
-              color: "var(--color-mist)",
-            }}
-          >
-            ↓ ENTER
-          </span>
         </div>
       </section>
 
@@ -223,15 +176,23 @@ export default function Home() {
             textAlign: "left",
           }}
         >
+          {/* Set in the body serif rather than the display sans: Spectral
+              ships a drawn italic, Bricolage has none at all, so this is
+              a true italic instead of a synthesised slant — and a serif
+              italic against the sans headings is the pairing this quote
+              wants. Weight 600 is Spectral's heaviest loaded cut; asking
+              for 700 would only re-introduce a synthesised bold.
+              Tracking is eased back to 0 because a serif italic does not
+              want the tight negative tracking the sans display carries. */}
           <p
             style={{
-              ...display,
               margin: 0,
+              fontFamily: "var(--font-body)",
               fontStyle: "italic",
-              fontWeight: DISPLAY_WEIGHT,
+              fontWeight: 600,
               fontSize: T.quote,
-              lineHeight: 1.12,
-              letterSpacing: "-0.025em",
+              lineHeight: 1.18,
+              letterSpacing: "0",
               maxWidth: 860,
               textWrap: "balance",
             }}
@@ -275,52 +236,58 @@ export default function Home() {
           by prefers-reduced-motion where it moves. */}
       <style>{`
         /* ---- hero ---- */
-        .hp-hero-veil { position: absolute; inset: 0; }
-        /* Lifts the copy above the art, and carries its own plate so
-           legibility never depends on where the flex layout happens to
-           place the block — the headline wraps to more lines on narrow
-           screens, which pushes the copy up into brighter art. The fade
-           length is tied to padding-top, so the first line of text
-           always lands on a backdrop of at least 0.92 void. */
-        .hp-hero-copy {
-          position: relative;
-          z-index: 1;
-          padding: 88px 48px 72px;
-          background: linear-gradient(
-            180deg,
-            ${rgba(0)} 0px,
-            ${rgba(0.92)} 88px,
-            ${rgba(0.97)} 100%
-          );
-        }
+        .hp-hero-copy { position: relative; padding: 0 48px; }
         /* Relationship-based rhythm: the eyebrow belongs to the
            headline, so it hugs it; the subline is a separate thought
-           and gets real air; the cue is further still.
+           and gets real air. With nothing but type in the hero these
+           intervals are what give it presence, so they run generous.
            The headline's tight line-height makes its box shorter than
            its glyphs, so a modest margin here collapses to no visible
-           gap at all — this is sized for the optical result. */
-        .hp-hero-copy > p:first-child { margin: 0 0 34px; }
-        .hp-hero-sub { margin: 32px 0 0; }
-        .hp-enter { margin-top: 40px; }
+           gap at all — these are sized for the optical result. */
+        .hp-hero-copy > p:first-of-type { margin: 0 0 40px; }
+        .hp-hero-sub { margin: 40px 0 0; }
 
         /* ---- closer ---- */
         .hp-closer { padding: 128px 48px; }
 
         /* ---- bands ---- */
+        /* The whole band is the link, so a click anywhere on the card
+           routes. It holds exactly one interactive element — the inner
+           "See the systems" affordance is a span, not a nested anchor. */
         .hp-band {
           display: grid;
           grid-template-columns: 1fr 1fr;
           align-items: center;
           border-top: 1px solid var(--color-nightfall);
           position: relative;
+          color: inherit;
+          text-decoration: none;
         }
+        /* The card lighting up on hover, in the band's own accent. */
+        .hp-band::after {
+          content: "";
+          position: absolute;
+          inset: 0;
+          background: var(--accent);
+          opacity: 0;
+          pointer-events: none;
+          transition: opacity 320ms ease;
+        }
+        .hp-band:hover::after { opacity: 0.055; }
+
         .hp-band-media {
           position: relative;
           height: 100%;
           min-height: 260px;
           overflow: hidden;
         }
-        .hp-band-copy { display: flex; flex-direction: column; padding: 64px 48px; }
+        .hp-band-copy {
+          display: flex;
+          flex-direction: column;
+          padding: 64px 48px;
+          position: relative;
+          z-index: 1;
+        }
 
         /* Copy on the named side, poster on the other. */
         .hp-band[data-side="left"]  .hp-band-copy  { order: 1; }
@@ -347,8 +314,17 @@ export default function Home() {
 
         /* The seam where poster meets copy, tinted with the project's
            own accent. It gives each band a constructed edge instead of
-           two halves simply abutting. */
-        .hp-band-seam { position: absolute; top: 0; bottom: 0; width: 1px; }
+           two halves simply abutting, and brightens on hover. */
+        .hp-band-seam {
+          position: absolute;
+          top: 0;
+          bottom: 0;
+          width: 1px;
+          background: linear-gradient(var(--accent-0), var(--accent-59), var(--accent-0));
+          opacity: 0.75;
+          transition: opacity 320ms ease;
+        }
+        .hp-band:hover .hp-band-seam { opacity: 1; }
         .hp-band[data-side="left"]  .hp-band-seam { left: 0; }
         .hp-band[data-side="right"] .hp-band-seam { right: 0; }
 
@@ -359,7 +335,6 @@ export default function Home() {
         .hp-band:hover .hp-band-media img { transform: scale(1.035); }
 
         .hp-link {
-          position: relative;
           display: inline-flex;
           align-items: center;
           gap: 10px;
@@ -367,8 +342,7 @@ export default function Home() {
           border-bottom: 1px solid currentColor;
         }
         .hp-link .hp-arrow { transition: transform 260ms ease; }
-        .hp-band:hover .hp-link .hp-arrow,
-        .hp-link:hover .hp-arrow { transform: translateX(4px); }
+        .hp-band:hover .hp-arrow { transform: translateX(4px); }
 
         .hp-cta { transition: background-color 220ms ease, color 220ms ease; }
         .hp-cta:hover {
@@ -376,36 +350,21 @@ export default function Home() {
           color: var(--color-void);
         }
 
-        /* A visible keyboard state everywhere, in the site's accent. */
+        /* A visible keyboard state everywhere, in the site's accent.
+           The card's ring is inset because the band is full-bleed and
+           an outward offset would be clipped at the viewport edge. */
         .hp-root a:focus-visible {
           outline: 2px solid var(--color-silver);
           outline-offset: 5px;
           border-radius: 1px;
         }
-
-        @keyframes hp-bob {
-          0%, 100% { transform: translateY(0); }
-          50%      { transform: translateY(6px); }
-        }
-        .hp-enter {
-          display: inline-block;
-          animation: hp-bob 2.2s ease-in-out infinite;
-        }
+        .hp-root a.hp-band:focus-visible { outline-offset: -6px; }
 
         /* ---- responsive ---- */
         @media (max-width: 900px) {
-          .hp-hero-copy {
-            padding: 64px 24px 56px;
-            background: linear-gradient(
-              180deg,
-              ${rgba(0)} 0px,
-              ${rgba(0.92)} 64px,
-              ${rgba(0.97)} 100%
-            );
-          }
-          .hp-hero-copy > p:first-child { margin: 0 0 22px; }
-          .hp-hero-sub { margin: 24px 0 0; }
-          .hp-enter { margin-top: 32px; }
+          .hp-hero-copy { padding: 0 24px; }
+          .hp-hero-copy > p:first-of-type { margin: 0 0 26px; }
+          .hp-hero-sub { margin: 30px 0 0; }
           .hp-closer { padding: 88px 24px; }
 
           /* Bands stack: poster above, copy full-width beneath. */
@@ -426,6 +385,7 @@ export default function Home() {
           .hp-band[data-side] .hp-band-seam {
             top: auto; bottom: 0; left: 0; right: 0;
             width: auto; height: 1px;
+            background: linear-gradient(90deg, var(--accent-0), var(--accent-59), var(--accent-0));
           }
 
           /* The long flagship label cannot hold one line at this width:
@@ -435,13 +395,13 @@ export default function Home() {
         }
 
         @media (prefers-reduced-motion: reduce) {
-          .hp-enter { animation: none; }
           .hp-band-media img,
-          .hp-link .hp-arrow,
+          .hp-band::after,
+          .hp-band-seam,
+          .hp-arrow,
           .hp-cta { transition: none; }
           .hp-band:hover .hp-band-media img { transform: none; }
-          .hp-band:hover .hp-link .hp-arrow,
-          .hp-link:hover .hp-arrow { transform: none; }
+          .hp-band:hover .hp-arrow { transform: none; }
         }
       `}</style>
     </div>
@@ -452,19 +412,30 @@ export default function Home() {
 
 function ActBand({ act }: { act: Act }) {
   const { project, label, accent, poster, side, flagship } = act;
+  const engine = project.facts.engine;
 
   /* Which side the copy sits on is driven by `data-side` and CSS
      `order`, not by inline grid placement: the mobile media query has
      to be able to override it to stack the poster on top, and an inline
-     grid-column would win over any stylesheet rule. */
+     grid-column would win over any stylesheet rule.
+
+     The accent is handed to CSS as custom properties so the hover wash
+     and the seam can use it without a second inline style. */
   return (
-    <section
+    <Link
       className="hp-band"
       data-side={side}
-      style={{
-        minHeight: flagship ? 640 : 420,
-        background: bandBackground(accent),
-      }}
+      href={`/${project.slug}`}
+      aria-label={`${project.title} — ${project.routingVerb}`}
+      style={
+        {
+          "--accent": accent,
+          "--accent-0": `${accent}00`,
+          "--accent-59": `${accent}59`,
+          minHeight: flagship ? 640 : 420,
+          background: bandBackground(accent),
+        } as React.CSSProperties
+      }
     >
       <div className="hp-band-media">
         <Image
@@ -480,11 +451,7 @@ function ActBand({ act }: { act: Act }) {
             data-side, so the mobile layout can swap it to a vertical
             fade once the copy sits underneath instead of beside. */}
         <div aria-hidden className="hp-band-scrim" />
-        <div
-          aria-hidden
-          className="hp-band-seam"
-          style={{ background: `linear-gradient(${accent}00, ${accent}59, ${accent}00)` }}
-        />
+        <div aria-hidden className="hp-band-seam" />
       </div>
 
       <div className="hp-band-copy" style={{ maxWidth: flagship ? 620 : 560 }}>
@@ -539,6 +506,9 @@ function ActBand({ act }: { act: Act }) {
           {project.systemsHook}
         </p>
 
+        {/* Spec: the engine leads, in the project's accent, because it
+            is the first hard fact a reader looks for; the disciplines
+            follow in the neutral. Both come from the real content. */}
         {flagship ? (
           <div
             style={{
@@ -548,6 +518,18 @@ function ActBand({ act }: { act: Act }) {
               marginTop: 28,
             }}
           >
+            <span
+              style={{
+                ...mono,
+                ...LABEL.chip,
+                border: `1px solid ${accent}66`,
+                padding: "8px 12px",
+                color: accent,
+                whiteSpace: "nowrap",
+              }}
+            >
+              {engine}
+            </span>
             {toChips(project.disciplines).map((chip) => (
               <span
                 key={chip}
@@ -555,7 +537,7 @@ function ActBand({ act }: { act: Act }) {
                   ...mono,
                   ...LABEL.chip,
                   border: "1px solid color-mix(in srgb, var(--color-mist) 32%, transparent)",
-                  padding: "7px 11px",
+                  padding: "8px 12px",
                   color: "var(--color-mist)",
                   whiteSpace: "nowrap",
                 }}
@@ -568,21 +550,23 @@ function ActBand({ act }: { act: Act }) {
           <p
             style={{
               ...mono,
-              ...LABEL.meta,
+              ...LABEL.spec,
               margin: "22px 0 0",
               color: "var(--color-mist)",
-              lineHeight: 1.7,
+              lineHeight: 1.75,
             }}
           >
+            <span style={{ color: accent }}>{engine}</span>
+            <span aria-hidden style={{ opacity: 0.45 }}>{"  ·  "}</span>
             {project.disciplines}
           </p>
         )}
 
-        {/* The link gets the largest break in the block: it is the one
-            thing in the band you are meant to act on. */}
-        <Link
+        {/* The affordance stays visible, but it is a span: the card
+            itself is the link, and an anchor inside an anchor is
+            invalid and unreachable by keyboard. */}
+        <span
           className="hp-link"
-          href={`/${project.slug}`}
           style={{
             marginTop: flagship ? 40 : 32,
             alignSelf: "flex-start",
@@ -597,8 +581,8 @@ function ActBand({ act }: { act: Act }) {
           <span aria-hidden className="hp-arrow">
             →
           </span>
-        </Link>
+        </span>
       </div>
-    </section>
+    </Link>
   );
 }

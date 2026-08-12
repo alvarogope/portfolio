@@ -21,28 +21,29 @@ import Link from "next/link";
 const cinzel = Cinzel({
   subsets: ["latin"],
   weight: ["500", "600"],
-  variable: "--font-cinzel",   // ← Moon-Knight hero
+  variable: "--font-cinzel",
   display: "swap",
 });
 
 const unifraktur = UnifrakturCook({
   subsets: ["latin"],
   weight: ["700"],
-  variable: "--font-unifraktur",   // ← Moon-Knight headings
+  variable: "--font-unifraktur",
   display: "swap",
 });
 
 const jetbrains = JetBrains_Mono({
   subsets: ["latin"],
   weight: ["400", "500"],
-  variable: "--font-jetbrains", // ← utility/mono slot
+  variable: "--font-jetbrains",
   display: "swap",
 });
 
 const spectral = Spectral({
   subsets: ["latin"],
-  weight: ["400", "500"],
-  variable: "--font-spectral", // ← body slot
+  weight: ["400", "500", "600"],
+  style: ["normal", "italic"],
+  variable: "--font-body",
   display: "swap",
 });
 

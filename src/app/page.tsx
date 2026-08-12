@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import Reveal from "@/components/layout/Reveal";
-import { homeDisplay, homeMono } from "@/components/home/fonts";
 import { acts, toChips, type Act } from "@/components/home/acts";
 
 export const metadata: Metadata = {
@@ -12,24 +11,21 @@ export const metadata: Metadata = {
 };
 
 /* ==================================================================
-   TOKENS
+   The homepage runs on the site's own token system — no standalone
+   palette or type of its own, so it sits flush against the global
+   header and footer.
 
-   Colour: one warm ramp, all of it biased toward the oxide accent so
-   the neutrals read as chosen rather than inherited greys. Oxide is
-   reserved for three jobs only — the opening eyebrow, the closing
-   call to action, and focus rings — so the accent brackets the page
-   instead of being sprinkled through it. The per-project accents are
-   a separate, semantic set: they identify a world, they are not the
-   brand colour.
+   Colour discipline: the page itself is entirely neutral (void,
+   moonlight, mist, silver). The ONLY colour on it comes from the four
+   projects, each announcing itself with its own accent from the acts
+   data. That makes the homepage a cool neutral frame around four
+   worlds rather than a fifth competing identity.
    ================================================================== */
 
-const INK = "#0a0908"; // ground
-const PAPER = "#f0ece4"; // primary text
-const WARM_2 = "#b3aa9d"; // secondary text
-const WARM_3 = "#8b8175"; // labels, meta — lifted to clear 4.5:1 on ink
-const OXIDE = "#d6784b"; // accent — eyebrow, CTA, focus
-const HAIRLINE = "#241f1b";
-const CHIP_EDGE = "#332e28";
+/* Literal of --color-void, for the gradient stops that need an alpha
+   channel. Kept next to the token so the two can't drift. */
+const VOID_RGB = "11, 14, 20";
+const rgba = (alpha: number) => `rgba(${VOID_RGB}, ${alpha})`;
 
 /* Type scale. Display sizes are fluid; everything else sits on a
    fixed 17px-based ramp so body copy never drifts between bands. */
@@ -44,9 +40,13 @@ const T = {
   link: 15,
 };
 
-/* Mono label roles. These are separated by tracking and colour rather
-   than by size — four labels one pixel apart would read as one thing
-   doing four jobs. */
+/* The site's display face tops out at 700, so that is the heavy end
+   here — asking for 800 would only get a synthesised weight. */
+const DISPLAY_WEIGHT = 700;
+
+/* Mono label roles, separated by tracking and colour rather than by
+   size — four labels one pixel apart would read as one thing doing
+   four jobs. */
 const LABEL = {
   eyebrow: { fontSize: 12, letterSpacing: "0.26em" },
   act: { fontSize: 11, letterSpacing: "0.3em" },
@@ -60,47 +60,49 @@ const CONTACT = "alvarogomezperez.work@gmail.com";
 const HERO_ART = "/images/moon-knight/poster.png";
 
 /* The veil that sits over the key art. Four layers, listed topmost
-   first: the raked oxide stripe that ties the hero to the bands; a
+   first: a faint raked stripe that ties the hero to the bands; a
    left-side fall-off that buys contrast for the copy in the bottom
    corner; a vertical fall-off that resolves to the page ground at the
    very bottom so the hero hands off to the first band without a seam;
-   and a warm highlight that keeps the brand temperature in the sky. */
-/* The art carries the upper two thirds; the lower third is a title
-   plate. The vertical stop values are set from measured contrast, not
-   by eye — the oxide eyebrow is the most demanding text on the page and
-   needs its backdrop at roughly rgb(35,35,35) or darker to clear 4.5:1,
-   which is what the 0.88 stop at 62% buys. */
+   and a cool moonlight highlight in the sky. */
 const HERO_VEIL = [
-  "repeating-linear-gradient(118deg, transparent 0 22px, rgba(214,120,75,0.05) 22px 23px)",
-  "linear-gradient(90deg, rgba(10,9,8,0.90) 0%, rgba(10,9,8,0.55) 38%, rgba(10,9,8,0) 78%)",
-  "linear-gradient(180deg, rgba(10,9,8,0.28) 0%, rgba(10,9,8,0.04) 20%, rgba(10,9,8,0.35) 42%, rgba(10,9,8,0.88) 62%, rgba(10,9,8,0.985) 78%, #0a0908 100%)",
-  "radial-gradient(120% 70% at 50% 0%, rgba(214,120,75,0.14), transparent 60%)",
+  "repeating-linear-gradient(118deg, transparent 0 22px, rgba(184,196,212,0.04) 22px 23px)",
+  `linear-gradient(90deg, ${rgba(0.9)} 0%, ${rgba(0.55)} 38%, ${rgba(0)} 78%)`,
+  `linear-gradient(180deg, ${rgba(0.28)} 0%, ${rgba(0.04)} 20%, ${rgba(0.35)} 42%, ${rgba(0.88)} 62%, ${rgba(0.985)} 78%, var(--color-void) 100%)`,
+  "radial-gradient(120% 70% at 50% 0%, rgba(184,196,212,0.10), transparent 60%)",
 ].join(", ");
 
-/* Each band gets the same raked stripe, tinted with its own accent. */
+/* Each band gets the same raked stripe, tinted with its own accent.
+
+   The alphas are deliberately low: the wash lifts the ground, and
+   --color-mist body copy sits on it at only ~5:1 to begin with, so a
+   heavier tint pushes the hook text below AA. These values are set
+   from measured contrast — the accent still identifies the band
+   through its label, rule, link and seam, which carry it far more
+   than the wash does. */
 function bandBackground(accent: string): string {
   return [
-    `linear-gradient(100deg, ${accent}14 0%, transparent 55%)`,
-    `repeating-linear-gradient(118deg, transparent 0 20px, ${accent}0d 20px 21px)`,
-    INK,
+    `linear-gradient(100deg, ${accent}0a 0%, transparent 55%)`,
+    `repeating-linear-gradient(118deg, transparent 0 20px, ${accent}07 20px 21px)`,
+    "var(--color-void)",
   ].join(", ");
 }
 
-const mono: React.CSSProperties = { fontFamily: "var(--font-home-mono)" };
+const mono: React.CSSProperties = { fontFamily: "var(--font-mono)" };
 
-/* globals.css sets `h1,h2,h3 { font-family: var(--font-display) }`, and
-   that element rule outranks inheritance from the wrapper — so the
-   homepage face has to be named on every heading. */
-const display: React.CSSProperties = { fontFamily: "var(--font-home-display)" };
+/* globals.css already points h1/h2/h3 at --font-display, but it also
+   pins weight and letter-spacing there, so the display face is named
+   explicitly alongside the overrides below. */
+const display: React.CSSProperties = { fontFamily: "var(--font-display)" };
 
 export default function Home() {
   return (
     <div
-      className={`${homeDisplay.variable} ${homeMono.variable} hp-root`}
+      className="hp-root"
       style={{
-        background: INK,
-        color: PAPER,
-        fontFamily: "var(--font-home-display)",
+        background: "var(--color-void)",
+        color: "var(--color-moonlight)",
+        fontFamily: "var(--font-body)",
         overflow: "hidden",
       }}
     >
@@ -117,7 +119,7 @@ export default function Home() {
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          background: INK,
+          background: "var(--color-void)",
           overflow: "hidden",
         }}
       >
@@ -149,7 +151,7 @@ export default function Home() {
             style={{
               ...mono,
               ...LABEL.eyebrow,
-              color: OXIDE,
+              color: "var(--color-silver)",
             }}
           >
             TECHNICAL GAME DESIGNER
@@ -159,10 +161,10 @@ export default function Home() {
             style={{
               ...display,
               margin: 0,
-              fontWeight: 800,
+              fontWeight: DISPLAY_WEIGHT,
               fontSize: T.hero,
-              lineHeight: 0.88,
-              letterSpacing: "-0.05em",
+              lineHeight: 0.9,
+              letterSpacing: "-0.04em",
               maxWidth: 1000,
               textWrap: "balance",
             }}
@@ -176,7 +178,7 @@ export default function Home() {
               maxWidth: 620,
               fontSize: T.lead,
               lineHeight: 1.55,
-              color: WARM_2,
+              color: "var(--color-mist)",
             }}
           >
             Four worlds, four systems, one hand on both the design doc and the
@@ -188,13 +190,12 @@ export default function Home() {
             style={{
               ...mono,
               ...LABEL.note,
-              color: WARM_3,
+              color: "var(--color-mist)",
             }}
           >
             ↓ ENTER
           </span>
         </div>
-
       </section>
 
       {/* ---------------------------------------------------------- */}
@@ -213,7 +214,7 @@ export default function Home() {
         <section
           className="hp-closer"
           style={{
-            borderTop: `1px solid ${HAIRLINE}`,
+            borderTop: "1px solid var(--color-nightfall)",
             display: "flex",
             flexDirection: "column",
             // Left-aligned to the same 48px gutter as the hero and the
@@ -227,10 +228,10 @@ export default function Home() {
               ...display,
               margin: 0,
               fontStyle: "italic",
-              fontWeight: 800,
+              fontWeight: DISPLAY_WEIGHT,
               fontSize: T.quote,
               lineHeight: 1.12,
-              letterSpacing: "-0.03em",
+              letterSpacing: "-0.025em",
               maxWidth: 860,
               textWrap: "balance",
             }}
@@ -244,7 +245,7 @@ export default function Home() {
               maxWidth: 560,
               fontSize: T.body,
               lineHeight: 1.6,
-              color: WARM_2,
+              color: "var(--color-mist)",
               textWrap: "pretty",
             }}
           >
@@ -259,8 +260,8 @@ export default function Home() {
               ...mono,
               ...LABEL.eyebrow,
               marginTop: 48,
-              color: OXIDE,
-              border: `1px solid ${OXIDE}`,
+              color: "var(--color-silver)",
+              border: "1px solid var(--color-silver)",
               padding: "16px 30px",
             }}
           >
@@ -280,22 +281,22 @@ export default function Home() {
            place the block — the headline wraps to more lines on narrow
            screens, which pushes the copy up into brighter art. The fade
            length is tied to padding-top, so the first line of text
-           always lands on a backdrop of at least 0.92 ink. */
+           always lands on a backdrop of at least 0.92 void. */
         .hp-hero-copy {
           position: relative;
           z-index: 1;
           padding: 88px 48px 72px;
           background: linear-gradient(
             180deg,
-            rgba(10, 9, 8, 0) 0px,
-            rgba(10, 9, 8, 0.92) 88px,
-            rgba(10, 9, 8, 0.97) 100%
+            ${rgba(0)} 0px,
+            ${rgba(0.92)} 88px,
+            ${rgba(0.97)} 100%
           );
         }
         /* Relationship-based rhythm: the eyebrow belongs to the
            headline, so it hugs it; the subline is a separate thought
            and gets real air; the cue is further still.
-           The headline's line-height of 0.88 makes its box shorter than
+           The headline's tight line-height makes its box shorter than
            its glyphs, so a modest margin here collapses to no visible
            gap at all — this is sized for the optical result. */
         .hp-hero-copy > p:first-child { margin: 0 0 34px; }
@@ -310,7 +311,7 @@ export default function Home() {
           display: grid;
           grid-template-columns: 1fr 1fr;
           align-items: center;
-          border-top: 1px solid ${HAIRLINE};
+          border-top: 1px solid var(--color-nightfall);
           position: relative;
         }
         .hp-band-media {
@@ -338,10 +339,10 @@ export default function Home() {
 
         .hp-band-scrim { position: absolute; inset: 0; }
         .hp-band[data-side="left"]  .hp-band-scrim {
-          background: linear-gradient(90deg, ${INK} 0%, transparent 48%);
+          background: linear-gradient(90deg, var(--color-void) 0%, transparent 48%);
         }
         .hp-band[data-side="right"] .hp-band-scrim {
-          background: linear-gradient(270deg, ${INK} 0%, transparent 48%);
+          background: linear-gradient(270deg, var(--color-void) 0%, transparent 48%);
         }
 
         /* The seam where poster meets copy, tinted with the project's
@@ -364,18 +365,20 @@ export default function Home() {
           gap: 10px;
           padding-bottom: 3px;
           border-bottom: 1px solid currentColor;
-          transition: gap 260ms ease;
         }
         .hp-link .hp-arrow { transition: transform 260ms ease; }
         .hp-band:hover .hp-link .hp-arrow,
         .hp-link:hover .hp-arrow { transform: translateX(4px); }
 
         .hp-cta { transition: background-color 220ms ease, color 220ms ease; }
-        .hp-cta:hover { background: ${OXIDE}; color: ${INK}; }
+        .hp-cta:hover {
+          background: var(--color-silver);
+          color: var(--color-void);
+        }
 
-        /* A visible keyboard state everywhere, in the brand accent. */
+        /* A visible keyboard state everywhere, in the site's accent. */
         .hp-root a:focus-visible {
-          outline: 2px solid ${OXIDE};
+          outline: 2px solid var(--color-silver);
           outline-offset: 5px;
           border-radius: 1px;
         }
@@ -395,9 +398,9 @@ export default function Home() {
             padding: 64px 24px 56px;
             background: linear-gradient(
               180deg,
-              rgba(10, 9, 8, 0) 0px,
-              rgba(10, 9, 8, 0.92) 64px,
-              rgba(10, 9, 8, 0.97) 100%
+              ${rgba(0)} 0px,
+              ${rgba(0.92)} 64px,
+              ${rgba(0.97)} 100%
             );
           }
           .hp-hero-copy > p:first-child { margin: 0 0 22px; }
@@ -418,7 +421,7 @@ export default function Home() {
           /* Copy is underneath now, so the poster fades downward and the
              seam becomes the horizontal edge between the two. */
           .hp-band[data-side] .hp-band-scrim {
-            background: linear-gradient(180deg, transparent 45%, ${INK} 100%);
+            background: linear-gradient(180deg, transparent 45%, var(--color-void) 100%);
           }
           .hp-band[data-side] .hp-band-seam {
             top: auto; bottom: 0; left: 0; right: 0;
@@ -434,7 +437,6 @@ export default function Home() {
         @media (prefers-reduced-motion: reduce) {
           .hp-enter { animation: none; }
           .hp-band-media img,
-          .hp-link,
           .hp-link .hp-arrow,
           .hp-cta { transition: none; }
           .hp-band:hover .hp-band-media img { transform: none; }
@@ -485,10 +487,7 @@ function ActBand({ act }: { act: Act }) {
         />
       </div>
 
-      <div
-        className="hp-band-copy"
-        style={{ maxWidth: flagship ? 620 : 560 }}
-      >
+      <div className="hp-band-copy" style={{ maxWidth: flagship ? 620 : 560 }}>
         {/* Act label and title are one unit; the rule that follows the
             label measures the copy column, the way a spec sheet sets a
             heading against its field. */}
@@ -518,9 +517,9 @@ function ActBand({ act }: { act: Act }) {
           style={{
             ...display,
             margin: 0,
-            fontWeight: 800,
-            lineHeight: flagship ? 0.9 : 0.95,
-            letterSpacing: flagship ? "-0.042em" : "-0.035em",
+            fontWeight: DISPLAY_WEIGHT,
+            lineHeight: flagship ? 0.92 : 0.98,
+            letterSpacing: flagship ? "-0.035em" : "-0.03em",
             fontSize: flagship ? T.displayLg : T.display,
             textWrap: "balance",
           }}
@@ -533,7 +532,7 @@ function ActBand({ act }: { act: Act }) {
             margin: `${flagship ? 24 : 20}px 0 0`,
             fontSize: flagship ? T.bodyLg : T.body,
             lineHeight: 1.6,
-            color: WARM_2,
+            color: "var(--color-mist)",
             textWrap: "pretty",
           }}
         >
@@ -555,9 +554,9 @@ function ActBand({ act }: { act: Act }) {
                 style={{
                   ...mono,
                   ...LABEL.chip,
-                  border: `1px solid ${CHIP_EDGE}`,
+                  border: "1px solid color-mix(in srgb, var(--color-mist) 32%, transparent)",
                   padding: "7px 11px",
-                  color: WARM_3,
+                  color: "var(--color-mist)",
                   whiteSpace: "nowrap",
                 }}
               >
@@ -571,7 +570,7 @@ function ActBand({ act }: { act: Act }) {
               ...mono,
               ...LABEL.meta,
               margin: "22px 0 0",
-              color: WARM_3,
+              color: "var(--color-mist)",
               lineHeight: 1.7,
             }}
           >
@@ -587,6 +586,7 @@ function ActBand({ act }: { act: Act }) {
           style={{
             marginTop: flagship ? 40 : 32,
             alignSelf: "flex-start",
+            fontFamily: "var(--font-display)",
             fontWeight: 600,
             fontSize: T.link,
             letterSpacing: "-0.01em",

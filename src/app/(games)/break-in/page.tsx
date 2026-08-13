@@ -3,7 +3,6 @@ import { breakIn as p } from "@/content/games/break-in";
 import Section from "@/components/layout/Section";
 import SectionHeading from "@/components/layout/SectionHeading";
 import ProjectHero from "@/components/project/ProjectHero";
-import RoleCard from "@/components/project/RoleCard";
 import ChallengeQuote from "@/components/project/ChallengeQuote";
 import Reveal from "@/components/layout/Reveal";
 import RoleWeb from "@/components/project/RoleWeb";

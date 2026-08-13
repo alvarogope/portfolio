@@ -122,9 +122,9 @@ export default function RootLayout({
             Álvaro Gómez
           </Link>
           <nav className="mono" style={{ display: "flex", gap: "1.5rem", fontSize: "0.8rem" }}>
-            <a href="/">Projects</a>
-            <a href="/engineering">Engineering</a>
-            <a href="/about">About</a>
+            <Link href="/">Projects</Link>
+            <Link href="/engineering">Engineering</Link>
+            <Link href="/about">About</Link>
           </nav>
         </header>
 

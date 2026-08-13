@@ -13,6 +13,18 @@ import { useEffect, useRef, useState } from "react";
 const GLYPHS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789/<>*#@%&";
 const TERMINAL = "#5FD98A";
 
+/* Checked at call time rather than mirrored into state: the preference
+   only ever gates the animation, so it never needs to cause a render. */
+const prefersReduced = () =>
+  typeof window !== "undefined" &&
+  window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+const scrambled = (body: string) =>
+  body
+    .split("")
+    .map((ch) => (ch === " " || ch === "\n" ? ch : GLYPHS[Math.floor(Math.random() * GLYPHS.length)]))
+    .join("");
+
 export default function TransmissionCard({
   label,
   body,
@@ -28,7 +40,9 @@ export default function TransmissionCard({
   const frame = useRef<number>(0);
 
   const scramble = () => {
-    if (done) return;
+    // Guards both triggers — under reduced motion the hover handler
+    // must not start a decode either.
+    if (done || prefersReduced()) return;
     let iteration = 0;
     let tick = 0;
     const total = body.length;
@@ -59,16 +73,15 @@ export default function TransmissionCard({
   };
 
   useEffect(() => {
-    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
-    if (mq.matches) {
-      setDisplay(body);
-      setDone(true);
-      return;
-    }
-    // Start scrambled
-    setDisplay(
-      body.split("").map((ch) => (ch === " " || ch === "\n" ? ch : GLYPHS[Math.floor(Math.random() * GLYPHS.length)])).join("")
-    );
+    // Reduced motion: `display` already holds the readable body, and
+    // scramble() refuses to run, so there is nothing to do.
+    if (prefersReduced()) return;
+
+    // Start scrambled. Deferred into a frame callback rather than set
+    // synchronously here: doing it during render would also break
+    // hydration, since the scramble is random and the server emits the
+    // readable text.
+    const seed = requestAnimationFrame(() => setDisplay(scrambled(body)));
     // Decode automatically when scrolled into view. Each card owns its
     // own observer on its own element, so cards never trigger together.
     //
@@ -81,18 +94,25 @@ export default function TransmissionCard({
     // 0.25 to compensate, so cards still fire reliably inside the
     // shortened box.
     const el = ref.current;
-    if (!el) return;
+    if (!el) return () => cancelAnimationFrame(seed);
+
+    let decodeTimer = 0;
     const obs = new IntersectionObserver(
       ([e]) => {
         if (e.isIntersecting) {
-          setTimeout(scramble, delay);
+          decodeTimer = window.setTimeout(scramble, delay);
           obs.disconnect();
         }
       },
       { threshold: 0.25, rootMargin: "0px 0px -22% 0px" }
     );
     obs.observe(el);
-    return () => obs.disconnect();
+
+    return () => {
+      cancelAnimationFrame(seed);
+      window.clearTimeout(decodeTimer);
+      obs.disconnect();
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [body]);
 

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import Reveal from "@/components/layout/Reveal";
+import EngineTag from "@/components/project/EngineTag";
 import { acts, toChips, type Act } from "@/components/home/acts";
 
 export const metadata: Metadata = {
@@ -518,18 +519,7 @@ function ActBand({ act }: { act: Act }) {
               marginTop: 28,
             }}
           >
-            <span
-              style={{
-                ...mono,
-                ...LABEL.chip,
-                border: `1px solid ${accent}66`,
-                padding: "8px 12px",
-                color: accent,
-                whiteSpace: "nowrap",
-              }}
-            >
-              {engine}
-            </span>
+            <EngineTag engine={engine} accent={accent} />
             {toChips(project.disciplines).map((chip) => (
               <span
                 key={chip}
@@ -547,19 +537,28 @@ function ActBand({ act }: { act: Act }) {
             ))}
           </div>
         ) : (
-          <p
+          <div
             style={{
-              ...mono,
-              ...LABEL.spec,
-              margin: "22px 0 0",
-              color: "var(--color-mist)",
-              lineHeight: 1.75,
+              marginTop: 22,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "flex-start",
+              gap: 12,
             }}
           >
-            <span style={{ color: accent }}>{engine}</span>
-            <span aria-hidden style={{ opacity: 0.45 }}>{"  ·  "}</span>
-            {project.disciplines}
-          </p>
+            <EngineTag engine={engine} accent={accent} />
+            <p
+              style={{
+                ...mono,
+                ...LABEL.spec,
+                margin: 0,
+                color: "var(--color-mist)",
+                lineHeight: 1.75,
+              }}
+            >
+              {project.disciplines}
+            </p>
+          </div>
         )}
 
         {/* The affordance stays visible, but it is a span: the card

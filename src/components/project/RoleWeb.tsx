@@ -26,6 +26,11 @@ export default function RoleWeb({ roles }: { roles: Role[] }) {
         <article
           key={role.name}
           className="panel rw-card"
+          /* Focusable so the circuit is reachable without a pointer.
+             The cards do not navigate or act, so they stay <article>
+             rather than becoming buttons — this is a tab stop that
+             mirrors hover, not a control. */
+          tabIndex={0}
           style={{ "--rw-i": String(i) } as React.CSSProperties}
         >
           <div>
@@ -140,6 +145,93 @@ export default function RoleWeb({ roles }: { roles: Role[] }) {
 
         .rw-key-out { color: var(--color-silver); }
 
+        /* A clear ring on the focused card, so the tab position is
+           unambiguous even while the whole circuit is lit. */
+        .rw-card:focus-visible {
+          outline: 2px solid var(--color-silver);
+          outline-offset: 3px;
+        }
+        .rw-card:focus:not(:focus-visible) { outline: none; }
+
+        /* ---- keyboard parity ----------------------------------------
+           The same lit circuit, driven by focus instead of hover.
+
+           These rules are written out again rather than folded into the
+           hover selector list on purpose: the hover block below is
+           gated behind (hover: hover) so touch devices never get a
+           stuck hover state, and focus must work regardless of pointer
+           type. A shared selector list could not be gated for one and
+           not the other. Declarations are kept identical to the hover
+           block so both paths reach exactly the same state. */
+        .rw-grid:has(.rw-card:focus-visible) .rw-card {
+          --rw-wash: 0.72;
+          border-color: color-mix(in srgb, var(--color-silver) 20%, transparent);
+          border-top-color: color-mix(in srgb, var(--color-silver) 85%, transparent);
+          box-shadow: 0 14px 34px -22px color-mix(in srgb, var(--color-silver) 60%, transparent);
+          transform: translateY(-2px);
+          transition-delay: calc(var(--rw-i) * 65ms);
+        }
+
+        .rw-grid:has(.rw-card:focus-visible) .rw-card::before {
+          opacity: 1;
+          box-shadow: 0 0 14px 1px color-mix(in srgb, var(--color-silver) 45%, transparent);
+          transition-delay: calc(var(--rw-i) * 65ms);
+        }
+
+        .rw-grid:has(.rw-card:focus-visible) .rw-card::after {
+          transition-delay: calc(var(--rw-i) * 65ms);
+        }
+
+        .rw-grid:has(.rw-card:focus-visible) .rw-links {
+          border-top-color: color-mix(in srgb, var(--color-silver) 32%, transparent);
+          transition-delay: calc(var(--rw-i) * 65ms);
+        }
+
+        .rw-grid:has(.rw-card:focus-visible) .rw-key {
+          color: color-mix(in srgb, var(--color-silver) 88%, transparent);
+          transition-delay: calc(var(--rw-i) * 65ms);
+        }
+
+        .rw-grid:has(.rw-card:focus-visible) .rw-tools {
+          color: color-mix(in srgb, var(--color-moonlight) 62%, var(--color-mist));
+          transition-delay: calc(var(--rw-i) * 65ms);
+        }
+
+        /* The focused card is the source, exactly as the hovered one is. */
+        .rw-grid:has(.rw-card:focus-visible) .rw-card:focus-visible {
+          --rw-wash: 1;
+          border-color: color-mix(in srgb, var(--color-silver) 34%, transparent);
+          border-top-color: var(--color-silver);
+          box-shadow: 0 22px 46px -24px color-mix(in srgb, var(--color-silver) 75%, transparent);
+          transform: translateY(-6px);
+          transition-delay: 0s;
+        }
+
+        .rw-grid:has(.rw-card:focus-visible) .rw-card:focus-visible::before {
+          box-shadow: 0 0 26px 4px color-mix(in srgb, var(--color-silver) 75%, transparent);
+          transition-delay: 0s;
+        }
+
+        .rw-grid:has(.rw-card:focus-visible) .rw-card:focus-visible::after {
+          transition-delay: 0s;
+        }
+
+        .rw-grid:has(.rw-card:focus-visible) .rw-card:focus-visible .rw-links {
+          border-top-color: color-mix(in srgb, var(--color-silver) 45%, transparent);
+          transition-delay: 0s;
+        }
+
+        .rw-grid:has(.rw-card:focus-visible) .rw-card:focus-visible .rw-key {
+          color: var(--color-silver);
+          text-shadow: 0 0 12px color-mix(in srgb, var(--color-silver) 45%, transparent);
+          transition-delay: 0s;
+        }
+
+        .rw-grid:has(.rw-card:focus-visible) .rw-card:focus-visible .rw-tools {
+          color: var(--color-moonlight);
+          transition-delay: 0s;
+        }
+
         @media (hover: hover) and (pointer: fine) {
           /* Any card hovered: the whole circuit energises, cascading
              left to right so it reads as current propagating. */
@@ -216,11 +308,14 @@ export default function RoleWeb({ roles }: { roles: Role[] }) {
           }
         }
 
-        /* No motion: the circuit still lights, it just does not move. */
+        /* No motion: the circuit still lights, it just does not move.
+           Covers the focus path on the same terms as hover. */
         @media (prefers-reduced-motion: reduce) {
           .rw-card,
           .rw-grid:has(.rw-card:hover) .rw-card,
-          .rw-grid:has(.rw-card:hover) .rw-card:hover {
+          .rw-grid:has(.rw-card:hover) .rw-card:hover,
+          .rw-grid:has(.rw-card:focus-visible) .rw-card,
+          .rw-grid:has(.rw-card:focus-visible) .rw-card:focus-visible {
             transform: none !important;
           }
           .rw-card,
@@ -234,7 +329,13 @@ export default function RoleWeb({ roles }: { roles: Role[] }) {
           .rw-grid:has(.rw-card:hover) .rw-card::after,
           .rw-grid:has(.rw-card:hover) .rw-links,
           .rw-grid:has(.rw-card:hover) .rw-key,
-          .rw-grid:has(.rw-card:hover) .rw-tools {
+          .rw-grid:has(.rw-card:hover) .rw-tools,
+          .rw-grid:has(.rw-card:focus-visible) .rw-card,
+          .rw-grid:has(.rw-card:focus-visible) .rw-card::before,
+          .rw-grid:has(.rw-card:focus-visible) .rw-card::after,
+          .rw-grid:has(.rw-card:focus-visible) .rw-links,
+          .rw-grid:has(.rw-card:focus-visible) .rw-key,
+          .rw-grid:has(.rw-card:focus-visible) .rw-tools {
             transition-delay: 0s !important;
           }
         }

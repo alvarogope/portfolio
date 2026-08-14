@@ -49,6 +49,28 @@
         body:
           "My ambition is to direct. To lead this medium the way I want to, I have to understand how every part of a game works, so I can speak to everyone who makes one and understand their craft. That is the real reason I became a technical designer: not to do every job, but to understand every job. And whatever I make along the way, online or single-player, a boss fight or a match with friends, I want it to stay with people. Even a single round of a multiplayer game can hold a story that makes you feel like you mattered in that world. RPGs are my favourite, and I think they express this medium best, but I try to see these possibilities in every game there is, because the medium itself is the thing I fell in love with.",
       },
-      
+    ],
+
+    dialogue: [
+      {
+        prompt: "Why games?",
+        answer: 
+          "Every other medium asks you to watch someone else's story. Games hand it to you. You're not watching the hero — you are one, and a different one each time: the champion, the coward, the villain who's sure they're right. I came from film and audiovisual media, chasing the feeling of making people feel something. Games are simply the best tool ever built for it, because the person on the other side isn't an audience. They're the main piece of the story.",
+      },
+      {
+        prompt: "Why technical designer?",
+        answer:
+          "I realised design is like playing an instrument. There's the feeling you're trying to express, and there's the technical craft — the theory, the rules, the mechanics — that lets you express it. They're not opposites; they work in unison. So I learned to build, because understanding the engineering lets me express more. If a system has rules, there's a way to turn those rules into feeling — that's exactly what Moon-Knight's quantum combat is. I design the game and build it myself, because I want to understand every part of how it works.",
+      },
+      {
+        prompt: "Why do you care about designing?",
+        answer:
+          "Feeling that lives in the mechanics, not the cutscenes. This is a game, not a film, so I want you to feel things by playing, not by watching. And I care about coherence — in Moon-Knight, the willows, the moon, the quantum, the Celtic symbols, and the music are all the same idea in different clothes, because a world only makes you feel something when every part of it agrees.",
+      },
+      {
+        prompt: "What do you love most about games?",
+        answer:
+          "Building worlds, and level design especially — the craft of hiding a medium's limits until they read as the world itself. An invisible wall dressed as a cliff. Fog that hides what the hardware can't render and becomes dread instead. It's creative problem-solving, and it's my favourite part of the job. I also research the real thing behind the fantasy — the planetary system in Shattered Skies is built on actual orbital physics, then bent into something fun to play.",
+      },
     ],
   };

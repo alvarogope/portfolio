@@ -4,6 +4,7 @@ import { about } from "@/content/about";
 import Section from "@/components/layout/Section";
 import SectionHeading from "@/components/layout/SectionHeading";
 import Reveal from "@/components/layout/Reveal";
+import DialogueTree from "@/components/project/DialogueTree";
 
 export const metadata: Metadata = {
   title: "About | Álvaro Gómez",
@@ -93,6 +94,19 @@ export default function AboutPage() {
         </div>
       </Reveal>
 
+      {/* Dialogue — the signature interactive piece */}
+      {about.dialogue && (
+        <Reveal>
+          <div style={{ marginTop: "3.5rem" }}>
+            <SectionHeading kicker="Dialogue" title="Ask me" />
+            <p style={{ color: "var(--color-mist)", maxWidth: "42rem", margin: "1rem 0 1.75rem" }}>
+              Pick a line.
+            </p>
+            <DialogueTree lines={about.dialogue} />
+          </div>
+        </Reveal>
+      )}
+      
       {/* Story sections as lore entries */}
       <div style={{ marginTop: "1rem" }}>
         {about.sections.map((s, i) => (

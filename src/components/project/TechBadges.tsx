@@ -17,8 +17,8 @@ export type TechGroup = { label: string; items: TechItem[] };
    white, or they would be invisible on the panel. */
 const INVERT = new Set(["unity", "unreal"]);
 
-const BADGE = 44;
-const ICON = 24;
+const BADGE = 60;
+const ICON = 34;
 
 export default function TechBadges({ groups }: { groups: TechGroup[] }) {
   return (

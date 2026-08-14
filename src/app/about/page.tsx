@@ -69,27 +69,23 @@ export default function AboutPage() {
             {about.intro}
           </p>
 
-          <div>
-            <SectionHeading kicker="Character File" title="The Basics" />
-            <div
-              className="panel"
-              style={{
-                marginTop: "1.5rem",
-                border: "1px solid color-mix(in srgb, var(--color-mist) 20%, transparent)",
-                padding: "clamp(1.5rem, 4vw, 2.25rem)",
-                display: "grid",
-                gap: "1.75rem",
-              }}
-            >
-              <div style={{ display: "flex", flexDirection: "column", gap: "0.35rem" }}>
-                <span className="mono" style={{ fontSize: "0.72rem", color: "var(--color-silver)" }}>
-                  Class
-                </span>
-                <span style={{ fontSize: "0.98rem", lineHeight: 1.55 }}>{cf.role}</span>
-              </div>
-
-              <TechBadges groups={about.tech} />
+          <div
+            className="panel"
+            style={{
+              border: "1px solid color-mix(in srgb, var(--color-mist) 20%, transparent)",
+              padding: "clamp(1.5rem, 4vw, 2.25rem)",
+              display: "grid",
+              gap: "1.75rem",
+            }}
+          >
+            <div style={{ display: "flex", flexDirection: "column", gap: "0.35rem" }}>
+              <span className="mono" style={{ fontSize: "0.72rem", color: "var(--color-silver)" }}>
+                Class
+              </span>
+              <span style={{ fontSize: "0.98rem", lineHeight: 1.55 }}>{cf.role}</span>
             </div>
+
+            <TechBadges groups={about.tech} />
           </div>
         </div>
       </Reveal>

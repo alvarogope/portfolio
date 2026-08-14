@@ -7,6 +7,10 @@
   
     intro:
       "I make games because they are the only medium that puts you at the centre of the story. A film asks you to watch a hero; a book asks you to imagine one. A game lets you be one, and be a different one each time: the champion, the coward, the villain who thinks they are right. I came to games chasing that feeling, and I have been trying to design it ever since.",
+
+    // Existing dialogue line elevated into structured header content, so
+    // the page never carries copy outside this source of truth.
+    headline: "The player is the main piece of the story.",
   
 
     characterFile: {

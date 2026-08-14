@@ -129,7 +129,8 @@ export default function DialogueTree({ lines }: { lines: Line[] }) {
         /* Speaker beside the reply; stacked once there is no room for
            the portrait to sit alongside without crushing the measure. */
         .dlg-exchange {
-          display: flex;
+          display: grid;
+          grid-template-columns: 9.5rem minmax(0, 1fr);
           align-items: flex-start;
           gap: 1.25rem;
         }
@@ -140,8 +141,37 @@ export default function DialogueTree({ lines }: { lines: Line[] }) {
           min-width: 0;
         }
 
+        /* The portrait remains coupled to the typewriter state, but gets
+           a quiet inspect-screen alcove instead of floating unframed. */
+        .dlg-avatar-alcove {
+          min-height: 10.5rem;
+          display: grid;
+          place-items: center;
+          align-content: center;
+          gap: 0.65rem;
+          padding: 1rem;
+          border: 1px solid color-mix(in srgb, var(--color-mist) 27%, transparent);
+          background:
+            repeating-linear-gradient(
+              0deg,
+              color-mix(in srgb, var(--color-silver) 4%, transparent) 0,
+              color-mix(in srgb, var(--color-silver) 4%, transparent) 1px,
+              transparent 1px,
+              transparent 5px
+            ),
+            radial-gradient(circle at 50% 40%, color-mix(in srgb, var(--color-gold) 12%, transparent), transparent 66%),
+            var(--color-nightfall);
+        }
+        .dlg-avatar-alcove__label {
+          color: var(--color-silver);
+          font-family: var(--font-mono);
+          font-size: 0.62rem;
+          letter-spacing: 0.14em;
+        }
+
         @media (max-width: 640px) {
-          .dlg-exchange { flex-direction: column; gap: 1rem; }
+          .dlg-exchange { grid-template-columns: 1fr; gap: 1rem; }
+          .dlg-avatar-alcove { min-height: 0; }
           .dlg-exchange > .panel { width: 100%; }
         }
 
@@ -205,7 +235,10 @@ function Exchange({ text, reduced }: { text: string; reduced: boolean }) {
       {/* He speaks for exactly as long as the text is still arriving.
           Under reduced motion the answer is complete on the first
           render, so `done` is already true and nothing animates. */}
-      <DialogueAvatar speaking={!reduced && !done} />
+      <div className="dlg-avatar-alcove">
+        <DialogueAvatar speaking={!reduced && !done} />
+        <span className="dlg-avatar-alcove__label">THE KNIGHT</span>
+      </div>
 
       <div
         className="panel"

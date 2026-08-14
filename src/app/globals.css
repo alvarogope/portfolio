@@ -176,7 +176,7 @@ img { max-width: 100%; display: block; }
    No image files: pure CSS, near-zero cost.
    ============================================ */
 
-   .panel {
+.panel {
     background-color: var(--color-nightfall);
     background-image:
       radial-gradient(
@@ -187,6 +187,165 @@ img { max-width: 100%; display: block; }
       url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
     position: relative;
   }
+
+/* ============================================
+   ABOUT — CHARACTER INSPECT
+   ============================================ */
+
+.about-inspect {
+  margin-top: 1rem;
+  border: 1px solid color-mix(in srgb, var(--color-mist) 27%, transparent);
+  background:
+    linear-gradient(145deg, color-mix(in srgb, var(--color-silver) 4%, transparent), transparent 38%),
+    var(--color-void);
+}
+
+.about-inspect__header {
+  display: grid;
+  justify-items: center;
+  padding: clamp(2.75rem, 7vw, 5.5rem) clamp(1.25rem, 7vw, 6rem) clamp(2.25rem, 6vw, 4.5rem);
+  text-align: center;
+}
+
+.about-inspect__emblem {
+  position: relative;
+  width: 4.75rem;
+  aspect-ratio: 1;
+  overflow: hidden;
+  transform: rotate(45deg);
+  border: 1px solid color-mix(in srgb, var(--color-gold) 72%, transparent);
+  background: var(--color-nightfall);
+  box-shadow: 0 0 1.8rem color-mix(in srgb, var(--color-gold) 12%, transparent);
+}
+.about-inspect__emblem img { object-fit: cover; transform: rotate(-45deg) scale(1.42); }
+
+.about-inspect__kicker,
+.about-inspect__section-label {
+  margin: 1.5rem 0 0;
+  color: var(--color-silver);
+  font-size: 0.68rem;
+  letter-spacing: 0.18em;
+}
+
+.about-inspect__title {
+  max-width: 15ch;
+  margin: 1rem 0 0;
+  color: var(--color-moonlight);
+  font-family: var(--font-body);
+  font-size: clamp(2.35rem, 1.6rem + 3vw, 4.6rem);
+  font-weight: 400;
+  letter-spacing: -0.015em;
+  line-height: 1.02;
+}
+
+.about-inspect__intro {
+  max-width: 50rem;
+  margin: 1.5rem 0 0;
+  color: var(--color-silver);
+  font-size: var(--text-lg);
+  line-height: 1.7;
+}
+
+.about-inspect__gold-rule {
+  width: min(100%, 26rem);
+  height: 1px;
+  margin-top: clamp(2rem, 5vw, 3.5rem);
+  background: linear-gradient(90deg, transparent, var(--color-gold), transparent);
+}
+
+.about-inspect__content {
+  display: grid;
+  grid-template-columns: minmax(15rem, 0.72fr) minmax(0, 1.55fr);
+  border-top: 1px solid color-mix(in srgb, var(--color-mist) 27%, transparent);
+}
+
+.about-character-file,
+.about-dialogue {
+  min-width: 0;
+  padding: clamp(1.5rem, 4vw, 3rem);
+}
+
+.about-character-file {
+  border-right: 1px solid color-mix(in srgb, var(--color-mist) 27%, transparent);
+  background: color-mix(in srgb, var(--color-nightfall) 48%, transparent);
+}
+
+.about-character-file .about-inspect__section-label,
+.about-dialogue .about-inspect__section-label { margin: 0 0 1.5rem; }
+.about-character-file__class { display: grid; gap: 0.45rem; }
+.about-character-file__class > span { color: var(--color-silver); font-size: 0.66rem; }
+.about-character-file__class h2 {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: clamp(1.45rem, 1.1rem + 1vw, 2rem);
+  font-weight: 500;
+}
+.about-character-file__class p {
+  margin: 0;
+  color: var(--color-mist);
+  font-size: 0.98rem;
+  font-style: italic;
+  line-height: 1.55;
+}
+.about-character-file__divider {
+  height: 1px;
+  margin: 1.75rem 0;
+  background: color-mix(in srgb, var(--color-mist) 27%, transparent);
+}
+
+.about-lore {
+  padding: clamp(2rem, 5vw, 4.5rem) clamp(1.5rem, 5vw, 4rem) clamp(2.5rem, 6vw, 5rem);
+  border-top: 1px solid color-mix(in srgb, var(--color-mist) 27%, transparent);
+}
+.about-lore__heading { display: flex; align-items: center; gap: 1.25rem; }
+.about-lore__heading .about-inspect__section-label { margin: 0; }
+.about-lore__heading > div {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, color-mix(in srgb, var(--color-gold) 65%, transparent), transparent);
+}
+.about-lore__entry {
+  display: grid;
+  grid-template-columns: 3rem minmax(0, 1fr);
+  gap: clamp(0.75rem, 2vw, 1.75rem);
+  max-width: 57rem;
+  padding: clamp(1.75rem, 4vw, 2.75rem) 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--color-mist) 22%, transparent);
+}
+.about-lore__number {
+  color: var(--color-gold);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  padding-top: 0.35rem;
+}
+.about-lore__kicker { margin: 0; color: var(--color-silver); font-size: 0.63rem; }
+.about-lore__entry h2 {
+  margin: 0.4rem 0 0;
+  font-family: var(--font-body);
+  font-size: clamp(1.55rem, 1.2rem + 1.25vw, 2.2rem);
+  font-weight: 500;
+}
+.about-lore__entry div > p:last-child {
+  margin: 0.8rem 0 0;
+  color: var(--color-silver);
+  line-height: 1.75;
+}
+
+@media (max-width: 800px) {
+  .about-inspect__content { grid-template-columns: 1fr; }
+  .about-character-file {
+    border-right: 0;
+    border-bottom: 1px solid color-mix(in srgb, var(--color-mist) 27%, transparent);
+  }
+}
+
+@media (max-width: 640px) {
+  .about-inspect { margin-inline: -0.25rem; }
+  .about-inspect__header { padding-inline: 1.25rem; }
+  .about-inspect__title { max-width: 12ch; }
+  .about-lore__entry { grid-template-columns: 2.2rem minmax(0, 1fr); }
+}
 /* ============================================
    SCROLL INDICATORS — the per-project rail.
    Each project's indicator is portalled to

@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { about } from "@/content/about";
 import Section from "@/components/layout/Section";
-import SectionHeading from "@/components/layout/SectionHeading";
 import Reveal from "@/components/layout/Reveal";
 import DialogueTree from "@/components/project/DialogueTree";
 import TechBadges from "@/components/project/TechBadges";
@@ -13,107 +12,77 @@ export const metadata: Metadata = {
 };
 
 export default function AboutPage() {
-  const cf = about.characterFile;
+  const characterFile = about.characterFile;
 
   return (
     <Section>
-      {/* Character header: emblem + intro */}
-      <Reveal>
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "minmax(0, 200px) minmax(0, 1fr)",
-            gap: "clamp(1.5rem, 4vw, 3rem)",
-            alignItems: "center",
-            marginTop: "2rem",
-          }}
-          className="about-header"
-        >
-          {/* Emblem / logo */}
-          <div
-            style={{
-              position: "relative",
-              aspectRatio: "1 / 1",
-              borderRadius: "50%",
-              overflow: "hidden",
-              border: "1px solid color-mix(in srgb, var(--color-gold) 40%, transparent)",
-              background: "var(--color-nightfall)",
-            }}
-          >
-            <Image src="/images/logo.png" alt="Álvaro Gómez emblem" fill style={{ objectFit: "cover" }} />
-          </div>
-
-          <div>
-            <p className="mono" style={{ color: "var(--color-silver)", fontSize: "0.75rem", marginBottom: "0.75rem" }}>
-              {about.role}
-            </p>
-            <h1 style={{ fontSize: "var(--text-hero)", margin: 0, lineHeight: 1.05, fontFamily: "var(--font-hero)" }}>
-              {about.name}
-            </h1>
-          </div>
-        </div>
-      </Reveal>
-
-      {/* Intro beside the character file. Two columns on desktop; the
-          intro leads and the panel follows once they stack. */}
-      <Reveal>
-        <div className="about-intro-row">
-          <p
-            style={{
-              fontSize: "var(--text-lg)",
-              margin: 0,
-              maxWidth: "44rem",
-              lineHeight: 1.7,
-            }}
-          >
-            {about.intro}
-          </p>
-
-          <div
-            className="panel"
-            style={{
-              border: "1px solid color-mix(in srgb, var(--color-mist) 20%, transparent)",
-              padding: "clamp(1.5rem, 4vw, 2.25rem)",
-              display: "grid",
-              gap: "1.75rem",
-            }}
-          >
-            <div style={{ display: "flex", flexDirection: "column", gap: "0.35rem" }}>
-              <span className="mono" style={{ fontSize: "0.72rem", color: "var(--color-silver)" }}>
-                Class
-              </span>
-              <span style={{ fontSize: "0.98rem", lineHeight: 1.55 }}>{cf.role}</span>
-            </div>
-
-            <TechBadges groups={about.tech} />
-          </div>
-        </div>
-      </Reveal>
-
-      {/* Dialogue — the signature interactive piece */}
-      {about.dialogue && (
+      <main className="about-inspect" aria-labelledby="about-title">
         <Reveal>
-          <div style={{ marginTop: "3.5rem" }}>
-            <SectionHeading kicker="Dialogue" title="Ask me" />
-            <p style={{ color: "var(--color-mist)", maxWidth: "42rem", margin: "1rem 0 1.75rem" }}>
-              Pick a line.
-            </p>
-            <DialogueTree lines={about.dialogue} />
-          </div>
+          <header className="about-inspect__header">
+            <div className="about-inspect__emblem">
+              <Image src="/images/logo.png" alt="Álvaro Gómez emblem" fill sizes="76px" />
+            </div>
+            <p className="mono about-inspect__kicker">Character Inspect</p>
+            <h1 id="about-title" className="about-inspect__title">
+              {about.headline}
+            </h1>
+            <p className="about-inspect__intro">{about.intro}</p>
+            <div className="about-inspect__gold-rule" aria-hidden />
+          </header>
         </Reveal>
-      )}
-      
-      {/* Story sections as lore entries */}
-      <div style={{ marginTop: "1rem" }}>
-        {about.sections.map((s, i) => (
-          <Reveal key={s.title}>
-            <div style={{ marginTop: "4rem", maxWidth: "44rem" }}>
-              <SectionHeading kicker={`${String(i + 1).padStart(2, "0")} · ${s.kicker}`} title={s.title} />
-              <p style={{ marginTop: "1rem", lineHeight: 1.75 }}>{s.body}</p>
+
+        <div className="about-inspect__content">
+          <Reveal>
+            <aside className="about-character-file" aria-labelledby="character-file-title">
+              <p id="character-file-title" className="mono about-inspect__section-label">
+                Character File
+              </p>
+              <div className="about-character-file__class">
+                <span className="mono">Class</span>
+                <h2>{characterFile.role}</h2>
+                <p>{characterFile.focus}</p>
+              </div>
+              <div className="about-character-file__divider" aria-hidden />
+              <TechBadges groups={about.tech} />
+            </aside>
+          </Reveal>
+
+          {about.dialogue && (
+            <Reveal delay={80}>
+              <section className="about-dialogue" aria-labelledby="dialogue-title">
+                <p id="dialogue-title" className="mono about-inspect__section-label">
+                  Dialogue
+                </p>
+                <DialogueTree lines={about.dialogue} />
+              </section>
+            </Reveal>
+          )}
+        </div>
+
+        <section className="about-lore" aria-labelledby="lore-title">
+          <Reveal>
+            <div className="about-lore__heading">
+              <p id="lore-title" className="mono about-inspect__section-label">Lore</p>
+              <div aria-hidden />
             </div>
           </Reveal>
-        ))}
-      </div>
+
+          {about.sections.map((section, index) => (
+            <Reveal key={section.title} delay={index * 50}>
+              <article className="about-lore__entry">
+                <span className="about-lore__number" aria-hidden>
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+                <div>
+                  <p className="mono about-lore__kicker">{section.kicker}</p>
+                  <h2>{section.title}</h2>
+                  <p>{section.body}</p>
+                </div>
+              </article>
+            </Reveal>
+          ))}
+        </section>
+      </main>
     </Section>
   );
 }

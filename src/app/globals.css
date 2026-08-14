@@ -107,6 +107,23 @@ img { max-width: 100%; display: block; }
   }
 }
 
+/* The intro paragraph beside the character-file panel. Two columns
+   with the prose given the wider track, collapsing to one below 768px
+   with the intro first — it is the lead, the panel is the reference. */
+.about-intro-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  gap: clamp(1.75rem, 4vw, 3rem);
+  align-items: start;
+  margin-top: 2.5rem;
+}
+
+@media (max-width: 768px) {
+  .about-intro-row {
+    grid-template-columns: 1fr;
+  }
+}
+
 /* ============================================
    GRID-4 — for sections of exactly four cards.
    auto-fit/minmax cannot express "4 or 2, never

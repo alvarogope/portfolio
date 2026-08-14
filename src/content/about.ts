@@ -12,11 +12,44 @@
     characterFile: {
         name: "Álvaro Gómez",
         role: "Technical Game Designer",
-        origin: "Seville, Spain",
-        based: "London, UK",
-        languages: "Spanish (native), English (fluent), French & Italian",
         focus: "Systems · Level design · World-building · Audio · Engineering",
       },
+
+    /* The tech stack, grouped for the character-file panel.
+
+       `icon` is the file stem in /public/images/tech, without the
+       extension — the badge component appends .svg and URL-encodes it,
+       which matters for "c#". Omit `icon` and the badge falls back to a
+       text-only chip of the same height, which is how Perforce is
+       shown: there is no mark for it in the icon set. */
+    tech: [
+      {
+        label: "Languages",
+        items: [
+          { name: "C++", icon: "cpp" },
+          { name: "C#", icon: "c#" },
+          { name: "Python", icon: "python" },
+          { name: "JavaScript", icon: "javascript" },
+        ],
+      },
+      {
+        label: "Engines",
+        items: [
+          { name: "Unity", icon: "unity" },
+          { name: "Unreal", icon: "unreal" },
+        ],
+      },
+      {
+        label: "Tools",
+        items: [
+          { name: "Git", icon: "git" },
+          { name: "Perforce" },
+          { name: "Jira", icon: "jira" },
+          { name: "HTML5", icon: "html5" },
+          { name: "CSS3", icon: "css3" },
+        ],
+      },
+    ],
 
     sections: [
       {

@@ -5,6 +5,7 @@ import Section from "@/components/layout/Section";
 import SectionHeading from "@/components/layout/SectionHeading";
 import Reveal from "@/components/layout/Reveal";
 import DialogueTree from "@/components/project/DialogueTree";
+import TechBadges from "@/components/project/TechBadges";
 
 export const metadata: Metadata = {
   title: "About | Álvaro Gómez",
@@ -13,13 +14,6 @@ export const metadata: Metadata = {
 
 export default function AboutPage() {
   const cf = about.characterFile;
-  const fileRows = [
-    { k: "Class", v: cf.role },
-    { k: "Origin", v: cf.origin },
-    { k: "Based", v: cf.based },
-    { k: "Languages", v: cf.languages },
-    { k: "Focus", v: cf.focus },
-  ];
 
   return (
     <Section>
@@ -60,36 +54,42 @@ export default function AboutPage() {
         </div>
       </Reveal>
 
-      {/* Intro */}
+      {/* Intro beside the character file. Two columns on desktop; the
+          intro leads and the panel follows once they stack. */}
       <Reveal>
-        <p style={{ fontSize: "var(--text-lg)", marginTop: "2.5rem", maxWidth: "44rem", lineHeight: 1.7 }}>
-          {about.intro}
-        </p>
-      </Reveal>
-
-      {/* Character File panel */}
-      <Reveal>
-        <div style={{ marginTop: "3.5rem" }}>
-          <SectionHeading kicker="Character File" title="The Basics" />
-          <div
-            className="panel"
+        <div className="about-intro-row">
+          <p
             style={{
-              marginTop: "1.5rem",
-              border: "1px solid color-mix(in srgb, var(--color-mist) 20%, transparent)",
-              padding: "clamp(1.5rem, 4vw, 2.5rem)",
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
-              gap: "1.5rem 2.5rem",
+              fontSize: "var(--text-lg)",
+              margin: 0,
+              maxWidth: "44rem",
+              lineHeight: 1.7,
             }}
           >
-            {fileRows.map((r) => (
-              <div key={r.k} style={{ display: "flex", flexDirection: "column", gap: "0.35rem" }}>
+            {about.intro}
+          </p>
+
+          <div>
+            <SectionHeading kicker="Character File" title="The Basics" />
+            <div
+              className="panel"
+              style={{
+                marginTop: "1.5rem",
+                border: "1px solid color-mix(in srgb, var(--color-mist) 20%, transparent)",
+                padding: "clamp(1.5rem, 4vw, 2.25rem)",
+                display: "grid",
+                gap: "1.75rem",
+              }}
+            >
+              <div style={{ display: "flex", flexDirection: "column", gap: "0.35rem" }}>
                 <span className="mono" style={{ fontSize: "0.72rem", color: "var(--color-silver)" }}>
-                  {r.k}
+                  Class
                 </span>
-                <span style={{ fontSize: "0.98rem", lineHeight: 1.55 }}>{r.v}</span>
+                <span style={{ fontSize: "0.98rem", lineHeight: 1.55 }}>{cf.role}</span>
               </div>
-            ))}
+
+              <TechBadges groups={about.tech} />
+            </div>
           </div>
         </div>
       </Reveal>

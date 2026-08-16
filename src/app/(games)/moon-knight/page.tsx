@@ -9,6 +9,8 @@ import EngineeringNote from "@/components/project/EngineeringNote";
 import ChallengeQuote from "@/components/project/ChallengeQuote";
 import Reveal from "@/components/layout/Reveal";
 import Link from "next/link";
+import ProjectNav from "@/components/layout/ProjectNav";
+import { projectNavItems } from "@/content/games";
 
 export const metadata: Metadata = {
   title: `${p.title} | Álvaro Gómez Pérez`,
@@ -113,6 +115,9 @@ export default function MoonKnightPage() {
             </div>
           </Reveal>
         )}
+        <Reveal>
+          <ProjectNav items={projectNavItems} currentSlug={p.slug} />
+        </Reveal>
       </Section>
     </>
   );

@@ -6,6 +6,8 @@ import ProjectHero from "@/components/project/ProjectHero";
 import ChallengeQuote from "@/components/project/ChallengeQuote";
 import Reveal from "@/components/layout/Reveal";
 import TransmissionCard from "@/components/project/TransmissionCard";
+import ProjectNav from "@/components/layout/ProjectNav";
+import { projectNavItems } from "@/content/games";
 
 export const metadata: Metadata = {
   title: `${p.title} | Álvaro Gómez`,
@@ -121,6 +123,9 @@ export default function ShatteredSkiesPage() {
               ))}
             </div>
           </div>
+        </Reveal>
+        <Reveal>
+          <ProjectNav items={projectNavItems} currentSlug={p.slug} />
         </Reveal>
       </Section>
     </>

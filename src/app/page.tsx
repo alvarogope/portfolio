@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import Reveal from "@/components/layout/Reveal";
+import Particles from "@/components/effects/Particles";
+import TiltedCard from "@/components/effects/TiltedCard";
 import EngineTag from "@/components/project/EngineTag";
 import { acts, toChips, type Act } from "@/components/home/acts";
 
@@ -109,6 +111,20 @@ export default function Home() {
           overflow: "hidden",
         }}
       >
+        {/* The field is tinted with the four project accents, taken from the
+            acts data rather than repeated as literals — so the hero always
+            carries the same four colours the bands below it do, and adding
+            or recolouring an act updates the hero with it. This is the one
+            place colour enters the page above the bands, and it enters as
+            the projects' own. */}
+        <Particles
+          className="hp-hero-particles"
+          particleColors={acts.map((act) => act.accent)}
+          particleCount={1500}
+          speed={0.20}
+          alphaParticles
+        />
+        <div aria-hidden className="hp-hero-contrast" />
         <div className="hp-hero-copy">
           {/* The eyebrow sits tight to the headline — they are one
               unit, so they are spaced as one. */}
@@ -125,7 +141,7 @@ export default function Home() {
           <h1
             style={{
               ...display,
-              margin: 0,
+              margin: "0 auto",
               fontWeight: DISPLAY_WEIGHT,
               fontSize: T.hero,
               lineHeight: 0.9,
@@ -171,12 +187,30 @@ export default function Home() {
             borderTop: "1px solid var(--color-nightfall)",
             display: "flex",
             flexDirection: "column",
-            // Left-aligned to the same 48px gutter as the hero and the
-            // bands, so the page holds one axis from top to bottom.
+            position: "relative",
+            // Keeps the field inside the closer's own box, so it cannot
+            // spill into the global footer below it.
+            overflow: "hidden",
+            // Left-aligned to the same 48px gutter as the bands. The hero
+            // is centred and deliberately stands apart from that axis;
+            // everything below it shares this one.
             alignItems: "flex-start",
             textAlign: "left",
           }}
         >
+          {/* The closer gets its own field, so the page opens and closes on
+              the same sky. It is a separate instance rather than one
+              page-wide canvas on purpose: each one is clipped to its own
+              section, which is what keeps the stars out of the bands
+              between them and out of the global header and footer. */}
+          <Particles
+            className="hp-closer-particles"
+            particleColors={acts.map((act) => act.accent)}
+            particleCount={1500}
+            speed={0.20}
+            alphaParticles
+          />
+
           {/* Set in the body serif rather than the display sans: Spectral
               ships a drawn italic, Bricolage has none at all, so this is
               a true italic instead of a synthesised slant — and a serif
@@ -237,7 +271,48 @@ export default function Home() {
           by prefers-reduced-motion where it moves. */}
       <style>{`
         /* ---- hero ---- */
-        .hp-hero-copy { position: relative; padding: 0 48px; }
+        .hp-hero-particles {
+          position: absolute;
+          inset: 0;
+          z-index: 0;
+          pointer-events: none;
+        }
+        /* The veil that protects the hero copy's contrast from the
+           particles behind it.
+
+           ⚠ CURRENTLY DISABLED, paired with the diagnostic values in
+           Particles.tsx. With it off, particles run at full strength over
+           the type and the subline does NOT meet AA.
+
+           It is off because the version below was wrong: an ellipse of
+           820x500 is a 1640x1000 area, larger than the hero itself
+           (1440x820 at most), so instead of thinning the field toward the
+           centre it smothered nearly all of it — 90-96% void across most of
+           the visible hero, which is why the particles could not be seen.
+
+           Restoring this needs the ellipse sized against the HERO, not just
+           against the text: something near "ellipse 520px 210px" covers the
+           copy block while leaving real unveiled area at the top, bottom
+           and sides. Re-measure the three text roles against it before
+           trusting it — the numbers that matter are eyebrow (silver),
+           headline (moonlight) and subline (--color-mist, the tight one, at
+           only 5.2:1 on bare void before any particle). */
+        .hp-hero-contrast {
+          position: absolute;
+          inset: 0;
+          z-index: 1;
+          pointer-events: none;
+          background: none;
+        }
+        /* Centred hero. The block is centred as a whole and each line is
+           centred within it, so the inline max-widths still bound the
+           measure — they just need auto side margins to sit on the axis. */
+        .hp-hero-copy {
+          position: relative;
+          z-index: 2;
+          padding: 0 48px;
+          text-align: center;
+        }
         /* Relationship-based rhythm: the eyebrow belongs to the
            headline, so it hugs it; the subline is a separate thought
            and gets real air. With nothing but type in the hero these
@@ -245,11 +320,24 @@ export default function Home() {
            The headline's tight line-height makes its box shorter than
            its glyphs, so a modest margin here collapses to no visible
            gap at all — these are sized for the optical result. */
-        .hp-hero-copy > p:first-of-type { margin: 0 0 40px; }
-        .hp-hero-sub { margin: 40px 0 0; }
+        .hp-hero-copy > p:first-of-type { margin: 0 auto 40px; }
+        .hp-hero-sub { margin: 40px auto 0; }
 
         /* ---- closer ---- */
         .hp-closer { padding: 128px 48px; }
+        .hp-closer-particles {
+          position: absolute;
+          inset: 0;
+          z-index: 0;
+          pointer-events: none;
+        }
+        /* Lifts the quote, the line under it and the CTA above the field.
+           Written as "everything that is not the canvas" so the closer's
+           content can change without this needing to be revisited. */
+        .hp-closer > *:not(.hp-closer-particles) {
+          position: relative;
+          z-index: 1;
+        }
 
         /* ---- bands ---- */
         /* The whole band is the link, so a click anywhere on the card
@@ -259,6 +347,7 @@ export default function Home() {
           display: grid;
           grid-template-columns: 1fr 1fr;
           align-items: center;
+          min-height: var(--band-min-height);
           border-top: 1px solid var(--color-nightfall);
           position: relative;
           color: inherit;
@@ -276,11 +365,15 @@ export default function Home() {
         }
         .hp-band:hover::after { opacity: 0.055; }
 
+        /* This is the TiltedCard wrapper itself, so the order rules below
+           still address a direct grid child. overflow:hidden keeps the
+           poster inside its own frame as it rotates. */
         .hp-band-media {
           position: relative;
           height: 100%;
           min-height: 260px;
           overflow: hidden;
+          will-change: transform;
         }
         .hp-band-copy {
           display: flex;
@@ -364,18 +457,18 @@ export default function Home() {
         /* ---- responsive ---- */
         @media (max-width: 900px) {
           .hp-hero-copy { padding: 0 24px; }
-          .hp-hero-copy > p:first-of-type { margin: 0 0 26px; }
-          .hp-hero-sub { margin: 30px 0 0; }
+          .hp-hero-copy > p:first-of-type { margin: 0 auto 26px; }
+          .hp-hero-sub { margin: 30px auto 0; }
           .hp-closer { padding: 88px 24px; }
 
           /* Bands stack: poster above, copy full-width beneath. */
           .hp-band {
             grid-template-columns: 1fr;
-            min-height: 0 !important;
+            min-height: 0;
           }
           /* Same specificity as the side rules above, and later in the
              sheet, so the poster always stacks on top regardless of side. */
-          .hp-band[data-side] .hp-band-media { height: 240px; min-height: 240px; order: 1; }
+          .hp-band[data-side] .hp-band-media { height: 240px; min-height: 240px; order: 1; will-change: auto; }
           .hp-band[data-side] .hp-band-copy  { order: 2; padding: 40px 24px 48px; max-width: none !important; }
 
           /* Copy is underneath now, so the poster fades downward and the
@@ -433,12 +526,27 @@ function ActBand({ act }: { act: Act }) {
           "--accent": accent,
           "--accent-0": `${accent}00`,
           "--accent-59": `${accent}59`,
-          minHeight: flagship ? 640 : 420,
+          "--band-min-height": `${flagship ? 640 : 420}px`,
           background: bandBackground(accent),
         } as React.CSSProperties
       }
     >
-      <div className="hp-band-media">
+      {/* Only the poster tilts. Wrapping the whole band meant the copy
+          column rotated too, and at this width even a few degrees swung
+          the far edge of a text line far enough back to lose it. The
+          poster is a flat image, so it can take the rotation without
+          costing anything legibility-wise.
+
+          scaleOnHover is 1: the poster already has its own hover zoom on
+          the <img> below, and a second scale here would both double that
+          up and push the tilted frame out of its grid cell. */}
+      <TiltedCard
+        className="hp-band-media"
+        rotateAmplitude={6}
+        scaleOnHover={1}
+        showMobileWarning={false}
+        showTooltip={false}
+      >
         <Image
           src={poster}
           alt={project.posterAlt}
@@ -453,7 +561,7 @@ function ActBand({ act }: { act: Act }) {
             fade once the copy sits underneath instead of beside. */}
         <div aria-hidden className="hp-band-scrim" />
         <div aria-hidden className="hp-band-seam" />
-      </div>
+      </TiltedCard>
 
       <div className="hp-band-copy" style={{ maxWidth: flagship ? 620 : 560 }}>
         {/* Act label and title are one unit; the rule that follows the

@@ -1,146 +1,158 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Geometry, Mesh, Program, Renderer } from "ogl";
+import { Camera, Geometry, Mesh, Program, Renderer } from "ogl";
 
 type ParticlesProps = {
+  /** Hex colours sampled at random, one per particle. */
   particleColors?: readonly string[];
   particleCount?: number;
+  /** How far particles spread from the centre of the cloud. */
+  particleSpread?: number;
+  /** Animation pace. 0.1 is the reference value; higher is faster. */
   speed?: number;
+  /** Parallax on hover — see the note below, this moves the camera. */
+  moveParticlesOnHover?: boolean;
+  /** How far the camera travels, in world units, at the edge of the box. */
+  particleHoverFactor?: number;
+  /** Soft-edged and translucent when true; solid discs when false. */
   alphaParticles?: boolean;
+  particleBaseSize?: number;
+  /** 0 makes every particle the same size. */
+  sizeRandomness?: number;
+  cameraDistance?: number;
+  disableRotation?: boolean;
+  /** Defaults to the display's DPR, capped at 2. */
+  pixelRatio?: number;
   className?: string;
 };
 
-type Particle = {
-  x: number;
-  y: number;
-  drift: number;
-  speed: number;
-};
+const defaultColors = ["#ffffff", "#ffffff", "#ffffff"];
 
-/* ────────────────────────────────────────────────────────────────────
-   TUNING — every knob for the field is here.
-
-   These are set for a bright, star-like field. At this strength a
-   particle CAN sit over hero copy at close to full opacity, which puts
-   the --color-mist subline below AA at those pixels. That is a
-   deliberate trade for visibility; the AA-safe value for each knob is
-   noted beside it, and the veil in page.tsx (search: hp-hero-contrast)
-   is the other half of the accessible setting.
-   ──────────────────────────────────────────────────────────────────── */
-const ALPHA_MIN = 0.7; // AA-safe: 0.35
-const ALPHA_MAX = 1; //   AA-safe: 0.75
-const SIZE_MIN = 50; //    AA-safe: 2.5
-const SIZE_MAX = 100; //   AA-safe: 6.5
-
-/* Twinkle depth: the field oscillates between this and full alpha. */
-const TWINKLE_FLOOR = 0.6;
-const TWINKLE_SPEED = 1.4;
-
-/* Cursor repulsion. Radius is in NDC half-widths, so 0.35 is roughly a
-   sixth of the viewport; push is how far a particle at the very centre
-   of the cursor is displaced. */
-const MOUSE_RADIUS = 0.38;
-const MOUSE_PUSH = 0.12;
-
-const glsl = (value: number) => value.toFixed(4);
+function hexToRgb(hex: string): [number, number, number] {
+  let value = hex.replace(/^#/, "");
+  if (value.length === 3) {
+    value = value
+      .split("")
+      .map((c) => c + c)
+      .join("");
+  }
+  const int = Number.parseInt(value.slice(0, 6), 16);
+  return [((int >> 16) & 255) / 255, ((int >> 8) & 255) / 255, (int & 255) / 255];
+}
 
 const vertex = /* glsl */ `
-  attribute vec2 position;
-  attribute float aSize;
-  attribute vec3 aColor;
-  attribute float aAlpha;
-  attribute float aPhase;
+  attribute vec3 position;
+  attribute vec4 random;
+  attribute vec3 color;
 
-  uniform float uDpr;
+  uniform mat4 modelMatrix;
+  uniform mat4 viewMatrix;
+  uniform mat4 projectionMatrix;
   uniform float uTime;
-  uniform vec2 uMouse;
-  uniform float uMouseStrength;
-  uniform float uAspect;
+  uniform float uSpread;
+  uniform float uBaseSize;
+  uniform float uSizeRandomness;
 
+  varying vec4 vRandom;
   varying vec3 vColor;
-  varying float vAlpha;
 
   void main() {
-    vColor = aColor;
+    vRandom = random;
+    vColor = color;
 
-    vec2 pos = position;
+    vec3 pos = position * uSpread;
+    pos.z *= 10.0;
 
-    /* Shove the star away from the cursor. The offset is aspect-corrected
-       so the zone of influence is a circle on screen rather than an
-       ellipse stretched by the viewport. */
-    vec2 toMouse = pos - uMouse;
-    float dist = length(vec2(toMouse.x * uAspect, toMouse.y));
-    float influence = 1.0 - smoothstep(0.0, ${glsl(MOUSE_RADIUS)}, dist);
-    float push = influence * uMouseStrength;
-    vec2 direction = dist > 0.0001 ? normalize(toMouse) : vec2(0.0);
-    pos += direction * push * ${glsl(MOUSE_PUSH)};
+    vec4 mPos = modelMatrix * vec4(pos, 1.0);
+    float t = uTime;
+    mPos.x += sin(t * random.z + 6.28 * random.w) * mix(0.1, 1.5, random.x);
+    mPos.y += sin(t * random.y + 6.28 * random.x) * mix(0.1, 1.5, random.w);
+    mPos.z += sin(t * random.w + 6.28 * random.y) * mix(0.1, 1.5, random.z);
 
-    /* Stars nearest the cursor also flare, so the interaction reads even
-       where a particle has nowhere to move. */
-    float twinkle = ${glsl(TWINKLE_FLOOR)}
-      + ${glsl(1 - TWINKLE_FLOOR)} * sin(uTime * ${glsl(TWINKLE_SPEED)} + aPhase * 6.2831853);
-    vAlpha = aAlpha * mix(twinkle, 1.0, push);
+    vec4 mvPos = viewMatrix * mPos;
 
-    gl_PointSize = aSize * uDpr * (1.0 + push * 0.8);
-    gl_Position = vec4(pos, 0.0, 1.0);
+    if (uSizeRandomness == 0.0) {
+      gl_PointSize = uBaseSize;
+    } else {
+      gl_PointSize = (uBaseSize * (1.0 + uSizeRandomness * (random.x - 0.5))) / length(mvPos.xyz);
+    }
+
+    gl_Position = projectionMatrix * mvPos;
   }
 `;
 
 const fragment = /* glsl */ `
   precision highp float;
+
+  uniform float uTime;
+  uniform float uAlphaParticles;
+  varying vec4 vRandom;
   varying vec3 vColor;
-  varying float vAlpha;
 
   void main() {
-    float d = distance(gl_PointCoord, vec2(0.5));
-    if (d > 0.5) discard;
+    vec2 uv = gl_PointCoord.xy;
+    float d = length(uv - vec2(0.5));
 
-    /* A star, not a smudge: a solid core carrying most of the light, with
-       a soft halo around it. The previous falloff started fading at 12% of
-       the radius, so 3/4 of every point was translucent haze — which is
-       what made the field look washed out however high its alpha went. */
-    float core = 1.0 - smoothstep(0.0, 0.22, d);
-    float halo = 1.0 - smoothstep(0.16, 0.5, d);
-    float shape = clamp(core + halo * 0.45, 0.0, 1.0);
-
-    gl_FragColor = vec4(vColor, vAlpha * shape);
+    if(uAlphaParticles < 0.5) {
+      if(d > 0.5) {
+        discard;
+      }
+      gl_FragColor = vec4(vColor + 0.2 * sin(uv.yxx + uTime + vRandom.y * 6.28), 1.0);
+    } else {
+      float circle = smoothstep(0.5, 0.4, d) * 0.8;
+      gl_FragColor = vec4(vColor + 0.2 * sin(uv.yxx + uTime + vRandom.y * 6.28), circle);
+    }
   }
 `;
 
-function hexToRgb(hex: string): [number, number, number] {
-  const value = hex.replace("#", "");
-  const normalized = value.length === 3
-    ? value.split("").map((part) => part + part).join("")
-    : value;
-  const number = Number.parseInt(normalized, 16);
-
-  return [
-    ((number >> 16) & 255) / 255,
-    ((number >> 8) & 255) / 255,
-    (number & 255) / 255,
-  ];
-}
-
 /**
- * An OGL point field. It mounts only after hydration and releases its
- * animation frame, WebGL resources, and canvas on unmount.
+ * The React Bits particle field, ported to TypeScript.
  *
- * Under prefers-reduced-motion the field is still drawn, but as a single
- * static frame with no animation loop — the drifting is what the preference
- * is about, and a motionless starfield is not motion.
+ * The shaders, the geometry and the motion are the upstream ones. What is
+ * different, and why:
+ *
+ *  - Hover moves the CAMERA, not the cloud. Upstream translates the mesh by
+ *    the negated cursor; here the camera trucks toward the cursor instead,
+ *    which is the same parallax read from the other side and is what the
+ *    effect is actually meant to be — the viewer leaning to look, rather
+ *    than the particles being pushed around.
+ *
+ *  - The cursor is tracked on the window and hit-tested against the host's
+ *    box, not with a listener on the container. The host is
+ *    pointer-events:none wherever this is used, so a listener on it would
+ *    never fire at all.
+ *
+ *  - Resizing is watched with a ResizeObserver rather than the window's
+ *    resize event: these fields are sized by their section, which can
+ *    change height without the window changing at all.
+ *
+ *  - Under prefers-reduced-motion the field is still drawn, but as a single
+ *    static frame with no animation loop and no hover — the drifting is
+ *    what the preference is about, and a motionless field is not motion.
+ *
+ *  - Cleanup releases the geometry, the program and the GL context, not
+ *    just the animation frame and the canvas.
  */
 export default function Particles({
-  particleColors = ["#B8C4D4", "#7A8699"],
-  particleCount = 120,
-  speed = 0.06,
-  alphaParticles = true,
+  particleColors,
+  particleCount = 200,
+  particleSpread = 10,
+  speed = 0.1,
+  moveParticlesOnHover = false,
+  particleHoverFactor = 1,
+  alphaParticles = false,
+  particleBaseSize = 100,
+  sizeRandomness = 1,
+  cameraDistance = 20,
+  disableRotation = false,
+  pixelRatio,
   className,
 }: ParticlesProps) {
   const hostRef = useRef<HTMLDivElement>(null);
+
   // Assume "reduced" until the client has actually read the preference, and
-  // re-read it if the user changes it mid-session. This only decides whether
-  // the field animates, not whether it is drawn.
+  // re-read it if the user changes it mid-session.
   const [reducedMotion, setReducedMotion] = useState(true);
 
   useEffect(() => {
@@ -155,91 +167,84 @@ export default function Particles({
   /* The colours arrive as a fresh array on every parent render, so the effect
      keys off their content instead — rebuilding a WebGL context because an
      array literal changed identity would be an expensive no-op. */
-  const colorKey = particleColors.join(",");
+  const colorKey = (particleColors ?? defaultColors).join(",");
 
   useEffect(() => {
     const host = hostRef.current;
-
     if (!host) return;
 
-    const canvas = document.createElement("canvas");
-    canvas.setAttribute("aria-hidden", "true");
-    canvas.style.cssText = "display:block;height:100%;width:100%;";
-    host.appendChild(canvas);
+    const dpr = pixelRatio ?? Math.min(window.devicePixelRatio || 1, 2);
 
     let renderer: Renderer;
     try {
-      renderer = new Renderer({
-        canvas,
-        alpha: true,
-        depth: false,
-        antialias: true,
-        dpr: Math.min(window.devicePixelRatio || 1, 1.5),
-      });
+      renderer = new Renderer({ dpr, depth: false, alpha: true });
     } catch {
-      canvas.remove();
       return;
     }
 
     const gl = renderer.gl;
-    const colors = colorKey.split(",").map(hexToRgb);
-    const particles: Particle[] = Array.from({ length: particleCount }, () => ({
-      x: Math.random() * 2 - 1,
-      y: Math.random() * 2 - 1,
-      drift: (Math.random() - 0.5) * 0.12,
-      speed: 0.25 + Math.random() * 0.75,
-    }));
-    const positions = new Float32Array(particleCount * 2);
-    const sizes = new Float32Array(particleCount);
-    const colorsAttribute = new Float32Array(particleCount * 3);
-    const alphas = new Float32Array(particleCount);
-    const phases = new Float32Array(particleCount);
+    gl.clearColor(0, 0, 0, 0);
+    gl.canvas.setAttribute("aria-hidden", "true");
+    gl.canvas.style.cssText = "display:block;height:100%;width:100%;";
+    host.appendChild(gl.canvas);
 
-    particles.forEach((particle, index) => {
-      positions[index * 2] = particle.x;
-      positions[index * 2 + 1] = particle.y;
-      sizes[index] = SIZE_MIN + Math.random() * (SIZE_MAX - SIZE_MIN);
-      const color = colors[index % colors.length] ?? colors[0];
-      colorsAttribute.set(color, index * 3);
-      alphas[index] = alphaParticles
-        ? ALPHA_MIN + Math.random() * (ALPHA_MAX - ALPHA_MIN)
-        : ALPHA_MAX;
-      // Random phase so the field twinkles out of step rather than pulsing
-      // as one.
-      phases[index] = Math.random();
-    });
+    const camera = new Camera(gl, { fov: 15 });
+    camera.position.set(0, 0, cameraDistance);
+
+    const palette = colorKey.split(",");
+    const count = particleCount;
+    const positions = new Float32Array(count * 3);
+    const randoms = new Float32Array(count * 4);
+    const colors = new Float32Array(count * 3);
+
+    for (let i = 0; i < count; i++) {
+      // Rejection-sample a point in the unit sphere, then push it out by the
+      // cube root so the cloud is evenly filled rather than centre-heavy.
+      let x: number, y: number, z: number, len: number;
+      do {
+        x = Math.random() * 2 - 1;
+        y = Math.random() * 2 - 1;
+        z = Math.random() * 2 - 1;
+        len = x * x + y * y + z * z;
+      } while (len > 1 || len === 0);
+      const r = Math.cbrt(Math.random());
+      positions.set([x * r, y * r, z * r], i * 3);
+      randoms.set([Math.random(), Math.random(), Math.random(), Math.random()], i * 4);
+      const hex = palette[Math.floor(Math.random() * palette.length)] ?? defaultColors[0];
+      colors.set(hexToRgb(hex), i * 3);
+    }
 
     const geometry = new Geometry(gl, {
-      position: { size: 2, data: positions, usage: gl.DYNAMIC_DRAW },
-      aSize: { size: 1, data: sizes },
-      aColor: { size: 3, data: colorsAttribute },
-      aAlpha: { size: 1, data: alphas },
-      aPhase: { size: 1, data: phases },
+      position: { size: 3, data: positions },
+      random: { size: 4, data: randoms },
+      color: { size: 3, data: colors },
     });
+
     const program = new Program(gl, {
       vertex,
       fragment,
+      uniforms: {
+        uTime: { value: 0 },
+        uSpread: { value: particleSpread },
+        uBaseSize: { value: particleBaseSize * dpr },
+        uSizeRandomness: { value: sizeRandomness },
+        uAlphaParticles: { value: alphaParticles ? 1 : 0 },
+      },
       transparent: true,
       depthTest: false,
-      depthWrite: false,
-      uniforms: {
-        uDpr: { value: renderer.dpr },
-        uTime: { value: 0 },
-        uMouse: { value: [0, 0] },
-        uMouseStrength: { value: 0 },
-        uAspect: { value: 1 },
-      },
     });
-    const mesh = new Mesh(gl, { geometry, program, mode: gl.POINTS });
+
+    const particles = new Mesh(gl, { mode: gl.POINTS, geometry, program });
 
     const resize = () => {
-      renderer.setSize(host.clientWidth, host.clientHeight);
-      program.uniforms.uDpr.value = renderer.dpr;
-      program.uniforms.uAspect.value =
-        host.clientHeight > 0 ? host.clientWidth / host.clientHeight : 1;
+      const width = host.clientWidth;
+      const height = host.clientHeight;
+      if (width === 0 || height === 0) return;
+      renderer.setSize(width, height);
+      camera.perspective({ aspect: gl.canvas.width / gl.canvas.height });
       // A static field has no loop to repaint it, so the resized buffer has
       // to be redrawn here or it would be left blank.
-      if (reducedMotion) renderer.render({ scene: mesh });
+      if (reducedMotion) renderer.render({ scene: particles, camera });
     };
 
     const observer = new ResizeObserver(resize);
@@ -249,11 +254,11 @@ export default function Particles({
     /* The canvas is pointer-events:none so it never intercepts selection or
        clicks, which also means it receives no pointer events of its own.
        The cursor is tracked on the window instead and tested against the
-       host's box, and the smoothed value is what reaches the shader — so
-       the field eases toward the cursor and relaxes when it leaves rather
+       host's box, and the smoothed value is what reaches the camera — so
+       the view eases toward the cursor and relaxes when it leaves rather
        than snapping. */
-    const pointer = { x: 0, y: 0, strength: 0 };
-    const pointerTarget = { x: 0, y: 0, strength: 0 };
+    const pointer = { x: 0, y: 0 };
+    const pointerTarget = { x: 0, y: 0 };
 
     const handlePointerMove = (event: globalThis.PointerEvent) => {
       const rect = host.getBoundingClientRect();
@@ -265,21 +270,25 @@ export default function Particles({
         event.clientY >= rect.top &&
         event.clientY <= rect.bottom;
 
-      pointerTarget.strength = inside ? 1 : 0;
-      if (!inside) return;
+      if (!inside) {
+        pointerTarget.x = 0;
+        pointerTarget.y = 0;
+        return;
+      }
 
       pointerTarget.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
-      // NDC runs bottom-up, client coordinates run top-down.
+      // Clip space runs bottom-up, client coordinates run top-down.
       pointerTarget.y = -(((event.clientY - rect.top) / rect.height) * 2 - 1);
     };
 
     const handlePointerOut = () => {
-      pointerTarget.strength = 0;
+      pointerTarget.x = 0;
+      pointerTarget.y = 0;
     };
 
-    // A coarse pointer has no hover, so the repulsion is desktop-only.
+    // A coarse pointer has no hover, so the parallax is desktop-only.
     const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
-    const interactive = !reducedMotion && finePointer.matches;
+    const interactive = moveParticlesOnHover && !reducedMotion && finePointer.matches;
 
     if (interactive) {
       window.addEventListener("pointermove", handlePointerMove, { passive: true });
@@ -287,41 +296,45 @@ export default function Particles({
     }
 
     let animationFrame = 0;
-    let previousTime = performance.now();
-    const render = (time: number) => {
-      const delta = Math.min((time - previousTime) / 1000, 0.1);
-      previousTime = time;
+    let lastTime = performance.now();
+    let elapsed = 0;
 
-      // Frame-rate independent easing toward the cursor's current position.
-      const ease = 1 - Math.pow(0.0015, delta);
-      pointer.x += (pointerTarget.x - pointer.x) * ease;
-      pointer.y += (pointerTarget.y - pointer.y) * ease;
-      pointer.strength += (pointerTarget.strength - pointer.strength) * ease;
+    const update = (time: number) => {
+      animationFrame = window.requestAnimationFrame(update);
 
-      particles.forEach((particle, index) => {
-        particle.y += delta * speed * particle.speed * 0.16;
-        particle.x += Math.sin(time * 0.0002 + index) * delta * particle.drift;
-        if (particle.y > 1.08) particle.y = -1.08;
-        if (particle.x > 1.08) particle.x = -1.08;
-        if (particle.x < -1.08) particle.x = 1.08;
-        positions[index * 2] = particle.x;
-        positions[index * 2 + 1] = particle.y;
-      });
+      const delta = time - lastTime;
+      lastTime = time;
+      elapsed += delta * speed;
 
-      program.uniforms.uTime.value = time / 1000;
-      program.uniforms.uMouse.value = [pointer.x, pointer.y];
-      program.uniforms.uMouseStrength.value = pointer.strength;
+      program.uniforms.uTime.value = elapsed * 0.001;
 
-      const position = geometry.attributes.position;
-      if (position) geometry.updateAttribute(position);
-      renderer.render({ scene: mesh });
-      animationFrame = window.requestAnimationFrame(render);
+      if (interactive) {
+        // Frame-rate independent easing toward the cursor's position.
+        const ease = 1 - Math.pow(0.0015, Math.min(delta / 1000, 0.1));
+        pointer.x += (pointerTarget.x - pointer.x) * ease;
+        pointer.y += (pointerTarget.y - pointer.y) * ease;
+
+        // The camera leans toward the cursor. Moving it right shifts the
+        // cloud left on screen, which is the same read as translating the
+        // cloud by the negated cursor — but it is the viewpoint moving,
+        // so nearer particles slide further than far ones.
+        camera.position.x = pointer.x * particleHoverFactor;
+        camera.position.y = pointer.y * particleHoverFactor;
+      }
+
+      if (!disableRotation) {
+        particles.rotation.x = Math.sin(elapsed * 0.0002) * 0.1;
+        particles.rotation.y = Math.cos(elapsed * 0.0005) * 0.15;
+        particles.rotation.z += 0.01 * speed;
+      }
+
+      renderer.render({ scene: particles, camera });
     };
 
     if (reducedMotion) {
-      renderer.render({ scene: mesh });
+      renderer.render({ scene: particles, camera });
     } else {
-      animationFrame = window.requestAnimationFrame(render);
+      animationFrame = window.requestAnimationFrame(update);
     }
 
     return () => {
@@ -334,9 +347,23 @@ export default function Particles({
       geometry.remove();
       program.remove();
       gl.getExtension("WEBGL_lose_context")?.loseContext();
-      canvas.remove();
+      gl.canvas.remove();
     };
-  }, [alphaParticles, colorKey, particleCount, speed, reducedMotion]);
+  }, [
+    alphaParticles,
+    cameraDistance,
+    colorKey,
+    disableRotation,
+    moveParticlesOnHover,
+    particleBaseSize,
+    particleCount,
+    particleHoverFactor,
+    particleSpread,
+    pixelRatio,
+    reducedMotion,
+    sizeRandomness,
+    speed,
+  ]);
 
   return <div ref={hostRef} aria-hidden className={className} />;
 }

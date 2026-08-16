@@ -88,7 +88,12 @@ export default function Home() {
         background: "var(--color-void)",
         color: "var(--color-moonlight)",
         fontFamily: "var(--font-body)",
-        overflow: "hidden",
+        /* Horizontal only. This used to be `overflow: hidden`, which also
+           clipped the bottom edge — and the closer's field is meant to
+           carry on past it and finish behind the footer. `clip` rather than
+           `hidden` on one axis because hidden on x would force y to become
+           a scroll container; clip leaves y genuinely visible. */
+        overflowX: "clip",
       }}
     >
       {/* ---------------------------------------------------------- */}
@@ -120,9 +125,12 @@ export default function Home() {
         <Particles
           className="hp-hero-particles"
           particleColors={acts.map((act) => act.accent)}
-          particleCount={1500}
-          speed={0.20}
-          alphaParticles
+          particleCount={400}
+          particleSpread={10}
+          speed={0.1}
+          particleBaseSize={100}
+          moveParticlesOnHover
+          particleHoverFactor={1}
         />
         <div aria-hidden className="hp-hero-contrast" />
         <div className="hp-hero-copy">
@@ -188,9 +196,10 @@ export default function Home() {
             display: "flex",
             flexDirection: "column",
             position: "relative",
-            // Keeps the field inside the closer's own box, so it cannot
-            // spill into the global footer below it.
-            overflow: "hidden",
+            // The field is meant to run past this box and finish behind the
+            // footer, so it is deliberately NOT clipped here. See
+            // .hp-closer-particles for how far it reaches and why.
+            overflow: "visible",
             // Left-aligned to the same 48px gutter as the bands. The hero
             // is centred and deliberately stands apart from that axis;
             // everything below it shares this one.
@@ -206,9 +215,12 @@ export default function Home() {
           <Particles
             className="hp-closer-particles"
             particleColors={acts.map((act) => act.accent)}
-            particleCount={1500}
-            speed={0.20}
-            alphaParticles
+            particleCount={400}
+            particleSpread={10}
+            speed={0.1}
+            particleBaseSize={100}
+            moveParticlesOnHover
+            particleHoverFactor={1}
           />
 
           {/* Set in the body serif rather than the display sans: Spectral
@@ -325,11 +337,48 @@ export default function Home() {
 
         /* ---- closer ---- */
         .hp-closer { padding: 128px 48px; }
+        /* The closer's field does not stop at the closer. It carries on
+           past the section's bottom edge and finishes at the very bottom of
+           the page, behind the footer, so the sky the page opened on is
+           still there under "© Álvaro Gómez / source on GitHub" instead of
+           ending on a hard horizontal seam above it.
+
+           --hp-footer-reach is exactly the footer's outer height, and the
+           footer is the last element in the document — so the canvas lands
+           flush with the end of the page and adds no scrollable overflow.
+           The parts are the ones set inline on <footer> in layout.tsx:
+             4rem      margin-top
+             1px       border-top
+             3rem      padding-top
+             1.275rem  one line of 0.75rem text at the body's 1.7
+             3rem      padding-bottom
+           If that footer changes, this is the one number to update. */
+        .hp-closer {
+          --hp-footer-reach: calc(4rem + 1px + 3rem + 1.275rem + 3rem);
+        }
+        /* The footer is a wrapping flex row, so below ~490px its two spans
+           stack and it grows by one line plus the 1rem gap; below ~340px
+           the second span wraps internally and it grows by one line again.
+           Measured at 181 / 218 / 238px against the three rules here. */
+        @media (max-width: 520px) {
+          .hp-closer { --hp-footer-reach: calc(4rem + 1px + 3rem + 1rem + 2.55rem + 3rem); }
+        }
+        @media (max-width: 340px) {
+          .hp-closer { --hp-footer-reach: calc(4rem + 1px + 3rem + 1rem + 3.825rem + 3rem); }
+        }
         .hp-closer-particles {
           position: absolute;
-          inset: 0;
+          inset: 0 0 calc(-1 * var(--hp-footer-reach)) 0;
           z-index: 0;
           pointer-events: none;
+        }
+        /* The canvas is positioned and the footer is not, so without this
+           the field would paint over the footer's text rather than behind
+           it. Scoped to the homepage: this style block only exists while
+           the homepage is mounted. */
+        body > footer {
+          position: relative;
+          z-index: 1;
         }
         /* Lifts the quote, the line under it and the CTA above the field.
            Written as "everything that is not the canvas" so the closer's

@@ -21,33 +21,24 @@ export const metadata: Metadata = {
 export default function MoonKnightPage() {
   return (
     <>
-      {/* Hero — poster + title + facts, full width, at the top.
-
-          The aurora is scoped to this band and to this project: it is the
-          flagship, and the arcane glow is part of its identity rather than
-          a site-wide effect. Everything about the stack below is tuned
-          against contrast — see mk-hero-veil. */}
+      {/* Hero */}
       <div className="mk-hero">
         <Aurora
           className="mk-hero-aurora"
-          /* Deep moon-blue → steel → deep scarlet. The scarlet is a darker
-             cousin of --color-scarlet, the ritual "blood/danger" accent, so
-             the band ends on the palette's own red rather than a new one.
+          /* Emerald -> scarlet, left to right. The middle stop is the exact
+             midpoint of the other two, so this is a straight two-colour ramp
+             with no third hue in it: deepened --color-emerald and
+             --color-scarlet and nothing else. */
+          colorStops={["#2d5e48", "#614844", "#95313f"]}
 
-             The alternative set (steel → #8a94a8 → deep green) was measured
-             and rejected: its light middle stop drives the background to
-             #717a8a, within 1.2:1 of --color-mist body text, and reads as
-             literal northern lights rather than something gothic. */
-          colorStops={["#1a2740", "#3a4a6a", "#681019"]}
-          amplitude={0.5}
-          speed={0.3}
-          /* High blend is the SOFT setting here — it widens the alpha ramp.
-             See the note in Aurora.tsx; `opacity` is the strength knob. */
-          blend={0.6}
-          opacity={0.5}
-          origin="bottom"
+          origin="top"
+          amplitude={0.9}
+          speed={2}
+
+          blend={1}
+
+          opacity={0.6}
         />
-        <div aria-hidden className="mk-hero-veil" />
         <div className="mk-hero-content">
           <ProjectHero project={p} posterSrc="/images/moon-knight/poster.png" />
         </div>
@@ -109,7 +100,6 @@ export default function MoonKnightPage() {
           </Reveal>
         )}
         {/* Design to Engineering */}
-        {/* Design to Engineering */}
         {p.engineeringNote && (
           <Reveal>
             <div style={{ marginTop: "5rem" }}>
@@ -150,8 +140,9 @@ export default function MoonKnightPage() {
         </Reveal>
       </Section>
 
-      {/* Scoped to this page. Three layers, bottom to top: the aurora, the
-          veil that buys back its contrast, and the hero itself. */}
+      {/* Scoped to this page. Two layers: the aurora, then the hero on top
+          of it. The contrast reasoning that used to live on a third layer
+          is now on the <Aurora /> call above. */}
       <style>{`
         .mk-hero {
           position: relative;
@@ -164,47 +155,9 @@ export default function MoonKnightPage() {
           z-index: 0;
           pointer-events: none;
         }
-        /* ────────────────────────────────────────────────────────────
-           THE VEIL — measured, not decorative.
-
-           --color-mist is the binding constraint on this page: at 0.75rem
-           it is small text, so it needs 4.5:1, and on bare --color-void it
-           only starts at 5.24:1. There is almost no headroom, which is why
-           the aurora runs at opacity 0.5 rather than anything higher.
-
-           Even at 0.5 the band's brightest pixel takes mist down to
-           4.14:1 — a fail. This gradient is what closes that: void at 40%
-           along the bottom edge, clearing by 55% up, i.e. exactly where
-           the glow lives. With it, the brightest background anywhere in
-           the hero is #161c28 (a shade off --color-nightfall) and every
-           hero text role passes AA at worst case:
-
-             h1        moonlight  large  13.66:1  (needs 3.0)
-             tagline   mist       large   4.63:1  (needs 3.0)
-             eyebrow   mist       small   4.63:1  (needs 4.5)
-             showcase  gold       small   7.58:1  (needs 4.5)
-             facts     silver     small   9.65:1  (needs 4.5)
-
-           Those are worst-case figures over the whole hero box and a full
-           sweep of the animation, not average ones — so they hold at every
-           breakpoint, including where the hero collapses to one column and
-           the text drops into the band. Raising the aurora's opacity or
-           weakening this veil breaks the eyebrow first.
-           ──────────────────────────────────────────────────────────── */
-        .mk-hero-veil {
-          position: absolute;
-          inset: 0;
-          z-index: 1;
-          pointer-events: none;
-          background: linear-gradient(
-            to top,
-            color-mix(in srgb, var(--color-void) 40%, transparent),
-            transparent 55%
-          );
-        }
         .mk-hero-content {
           position: relative;
-          z-index: 2;
+          z-index: 1;
         }
       `}</style>
     </>

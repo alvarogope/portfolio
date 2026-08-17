@@ -3,9 +3,19 @@
 import { useEffect, useRef, useState } from "react";
 import { Color, Mesh, Program, Renderer, Triangle } from "ogl";
 
+type Origin = "top" | "bottom" | "both";
+
 type AuroraProps = {
-  /** Three hex colours sampled left → centre → right across the band. */
+  /**
+   * Three hex colours sampled left → centre → right across the band.
+   * With `origin="both"` this is the BOTTOM band; see `topColorStops`.
+   */
   colorStops?: readonly string[];
+  /**
+   * The top band's ramp, `origin="both"` only. Defaults to `colorStops`,
+   * which mirrors one palette into both bands.
+   */
+  topColorStops?: readonly string[];
   /** Height of the noise ridge. Higher reaches further up the box. */
   amplitude?: number;
   /** uTime units per second. */
@@ -14,8 +24,8 @@ type AuroraProps = {
   blend?: number;
   /** The dimmer. Applied to the canvas, so it scales the whole effect. */
   opacity?: number;
-  /** Which edge the glow grows from. */
-  origin?: "top" | "bottom";
+  /** Which edge(s) the glow grows from. */
+  origin?: Origin;
   className?: string;
 };
 
@@ -44,12 +54,16 @@ void main() {
 }
 `;
 
-const buildFrag = (origin: "top" | "bottom") => `#version 300 es
+/** Fraction of the box over which `origin="both"` dissolves into the page. */
+const SEAM = 0.1;
+
+const buildFrag = (origin: Origin) => `#version 300 es
 precision highp float;
 
 uniform float uTime;
 uniform float uAmplitude;
 uniform vec3 uColorStops[3];
+uniform vec3 uColorStopsTop[3];
 uniform vec2 uResolution;
 uniform float uBlend;
 
@@ -121,27 +135,55 @@ struct ColorStop {
 void main() {
   vec2 uv = gl_FragCoord.xy / uResolution;
 
-  /* gl_FragCoord.y counts up from the bottom, so the stock shader grows
-     the band from the top of the box. Mirroring uv.y drops it to the
-     bottom edge, which is where atmosphere belongs: it pools under the
-     content instead of hanging over the headline. */
-  float vy = ${origin === "bottom" ? "1.0 - uv.y" : "uv.y"};
+  /* gl_FragCoord.y counts up from the bottom, so the stock shader grows the
+     band from the top of the box. vy is the distance travelled from whichever
+     edge the glow is anchored to: mirror uv.y and it pools at the bottom
+     instead; fold it about the centre and you get BOTH edges at once, with
+     the middle of the box (where the hero's content lives) at vy = 0 and
+     therefore black.
+
+     Keep this source pure ASCII, comments included: ANGLE rejects shaders
+     containing characters outside the GLSL ES source set even inside a
+     comment, which would blank the canvas on Chrome/Windows only. */
+  float vy = ${
+    origin === "bottom" ? "1.0 - uv.y" : origin === "both" ? "abs(uv.y * 2.0 - 1.0)" : "uv.y"
+  };
+
+  /* Which half of the box this pixel is in, for the two-band case. It picks
+     the ramp and offsets the noise, so the two bands drift independently
+     instead of reading as one shape reflected in a mirror. Constant-folded
+     away for the single-band origins. */
+  float side = ${origin === "both" ? "step(0.5, uv.y)" : "0.0"};
 
   ColorStop colors[3];
-  colors[0] = ColorStop(uColorStops[0], 0.0);
-  colors[1] = ColorStop(uColorStops[1], 0.5);
-  colors[2] = ColorStop(uColorStops[2], 1.0);
+  colors[0] = ColorStop(mix(uColorStops[0], uColorStopsTop[0], side), 0.0);
+  colors[1] = ColorStop(mix(uColorStops[1], uColorStopsTop[1], side), 0.5);
+  colors[2] = ColorStop(mix(uColorStops[2], uColorStopsTop[2], side), 1.0);
 
   vec3 rampColor;
   COLOR_RAMP(colors, uv.x, rampColor);
 
-  float height = snoise(vec2(uv.x * 2.0 + uTime * 0.1, uTime * 0.25)) * 0.5 * uAmplitude;
+  vec2 seed = vec2(side * 41.0, side * 17.0);
+  float height = snoise(vec2(uv.x * 2.0 + uTime * 0.1, uTime * 0.25) + seed) * 0.5 * uAmplitude;
   height = exp(height);
   height = (vy * 2.0 - height + 0.2);
   float intensity = 0.6 * height;
 
   float midPoint = 0.20;
   float auroraAlpha = smoothstep(midPoint - uBlend * 0.5, midPoint + uBlend * 0.5, intensity);
+
+  /* The two-band form is at its brightest hard against the box's edges,
+     which would cut a visible line across the page where the hero ends.
+     This dissolves the last tenth into nothing so the glow meets the page
+     background rather than stopping at it. Single-band origins keep their
+     hard anchor edge; nothing above depends on this. */
+  auroraAlpha *= ${
+    // min(uv.y, 1 - uv.y) is the distance to the nearer edge, so one
+    // smoothstep fades both seams. Written this way rather than as a pair of
+    // opposed smoothsteps because GLSL leaves smoothstep undefined when
+    // edge0 >= edge1, which the descending half would need.
+    origin === "both" ? `smoothstep(0.0, ${SEAM}, min(uv.y, 1.0 - uv.y))` : "1.0"
+  };
 
   vec3 auroraColor = intensity * rampColor;
 
@@ -160,19 +202,67 @@ void main() {
  */
 /* The still version paints the ramp colours flat, while the shader first
    multiplies them by `intensity` (< 1 almost everywhere). At equal alpha
-   the still one therefore reads brighter. 0.8 is the factor that makes
-   the two peak luminances match — measured, not guessed: at the page's
-   opacity of 0.5 the animated band peaks at #161c28 and the gradient at
-   0.5 * 0.8 peaks at #161c29. */
-const STATIC_DIM = 0.8;
+   the still one therefore reads brighter, and this is the factor that pulls
+   the two peak luminances back level. Measured, not guessed, per origin —
+   the two-band form needs a much harder dim because its seam fade caps the
+   animated band's peak intensity at ~0.64 rather than the ~0.85 the
+   single-band origins reach at their anchor edge. The calibration runs, each
+   against the Moon-Knight hero at the opacity noted:
 
-function staticGradient(stops: readonly string[], origin: "top" | "bottom") {
+     top/bottom  0.80  animated peak #161c28 vs still #161c29 (opacity 0.5)
+     both        0.55  animated peak #131820 vs still #131821 (opacity 0.25)
+
+   These pair a dim factor with a peak, not with any particular set of props:
+   the factor is what keeps the still fallback level with the animation at
+   whatever opacity the caller picks, so it holds while the hero is retuned. */
+const STATIC_DIM: Record<Origin, number> = { top: 0.8, bottom: 0.8, both: 0.55 };
+
+/* Where the shader's alpha reaches 1 and where it dies, for amplitude ~0.5
+   and blend ~0.6 — so the mask peaks and clears in the same places the
+   animated band does, instead of approximating it. */
+const BOTH_MASK =
+  "linear-gradient(to bottom, transparent, #000 9%, transparent 35%, transparent 65%, #000 91%, transparent)";
+
+/* Narrower than React.CSSProperties on purpose: every value here is written
+   straight onto a CSSStyleDeclaration by the fallback path below, which only
+   takes strings. */
+type StillStyle = {
+  backgroundImage: string;
+  backgroundSize?: string;
+  backgroundPosition?: string;
+  backgroundRepeat?: string;
+  maskImage: string;
+  WebkitMaskImage: string;
+};
+
+function staticGradient(
+  stops: readonly string[],
+  origin: Origin,
+  topStops: readonly string[]
+): StillStyle {
+  if (origin === "both") {
+    /* One element, two ramps: each linear-gradient is painted into its own
+       half by background-size/position, and the mask supplies the vertical
+       falloff for both at once. */
+    return {
+      backgroundImage: [
+        `linear-gradient(to right, ${topStops.join(", ")})`,
+        `linear-gradient(to right, ${stops.join(", ")})`,
+      ].join(", "),
+      backgroundSize: "100% 50%",
+      backgroundPosition: "top, bottom",
+      backgroundRepeat: "no-repeat",
+      maskImage: BOTH_MASK,
+      WebkitMaskImage: BOTH_MASK,
+    };
+  }
+
   const toEdge = origin === "bottom" ? "to top" : "to bottom";
   return {
     backgroundImage: `linear-gradient(to right, ${stops.join(", ")})`,
     maskImage: `linear-gradient(${toEdge}, #000, transparent 55%)`,
     WebkitMaskImage: `linear-gradient(${toEdge}, #000, transparent 55%)`,
-  } satisfies React.CSSProperties;
+  };
 }
 
 /**
@@ -193,7 +283,10 @@ function supportsWebgl2() {
  * The React Bits aurora, ported to TypeScript and tuned to sit quiet.
  *
  * Differences from upstream, all deliberate:
- *  - the band grows from a chosen edge rather than always the top;
+ *  - the band grows from a chosen edge rather than always the top, and
+ *    `origin="both"` puts one band at each edge from a single canvas: one
+ *    context, one noise sample and one rAF loop, rather than the two of
+ *    everything that stacking two instances would cost;
  *  - `opacity` dims the finished canvas, so the effect has a single honest
  *    strength control (see the note on `blend` above);
  *  - the loop stops when the host scrolls out of view or the tab is
@@ -204,6 +297,7 @@ function supportsWebgl2() {
  */
 export default function Aurora({
   colorStops = ["#5227FF", "#7cff67", "#5227FF"],
+  topColorStops,
   amplitude = 1,
   speed = 1,
   blend = 0.5,
@@ -236,6 +330,7 @@ export default function Aurora({
      effect keys off their content — rebuilding a GL context because an
      array changed identity would be an expensive no-op. */
   const colorKey = colorStops.join(",");
+  const topColorKey = (topColorStops ?? colorStops).join(",");
 
   useEffect(() => {
     if (mode !== "animate") return;
@@ -260,15 +355,21 @@ export default function Aurora({
        Doing it imperatively keeps it out of React's hands: a setState in an
        effect body would only buy a cascading render for the same result. */
     const paintStill = () => {
-      const still = staticGradient(colorKey.split(","), origin);
-      host.style.opacity = String(opacity * STATIC_DIM);
+      const still = staticGradient(colorKey.split(","), origin, topColorKey.split(","));
+      host.style.opacity = String(opacity * STATIC_DIM[origin]);
       host.style.backgroundImage = still.backgroundImage;
+      host.style.backgroundSize = still.backgroundSize ?? "";
+      host.style.backgroundPosition = still.backgroundPosition ?? "";
+      host.style.backgroundRepeat = still.backgroundRepeat ?? "";
       host.style.setProperty("mask-image", still.maskImage);
       host.style.setProperty("-webkit-mask-image", still.WebkitMaskImage);
     };
     const clearStill = () => {
       host.style.opacity = "";
       host.style.backgroundImage = "";
+      host.style.backgroundSize = "";
+      host.style.backgroundPosition = "";
+      host.style.backgroundRepeat = "";
       host.style.removeProperty("mask-image");
       host.style.removeProperty("-webkit-mask-image");
     };
@@ -308,10 +409,11 @@ export default function Aurora({
     // attribute would just be a buffer the program never reads.
     if (geometry.attributes.uv) delete geometry.attributes.uv;
 
-    const stops = colorKey.split(",").map((hex) => {
-      const c = new Color(hex);
-      return [c.r, c.g, c.b];
-    });
+    const toStops = (key: string) =>
+      key.split(",").map((hex) => {
+        const c = new Color(hex);
+        return [c.r, c.g, c.b];
+      });
 
     const program = new Program(gl, {
       vertex: VERT,
@@ -319,7 +421,10 @@ export default function Aurora({
       uniforms: {
         uTime: { value: 0 },
         uAmplitude: { value: amplitude },
-        uColorStops: { value: stops },
+        uColorStops: { value: toStops(colorKey) },
+        // Folded out of the shader unless origin is "both"; ogl only uploads
+        // uniforms the compiler kept, so supplying it always costs nothing.
+        uColorStopsTop: { value: toStops(topColorKey) },
         uResolution: { value: [host.clientWidth, host.clientHeight] },
         uBlend: { value: blend },
       },
@@ -396,7 +501,7 @@ export default function Aurora({
       gl.getExtension("WEBGL_lose_context")?.loseContext();
       canvas.remove();
     };
-  }, [amplitude, blend, colorKey, mode, opacity, origin, speed]);
+  }, [amplitude, blend, colorKey, mode, opacity, origin, speed, topColorKey]);
 
   const still = mode === "still";
 
@@ -406,8 +511,8 @@ export default function Aurora({
       aria-hidden
       className={className}
       style={{
-        opacity: still ? opacity * STATIC_DIM : opacity,
-        ...(still ? staticGradient(colorKey.split(","), origin) : null),
+        opacity: still ? opacity * STATIC_DIM[origin] : opacity,
+        ...(still ? staticGradient(colorKey.split(","), origin, topColorKey.split(",")) : null),
       }}
     />
   );

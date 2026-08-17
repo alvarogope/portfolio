@@ -62,7 +62,7 @@ export default function ShatteredSkiesPage() {
           </Reveal>
         )}
 
-        {/* Communication — the signature mechanic, as transmissions */}
+        {/* Communication Design */}
         {p.communication && (
           <Reveal>
             <div style={{ marginTop: "5rem" }}>

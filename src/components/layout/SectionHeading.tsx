@@ -1,7 +1,3 @@
-/* A consistent section heading: a small mono kicker above a Cinzel
-   title, with a short gold rule. Gives every section the same
-   announced-entrance rhythm instead of a bare <h2>. */
-
    export default function SectionHeading({
     kicker,
     title,

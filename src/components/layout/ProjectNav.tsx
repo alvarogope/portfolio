@@ -142,8 +142,6 @@ export default function ProjectNav(props: ProjectNavProps) {
 
   return (
     <>
-      {/* Stays behind in the themed subtree so the portal can read the
-          project's resolved palette from it. */}
       <span
         ref={anchorRef}
         aria-hidden

@@ -21,11 +21,6 @@ type TiltedCardProps = {
 
 const spring = { stiffness: 180, damping: 22, mass: 0.45 };
 
-/**
- * A link-safe, intentionally minimal adaptation of React Bits' TiltedCard.
- * It has no built-in caption or mobile alert; coarse pointers and reduced
- * motion keep the normal static card presentation.
- */
 export default function TiltedCard({
   children,
   className,
@@ -70,9 +65,6 @@ export default function TiltedCard({
     rotateY.set(horizontal * rotateAmplitude * 2);
   };
 
-  // These props intentionally remain part of the public component contract.
-  // They are false at each homepage call site, so no tooltip or touch warning
-  // is rendered.
   void showMobileWarning;
   void showTooltip;
 

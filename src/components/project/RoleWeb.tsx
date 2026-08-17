@@ -2,23 +2,6 @@
 
 import type { Role } from "@/content/schema";
 
-/* Break-In's signature element. The four roles are fully
-   interdependent: hover any one and ALL of them illuminate, because
-   removing any single role breaks the heist. The interaction is the
-   design thesis, "nobody wins alone," made literal.
-
-   The illumination is a shared power rail rather than four outlines.
-   Each card's top edge is a filament that blooms light down into the
-   card body; on hover the whole rail energises in a left-to-right
-   cascade, so the four cards read as one circuit completing instead
-   of four boxes changing colour. The hovered card is the focal point
-   (brightest wash, deepest lift, no stagger delay) and the other
-   three answer it.
-
-   Driven entirely by CSS :has() group hover, gated behind
-   (hover: hover) so touch devices get the clean static state, where
-   the text alone carries the information. */
-
 export default function RoleWeb({ roles }: { roles: Role[] }) {
   return (
     <div className="rw-grid grid-4">
@@ -26,10 +9,6 @@ export default function RoleWeb({ roles }: { roles: Role[] }) {
         <article
           key={role.name}
           className="panel rw-card"
-          /* Focusable so the circuit is reachable without a pointer.
-             The cards do not navigate or act, so they stay <article>
-             rather than becoming buttons — this is a tab stop that
-             mirrors hover, not a control. */
           tabIndex={0}
           style={{ "--rw-i": String(i) } as React.CSSProperties}
         >

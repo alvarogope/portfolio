@@ -8,9 +8,6 @@ export default function ProjectFactsBlock({
   facts: ProjectFacts;
   links: ProjectLink[];
 }) {
-  /* Engine is pulled out of the plain-text run and rendered as a tag,
-     so it is the one fact that reads at a glance. The rest of the row
-     stays as it was. */
   const items = [
     { k: "Role", v: facts.role },
     { k: "Team", v: facts.team },

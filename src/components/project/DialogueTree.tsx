@@ -5,29 +5,12 @@ import DialogueAvatar from "./DialogueAvatar";
 
 type Line = { prompt: string; answer: string };
 
-/* ==================================================================
-   Typing speed — THE ONE NUMBER TO TUNE.
-
-   Characters per second, wall-clock. The reveal is driven by elapsed
-   time rather than by counting animation frames, so the speed is the
-   same on a 60Hz laptop, a 120Hz phone and a 144Hz monitor. (Frame
-   counting made the text more than twice as fast on a 144Hz display as
-   on a 60Hz one, which is what this replaces.)
-
-   The rate is uniform across every character — no extra delay on
-   punctuation or anywhere else.
-   ================================================================== */
 const CHARS_PER_SEC = 34;
 
-/** Derived; nothing else needs changing when the rate above changes. */
 const MS_PER_CHAR = 1000 / CHARS_PER_SEC;
 
 const REDUCED_QUERY = "(prefers-reduced-motion: reduce)";
 
-/* Read as a subscription rather than mirrored into state by an effect,
-   so the preference is known during render — that is what lets the
-   reduced-motion path emit the finished answer on its first paint
-   instead of typing and then correcting itself. */
 function subscribeReduced(onChange: () => void) {
   const mq = window.matchMedia(REDUCED_QUERY);
   mq.addEventListener("change", onChange);
@@ -41,7 +24,7 @@ export default function DialogueTree({ lines }: { lines: Line[] }) {
 
   return (
     <div style={{ display: "grid", gap: "1.5rem" }}>
-      {/* The dialogue options — the "choices" (on top) */}
+      {/* Dialogue Options */}
       <div style={{ display: "grid", gap: "0.6rem" }}>
         {lines.map((line, i) => {
           const selected = i === active;
@@ -98,16 +81,7 @@ export default function DialogueTree({ lines }: { lines: Line[] }) {
         })}
       </div>
 
-      {/* The speaker and the reply, below the choices.
-
-          Keyed by the active line. Switching options unmounts the
-          running typewriter outright rather than trying to unwind it,
-          so its frame is cancelled, its state is gone, and the new
-          answer mounts at zero characters. That removes the whole class
-          of switch races — no interleaving, and no character of the
-          previous answer can survive into the next. The avatar lives
-          inside the keyed subtree too, so it resets in the same beat as
-          the text rather than lagging a render behind it. */}
+      {/* Speaker and Reply */}
       <Exchange key={active} text={lines[active].answer} reduced={reduced} />
 
       <style>{`
@@ -185,10 +159,6 @@ export default function DialogueTree({ lines }: { lines: Line[] }) {
 
 /* ------------------------------------------------------------------ */
 
-/* Owns the typing state for one question/answer pair, so the portrait
-   and the text read from the same source of truth — the avatar speaks
-   for exactly as long as characters are still arriving, with no second
-   timer to drift out of sync. */
 function Exchange({ text, reduced }: { text: string; reduced: boolean }) {
   const [count, setCount] = useState(0);
   const frame = useRef(0);
@@ -196,14 +166,6 @@ function Exchange({ text, reduced }: { text: string; reduced: boolean }) {
   useEffect(() => {
     if (reduced) return;
 
-    /* How many characters *should* be showing is a pure function of
-       elapsed time, so the frame rate only decides how often that
-       function is sampled — never how fast the text arrives. A slow or
-       skipped frame catches up on the next one instead of falling
-       behind, and because the paragraph always renders slice(0, n), a
-       catch-up can never skip a character.
-
-       The first character lands on the first frame, as before. */
     let start: number | null = null;
     let shown = 0;
 
@@ -212,8 +174,6 @@ function Exchange({ text, reduced }: { text: string; reduced: boolean }) {
 
       const target = Math.min(text.length, Math.floor((now - start) / MS_PER_CHAR) + 1);
 
-      // Only re-render when the count actually moves: at high refresh
-      // rates most frames land on the same character.
       if (target !== shown) {
         shown = target;
         setCount(target);
@@ -232,9 +192,7 @@ function Exchange({ text, reduced }: { text: string; reduced: boolean }) {
 
   return (
     <div className="dlg-exchange">
-      {/* He speaks for exactly as long as the text is still arriving.
-          Under reduced motion the answer is complete on the first
-          render, so `done` is already true and nothing animates. */}
+      {/* Speaking Duration */}
       <div className="dlg-avatar-alcove">
         <DialogueAvatar speaking={!reduced && !done} />
         <span className="dlg-avatar-alcove__label">THE KNIGHT</span>
@@ -254,13 +212,6 @@ function Exchange({ text, reduced }: { text: string; reduced: boolean }) {
           {!done && (
             <>
               <span aria-hidden className="dlg-cursor" />
-              {/* The untyped remainder stays in the flow but invisible,
-                  so the paragraph occupies its finished size from the
-                  very first frame. Nothing reflows as characters arrive,
-                  and the cursor always has text after it — which is also
-                  what stops it from ever being orphaned onto a line of
-                  its own. `visibility: hidden` keeps it out of the
-                  accessibility tree, so it is not announced twice. */}
               <span aria-hidden style={{ visibility: "hidden" }}>
                 {text.slice(shown)}
               </span>

@@ -1,9 +1,5 @@
 import type { DesignChallenge } from "@/content/schema";
 
-/* The design-challenge quote, styled as an in-game dialogue box.
-   Gold frame = the alchemical "transformation" moment (problem
-   turned into solution). A mono metadata line underneath. */
-
 export default function ChallengeQuote({ challenge }: { challenge: DesignChallenge }) {
   const meta = [
     challenge.engine && { k: "Engine", v: challenge.engine },

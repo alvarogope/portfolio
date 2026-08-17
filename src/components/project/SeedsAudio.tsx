@@ -13,13 +13,8 @@ const SEEDS: Seed[] = [
   { id: "boss", name: "Final Boss", mood: "The last stand for the Earth", src: "/audio/seeds/final-boss.mp3", tint: "#E0A845" },
 ];
 
-/* The transport bar is portalled to <body> so no transformed ancestor can
-   capture its position: fixed. That also takes it outside the page's themed
-   wrapper, so these custom properties have to be carried across by hand. */
 const THEMED_VARS = ["--color-nightfall", "--color-silver", "--color-moonlight", "--font-mono"];
 
-/* Nothing to subscribe to — this store only ever reports whether we are
-   past hydration, so the subscribe callback is a no-op. */
 const noopSubscribe = () => () => {};
 
 export default function SeedsAudio() {
@@ -29,14 +24,9 @@ export default function SeedsAudio() {
   const [ambientOn, setAmbientOn] = useState(false);
   const [activeSeed, setActiveSeed] = useState<string | null>(null);
 
-  // Was the ambience playing when we ducked out of it for a seed? Only
-  // then does it come back when the seed finishes.
   const wasAmbientOn = useRef(false);
-  // Invalidates in-flight play() promises so a superseded click can never
-  // land its state update after the click that replaced it.
-  const playToken = useRef(0);
 
-  /* ---- playback: exactly one element is ever unpaused ---- */
+  const playToken = useRef(0);
 
   const stopSeed = () => {
     const s = seedRef.current;
@@ -52,9 +42,9 @@ export default function SeedsAudio() {
     const a = ambientRef.current;
     const s = seedRef.current;
     if (!a) return;
-    // Never come back in on top of a seed.
+
     if (s && !s.paused) return;
-    wasAmbientOn.current = false; // memory consumed
+    wasAmbientOn.current = false; 
     a.play()
       .then(() => setAmbientOn(true))
       .catch(() => setAmbientOn(false));
@@ -71,9 +61,6 @@ export default function SeedsAudio() {
       return;
     }
 
-    // Turning the ambience on takes the floor from whatever seed is
-    // playing, and clears the resume memory so stopping that seed
-    // doesn't try to start the ambience a second time.
     stopSeed();
     wasAmbientOn.current = false;
     a.play()
@@ -86,27 +73,23 @@ export default function SeedsAudio() {
     const a = ambientRef.current;
     if (!s) return;
 
-    // Same card again = stop, and hand the room back to the ambience.
     if (activeSeed === seed.id) {
       stopSeed();
       if (wasAmbientOn.current) resumeAmbient();
       return;
     }
 
-    // Only sample the ambience state on the way *into* a seed. Switching
-    // from one seed to another would read it as false — the first seed
-    // already paused it — and erase the memory that it was ever on.
     if (activeSeed === null) wasAmbientOn.current = ambientOn;
 
     if (a) a.pause();
     setAmbientOn(false);
-    stopSeed(); // never leave the previous seed running
+    stopSeed();
 
     const token = ++playToken.current;
     s.src = seed.src;
     s.play()
       .then(() => {
-        if (token !== playToken.current) return; // a newer click won
+        if (token !== playToken.current) return;
         setActiveSeed(seed.id);
       })
       .catch(() => {
@@ -116,7 +99,6 @@ export default function SeedsAudio() {
       });
   };
 
-  // A seed running to its end, or failing to load, releases the floor.
   useEffect(() => {
     const s = seedRef.current;
     if (!s) return;
@@ -132,9 +114,6 @@ export default function SeedsAudio() {
     };
   }, []);
 
-  // Backstop for the one-source invariant: whatever starts playing wins,
-  // and the other element is stopped. Nothing above should ever trip this,
-  // but it makes "two at once" unrepresentable rather than merely unlikely.
   useEffect(() => {
     const a = ambientRef.current;
     const s = seedRef.current;
@@ -162,8 +141,6 @@ export default function SeedsAudio() {
     };
   }, []);
 
-  /* ---- the portalled transport bar ---- */
-
   const hostRef = useRef<HTMLDivElement>(null);
   const barRef = useRef<HTMLDivElement>(null);
 
@@ -171,10 +148,6 @@ export default function SeedsAudio() {
     typeof document === "undefined" ? null : document.createElement("div")
   );
 
-  /* The portal must not render during hydration: the server emits
-     nothing for it, so portalling on the first client render is a
-     mismatch and React throws out the tree. This reports false through
-     hydration and true immediately after. */
   const hydrated = useSyncExternalStore(
     noopSubscribe,
     () => true,
@@ -192,15 +165,12 @@ export default function SeedsAudio() {
     const bar = barRef.current;
     if (!portalHost || !host || !bar) return;
 
-    // Carry the page's palette across the portal boundary.
     const computed = getComputedStyle(host);
     for (const name of THEMED_VARS) {
       const value = computed.getPropertyValue(name).trim();
       if (value) bar.style.setProperty(name, value);
     }
 
-    // Reserve the bar's lane at the foot of the document so the last of
-    // the page can always scroll clear of it.
     const previousPadding = document.body.style.paddingBottom;
     const reserve = () => {
       document.body.style.paddingBottom = `${bar.offsetHeight}px`;
@@ -216,8 +186,6 @@ export default function SeedsAudio() {
       window.removeEventListener("resize", reserve);
       document.body.style.paddingBottom = previousPadding;
     };
-    // `hydrated` gates the portal, so barRef is only populated on the
-    // commit after it flips — this has to re-run then, not just on mount.
   }, [portalHost, hydrated]);
 
   const anythingPlaying = ambientOn || activeSeed !== null;

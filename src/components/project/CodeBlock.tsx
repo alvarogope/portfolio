@@ -1,15 +1,5 @@
-/* A technical code display block for the engineering deep-dive.
-   Monospace, dark, with a filename/label header and the language
-   tag. Syntax highlighting is done by Shiki on the server, so the
-   coloured markup is baked into the HTML and no highlighter JS is
-   shipped to the browser. */
-
 import { codeToHtml, bundledLanguages, type BundledLanguage } from "shiki";
 
-/* github-dark-default sits on #0d1117, near-identical to the block
-   background below, so its palette was tuned for exactly this kind of
-   near-black surface. The background itself is replaced with our own
-   token rather than Shiki's, keeping the block flush with the panel. */
 const THEME = "github-dark-default";
 const THEME_BG = "#0d1117";
 const SURFACE = "#0A0D12";
@@ -33,8 +23,6 @@ export default async function CodeBlock({
     colorReplacements: { [THEME_BG]: SURFACE },
     transformers: [
       {
-        /* Shiki owns the <pre>, so the body styling that used to live in
-           JSX is applied here instead. Whitespace is left untouched. */
         pre(node) {
           node.properties.style =
             `${node.properties.style ?? ""};margin:0;padding:1.1rem 1.25rem;` +

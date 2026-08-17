@@ -1,6 +1,3 @@
-/* A consistent vertical rhythm wrapper. Every page section
-   uses this so spacing and max-width stay uniform sitewide. */
-
    export default function Section({
     children,
     className = "",

@@ -4,19 +4,8 @@ import "./globals.css";
 import Link from "next/link";
 
 /* ============================================
-   FONTS — next/font self-hosts these and feeds
-   them into the --font-* slots that globals.css
-   already references. Zero layout shift: the
-   space is reserved before the font loads.
+   FONTS
    ============================================ */
-
-/* Each loader owns a RAW font variable named after the typeface
-   (--font-cinzel, --font-archivo, …). The SEMANTIC slots that
-   components actually read (--font-hero, --font-display, --font-body,
-   --font-mono) are assigned in globals.css and re-pointed per route by
-   the scoped layouts under (games). Never give a loader a slot name:
-   next/font writes it onto <html> unlayered, which would outrank the
-   @theme default and pin that slot site-wide. */
 
 const cinzel = Cinzel({
   subsets: ["latin"],
@@ -76,8 +65,7 @@ const brand = Bricolage_Grotesque({
 });
 
 /* ============================================
-   METADATA — site-wide defaults. Per-page files
-   override title/description later.
+   DATA
    ============================================ */
 
 export const metadata: Metadata = {
@@ -87,9 +75,7 @@ export const metadata: Metadata = {
 };
 
 /* ============================================
-   ROOT LAYOUT — wraps every page. The font
-   variables are attached to <html> so they
-   cascade everywhere.
+   LAYOUT
    ============================================ */
 
 export default function RootLayout({
@@ -103,7 +89,7 @@ export default function RootLayout({
         className={`${cinzel.variable} ${unifraktur.variable} ${spectral.variable} ${jetbrains.variable} ${rajdhani.variable} ${fraunces.variable} ${archivo.variable} ${brand.variable}`}
     >
       <body>
-        {/* Placeholder nav — replaced by <SiteNav /> next file */}
+        {/* Placeholder nav */}
         <header
           style={{
             display: "flex",
@@ -130,7 +116,7 @@ export default function RootLayout({
 
         {children}
 
-        {/* Placeholder footer — replaced by <Footer /> later */}
+        {/* Placeholder footer */}
         <footer
           className="mono"
           style={{

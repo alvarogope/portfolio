@@ -12,7 +12,6 @@ export default function DialogueAvatar({
       style={{
         width: 96,
         height: 96,
-        // Never let the flex row squeeze the portrait.
         flex: "0 0 auto",
       }}
     >
@@ -23,9 +22,7 @@ export default function DialogueAvatar({
         xmlns="http://www.w3.org/2000/svg"
         shapeRendering="crispEdges"
       >
-        {/* =========================
-            BACK OF HELMET
-            ========================= */}
+        {/* Upper Helmet */}
 
         <path
           fill="#3b414a"
@@ -48,7 +45,7 @@ export default function DialogueAvatar({
           "
         />
 
-        {/* Helmet highlight */}
+        {/* Helmet Highlight */}
         <path
           fill="#59616c"
           d="
@@ -64,7 +61,7 @@ export default function DialogueAvatar({
           "
         />
 
-        {/* Dark lower helmet */}
+        {/* lower Helmet */}
         <path
           fill="#272c33"
           d="
@@ -83,9 +80,7 @@ export default function DialogueAvatar({
           "
         />
 
-        {/* =========================
-            FACE
-            ========================= */}
+        {/* Face */}
 
         <path
           fill="#d89b72"
@@ -104,7 +99,7 @@ export default function DialogueAvatar({
           "
         />
 
-        {/* Face shadow */}
+        {/* Face Shadow */}
         <path
           fill="#b87555"
           d="
@@ -121,9 +116,7 @@ export default function DialogueAvatar({
           "
         />
 
-        {/* =========================
-            HAIR
-            ========================= */}
+        {/* Hair */}
 
         <path
           fill="#352821"
@@ -156,9 +149,7 @@ export default function DialogueAvatar({
           "
         />
 
-        {/* =========================
-            EYES
-            ========================= */}
+        {/* Eyes */}
 
         <rect
           x="25"
@@ -192,9 +183,7 @@ export default function DialogueAvatar({
           fill="#f4f4f4"
         />
 
-        {/* =========================
-            NOSE
-            ========================= */}
+        {/* Nose */}
 
         <path
           fill="#a9654d"
@@ -209,14 +198,9 @@ export default function DialogueAvatar({
           "
         />
 
-        {/* =========================
-            MOUTH
-            ========================= */}
+        {/* Mouth */}
 
-        {/* Two mouth frames, cross-faded on a steps(1) timing so they
-            snap rather than blend — a tween would read as blur against
-            the crispEdges pixel art. Only the open frame is animated
-            in; at rest the closed mouth is the one showing. */}
+        {/* Talking */}
         <g className="avatar-mouth-closed">
           <rect
             x="28"
@@ -253,9 +237,7 @@ export default function DialogueAvatar({
           />
         </g>
 
-        {/* =========================
-            VISOR
-            ========================= */}
+        {/* Visor */}
 
         <path
           fill="#707984"
@@ -305,9 +287,7 @@ export default function DialogueAvatar({
           "
         />
 
-        {/* =========================
-            VISOR SLITS
-            ========================= */}
+        {/* Visor Slits */}
 
         <rect
           x="23"
@@ -333,9 +313,7 @@ export default function DialogueAvatar({
           fill="#1a1d22"
         />
 
-        {/* =========================
-            CHEEK PLATES
-            ========================= */}
+        {/* Cheek Plates */}
 
         <path
           fill="#626a75"
@@ -361,9 +339,7 @@ export default function DialogueAvatar({
           "
         />
 
-        {/* =========================
-            HELMET RIDGE
-            ========================= */}
+        {/* Helmet Ridge */}
 
         <rect
           x="30"
@@ -381,9 +357,7 @@ export default function DialogueAvatar({
           fill="#858e99"
         />
 
-        {/* =========================
-            ARMOR / NECK
-            ========================= */}
+        {/* Neck */}
 
         <rect
           x="19"

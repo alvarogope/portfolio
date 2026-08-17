@@ -1,38 +1,21 @@
 @import "tailwindcss";
 
-/* ============================================
-   DESIGN TOKENS — the whole visual system.
-   In Tailwind v4, @theme both defines the
-   tokens AND generates utilities (bg-void,
-   text-moonlight, etc.) automatically.
-   ============================================ */
-
 @theme {
-/* — Moon-Knight palette: the alchemical system — */
 --color-void:       #0B0E14;  /* page background, blue-black */
 --color-nightfall:  #141B28;  /* panels, raised surfaces */
 --color-moonlight:  #E8E6DF;  /* primary text, warm silver-white */
 --color-mist:       #7A8699;  /* secondary text, borders */
 
-/* Silver: the moon. The everyday accent (links, rules, most UI). */
 --color-silver:     #B8C4D4;
 
-/* Gold: the sun, alchemy. Rare. Transformation and the arcane. */
 --color-gold:       #C9A961;
 
-/* Ritual accents, rarest, each with a fixed meaning. */
---color-scarlet:    #8E2F3C;  /* blood, roses, danger, enemy-only */
---color-emerald:    #3B7A5E;  /* life, plants, the arcane green */
+--color-scarlet:    #8E2F3C;  
+--color-emerald:    #3B7A5E;  
 
-/* Back-compat: components still reference --color-lunar-gold and
-   --color-rose-blood. Point them at the new system so nothing breaks. */
 --color-lunar-gold: var(--color-silver);
 --color-rose-blood: var(--color-scarlet);
 
-/* — Semantic type slots — the site-wide default identity.
-   Instrument Serif is the brand face: it covers every page that has no
-   theme of its own (home, About, 404). The four game routes re-point
-   --font-display / --font-hero in their own scoped layout. — */
 --font-display: var(--font-brand), serif;
 --font-hero:    var(--font-brand), serif;
 --font-body:    var(--font-spectral), Georgia, serif;
@@ -76,7 +59,7 @@ a   { color: inherit; text-decoration: none; }
 img { max-width: 100%; display: block; }
 
 /* ============================================
-   ACCESSIBILITY FLOOR
+   ACCESSIBILITY
    ============================================ */
 
 :focus-visible {
@@ -107,9 +90,6 @@ img { max-width: 100%; display: block; }
   }
 }
 
-/* The intro paragraph beside the character-file panel. Two columns
-   with the prose given the wider track, collapsing to one below 768px
-   with the intro first — it is the lead, the panel is the reference. */
 .about-intro-row {
   display: grid;
   grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
@@ -125,15 +105,7 @@ img { max-width: 100%; display: block; }
 }
 
 /* ============================================
-   GRID-4 — for sections of exactly four cards.
-   auto-fit/minmax cannot express "4 or 2, never
-   3": inside Section's ~1040px content box, four
-   280px tracks need 1180px, so auto-fit settles
-   on three and orphans the fourth. Explicit
-   counts instead: one column on mobile, a
-   balanced 2x2 through the middle range, and
-   4-across only past 1200px, where each card
-   still clears ~240px.
+   GRID-4
    ============================================ */
 
 .grid-4 {
@@ -151,12 +123,7 @@ img { max-width: 100%; display: block; }
 }
 
 /* ============================================
-   PROJECT-GRID — the homepage gateway grid.
-   The featured card spans the full row, so the
-   three that follow fill exactly three columns
-   with nothing left over. Collapses straight to
-   one column rather than to two, because two
-   would orphan one of those three.
+   PROJECT-GRID
    ============================================ */
 
 .project-grid {
@@ -170,10 +137,7 @@ img { max-width: 100%; display: block; }
 }
 
 /* ============================================
-   MATERIAL — subtle texture for panels.
-   A faint noise + vignette so surfaces read as
-   aged stone/parchment rather than flat fills.
-   No image files: pure CSS, near-zero cost.
+   MATERIAL
    ============================================ */
 
 .panel {
@@ -347,15 +311,7 @@ img { max-width: 100%; display: block; }
   .about-lore__entry { grid-template-columns: 2.2rem minmax(0, 1fr); }
 }
 /* ============================================
-   SCROLL INDICATORS — the per-project rail.
-   Each project's indicator is portalled to
-   <body>, so it is styled here by its data
-   attribute rather than from inside the tree.
-
-   The page's text column starts at the section
-   gutter (2.5rem on narrow screens), so the rail
-   tucks closer to the edge — and the moon scales
-   down — to stay clear of it on phones.
+   SCROLL INDICATORS
    ============================================ */
 
 [data-scroll-indicator] {
@@ -366,8 +322,6 @@ img { max-width: 100%; display: block; }
 @media (max-width: 700px) {
   [data-scroll-indicator] {
     --rail-left: 0.5rem;
-    /* 64px * 0.42 = ~27px; at 8px from the edge that still ends well
-       short of the 40px text gutter. */
     --moon-scale: 0.42;
   }
 }

@@ -1,10 +1,5 @@
 import type { Ability } from "@/content/schema";
 
-/* The signature component. Design prose leads (serif, the player's
-   experience); the quantum principle sits underneath as a mono
-   annotation with a gold rule — present but never the subject.
-   This is what keeps the page reading as design, not engineering. */
-
 export default function AbilityCard({ ability }: { ability: Ability }) {
   return (
     <article

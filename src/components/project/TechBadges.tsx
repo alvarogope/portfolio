@@ -3,18 +3,6 @@
 export type TechItem = { name: string; icon?: string };
 export type TechGroup = { label: string; items: TechItem[] };
 
-/* The tech stack as icon chips.
-
-   A badge takes either an icon or nothing: with no icon it falls back
-   to a text chip of the same height and border, so a tech with no mark
-   in the set (Perforce) still sits flush in the grid rather than
-   leaving a hole.
-
-   Icon colour is per-file, not global. Most of these marks ship in
-   their brand colours and must be left alone — inverting Python or
-   JavaScript would destroy the thing that makes them recognisable.
-   Only the two that ship as black-on-transparent get normalised to
-   white, or they would be invisible on the panel. */
 const INVERT = new Set(["unity", "unreal"]);
 
 const BADGE = 60;
@@ -125,9 +113,6 @@ export default function TechBadges({ groups }: { groups: TechGroup[] }) {
 function Badge({ item }: { item: TechItem }) {
   const { name, icon } = item;
 
-  /* role="img" + aria-label makes each chip announce as a single named
-     graphic; the inner <img> and the tooltip are decorative duplicates
-     of that name, so both are hidden from assistive tech. */
   return (
     <li
       className={`tb-badge${icon ? "" : " tb-badge--text"}`}
@@ -137,9 +122,6 @@ function Badge({ item }: { item: TechItem }) {
     >
       {icon ? (
         <img
-          /* encodeURIComponent matters here: the C# icon is literally
-             "c#.svg", and an unencoded # would be read as a URL
-             fragment and the request would 404. */
           src={`/images/tech/${encodeURIComponent(icon)}.svg`}
           alt=""
           aria-hidden
@@ -155,9 +137,6 @@ function Badge({ item }: { item: TechItem }) {
       ) : (
         name
       )}
-      {/* Only icon badges need the reveal — a text badge already shows
-          its name, and a tooltip repeating it would just duplicate the
-          word in the DOM. */}
       {icon && (
         <span className="tb-tip" aria-hidden>
           {name}

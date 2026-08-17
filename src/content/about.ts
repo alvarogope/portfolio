@@ -1,6 +1,3 @@
-/* About page content. First person, story-driven: warm and direct,
-   with reflective moments where the ideas earn them. */
-
    export const about = {
     name: "Álvaro Gómez",
     role: "Technical Game Designer",
@@ -8,8 +5,6 @@
     intro:
       "I make games because they are the only medium that puts you at the centre of the story. A film asks you to watch a hero; a book asks you to imagine one. A game lets you be one, and be a different one each time: the champion, the coward, the villain who thinks they are right. I came to games chasing that feeling, and I have been trying to design it ever since.",
 
-    // Existing dialogue line elevated into structured header content, so
-    // the page never carries copy outside this source of truth.
     headline: "The player is the main piece of the story.",
   
 
@@ -19,13 +14,6 @@
         focus: "Systems · Level design · World-building · Audio · Engineering",
       },
 
-    /* The tech stack, grouped for the character-file panel.
-
-       `icon` is the file stem in /public/images/tech, without the
-       extension — the badge component appends .svg and URL-encodes it,
-       which matters for "c#". Omit `icon` and the badge falls back to a
-       text-only chip of the same height, which is how Perforce is
-       shown: there is no mark for it in the icon set. */
     tech: [
       {
         label: "Languages",

@@ -13,23 +13,7 @@ export const metadata: Metadata = {
     "I design game systems and build them myself. Unreal Engine 5, Unity, C++, Python.",
 };
 
-/* ==================================================================
-   The homepage runs on the site's own token system — no standalone
-   palette or type of its own, so it sits flush against the global
-   header and footer.
-
-   Colour discipline: the page itself is entirely neutral (void,
-   moonlight, mist, silver). The ONLY colour on it comes from the four
-   projects, each announcing itself with its own accent from the acts
-   data. That makes the homepage a cool neutral frame around four
-   worlds rather than a fifth competing identity.
-   ================================================================== */
-
-/* Type scale. Display sizes are fluid; everything else sits on a
-   fixed 17px-based ramp so body copy never drifts between bands. */
 const T = {
-  // The hero is type-only now, so the headline carries it alone and
-  // runs a step larger than it did beside artwork.
   hero: "clamp(2.75rem, 1.7rem + 5.4vw, 7.5rem)",
   displayLg: "clamp(2.5rem, 1.8rem + 3.5vw, 4.75rem)",
   display: "clamp(2rem, 1.6rem + 2vw, 3.125rem)",
@@ -40,14 +24,8 @@ const T = {
   link: 15,
 };
 
-/* The site's display face tops out at 700, so that is the heavy end
-   here — asking for 800 would only get a synthesised weight. */
 const DISPLAY_WEIGHT = 700;
 
-/* Mono label roles, separated by tracking and colour rather than by
-   size. The spec roles sit deliberately larger than a caption: engine
-   and disciplines are the hard facts a reader scans for, so they are
-   set to be read, not squinted at. */
 const LABEL = {
   eyebrow: { fontSize: 12, letterSpacing: "0.26em" },
   act: { fontSize: 11, letterSpacing: "0.3em" },
@@ -57,14 +35,6 @@ const LABEL = {
 
 const CONTACT = "alvarogomezperez.work@gmail.com";
 
-/* Each band gets the same raked stripe, tinted with its own accent.
-
-   The alphas are deliberately low: the wash lifts the ground, and
-   --color-mist body copy sits on it at only ~5:1 to begin with, so a
-   heavier tint pushes the spec text below AA. These values are set
-   from measured contrast — the accent still identifies the band
-   through its label, rule, link and seam, which carry it far more
-   than the wash does. */
 function bandBackground(accent: string): string {
   return [
     `linear-gradient(100deg, ${accent}0a 0%, transparent 55%)`,
@@ -75,9 +45,6 @@ function bandBackground(accent: string): string {
 
 const mono: React.CSSProperties = { fontFamily: "var(--font-mono)" };
 
-/* globals.css already points h1/h2/h3 at --font-display, but it also
-   pins weight and letter-spacing there, so the display face is named
-   explicitly alongside the overrides below. */
 const display: React.CSSProperties = { fontFamily: "var(--font-display)" };
 
 export default function Home() {
@@ -88,18 +55,10 @@ export default function Home() {
         background: "var(--color-void)",
         color: "var(--color-moonlight)",
         fontFamily: "var(--font-body)",
-        /* Horizontal only. This used to be `overflow: hidden`, which also
-           clipped the bottom edge — and the closer's field is meant to
-           carry on past it and finish behind the footer. `clip` rather than
-           `hidden` on one axis because hidden on x would force y to become
-           a scroll container; clip leaves y genuinely visible. */
         overflowX: "clip",
       }}
     >
-      {/* ---------------------------------------------------------- */}
-      {/* HERO — no nav here: the global <header> in layout.tsx is    */}
-      {/* the site's only navigation.                                */}
-      {/* ---------------------------------------------------------- */}
+      {/* Hero */}
       <section
         className="hp-hero"
         style={{
@@ -108,20 +67,13 @@ export default function Home() {
           minHeight: 580,
           display: "flex",
           flexDirection: "column",
-          // Type-led and nothing else, so the block sits on the optical
-          // centre rather than being bottom-anchored under artwork that
-          // is no longer there.
+
           justifyContent: "center",
           background: "var(--color-void)",
           overflow: "hidden",
         }}
       >
-        {/* The field is tinted with the four project accents, taken from the
-            acts data rather than repeated as literals — so the hero always
-            carries the same four colours the bands below it do, and adding
-            or recolouring an act updates the hero with it. This is the one
-            place colour enters the page above the bands, and it enters as
-            the projects' own. */}
+        {/* Particles Effect for the Hero */}
         <Particles
           className="hp-hero-particles"
           particleColors={acts.map((act) => act.accent)}
@@ -134,8 +86,6 @@ export default function Home() {
         />
         <div aria-hidden className="hp-hero-contrast" />
         <div className="hp-hero-copy">
-          {/* The eyebrow sits tight to the headline — they are one
-              unit, so they are spaced as one. */}
           <p
             style={{
               ...mono,
@@ -176,18 +126,14 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ---------------------------------------------------------- */}
-      {/* FOUR WORLDS — every word below comes from @/content/games   */}
-      {/* ---------------------------------------------------------- */}
+      {/* Four Project Grid */}
       {acts.map((act) => (
         <Reveal key={act.project.slug}>
           <ActBand act={act} />
         </Reveal>
       ))}
 
-      {/* ---------------------------------------------------------- */}
-      {/* CLOSER                                                      */}
-      {/* ---------------------------------------------------------- */}
+      {/* Page Closer */}
       <Reveal>
         <section
           className="hp-closer"
@@ -196,22 +142,14 @@ export default function Home() {
             display: "flex",
             flexDirection: "column",
             position: "relative",
-            // The field is meant to run past this box and finish behind the
-            // footer, so it is deliberately NOT clipped here. See
-            // .hp-closer-particles for how far it reaches and why.
+
             overflow: "visible",
-            // Left-aligned to the same 48px gutter as the bands. The hero
-            // is centred and deliberately stands apart from that axis;
-            // everything below it shares this one.
+
             alignItems: "flex-start",
             textAlign: "left",
           }}
         >
-          {/* The closer gets its own field, so the page opens and closes on
-              the same sky. It is a separate instance rather than one
-              page-wide canvas on purpose: each one is clipped to its own
-              section, which is what keeps the stars out of the bands
-              between them and out of the global header and footer. */}
+          {/* Particles Effect for the Closer */}
           <Particles
             className="hp-closer-particles"
             particleColors={acts.map((act) => act.accent)}
@@ -223,14 +161,6 @@ export default function Home() {
             particleHoverFactor={1}
           />
 
-          {/* Set in the body serif rather than the display sans: Spectral
-              ships a drawn italic, Bricolage has none at all, so this is
-              a true italic instead of a synthesised slant — and a serif
-              italic against the sans headings is the pairing this quote
-              wants. Weight 600 is Spectral's heaviest loaded cut; asking
-              for 700 would only re-introduce a synthesised bold.
-              Tracking is eased back to 0 because a serif italic does not
-              want the tight negative tracking the sans display carries. */}
           <p
             style={{
               margin: 0,
@@ -278,9 +208,7 @@ export default function Home() {
         </section>
       </Reveal>
 
-      {/* Scoped to the homepage. Everything here is either responsive
-          layout, an interaction state, or motion — all of it guarded
-          by prefers-reduced-motion where it moves. */}
+      {/* Responsive and Interactions */}
       <style>{`
         /* ---- hero ---- */
         .hp-hero-particles {
@@ -557,13 +485,6 @@ function ActBand({ act }: { act: Act }) {
   const { project, label, accent, poster, side, flagship } = act;
   const engine = project.facts.engine;
 
-  /* Which side the copy sits on is driven by `data-side` and CSS
-     `order`, not by inline grid placement: the mobile media query has
-     to be able to override it to stack the poster on top, and an inline
-     grid-column would win over any stylesheet rule.
-
-     The accent is handed to CSS as custom properties so the hover wash
-     and the seam can use it without a second inline style. */
   return (
     <Link
       className="hp-band"
@@ -580,15 +501,7 @@ function ActBand({ act }: { act: Act }) {
         } as React.CSSProperties
       }
     >
-      {/* Only the poster tilts. Wrapping the whole band meant the copy
-          column rotated too, and at this width even a few degrees swung
-          the far edge of a text line far enough back to lose it. The
-          poster is a flat image, so it can take the rotation without
-          costing anything legibility-wise.
-
-          scaleOnHover is 1: the poster already has its own hover zoom on
-          the <img> below, and a second scale here would both double that
-          up and push the tilted frame out of its grid cell. */}
+      {/* Poster Tilts */}
       <TiltedCard
         className="hp-band-media"
         rotateAmplitude={6}
@@ -604,18 +517,13 @@ function ActBand({ act }: { act: Act }) {
           style={{ objectFit: "cover" }}
           priority={flagship}
         />
-        {/* Fades the poster's inner edge into the band so it meets the
-            copy without a hard seam. Direction lives in CSS keyed off
-            data-side, so the mobile layout can swap it to a vertical
-            fade once the copy sits underneath instead of beside. */}
+
         <div aria-hidden className="hp-band-scrim" />
         <div aria-hidden className="hp-band-seam" />
       </TiltedCard>
 
       <div className="hp-band-copy" style={{ maxWidth: flagship ? 620 : 560 }}>
-        {/* Act label and title are one unit; the rule that follows the
-            label measures the copy column, the way a spec sheet sets a
-            heading against its field. */}
+
         <div
           style={{
             display: "flex",
@@ -624,8 +532,6 @@ function ActBand({ act }: { act: Act }) {
             marginBottom: flagship ? 24 : 20,
           }}
         >
-          {/* nowrap lives in CSS, not inline, so the narrow breakpoint
-              can let this long label wrap instead of clipping. */}
           <span className="hp-act-label" style={{ ...mono, color: accent }}>
             {label}
           </span>
@@ -664,9 +570,6 @@ function ActBand({ act }: { act: Act }) {
           {project.systemsHook}
         </p>
 
-        {/* Spec: the engine leads, in the project's accent, because it
-            is the first hard fact a reader looks for; the disciplines
-            follow in the neutral. Both come from the real content. */}
         {flagship ? (
           <div
             style={{
@@ -718,9 +621,6 @@ function ActBand({ act }: { act: Act }) {
           </div>
         )}
 
-        {/* The affordance stays visible, but it is a span: the card
-            itself is the link, and an anchor inside an anchor is
-            invalid and unreachable by keyboard. */}
         <span
           className="hp-link"
           style={{

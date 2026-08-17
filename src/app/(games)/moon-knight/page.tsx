@@ -25,10 +25,7 @@ export default function MoonKnightPage() {
       <div className="mk-hero">
         <Aurora
           className="mk-hero-aurora"
-          /* Emerald -> scarlet, left to right. The middle stop is the exact
-             midpoint of the other two, so this is a straight two-colour ramp
-             with no third hue in it: deepened --color-emerald and
-             --color-scarlet and nothing else. */
+
           colorStops={["#2d5e48", "#614844", "#95313f"]}
 
           origin="top"
@@ -140,9 +137,7 @@ export default function MoonKnightPage() {
         </Reveal>
       </Section>
 
-      {/* Scoped to this page. Two layers: the aurora, then the hero on top
-          of it. The contrast reasoning that used to live on a third layer
-          is now on the <Aurora /> call above. */}
+      {/* The two layers. */}
       <style>{`
         .mk-hero {
           position: relative;

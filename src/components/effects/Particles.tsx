@@ -4,25 +4,25 @@ import { useEffect, useRef, useState } from "react";
 import { Camera, Geometry, Mesh, Program, Renderer } from "ogl";
 
 type ParticlesProps = {
-  /** Hex colours sampled at random, one per particle. */
+
   particleColors?: readonly string[];
   particleCount?: number;
-  /** How far particles spread from the centre of the cloud. */
+
   particleSpread?: number;
-  /** Animation pace. 0.1 is the reference value; higher is faster. */
+
   speed?: number;
-  /** Parallax on hover — see the note below, this moves the camera. */
+
   moveParticlesOnHover?: boolean;
-  /** How far the camera travels, in world units, at the edge of the box. */
+
   particleHoverFactor?: number;
-  /** Soft-edged and translucent when true; solid discs when false. */
+
   alphaParticles?: boolean;
   particleBaseSize?: number;
-  /** 0 makes every particle the same size. */
+
   sizeRandomness?: number;
   cameraDistance?: number;
   disableRotation?: boolean;
-  /** Defaults to the display's DPR, capped at 2. */
+
   pixelRatio?: number;
   className?: string;
 };
@@ -106,34 +106,6 @@ const fragment = /* glsl */ `
   }
 `;
 
-/**
- * The React Bits particle field, ported to TypeScript.
- *
- * The shaders, the geometry and the motion are the upstream ones. What is
- * different, and why:
- *
- *  - Hover moves the CAMERA, not the cloud. Upstream translates the mesh by
- *    the negated cursor; here the camera trucks toward the cursor instead,
- *    which is the same parallax read from the other side and is what the
- *    effect is actually meant to be — the viewer leaning to look, rather
- *    than the particles being pushed around.
- *
- *  - The cursor is tracked on the window and hit-tested against the host's
- *    box, not with a listener on the container. The host is
- *    pointer-events:none wherever this is used, so a listener on it would
- *    never fire at all.
- *
- *  - Resizing is watched with a ResizeObserver rather than the window's
- *    resize event: these fields are sized by their section, which can
- *    change height without the window changing at all.
- *
- *  - Under prefers-reduced-motion the field is still drawn, but as a single
- *    static frame with no animation loop and no hover — the drifting is
- *    what the preference is about, and a motionless field is not motion.
- *
- *  - Cleanup releases the geometry, the program and the GL context, not
- *    just the animation frame and the canvas.
- */
 export default function Particles({
   particleColors,
   particleCount = 200,
@@ -151,8 +123,6 @@ export default function Particles({
 }: ParticlesProps) {
   const hostRef = useRef<HTMLDivElement>(null);
 
-  // Assume "reduced" until the client has actually read the preference, and
-  // re-read it if the user changes it mid-session.
   const [reducedMotion, setReducedMotion] = useState(true);
 
   useEffect(() => {
@@ -164,9 +134,6 @@ export default function Particles({
     return () => query.removeEventListener("change", update);
   }, []);
 
-  /* The colours arrive as a fresh array on every parent render, so the effect
-     keys off their content instead — rebuilding a WebGL context because an
-     array literal changed identity would be an expensive no-op. */
   const colorKey = (particleColors ?? defaultColors).join(",");
 
   useEffect(() => {
@@ -198,8 +165,6 @@ export default function Particles({
     const colors = new Float32Array(count * 3);
 
     for (let i = 0; i < count; i++) {
-      // Rejection-sample a point in the unit sphere, then push it out by the
-      // cube root so the cloud is evenly filled rather than centre-heavy.
       let x: number, y: number, z: number, len: number;
       do {
         x = Math.random() * 2 - 1;
@@ -242,8 +207,7 @@ export default function Particles({
       if (width === 0 || height === 0) return;
       renderer.setSize(width, height);
       camera.perspective({ aspect: gl.canvas.width / gl.canvas.height });
-      // A static field has no loop to repaint it, so the resized buffer has
-      // to be redrawn here or it would be left blank.
+
       if (reducedMotion) renderer.render({ scene: particles, camera });
     };
 
@@ -251,12 +215,6 @@ export default function Particles({
     observer.observe(host);
     resize();
 
-    /* The canvas is pointer-events:none so it never intercepts selection or
-       clicks, which also means it receives no pointer events of its own.
-       The cursor is tracked on the window instead and tested against the
-       host's box, and the smoothed value is what reaches the camera — so
-       the view eases toward the cursor and relaxes when it leaves rather
-       than snapping. */
     const pointer = { x: 0, y: 0 };
     const pointerTarget = { x: 0, y: 0 };
 
@@ -277,7 +235,7 @@ export default function Particles({
       }
 
       pointerTarget.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
-      // Clip space runs bottom-up, client coordinates run top-down.
+
       pointerTarget.y = -(((event.clientY - rect.top) / rect.height) * 2 - 1);
     };
 
@@ -286,7 +244,6 @@ export default function Particles({
       pointerTarget.y = 0;
     };
 
-    // A coarse pointer has no hover, so the parallax is desktop-only.
     const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
     const interactive = moveParticlesOnHover && !reducedMotion && finePointer.matches;
 
@@ -309,15 +266,11 @@ export default function Particles({
       program.uniforms.uTime.value = elapsed * 0.001;
 
       if (interactive) {
-        // Frame-rate independent easing toward the cursor's position.
+
         const ease = 1 - Math.pow(0.0015, Math.min(delta / 1000, 0.1));
         pointer.x += (pointerTarget.x - pointer.x) * ease;
         pointer.y += (pointerTarget.y - pointer.y) * ease;
 
-        // The camera leans toward the cursor. Moving it right shifts the
-        // cloud left on screen, which is the same read as translating the
-        // cloud by the negated cursor — but it is the viewpoint moving,
-        // so nearer particles slide further than far ones.
         camera.position.x = pointer.x * particleHoverFactor;
         camera.position.y = pointer.y * particleHoverFactor;
       }

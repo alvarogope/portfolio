@@ -6,62 +6,31 @@ import { Mesh, Program, Renderer, Triangle } from "ogl";
 type Origin = "top-left" | "top-right" | "bottom-left" | "bottom-right";
 
 type SideRaysProps = {
-  /** Which corner the light sits just outside of. */
+
   origin?: Origin;
-  /** The near ray fan. */
+
   rayColor1?: string;
-  /** The far ray fan, offset from the first by `spread`. */
+
   rayColor2?: string;
-  /** Balance between the two fans: 0 is all of colour 1, 1 is all of colour 2. */
+
   blend?: number;
-  /** Angular gap between the two fans. Wider separates the two colours. */
+
   spread?: number;
-  /** Rotates the whole fan, in degrees. */
+
   tilt?: number;
-  /** Brightness at the source, before falloff. */
+
   intensity?: number;
-  /** How fast brightness drops with distance. Higher is BRIGHTER here, not
-   *  dimmer -- see the note below. */
+
   falloff?: number;
-  /** 0 is greyscale, 1 leaves the ray colours alone, above 1 boosts them. */
+
   saturation?: number;
-  /** Shimmer pace. */
+
   speed?: number;
-  /** The dimmer, applied to the shader's own alpha. */
+
   opacity?: number;
   className?: string;
 };
 
-/* ────────────────────────────────────────────────────────────────────
-   Two things about this shader are worth knowing before turning a knob.
-
-   1. `falloff` is not a dimmer. Brightness is
-
-        intensity * 0.4 / distanceToLight ^ falloff
-
-      and distanceToLight is measured in units of the box HEIGHT, so it is
-      about 0.5 at the corner nearest the light -- well under 1. Raising the
-      exponent therefore makes the near corner BRIGHTER while making the far
-      side darker: it tightens the glow around the source rather than
-      lowering it. `intensity` and `opacity` are the strength controls.
-
-   2. The effect falls off quadratically, not linearly. The shader sets
-
-        alpha = max(rgb) * opacity
-
-      so both the colour AND its alpha scale with brightness, and the
-      composited lift over the page goes as roughly the square of it. That
-      is why the light pools near its corner instead of raking across the
-      whole box: across a wide hero the distance to the source varies about
-      4.5x, which is ~20x once squared. A low `falloff` is what buys reach.
-   ──────────────────────────────────────────────────────────────────── */
-
-/* GLSL ES 1.00, as upstream wrote it: it compiles in a WebGL2 context too,
-   and keeping it means the effect still runs where WebGL2 is missing.
-
-   Keep this source pure ASCII, comments included -- ANGLE rejects shaders
-   containing characters outside the GLSL ES source set even inside a
-   comment, which would blank the canvas on Chrome/Windows only. */
 const VERT = `
 attribute vec2 position;
 void main() {
@@ -142,7 +111,6 @@ function hexToRgb(hex: string): [number, number, number] {
     : [1, 1, 1];
 }
 
-/** Mirror flags that move the fan to the requested corner. */
 function originToFlip(origin: Origin): [number, number] {
   switch (origin) {
     case "top-left":
@@ -156,7 +124,6 @@ function originToFlip(origin: Origin): [number, number] {
   }
 }
 
-/** CSS position for a radial gradient centred on the lit corner. */
 const CORNER: Record<Origin, string> = {
   "top-left": "0% 0%",
   "top-right": "100% 0%",
@@ -171,17 +138,6 @@ type Tuning = Required<
   >
 >;
 
-/**
- * The shader's own output, evaluated in JS at a point `t` of the way along the
- * box diagonal from the lit corner.
- *
- * This is the whole fragment path -- ramp, brightness, saturation, the
- * `alpha = max(rgb)` line -- with the time-varying term pinned at its maximum
- * of 1.0 (it is `clamp(0.75 +/- 0.35, 0, 1)`, so it saturates across a broad
- * region anyway). It exists so the still fallback below is a trace of the real
- * envelope that tracks the props, rather than a hand-tuned constant that goes
- * stale the first time someone changes `intensity`.
- */
 function sampleAt(t: number, cfg: Tuning, aspect = 16 / 9) {
   // The light sits just outside the corner; see rayPos in the shader.
   const source = [1.1 * aspect, 1.5];
@@ -204,16 +160,6 @@ function sampleAt(t: number, cfg: Tuning, aspect = 16 / 9) {
   };
 }
 
-/**
- * A CSS stand-in for the shader, used when motion is not wanted or WebGL is
- * unavailable.
- *
- * The shafts cannot survive the translation -- they are angular structure a
- * gradient has no way to express -- so what is kept is the part that carries
- * the mood: warm light pooling at the corner, with the same colour and the
- * same falloff. The stops are sampled straight off `sampleAt`, so the still
- * peak matches the animated peak by construction rather than by calibration.
- */
 function staticGradient(origin: Origin, cfg: Tuning) {
   const stops = [0, 0.12, 0.28, 0.55].map((t) => {
     const { rgb, a } = sampleAt(t, cfg);
@@ -222,8 +168,6 @@ function staticGradient(origin: Origin, cfg: Tuning) {
   return `radial-gradient(125% 125% at ${CORNER[origin]}, ${stops.join(", ")}, transparent 100%)`;
 }
 
-/** Whether a GL context can be had at all. The shader is GLSL ES 1.00, so
- *  WebGL1 is enough and there is no need to insist on WebGL2. */
 function supportsWebgl() {
   try {
     const canvas = document.createElement("canvas");
@@ -233,26 +177,6 @@ function supportsWebgl() {
   }
 }
 
-/**
- * The React Bits SideRays, ported to this codebase's conventions.
- *
- * Differences from upstream, all deliberate:
- *  - reduced motion and missing WebGL both fall back to a static gradient
- *    instead of an empty box;
- *  - the loop stops when the host scrolls out of view or the tab is hidden,
- *    so a background on one hero costs nothing while the reader is further
- *    down the page;
- *  - the GL context is built once and the uniforms are pushed per frame from
- *    a ref, rather than the context being torn down and rebuilt every time a
- *    prop changes (upstream does both, and the rebuild wins);
- *  - the buffer is capped harder on small screens, where a full-viewport
- *    fragment shader costs real battery;
- *  - time is accumulated rather than read off the clock, so pausing does not
- *    jump the shimmer forward by however long the reader was away;
- *  - a ResizeObserver on the host replaces the window resize listener, so it
- *    tracks layout changes that do not resize the window;
- *  - no setTimeout before init.
- */
 export default function SideRays({
   origin = "top-right",
   rayColor1 = "#ffaa6e",
@@ -269,17 +193,8 @@ export default function SideRays({
 }: SideRaysProps) {
   const hostRef = useRef<HTMLDivElement>(null);
 
-  /* "still" until the client has actually read the preference, so the
-     server-rendered markup and the first paint are never the animated one.
-     Both reasons to hold still -- the user asked for less motion, or the GPU
-     cannot run the shader -- collapse into this one flag, because the
-     rendered result is identical either way. */
   const [mode, setMode] = useState<"still" | "animate">("still");
 
-  /* Live values for the render loop, so tuning a prop updates a uniform
-     instead of tearing down and rebuilding the GL context. The loop reads
-     ONLY this ref, never the props directly, which is what lets the effect
-     below depend on `mode` alone and still be exhaustive. */
   const live = useRef({
     rayColor1,
     rayColor2,
@@ -294,8 +209,6 @@ export default function SideRays({
     origin,
   });
 
-  // Written in an effect, not during render: a ref assignment in the render
-  // body is not safe under the React Compiler.
   useEffect(() => {
     live.current = {
       rayColor1,
@@ -326,8 +239,7 @@ export default function SideRays({
 
   useEffect(() => {
     const query = window.matchMedia("(prefers-reduced-motion: reduce)");
-    // Capability is fixed for the session; the preference is not, so it is
-    // re-read whenever the user changes it.
+
     const capable = supportsWebgl();
     const update = () => setMode(query.matches || !capable ? "still" : "animate");
 
@@ -353,10 +265,7 @@ export default function SideRays({
     try {
       renderer = new Renderer({ canvas, alpha: true, depth: false, antialias: false, dpr });
     } catch {
-      // The probe said a context was available, so getting here means creation
-      // failed for another reason -- memory pressure being the likely one. The
-      // still gradient is already on the host as the base style, so there is
-      // nothing to paint: just leave it showing.
+
       return;
     }
 
@@ -368,8 +277,6 @@ export default function SideRays({
     const geometry = new Triangle(gl);
     if (geometry.attributes.uv) delete geometry.attributes.uv;
 
-    // Seeded from the ref, same as every later frame, so the first paint and
-    // the loop cannot disagree.
     const seed = live.current;
     const [flipX, flipY] = originToFlip(seed.origin);
     const program = new Program(gl, {
@@ -400,7 +307,7 @@ export default function SideRays({
       const height = host.clientHeight;
       if (width === 0 || height === 0) return;
       renderer.setSize(width, height);
-      // gl_FragCoord is in device pixels, so iResolution must be too.
+
       program.uniforms.iResolution.value = [width * renderer.dpr, height * renderer.dpr];
     };
 
@@ -451,9 +358,6 @@ export default function SideRays({
       frame = 0;
     };
 
-    /* The shimmer is slow and means nothing in particular at any given moment,
-       so there is no reason to render it while it cannot be seen. Both the
-       scroll position and the tab's visibility gate the loop. */
     const visibility = new IntersectionObserver(
       ([entry]) => {
         onScreen = entry?.isIntersecting ?? true;
@@ -479,14 +383,8 @@ export default function SideRays({
       gl.getExtension("WEBGL_lose_context")?.loseContext();
       canvas.remove();
     };
-    // Every prop reaches this effect through `live`, so `mode` really is the
-    // only thing that should rebuild the context.
   }, [mode]);
 
-  /* The gradient stays underneath the canvas rather than being swapped out for
-     it: the canvas is opaque where the light is and transparent elsewhere, so
-     leaving the gradient in place costs nothing and means a context lost
-     mid-session degrades to the still version instead of to nothing. */
   return (
     <div
       ref={hostRef}

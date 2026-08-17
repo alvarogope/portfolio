@@ -3,22 +3,10 @@
 import IndicatorPortal, { railStyle } from "./IndicatorPortal";
 import { useScrollProgress } from "./useScrollProgress";
 
-/* Seeds of Tomorrow scroll indicator: a stem that grows as you read.
-   It rises from a fixed base on the left edge, puts out a pair of
-   leaves partway up, and blooms in the last third of the scroll —
-   life returning as you descend.
-
-   Deliberately mid-height on the left edge, not pinned to the bottom:
-   Seeds already has a full-width audio transport bar down there, and
-   this must stay well clear of it.
-
-   Greens come from --color-silver (living green in this theme) and the
-   bloom from --color-gold (warm amber). */
-
 const TRACK = 220;
 const STEM = 4;
-const BLOOM = 26; // svg box for the flower at the tip
-const BLOOM_STARTS = 0.7; // last 30% of the scroll
+const BLOOM = 26; 
+const BLOOM_STARTS = 0.7; 
 
 export default function GrowthIndicator() {
   const { progress, reduced } = useScrollProgress();
@@ -26,10 +14,8 @@ export default function GrowthIndicator() {
   const grown = reduced ? 1 : progress;
   const stem = grown * TRACK;
 
-  // 0 -> 1 across the final stretch, so the flower opens rather than pops.
   const bloom = Math.min(1, Math.max(0, (grown - BLOOM_STARTS) / (1 - BLOOM_STARTS)));
 
-  // Leaves appear once the stem has actually grown past them.
   const leafAt = TRACK * 0.45;
   const lowerLeafAt = leafAt - 20;
   const leavesOut = stem > leafAt;
@@ -38,7 +24,7 @@ export default function GrowthIndicator() {
     <IndicatorPortal name="growth">
       <div aria-hidden style={railStyle(TRACK)}>
         <div style={{ position: "relative", width: STEM, height: "100%" }}>
-          {/* the soil line the stem rises from */}
+          {/* Soil Line */}
           <span
             style={{
               position: "absolute",
@@ -52,8 +38,7 @@ export default function GrowthIndicator() {
             }}
           />
 
-          {/* faint trace of the full height, so the stem reads as growing
-              into something rather than floating */}
+          {/* Faint Trace */}
           <div
             style={{
               position: "absolute",
@@ -63,7 +48,7 @@ export default function GrowthIndicator() {
             }}
           />
 
-          {/* the stem itself, growing upward from the base */}
+          {/* Stem */}
           <div
             style={{
               position: "absolute",
@@ -77,7 +62,7 @@ export default function GrowthIndicator() {
             }}
           />
 
-          {/* a leaf either side, once the stem clears them */}
+          {/* Leaf */}
           {leavesOut && (
             <>
               <span style={leafStyle(leafAt, "left")} />
@@ -85,11 +70,9 @@ export default function GrowthIndicator() {
             </>
           )}
 
-          {/* the bloom at the growing tip */}
+          {/* Bloom */}
           {bloom > 0 && (
             <svg
-              /* viewBox stays 18-square, so the whole flower scales
-                 proportionally with BLOOM without recomputing petals */
               width={BLOOM}
               height={BLOOM}
               viewBox="0 0 18 18"
@@ -132,7 +115,6 @@ function leafStyle(bottom: number, side: "left" | "right"): React.CSSProperties 
     height: 7,
     background: "var(--color-silver)",
     opacity: 0.75,
-    // a leaf shape: round on the outer edge, pointed where it meets the stem
     borderRadius: side === "left" ? "100% 0 100% 0" : "0 100% 0 100%",
     transform: side === "left" ? "translateX(-100%)" : "translateX(0)",
     transformOrigin: side === "left" ? "right center" : "left center",

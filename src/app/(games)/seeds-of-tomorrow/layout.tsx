@@ -13,8 +13,8 @@ import GrowthIndicator from "@/components/layout/GrowthIndicator";
             "--color-nightfall": "#16211B",
             "--color-moonlight": "#EDEAE0",
             "--color-mist": "#7E9885",
-            "--color-silver": "#5F9B6B", // primary accent -> living green
-            "--color-gold": "#E0A845", // secondary accent -> warm amber
+            "--color-silver": "#5F9B6B", // primary colour -> green
+            "--color-gold": "#E0A845", // secondary colour -> amberish colour
             "--color-scarlet": "#E0A845",
             "--color-emerald": "#5FB2C4",
             "--color-lunar-gold": "#5F9B6B",

@@ -125,7 +125,7 @@ export default function Home() {
         <Particles
           className="hp-hero-particles"
           particleColors={acts.map((act) => act.accent)}
-          particleCount={400}
+          particleCount={600}
           particleSpread={10}
           speed={0.1}
           particleBaseSize={100}
@@ -215,7 +215,7 @@ export default function Home() {
           <Particles
             className="hp-closer-particles"
             particleColors={acts.map((act) => act.accent)}
-            particleCount={400}
+            particleCount={900}
             particleSpread={10}
             speed={0.1}
             particleBaseSize={100}

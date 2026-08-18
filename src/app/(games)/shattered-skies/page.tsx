@@ -23,7 +23,7 @@ export default function ShatteredSkiesPage() {
         <Galaxy
           className="ss-hero-galaxy"
           hueShift={97}                 // Shifts the hue of all stars by the specified degrees (0-360)
-          saturation={1.6}              // Controls color saturation of stars (0 = grayscale, 1 = full color)
+          saturation={1.1}              // Controls color saturation of stars (0 = grayscale, 1 = full color)
           density={1.2}                   // Controls the density of stars in the galaxy
           glowIntensity={0.03}          // Controls the intensity of the star glow effect
           opacity={0.66}                

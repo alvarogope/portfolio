@@ -8,6 +8,7 @@ import Reveal from "@/components/layout/Reveal";
 import TransmissionCard from "@/components/project/TransmissionCard";
 import ProjectNav from "@/components/layout/ProjectNav";
 import { projectNavItems } from "@/content/games";
+import Galaxy from "@/components/effects/Galaxy";
 
 export const metadata: Metadata = {
   title: `${p.title} | Álvaro Gómez`,
@@ -17,7 +18,27 @@ export const metadata: Metadata = {
 export default function ShatteredSkiesPage() {
   return (
     <>
-      <ProjectHero project={p} posterSrc="/images/shattered-skies/poster.png" />
+      {/* Hero */}
+      <div className="ss-hero">
+        <Galaxy
+          className="ss-hero-galaxy"
+          hueShift={97}                 // Shifts the hue of all stars by the specified degrees (0-360)
+          saturation={1.6}              // Controls color saturation of stars (0 = grayscale, 1 = full color)
+          density={1.2}                   // Controls the density of stars in the galaxy
+          glowIntensity={0.03}          // Controls the intensity of the star glow effect
+          opacity={0.66}                
+          speed={0.1}                   // Global speed multiplier for all animations
+          starSpeed={0.1}              
+          rotationSpeed={0.03}          // Speed of automatic galaxy rotation
+          twinkleIntensity={0.5}        // Controls how much stars twinkle (0 = no twinkle, 1 = maximum twinkle)
+          mouseInteraction              
+          mouseRepulsion={true}         // Black Hole Effect when true
+          transparent={true}            // Refers to the background
+        />
+        <div className="ss-hero-content">
+          <ProjectHero project={p} posterSrc="/images/shattered-skies/poster.png" />
+        </div>
+      </div>
 
       <Section>
         {/* Vision */}
@@ -128,6 +149,25 @@ export default function ShatteredSkiesPage() {
           <ProjectNav items={projectNavItems} currentSlug={p.slug} />
         </Reveal>
       </Section>
+
+      {/* Scoped to this page. Two layers: the starfield, then the hero. */}
+      <style>{`
+        .ss-hero {
+          position: relative;
+          isolation: isolate;
+          overflow: hidden;
+        }
+        .ss-hero-galaxy {
+          position: absolute;
+          inset: 0;
+          z-index: 0;
+          pointer-events: none;
+        }
+        .ss-hero-content {
+          position: relative;
+          z-index: 1;
+        }
+      `}</style>
     </>
   );
 }

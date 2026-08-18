@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Cinzel, UnifrakturCook, Spectral, JetBrains_Mono, Rajdhani, Fraunces, Archivo, Bricolage_Grotesque } from "next/font/google";
 import "./globals.css";
 import Link from "next/link";
+import ScrollToTop from "@/components/layout/ScrollToTop";
 
 /* ============================================
    FONTS
@@ -86,9 +87,12 @@ export default function RootLayout({
   return (
     <html
       lang="en-GB"
+      data-scroll-behavior="smooth"
         className={`${cinzel.variable} ${unifraktur.variable} ${spectral.variable} ${jetbrains.variable} ${rajdhani.variable} ${fraunces.variable} ${archivo.variable} ${brand.variable}`}
     >
       <body>
+        <ScrollToTop />
+
         {/* Placeholder nav */}
         <header
           style={{

@@ -113,7 +113,6 @@ export default function RootLayout({
           </Link>
           <nav className="mono" style={{ display: "flex", gap: "1.5rem", fontSize: "0.8rem" }}>
             <Link href="/">Projects</Link>
-            <Link href="/engineering">Engineering</Link>
             <Link href="/about">About</Link>
           </nav>
         </header>

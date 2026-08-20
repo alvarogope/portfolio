@@ -6,6 +6,8 @@ import ProjectHero from "@/components/project/ProjectHero";
 import ChallengeQuote from "@/components/project/ChallengeQuote";
 import Reveal from "@/components/layout/Reveal";
 import TransmissionCard from "@/components/project/TransmissionCard";
+import PlanetDossier from "@/components/project/PlanetDossier";
+import ShatteredSkiesSystem from "@/components/project/ShatteredSkiesSystem";
 import ProjectNav from "@/components/layout/ProjectNav";
 import { projectNavItems } from "@/content/games";
 import Galaxy from "@/components/effects/Galaxy";
@@ -50,38 +52,19 @@ export default function ShatteredSkiesPage() {
         </Reveal>
 
         {/* The Planetary System */}
-        {p.worlds && (
-          <Reveal>
-            <div style={{ marginTop: "5rem" }}>
-              <SectionHeading kicker="02 · World Design" title="A System of Five Worlds" />
-              <p style={{ color: "var(--color-mist)", maxWidth: "42rem", marginTop: "1.5rem", marginBottom: "1.5rem" }}>
-                A miniature solar system where the physics is the puzzle. Each planet has its own hazard, its own secret, and its own rule for getting through.
-              </p>
-              <div style={{ display: "grid", gap: "1rem" }}>
-                {p.worlds.map((w, i) => (
-                  <Reveal key={w.name} delay={i * 60}>
-                    <div
-                      className="panel"
-                      style={{
-                        border: "1px solid color-mix(in srgb, var(--color-mist) 20%, transparent)",
-                        padding: "1.1rem 1.4rem",
-                        display: "flex",
-                        gap: "1.25rem",
-                        alignItems: "baseline",
-                        flexWrap: "wrap",
-                      }}
-                    >
-                      <h3 style={{ margin: 0, fontSize: "var(--text-lg)", fontFamily: "var(--font-hero)", minWidth: "8rem", color: "var(--color-silver)" }}>
-                        {w.name}
-                      </h3>
-                      <p style={{ margin: 0, color: "var(--color-mist)", flex: 1, minWidth: "16rem" }}>{w.descriptor}</p>
-                    </div>
-                  </Reveal>
-                ))}
-              </div>
-            </div>
-          </Reveal>
-        )}
+        <Reveal>
+          <div style={{ marginTop: "5rem" }}>
+            <SectionHeading kicker="02 · World Design" title="A System of Five Worlds" />
+            <p style={{ color: "var(--color-mist)", maxWidth: "42rem", marginTop: "1.5rem", marginBottom: "1.5rem" }}>
+              A miniature solar system where the physics is the puzzle. Each planet has its own hazard, its own secret, and its own rule for getting through.
+            </p>
+            {/* The dossier is passed as children so it stays a server component;
+                the wrapper only owns the active-world state. */}
+            <ShatteredSkiesSystem>
+              <PlanetDossier />
+            </ShatteredSkiesSystem>
+          </div>
+        </Reveal>
 
         {/* Communication Design */}
         {p.communication && (

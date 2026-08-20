@@ -14,6 +14,7 @@ export default function ShatteredSkiesLayout({
             "--color-moonlight": "#DDE8F0",
             "--color-mist": "#6B8299",
             "--color-silver": "#4DD0E1", // primary colour  -> cyan
+            "--color-nebula": "#7ec8d8", // shared UI accent for the system views
             "--color-gold": "#FF8A3D",  // secondary colour -> orange
             "--color-scarlet": "#FF8A3D",
             "--color-emerald": "#5FD98A",

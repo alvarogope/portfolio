@@ -20,13 +20,8 @@ export const shatteredSkies: Project = {
   vision:
     "Shattered Skies binds two soldiers of enemy species to a single parasite, the Symbiochord: it fuses their fates so that if one dies, both die, and it inflicts pain when they fight or drift apart. They cannot speak a shared language. Across a hand-built miniature solar system, they must cooperate to survive, and along the way decide whether to trust the person they were raised to hate. I designed the world they move through and the systems that force them together: the planets and their physics, the interdependent puzzles, the traversal, and the knowledge-gated progression that turns understanding the universe into the way forward.",
 
-  worlds: [
-    { name: "Pyroterra", descriptor: "A world of lava lakes crossed only through unstable tunnels beneath the surface." },
-    { name: "Dunestorm", descriptor: "A desert of killing winds; its high gravity demands an upgraded thruster to escape." },
-    { name: "Remnara", descriptor: "An Earth-like ruin, the one habitable zone, where players rebuild from the wreckage of a war." },
-    { name: "Tidalor", descriptor: "A tidal moon whose water rises and falls with its host planet, opening and sealing paths." },
-    { name: "Cryonix", descriptor: "The coldest dwarf planet, source of the Zyrium Crystals that hold the key to the parasite." },
-  ],
+  /* The five worlds now live in src/content/shattered-skies-planets.ts, with the
+     full survey data the planetary dossier and the orrery both read. */
 
   designChallenge: {
     quote:

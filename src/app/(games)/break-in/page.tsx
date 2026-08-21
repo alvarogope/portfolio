@@ -10,6 +10,7 @@ import ProjectNav from "@/components/layout/ProjectNav";
 import { projectNavItems } from "@/content/games";
 import Prism from "@/components/effects/Prism";
 import RoleTerms from "@/components/project/RoleTerms";
+import RoleGraph from "@/components/project/RoleGraph";
 
 export const metadata: Metadata = {
   title: `${p.title} | Álvaro Gómez`,
@@ -55,11 +56,22 @@ export default function BreakInPage() {
           </div>
         </Reveal>
 
+        {/* Nobody wins alone — the dependency web */}
+        <Reveal>
+          <div style={{ marginTop: "5rem" }}>
+            <SectionHeading kicker="02 · Signature Systems" title="Nobody wins alone" />
+            <p style={{ color: "var(--color-mist)", maxWidth: "42rem", marginTop: "1.5rem", marginBottom: "1.75rem" }}>
+              <RoleTerms text="Four cameras, four roles, and seven dependencies wired between them. Every line is something one player can only get from another: an ability switched on, a window opened, a trap taken off the board. Cut any one wire and the run ends." />
+            </p>
+            <RoleGraph />
+          </div>
+        </Reveal>
+
         {/* The Four Roles */}
         {p.roles && (
           <Reveal>
             <div style={{ marginTop: "5rem" }}>
-              <SectionHeading kicker="02 · Signature Systems" title="Four Roles, One Web" />
+              <SectionHeading kicker="03 · The Cast" title="Four Roles, One Web" />
               <p style={{ color: "var(--color-mist)", maxWidth: "42rem", marginTop: "1.5rem", marginBottom: "1.5rem" }}>
                 <RoleTerms text="No role can finish the heist alone. Read across the four and the dependency forms a loop: each player holds a key another player needs. Hover any role to see the whole system light up: remove one, and the heist falls apart." />
               </p>
@@ -72,7 +84,7 @@ export default function BreakInPage() {
         {p.designChallenge && (
           <Reveal>
             <div style={{ marginTop: "5rem" }}>
-              <SectionHeading kicker="03 · The Hard Part" title="Design Challenge" />
+              <SectionHeading kicker="04 · The Hard Part" title="Design Challenge" />
               <div style={{ marginTop: "1.5rem" }}>
                 <ChallengeQuote
                   challenge={p.designChallenge}
@@ -86,7 +98,7 @@ export default function BreakInPage() {
         {/* Contributions */}
         <Reveal>
           <div style={{ marginTop: "5rem" }}>
-            <SectionHeading kicker="04 · My Role" title="My Contribution" />
+            <SectionHeading kicker="05 · My Role" title="My Contribution" />
             <div style={{ display: "grid", gap: "1.5rem" }}>
               {p.contributions.map((c) => (
                 <div key={c.label}>

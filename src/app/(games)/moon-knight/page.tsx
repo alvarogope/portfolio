@@ -12,6 +12,8 @@ import Link from "next/link";
 import ProjectNav from "@/components/layout/ProjectNav";
 import { projectNavItems } from "@/content/games";
 import Aurora from "@/components/effects/Aurora";
+import MoonKnightAudio from "@/components/project/MoonKnightAudio";
+import Bestiary from "@/components/project/Bestiary";
 
 export const metadata: Metadata = {
   title: `${p.title} | Álvaro Gómez Pérez`,
@@ -85,11 +87,19 @@ export default function MoonKnightPage() {
             </div>
           </Reveal>
         )}
+
+        {/* Bestiary — the creatures the combat systems above are taught through */}
+        <Reveal>
+          <div style={{ marginTop: "5rem" }}>
+            <Bestiary kicker="04 · The Creatures" />
+          </div>
+        </Reveal>
+
         {/* Challenge Quote */}
         {p.designChallenge && (
           <Reveal>
             <div style={{ marginTop: "5rem" }}>
-              <SectionHeading kicker="04 · The Hard Part" title="Design Challenge" />
+              <SectionHeading kicker="05 · The Hard Part" title="Design Challenge" />
               <div style={{ marginTop: "1.5rem" }}>
                 <ChallengeQuote challenge={p.designChallenge} />
               </div>
@@ -100,7 +110,7 @@ export default function MoonKnightPage() {
         {p.engineeringNote && (
           <Reveal>
             <div style={{ marginTop: "5rem" }}>
-              <SectionHeading kicker="05 · From Design to Engineering" title="Building the Quantum" />
+              <SectionHeading kicker="06 · From Design to Engineering" title="Building the Quantum" />
               <div style={{ marginTop: "1.5rem" }}>
                 <EngineeringNote note={p.engineeringNote} />
               </div>
@@ -121,11 +131,23 @@ export default function MoonKnightPage() {
             </div>
           </Reveal>
         )}
+        {/* Original Score */}
+        <Reveal>
+          <div style={{ marginTop: "5rem" }}>
+            <SectionHeading kicker="07 · Original Score" title="Music for a Borrowed Moon" />
+            <p style={{ color: "var(--color-mist)", maxWidth: "42rem", marginTop: "1.5rem", marginBottom: "1.5rem" }}>
+              I wrote and recorded the game&apos;s score myself. The main theme carries the knight through the night; the rest
+              theme only surfaces when he stops beneath a willow tree. Play either below.
+            </p>
+            <MoonKnightAudio />
+          </div>
+        </Reveal>
+
         {/* Gallery */}
         {p.gallery && (
           <Reveal>
             <div style={{ marginTop: "5rem" }}>
-              <SectionHeading kicker="06 · From the Game" title="Gallery" />
+              <SectionHeading kicker="08 · From the Game" title="Gallery" />
               <div style={{ marginTop: "1.5rem" }}>
                 <Gallery items={p.gallery} />
               </div>

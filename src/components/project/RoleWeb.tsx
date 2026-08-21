@@ -1,6 +1,7 @@
 "use client";
 
 import type { Role } from "@/content/schema";
+import RoleTerms from "./RoleTerms";
 
 export default function RoleWeb({ roles }: { roles: Role[] }) {
   return (
@@ -17,12 +18,12 @@ export default function RoleWeb({ roles }: { roles: Role[] }) {
               {role.name}
             </h3>
             <p style={{ margin: "0.4rem 0 0", color: "var(--color-moonlight)", lineHeight: 1.55 }}>
-              {role.brief}
+              <RoleTerms text={role.brief} />
             </p>
           </div>
 
           <p className="rw-tools" style={{ margin: 0, fontSize: "0.92rem", lineHeight: 1.6 }}>
-            {role.tools}
+            <RoleTerms text={role.tools} />
           </p>
 
           <div
@@ -38,13 +39,17 @@ export default function RoleWeb({ roles }: { roles: Role[] }) {
               <span className="mono rw-key" style={{ fontSize: "0.72rem", minWidth: "6rem" }}>
                 Depends on
               </span>
-              <span style={{ fontSize: "0.9rem", lineHeight: 1.5 }}>{role.dependsOn}</span>
+              <span style={{ fontSize: "0.9rem", lineHeight: 1.5 }}>
+                <RoleTerms text={role.dependsOn} />
+              </span>
             </div>
             <div style={{ display: "flex", gap: "0.6rem", alignItems: "baseline" }}>
               <span className="mono rw-key rw-key-out" style={{ fontSize: "0.72rem", minWidth: "6rem" }}>
                 Needed by
               </span>
-              <span style={{ fontSize: "0.9rem", lineHeight: 1.5 }}>{role.neededBy}</span>
+              <span style={{ fontSize: "0.9rem", lineHeight: 1.5 }}>
+                <RoleTerms text={role.neededBy} />
+              </span>
             </div>
           </div>
         </article>

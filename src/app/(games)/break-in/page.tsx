@@ -9,6 +9,7 @@ import RoleWeb from "@/components/project/RoleWeb";
 import ProjectNav from "@/components/layout/ProjectNav";
 import { projectNavItems } from "@/content/games";
 import Prism from "@/components/effects/Prism";
+import RoleTerms from "@/components/project/RoleTerms";
 
 export const metadata: Metadata = {
   title: `${p.title} | Álvaro Gómez`,
@@ -48,7 +49,9 @@ export default function BreakInPage() {
         <Reveal>
           <div style={{ maxWidth: "42rem" }}>
             <SectionHeading kicker="01 · Overview" title="The Vision" />
-            <p style={{ marginTop: "1rem" }}>{p.vision}</p>
+            <p style={{ marginTop: "1rem" }}>
+              <RoleTerms text={p.vision} />
+            </p>
           </div>
         </Reveal>
 
@@ -58,7 +61,7 @@ export default function BreakInPage() {
             <div style={{ marginTop: "5rem" }}>
               <SectionHeading kicker="02 · Signature Systems" title="Four Roles, One Web" />
               <p style={{ color: "var(--color-mist)", maxWidth: "42rem", marginTop: "1.5rem", marginBottom: "1.5rem" }}>
-                No role can finish the heist alone. Read across the four and the dependency forms a loop: each player holds a key another player needs. Hover any role to see the whole system light up: remove one, and the heist falls apart.
+                <RoleTerms text="No role can finish the heist alone. Read across the four and the dependency forms a loop: each player holds a key another player needs. Hover any role to see the whole system light up: remove one, and the heist falls apart." />
               </p>
               <RoleWeb roles={p.roles} />
             </div>
@@ -71,7 +74,10 @@ export default function BreakInPage() {
             <div style={{ marginTop: "5rem" }}>
               <SectionHeading kicker="03 · The Hard Part" title="Design Challenge" />
               <div style={{ marginTop: "1.5rem" }}>
-                <ChallengeQuote challenge={p.designChallenge} />
+                <ChallengeQuote
+                  challenge={p.designChallenge}
+                  renderProse={(text) => <RoleTerms text={text} />}
+                />
               </div>
             </div>
           </Reveal>
@@ -87,7 +93,9 @@ export default function BreakInPage() {
                   <span className="mono" style={{ fontSize: "0.75rem", color: "var(--color-silver)" }}>
                     {c.label}
                   </span>
-                  <p style={{ marginTop: "0.4rem", maxWidth: "42rem" }}>{c.description}</p>
+                  <p style={{ marginTop: "0.4rem", maxWidth: "42rem" }}>
+                    <RoleTerms text={c.description} />
+                  </p>
                 </div>
               ))}
             </div>
@@ -107,6 +115,16 @@ export default function BreakInPage() {
            This lifts the route's void onto body for as long as this page
            is mounted, which is what makes the whole page one colour. */
         body { background: #0A0B0D; }
+
+        /* Role cross-references in prose. Colour only — no background, no
+           box — so it reads as a linked term rather than a highlighter pen.
+           #E5B54D on this page's #0A0B0D is 10.36:1, on .panel 9.35:1. The
+           glow is a whisper of the same amber the role cards use on hover. */
+        .role-term {
+          color: var(--color-silver);
+          font-weight: 500;
+          text-shadow: 0 0 12px color-mix(in srgb, var(--color-silver) 22%, transparent);
+        }
         .bi-hero {
           position: relative;
           isolation: isolate;

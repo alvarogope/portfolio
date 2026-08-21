@@ -1,6 +1,14 @@
 import type { DesignChallenge } from "@/content/schema";
 
-export default function ChallengeQuote({ challenge }: { challenge: DesignChallenge }) {
+export default function ChallengeQuote({
+  challenge,
+  renderProse,
+}: {
+  challenge: DesignChallenge;
+  /** Optional pass over the quote before it renders — Break-In uses it to
+      light up role names. Omitted everywhere else, which renders plain text. */
+  renderProse?: (text: string) => React.ReactNode;
+}) {
   const meta = [
     challenge.engine && { k: "Engine", v: challenge.engine },
     challenge.system && { k: "System", v: challenge.system },
@@ -24,7 +32,7 @@ export default function ChallengeQuote({ challenge }: { challenge: DesignChallen
       </span>
 
       <p style={{ fontSize: "var(--text-lg)", lineHeight: 1.6, margin: "1rem 0 1.5rem", maxWidth: "48rem" }}>
-        {challenge.quote}
+        {renderProse ? renderProse(challenge.quote) : challenge.quote}
       </p>
 
       {meta.length > 0 && (

@@ -133,6 +133,37 @@ export default function Home() {
         </Reveal>
       ))}
 
+      {/* AV Media side note — a quiet footnote under the four projects,
+          not a fifth card. Deliberately the smallest voice on the page:
+          body copy one step down from the bands, a single mono label, and
+          the same 48px axis everything else on the homepage sits on. */}
+      <Reveal>
+        <section className="hp-avnote" aria-label="Audiovisual media background">
+          <p className="hp-avnote-line">
+            Before games, I worked in audiovisual media — an eye for framing,
+            pacing, and world that still shapes how I design levels and stories.
+          </p>
+
+          {/* TODO: no destination yet. When the AV portfolio has a URL, wrap
+              this <span> in an anchor and delete the span:
+
+                <a className="hp-avnote-link" href="THE_URL_GOES_HERE"
+                   target="_blank" rel="noopener noreferrer">
+                  Selected AV work <span aria-hidden className="hp-avnote-arrow">→</span>
+                </a>
+
+              The .hp-avnote-link styles below already cover both cases, and
+              a :hover/:focus rule is waiting there for when it is a real
+              link. Nothing else needs to change. */}
+          <span className="hp-avnote-link">
+            Selected AV work
+            <span aria-hidden className="hp-avnote-arrow">
+              →
+            </span>
+          </span>
+        </section>
+      </Reveal>
+
       {/* Page Closer */}
       <Reveal>
         <section
@@ -431,12 +462,69 @@ export default function Home() {
         }
         .hp-root a.hp-band:focus-visible { outline-offset: -6px; }
 
+        /* ---- av note ---- */
+        /* Sits between the last band and the closer, so it inherits the
+           same 1px nightfall seam the bands use to divide from each other
+           — it reads as one more rule in that stack rather than a new
+           region. Vertical padding is deliberately about half the closer's:
+           enough air to be its own thought, too little to be a section. */
+        .hp-avnote {
+          border-top: 1px solid var(--color-nightfall);
+          padding: 64px 48px;
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          text-align: left;
+        }
+        /* One step below the bands' body copy (17px) so the hierarchy is
+           legible before anyone reads a word. --color-mist is 5.2:1 on
+           void, which clears AA at this size. */
+        .hp-avnote-line {
+          margin: 0;
+          max-width: 620px;
+          font-size: 15px;
+          line-height: 1.65;
+          color: var(--color-mist);
+          text-wrap: pretty;
+        }
+        /* Styled as a link, but currently a <span>: silver, and a hairline
+           underline drawn as a border rather than text-decoration so it can
+           sit away from the baseline at a lower weight than the type. No
+           cursor: pointer and no hover lift while it is inert — it should
+           not promise a click it cannot honour yet. */
+        .hp-avnote-link {
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          margin-top: 18px;
+          font-family: var(--font-mono);
+          font-size: 12px;
+          letter-spacing: 0.14em;
+          color: var(--color-silver);
+          text-decoration: none;
+          padding-bottom: 4px;
+          /* 48% of silver over void lands at #5E6570 — 3.3:1, clear of the
+             3:1 non-text floor, while still reading as a hairline. */
+          border-bottom: 1px solid color-mix(in srgb, var(--color-silver) 48%, transparent);
+        }
+        /* Live only once this is a real anchor; harmless on the span. */
+        a.hp-avnote-link {
+          transition: color 220ms ease, border-color 220ms ease;
+        }
+        a.hp-avnote-link:hover {
+          color: var(--color-moonlight);
+          border-bottom-color: var(--color-moonlight);
+        }
+        a.hp-avnote-link:hover .hp-avnote-arrow { transform: translateX(4px); }
+        .hp-avnote-arrow { transition: transform 260ms ease; }
+
         /* ---- responsive ---- */
         @media (max-width: 900px) {
           .hp-hero-copy { padding: 0 24px; }
           .hp-hero-copy > p:first-of-type { margin: 0 auto 26px; }
           .hp-hero-sub { margin: 30px auto 0; }
           .hp-closer { padding: 88px 24px; }
+          .hp-avnote { padding: 48px 24px; }
 
           /* Bands stack: poster above, copy full-width beneath. */
           .hp-band {
@@ -470,9 +558,12 @@ export default function Home() {
           .hp-band::after,
           .hp-band-seam,
           .hp-arrow,
+          .hp-avnote-arrow,
+          a.hp-avnote-link,
           .hp-cta { transition: none; }
           .hp-band:hover .hp-band-media img { transform: none; }
           .hp-band:hover .hp-arrow { transform: none; }
+          a.hp-avnote-link:hover .hp-avnote-arrow { transform: none; }
         }
       `}</style>
     </div>

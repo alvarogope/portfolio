@@ -5,7 +5,7 @@ import DialogueAvatar from "./DialogueAvatar";
 
 type Line = { prompt: string; answer: string };
 
-const CHARS_PER_SEC = 34;
+const CHARS_PER_SEC = 47;
 
 const MS_PER_CHAR = 1000 / CHARS_PER_SEC;
 

@@ -1,14 +1,3 @@
-/**
- * The knight's head — the same pixel-art helmet used by the dialogue
- * avatar on the About page. Drawn in a 64x64 coordinate space so it can
- * be dropped into any SVG with a `translate`/`scale` wrapper.
- *
- * Pure markup, no client boundary: the speaking animation lives in the
- * stylesheet of whoever renders it. Pass `mouth="animated"` to emit both
- * mouth frames tagged with the `avatar-mouth-*` classes that
- * `DialogueAvatar` drives; the default renders only the resting frame,
- * for anyone who wants the knight silent.
- */
 export default function KnightHead({
   mouth = "idle",
 }: {

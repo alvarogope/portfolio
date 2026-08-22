@@ -11,6 +11,7 @@ import { projectNavItems } from "@/content/games";
 import Prism from "@/components/effects/Prism";
 import RoleTerms from "@/components/project/RoleTerms";
 import RoleGraph from "@/components/project/RoleGraph";
+import LevelFlow from "@/components/project/LevelFlow";
 
 export const metadata: Metadata = {
   title: `${p.title} | Álvaro Gómez`,
@@ -80,11 +81,22 @@ export default function BreakInPage() {
           </Reveal>
         )}
 
+        {/* Level design — the route and the pacing */}
+        <Reveal>
+          <div style={{ marginTop: "5rem" }}>
+            <SectionHeading kicker="04 · Level Design" title="The Route" />
+            <p style={{ color: "var(--color-mist)", maxWidth: "42rem", marginTop: "1.5rem", marginBottom: "1.75rem" }}>
+              <RoleTerms text="The bank is one level with two places the team has to split up and two places it has to be back together. Below: the route through it, the tension curve the five stages are tuned to, and what each stage is actually made of. The quiet stage in the middle is deliberate — it is what the vault is measured against." />
+            </p>
+            <LevelFlow />
+          </div>
+        </Reveal>
+
         {/* Design Challenge */}
         {p.designChallenge && (
           <Reveal>
             <div style={{ marginTop: "5rem" }}>
-              <SectionHeading kicker="04 · The Hard Part" title="Design Challenge" />
+              <SectionHeading kicker="05 · The Hard Part" title="Design Challenge" />
               <div style={{ marginTop: "1.5rem" }}>
                 <ChallengeQuote
                   challenge={p.designChallenge}
@@ -98,7 +110,7 @@ export default function BreakInPage() {
         {/* Contributions */}
         <Reveal>
           <div style={{ marginTop: "5rem" }}>
-            <SectionHeading kicker="05 · My Role" title="My Contribution" />
+            <SectionHeading kicker="06 · My Role" title="My Contribution" />
             <div style={{ display: "grid", gap: "1.5rem" }}>
               {p.contributions.map((c) => (
                 <div key={c.label}>

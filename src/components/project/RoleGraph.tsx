@@ -1,3 +1,7 @@
+"use client";
+
+import { useState, useSyncExternalStore } from "react";
+
 import {
   DEFAULT_ROLE,
   breakInRoles,
@@ -24,13 +28,18 @@ import {
  * summary, its abilities, and the two lists that carry the thesis: what it
  * NEEDS, and what it gives.
  *
- * STAGE 1 is static. `selected` is a prop with a default rather than state, so
- * this renders on the server with no client JS — but every piece the
- * interactive version needs is already here: the highlight is a pure function
- * of `selected` (`linkTouches` / `connectedRoles`), and each node and wire
- * already carries its own `is-selected` / `is-active` / `is-dim` class.
- * Stage 2 only has to add `"use client"`, lift `selected` into `useState`, and
- * hang pointer/focus handlers on the `<g class="rg-node">` groups.
+ * STAGE 2 makes the selection live. It is one piece of state, and click, tap,
+ * hover and focus all do the same thing to it — so the ring on the node, the
+ * lit conduit and the readout can never disagree. The highlight itself did not
+ * change: it was already a pure function of `selected` (`linkTouches` /
+ * `connectedRoles`), and every node and wire already carried its own
+ * `is-selected` / `is-active` / `is-dim` class.
+ *
+ * The controls are HTML buttons laid over the drawing rather than the `<g>`
+ * groups themselves. The SVG stays decorative and `aria-hidden`, and a real
+ * `<button>` brings the tab stop, Enter/Space, the focus ring and a finger-sized
+ * target with it — none of which an SVG group gives you the same way across
+ * browsers.
  *
  * GEOMETRY lives here, not in the data file. The wires are hand-routed rather
  * than solved: with seven links, four nodes and a label on every one, an
@@ -163,6 +172,38 @@ type NodeState = "selected" | "linked" | "dim";
 
 /** The escape bus is a `protects` link, but it takes its own colour: it is the one line all four share. */
 const wireKind = (id: string, type: LinkType) => (id === "insider-all" ? "escape" : type);
+
+/* ---- interaction -------------------------------------------------------
+   The roster is the diagram's text equivalent on desktop, where it is clipped
+   off-screen. Rendering its cards as buttons at that width would put four
+   invisible focus stops in the tab order, so the card control only exists in
+   the compact band — where the roster *is* the diagram and the stage is
+   `display: none`. Exactly one set of role controls is focusable at any width,
+   and neither set is ever focusable while it cannot be seen. */
+const COMPACT_QUERY = "(max-width: 899px)";
+
+function subscribeCompact(onChange: () => void) {
+  const mq = window.matchMedia(COMPACT_QUERY);
+  mq.addEventListener("change", onChange);
+  return () => mq.removeEventListener("change", onChange);
+}
+
+const getCompact = () => window.matchMedia(COMPACT_QUERY).matches;
+
+/**
+ * A node's box as stage percentages. The SVG meets its box exactly — width
+ * 100%, height auto, one fixed aspect — so viewBox units map linearly onto the
+ * overlay and a hit box stays on its feed at every stage size.
+ */
+function hitBox(id: RoleId) {
+  const pos = NODE_POS[id];
+  return {
+    left: `${((pos.x - NODE_W / 2) / VB_W) * 100}%`,
+    top: `${((pos.y - NODE_H / 2) / VB_H) * 100}%`,
+    width: `${(NODE_W / VB_W) * 100}%`,
+    height: `${(NODE_H / VB_H) * 100}%`,
+  };
+}
 
 function FeedNode({ role, state }: { role: BreakInRole; state: NodeState }) {
   const pos = NODE_POS[role.id];
@@ -303,19 +344,30 @@ function Tags({ abilities }: { abilities: readonly string[] }) {
 }
 
 export default function RoleGraph({
-  selected = DEFAULT_ROLE,
+  initialRole = DEFAULT_ROLE,
 }: {
   /**
-   * The role the readout expands and the graph highlights around.
-   * Stage 1 passes nothing and gets the Hacker, the hub of the web.
+   * The role the readout opens on, before anyone has touched the diagram.
+   * The page passes nothing and gets the Hacker, the hub of the web.
    */
-  selected?: RoleId;
+  initialRole?: RoleId;
 }) {
+  const [selected, setSelected] = useState<RoleId>(initialRole);
+  const compact = useSyncExternalStore(subscribeCompact, getCompact, () => false);
+
   const role = getRole(selected);
   const linked = connectedRoles(selected);
 
   const nodeState = (id: RoleId): NodeState =>
     id === selected ? "selected" : linked.has(id) ? "linked" : "dim";
+
+  /* Hover is sticky: it does not revert on leave, so the picture holds still
+     when the pointer wanders off the diamond and there is no flicker crossing
+     the gap between two nodes. Touch is left to the click that follows — a
+     synthetic pointerenter selecting first would only pick the same role. */
+  const hover = (id: RoleId) => (event: React.PointerEvent) => {
+    if (event.pointerType !== "touch") setSelected(id);
+  };
 
   return (
     <div className="rg">
@@ -381,6 +433,26 @@ export default function RoleGraph({
             <FeedNode key={r.id} role={r} state={nodeState(r.id)} />
           ))}
         </svg>
+
+        {/* The buttons are transparent and exactly the size of the feed they
+            cover; the lit state is drawn by the node underneath. Focus selects
+            as well as click, so tabbing through the diamond traces the web the
+            same way a pointer does. */}
+        <div className="rg-hits" role="group" aria-label="Break-In roles">
+          {breakInRoles.map((r) => (
+            <button
+              key={r.id}
+              type="button"
+              className="rg-hit"
+              style={hitBox(r.id)}
+              aria-label={`${r.name} — ${r.location}`}
+              aria-pressed={r.id === selected}
+              onClick={() => setSelected(r.id)}
+              onFocus={() => setSelected(r.id)}
+              onPointerEnter={hover(r.id)}
+            />
+          ))}
+        </div>
       </div>
 
       {/* The roster. Visually hidden beside the diagram on desktop, where it is
@@ -399,7 +471,21 @@ export default function RoleGraph({
                 REC
               </span>
             </p>
-            <h3 className="rg-card-name">{r.name}</h3>
+            <h3 className="rg-card-name">
+              {compact ? (
+                <button
+                  type="button"
+                  className="rg-card-hit"
+                  aria-pressed={r.id === selected}
+                  onClick={() => setSelected(r.id)}
+                >
+                  {r.name}
+                  <span className="rg-card-caret" aria-hidden="true" />
+                </button>
+              ) : (
+                r.name
+              )}
+            </h3>
             <p className="rg-card-summary">{r.summary}</p>
             <Tags abilities={r.abilities} />
             <div className="rg-card-links">
@@ -435,7 +521,9 @@ export default function RoleGraph({
       </div>
 
       <aside className="panel rg-panel">
-        <div className="rg-panel-detail">
+        {/* Keyed on the role so a change replays the swap rather than editing
+            the text in place under the reader's eye. */}
+        <div className="rg-panel-detail" key={selected}>
           <p className="mono rg-panel-kicker">
             Readout · {role.orbitLabel} · {role.cam} · {role.location}
           </p>
@@ -452,6 +540,13 @@ export default function RoleGraph({
 
         <p className="rg-thesis">Nobody wins alone</p>
       </aside>
+
+      {/* The readout is display:none in the compact band and the roster carries
+          the detail there, so this one line is what reports a change of
+          selection at every width. */}
+      <p className="rg-sr-live" role="status">
+        {role.name} selected · {role.location}
+      </p>
 
       <style>{`
         .rg {
@@ -501,11 +596,35 @@ export default function RoleGraph({
 
         /* ---- stage ---- */
         .rg-stage {
+          position: relative;
           border: 1px solid var(--rg-edge);
           background: var(--color-void);
           overflow: hidden;
         }
         .rg-stage svg { display: block; width: 100%; height: auto; }
+
+        /* ---- hit boxes ----
+           Transparent, and exactly the size of the feed they sit on: there is
+           nothing to style here but the pointer, the tap behaviour and the
+           focus ring, because the lit state is drawn by the SVG node beneath.
+           The ring has room — the nearest node edge is 50 viewBox units in
+           from the wall and the stage clips at 0 — so it never gets shaved. */
+        .rg-hits { position: absolute; inset: 0; }
+        .rg-hit {
+          position: absolute;
+          appearance: none;
+          margin: 0;
+          padding: 0;
+          border: 0;
+          background: none;
+          cursor: pointer;
+          touch-action: manipulation;
+          -webkit-tap-highlight-color: transparent;
+        }
+        .rg-hit:focus-visible {
+          outline: 2px solid var(--color-lunar-gold);
+          outline-offset: 3px;
+        }
 
         .rg-field { fill: var(--color-void); }
         .rg-field-grid { fill: url(#rg-grid); opacity: 0.5; }
@@ -655,6 +774,15 @@ export default function RoleGraph({
           gap: 1rem;
         }
 
+        /* The swap, replayed by the key on .rg-panel-detail. Short enough to
+           read as the panel answering the pointer rather than as an entrance. */
+        .rg-panel-detail { animation: rg-swap 200ms cubic-bezier(0.22, 1, 0.36, 1); }
+
+        @keyframes rg-swap {
+          from { opacity: 0; transform: translateY(4px); }
+          to { opacity: 1; transform: none; }
+        }
+
         .rg-panel-kicker,
         .rg-list-title {
           font-size: 0.72rem;
@@ -773,6 +901,19 @@ export default function RoleGraph({
           line-height: 1.4;
         }
 
+        /* Heard, never seen. Out of flow, so it costs the grid nothing. */
+        .rg-sr-live {
+          position: absolute;
+          width: 1px;
+          height: 1px;
+          margin: -1px;
+          padding: 0;
+          overflow: hidden;
+          clip-path: inset(50%);
+          white-space: nowrap;
+          border: 0;
+        }
+
         /* Anchors to the bottom of the panel, which stretches to the height of
            the graph column beside it. */
         .rg-thesis {
@@ -793,9 +934,50 @@ export default function RoleGraph({
            Below 900px: the diagram itself. */
         .rg-roster { list-style: none; margin: 0; padding: 0; display: grid; gap: 1rem; }
 
-        .rg-card { padding: 1.35rem; border: 1px solid var(--rg-edge); }
+        .rg-card { position: relative; padding: 1.35rem; border: 1px solid var(--rg-edge); }
         .rg-card.is-selected {
           border-color: color-mix(in srgb, var(--color-silver) 45%, transparent);
+        }
+
+        /* The role name is the control, but its ::after stretches over the
+           whole card, so anywhere on a card is a tap target — the finger-sized
+           equivalent of clicking a node. The outline still hugs the name,
+           since an outline ignores the pseudo-element. */
+        .rg-card-hit {
+          appearance: none;
+          margin: 0;
+          padding: 0;
+          border: 0;
+          background: none;
+          font: inherit;
+          color: inherit;
+          letter-spacing: inherit;
+          text-align: left;
+          cursor: pointer;
+          touch-action: manipulation;
+          -webkit-tap-highlight-color: transparent;
+        }
+        .rg-card-hit::after { content: ""; position: absolute; inset: 0; }
+        .rg-card-hit:focus-visible {
+          outline: 2px solid var(--color-lunar-gold);
+          outline-offset: 3px;
+        }
+
+        /* Says the card opens, and which way it is pointing now. */
+        .rg-card-caret {
+          display: inline-block;
+          width: 0.38em;
+          height: 0.38em;
+          margin-left: 0.6rem;
+          border-right: 2px solid var(--color-silver);
+          border-bottom: 2px solid var(--color-silver);
+          transform: translateY(-0.16em) rotate(45deg);
+          opacity: 0.7;
+          transition: transform 200ms cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .rg-card.is-selected .rg-card-caret {
+          transform: translateY(0.06em) rotate(-135deg);
+          opacity: 1;
         }
         .rg-card-cam {
           display: flex;
@@ -877,13 +1059,23 @@ export default function RoleGraph({
           .rg-stage { display: none; }
           .rg-panel-detail { display: none; }
           .rg-key { margin-top: 0; border-top: 0; padding-top: 0; }
+
+          /* Collapsed until picked: four cards with every list open is a long
+             scroll, and it gives the tap something to reveal. Only this band
+             collapses — the desktop roster keeps every list in place, so the
+             diagram's text equivalent up there is untouched. */
+          .rg-card:not(.is-selected) .rg-card-links { display: none; }
         }
 
+        /* Reduced motion switches instantly: no wire cross-fade, no readout
+           swap, no caret sweep — the picture is simply already changed. */
         @media (prefers-reduced-motion: reduce) {
           .rg-rec-dot,
-          .rg-card-dot { animation: none; }
+          .rg-card-dot,
+          .rg-panel-detail { animation: none; }
           .rg-wire,
-          .rg-node { transition: none; }
+          .rg-node,
+          .rg-card-caret { transition: none; }
         }
       `}</style>
     </div>

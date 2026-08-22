@@ -34,10 +34,19 @@ import {
  * selection. Reading down the list lights the map up in step; it does not throw
  * a panel of text you are already reading over the art.
  *
- * Hover is sticky. Nothing clears on pointer-leave, so the map holds still
- * while you read; Escape, the popover's dismiss button, or a click on open
- * water clears it. That is also what WCAG 1.4.13 asks of content shown on
- * hover: dismissable, hoverable, and it stays put.
+ * CLOSING. A mouse leaving a marker closes its popover at once, and focus
+ * leaving does the same — the ordinary tooltip contract. Three things keep
+ * that from being annoying:
+ *
+ *   - The popover is a descendant of the marker, and a transparent bridge
+ *     spans the gap between the two, so moving the pointer INTO the popover to
+ *     read it does not count as leaving. (WCAG 1.4.13 asks for exactly this:
+ *     hover content must be hoverable as well as dismissable.)
+ *   - Touch is exempt. A tap fires a pointerleave of its own the moment the
+ *     finger lifts, which would shut the popover before it was read, so only a
+ *     mouse or pen closes on leave. A tap is cleared by tapping open water,
+ *     the dismiss button, or another marker.
+ *   - Escape still clears from anywhere.
  */
 
 const MAP_SRC = "/images/moon-knight/world-map.jpg";
@@ -132,6 +141,21 @@ export default function WorldMap() {
     if (event.pointerType !== "touch") select(id, from);
   };
 
+  /* Closes on the way out, but only for a pointer that can actually hover: a
+     touch fires pointerleave as the finger lifts, and honouring that would
+     close the popover a tap had just opened. */
+  const unhover = (id: MarkerId) => (event: React.PointerEvent) => {
+    if (event.pointerType !== "touch" && selection?.id === id) clear();
+  };
+
+  /* Focus leaving the marker entirely — not merely moving from the sigil to
+     the dismiss button inside its own popover. */
+  const unfocus = (id: MarkerId) => (event: React.FocusEvent<HTMLElement>) => {
+    if (selection?.id !== id) return;
+    if (event.currentTarget.contains(event.relatedTarget as Node | null)) return;
+    clear();
+  };
+
   useEffect(() => {
     const onKey = (event: KeyboardEvent) => {
       if (event.key === "Escape") clear();
@@ -169,6 +193,8 @@ export default function WorldMap() {
               <div
                 key={marker.id}
                 className={`wm-marker is-${marker.type} ${isSelected ? "is-selected" : ""}`}
+                onPointerLeave={unhover(marker.id)}
+                onBlur={unfocus(marker.id)}
                 style={
                   {
                     left: `${marker.xPct}%`,
@@ -235,6 +261,8 @@ export default function WorldMap() {
             <li
               key={marker.id}
               className={`panel wm-item is-${marker.type} ${isSelected ? "is-selected" : ""}`}
+              onPointerLeave={unhover(marker.id)}
+              onBlur={unfocus(marker.id)}
             >
               <h3 className="wm-item-name">
                 <button
@@ -405,6 +433,20 @@ export default function WorldMap() {
         }
         .wm-pop.side-below { top: calc(100% + 0.6rem); }
         .wm-pop.side-above { bottom: calc(100% + 0.6rem); }
+
+        /* The 0.6rem of air between sigil and popover is map, not marker, so a
+           pointer crossing it would fire pointerleave and shut the thing the
+           reader is reaching for. This bridges the gap invisibly; it is a
+           child of the popover, so the crossing never leaves the marker. */
+        .wm-pop::before {
+          content: "";
+          position: absolute;
+          left: 0;
+          right: 0;
+          height: 0.75rem;
+        }
+        .wm-pop.side-below::before { top: -0.75rem; }
+        .wm-pop.side-above::before { bottom: -0.75rem; }
         .wm-pop.align-center { left: 50%; transform: translateX(-50%); }
         .wm-pop.align-start { left: -0.5rem; }
         .wm-pop.align-end { right: -0.5rem; }

@@ -15,6 +15,7 @@ import Aurora from "@/components/effects/Aurora";
 import MoonKnightAudio from "@/components/project/MoonKnightAudio";
 import Bestiary from "@/components/project/Bestiary";
 import WorldMap from "@/components/project/WorldMap";
+import NarrativeDesign from "@/components/project/NarrativeDesign";
 
 export const metadata: Metadata = {
   title: `${p.title} | Álvaro Gómez Pérez`,
@@ -109,11 +110,23 @@ export default function MoonKnightPage() {
           </div>
         </Reveal>
 
+        {/* Narrative design — the arc, the motifs, and story carried by systems */}
+        <Reveal>
+          <div style={{ marginTop: "5rem" }}>
+            <SectionHeading kicker="06 · Narrative Design" title="Three Acts, One Moon" />
+            <p style={{ color: "var(--color-mist)", maxWidth: "42rem", marginTop: "1.5rem", marginBottom: "1.75rem" }}>
+              The story is told by the world, not by cutscenes. Three acts, three moon phases, three
+              ages of a life — and a reversal in the last one that re-reads everything before it.
+            </p>
+            <NarrativeDesign />
+          </div>
+        </Reveal>
+
         {/* Challenge Quote */}
         {p.designChallenge && (
           <Reveal>
             <div style={{ marginTop: "5rem" }}>
-              <SectionHeading kicker="06 · The Hard Part" title="Design Challenge" />
+              <SectionHeading kicker="07 · The Hard Part" title="Design Challenge" />
               <div style={{ marginTop: "1.5rem" }}>
                 <ChallengeQuote challenge={p.designChallenge} />
               </div>
@@ -124,7 +137,7 @@ export default function MoonKnightPage() {
         {p.engineeringNote && (
           <Reveal>
             <div style={{ marginTop: "5rem" }}>
-              <SectionHeading kicker="07 · From Design to Engineering" title="Building the Quantum" />
+              <SectionHeading kicker="08 · From Design to Engineering" title="Building the Quantum" />
               <div style={{ marginTop: "1.5rem" }}>
                 <EngineeringNote note={p.engineeringNote} />
               </div>
@@ -148,7 +161,7 @@ export default function MoonKnightPage() {
         {/* Original Score */}
         <Reveal>
           <div style={{ marginTop: "5rem" }}>
-            <SectionHeading kicker="08 · Original Score" title="Music for a Borrowed Moon" />
+            <SectionHeading kicker="09 · Original Score" title="Music for a Borrowed Moon" />
             <p style={{ color: "var(--color-mist)", maxWidth: "42rem", marginTop: "1.5rem", marginBottom: "1.5rem" }}>
               I wrote and recorded the game&apos;s score myself. The main theme carries the knight through the night; the rest
               theme only surfaces when he stops beneath a willow tree. Play either below.
@@ -161,7 +174,7 @@ export default function MoonKnightPage() {
         {p.gallery && (
           <Reveal>
             <div style={{ marginTop: "5rem" }}>
-              <SectionHeading kicker="09 · From the Game" title="Gallery" />
+              <SectionHeading kicker="10 · From the Game" title="Gallery" />
               <div style={{ marginTop: "1.5rem" }}>
                 <Gallery items={p.gallery} />
               </div>

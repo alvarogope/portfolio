@@ -14,6 +14,7 @@ import { projectNavItems } from "@/content/games";
 import Aurora from "@/components/effects/Aurora";
 import MoonKnightAudio from "@/components/project/MoonKnightAudio";
 import Bestiary from "@/components/project/Bestiary";
+import WorldMap from "@/components/project/WorldMap";
 
 export const metadata: Metadata = {
   title: `${p.title} | Álvaro Gómez Pérez`,
@@ -95,11 +96,24 @@ export default function MoonKnightPage() {
           </div>
         </Reveal>
 
+        {/* The world of Kaelum — the hand-drawn map, marked up */}
+        <Reveal>
+          <div style={{ marginTop: "5rem" }}>
+            <SectionHeading kicker="05 · The World" title="The World of Kaelum" />
+            <p style={{ color: "var(--color-mist)", maxWidth: "42rem", marginTop: "1.5rem", marginBottom: "1.75rem" }}>
+              Four lands around one drowned island, drawn by hand. Three torches mark the fortresses
+              holding the Moon Fragments; the roses mark the ways down into the Old Gods&apos; dungeons.
+              Point at any sigil to read what waits there.
+            </p>
+            <WorldMap />
+          </div>
+        </Reveal>
+
         {/* Challenge Quote */}
         {p.designChallenge && (
           <Reveal>
             <div style={{ marginTop: "5rem" }}>
-              <SectionHeading kicker="05 · The Hard Part" title="Design Challenge" />
+              <SectionHeading kicker="06 · The Hard Part" title="Design Challenge" />
               <div style={{ marginTop: "1.5rem" }}>
                 <ChallengeQuote challenge={p.designChallenge} />
               </div>
@@ -110,7 +124,7 @@ export default function MoonKnightPage() {
         {p.engineeringNote && (
           <Reveal>
             <div style={{ marginTop: "5rem" }}>
-              <SectionHeading kicker="06 · From Design to Engineering" title="Building the Quantum" />
+              <SectionHeading kicker="07 · From Design to Engineering" title="Building the Quantum" />
               <div style={{ marginTop: "1.5rem" }}>
                 <EngineeringNote note={p.engineeringNote} />
               </div>
@@ -134,7 +148,7 @@ export default function MoonKnightPage() {
         {/* Original Score */}
         <Reveal>
           <div style={{ marginTop: "5rem" }}>
-            <SectionHeading kicker="07 · Original Score" title="Music for a Borrowed Moon" />
+            <SectionHeading kicker="08 · Original Score" title="Music for a Borrowed Moon" />
             <p style={{ color: "var(--color-mist)", maxWidth: "42rem", marginTop: "1.5rem", marginBottom: "1.5rem" }}>
               I wrote and recorded the game&apos;s score myself. The main theme carries the knight through the night; the rest
               theme only surfaces when he stops beneath a willow tree. Play either below.
@@ -147,7 +161,7 @@ export default function MoonKnightPage() {
         {p.gallery && (
           <Reveal>
             <div style={{ marginTop: "5rem" }}>
-              <SectionHeading kicker="08 · From the Game" title="Gallery" />
+              <SectionHeading kicker="09 · From the Game" title="Gallery" />
               <div style={{ marginTop: "1.5rem" }}>
                 <Gallery items={p.gallery} />
               </div>

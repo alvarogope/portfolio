@@ -16,6 +16,11 @@ import MoonKnightAudio from "@/components/project/MoonKnightAudio";
 import Bestiary from "@/components/project/Bestiary";
 import WorldMap from "@/components/project/WorldMap";
 import NarrativeDesign from "@/components/project/NarrativeDesign";
+import Cast from "@/components/project/Cast";
+import DiegeticDesign from "@/components/project/DiegeticDesign";
+import Jousting from "@/components/project/Jousting";
+import ArtDirection from "@/components/project/ArtDirection";
+import AudioDesign from "@/components/project/AudioDesign";
 
 export const metadata: Metadata = {
   title: `${p.title} | Álvaro Gómez Pérez`,
@@ -122,11 +127,64 @@ export default function MoonKnightPage() {
           </div>
         </Reveal>
 
+        {/* The cast — who is in the story the section above tells, and why each exists */}
+        <Reveal>
+          <div style={{ marginTop: "5rem" }}>
+            <Cast kicker="07 · The Cast" />
+          </div>
+        </Reveal>
+
+        {/* Diegetic design — the systems the story above is actually told through:
+            UI, progression and navigation dissolved into the fiction. Sits after
+            the narrative and the cast because the moon HUD only lands once the
+            reader knows what the moon means. */}
+        <Reveal>
+          <div style={{ marginTop: "5rem" }}>
+            <SectionHeading kicker="08 · Diegetic Design" title="Mechanics That Hide in the World" />
+            <p style={{ color: "var(--color-mist)", maxWidth: "42rem", marginTop: "1.5rem", marginBottom: "1.75rem" }}>
+              The health bar is the moon on the knight&apos;s back, experience is a rose stained in a
+              boss&apos;s blood, and the map is a blade held up to the moonlight. Nothing here is a
+              menu — every system is an object, a gesture or a place.
+            </p>
+            <DiegeticDesign />
+          </div>
+        </Reveal>
+
+        {/* Art direction — the visual thesis and what it decides. Sits after
+            the world, the narrative and the diegetic systems on purpose: the
+            Sublime is argued through solitude, ruin and darkness, so the reader
+            needs the world and the story first, and the visibility decision
+            only lands once the integrated UI has been made the case for. */}
+        <Reveal>
+          <div style={{ marginTop: "5rem" }}>
+            <SectionHeading kicker="09 · Art Direction" title="The Sublime, Made Playable" />
+            <p style={{ color: "var(--color-mist)", maxWidth: "42rem", marginTop: "1.5rem", marginBottom: "1.75rem" }}>
+              One aesthetic idea decides the whole look of the game — and then keeps going,
+              into how the player travels, what the world is made of, and how hard it is to
+              see what is about to kill you.
+            </p>
+            <ArtDirection />
+          </div>
+        </Reveal>
+
+        {/* The joust — a side feature, kept small, sitting with the other
+            mechanics rather than among the pillars. */}
+        <Reveal>
+          <div style={{ marginTop: "5rem" }}>
+            <SectionHeading kicker="10 · A Side Feature" title="The Jousting Minigame" />
+            <p style={{ color: "var(--color-mist)", maxWidth: "42rem", marginTop: "1.5rem", marginBottom: "1.75rem" }}>
+              The Woods still keeps the duelling tradition of a fallen noble house, and Orpheus is
+              the one who teaches it. Two riders, two lances, and one moment to decide.
+            </p>
+            <Jousting />
+          </div>
+        </Reveal>
+
         {/* Challenge Quote */}
         {p.designChallenge && (
           <Reveal>
             <div style={{ marginTop: "5rem" }}>
-              <SectionHeading kicker="07 · The Hard Part" title="Design Challenge" />
+              <SectionHeading kicker="11 · The Hard Part" title="Design Challenge" />
               <div style={{ marginTop: "1.5rem" }}>
                 <ChallengeQuote challenge={p.designChallenge} />
               </div>
@@ -137,7 +195,7 @@ export default function MoonKnightPage() {
         {p.engineeringNote && (
           <Reveal>
             <div style={{ marginTop: "5rem" }}>
-              <SectionHeading kicker="08 · From Design to Engineering" title="Building the Quantum" />
+              <SectionHeading kicker="12 · From Design to Engineering" title="Building the Quantum" />
               <div style={{ marginTop: "1.5rem" }}>
                 <EngineeringNote note={p.engineeringNote} />
               </div>
@@ -158,15 +216,22 @@ export default function MoonKnightPage() {
             </div>
           </Reveal>
         )}
-        {/* Original Score */}
+        {/* Original score & audio design. The two real recordings are the
+            playable core and are passed straight through to `MoonKnightAudio`;
+            everything around them is the composer's reasoning. No third player
+            is ever added here — the other pieces described in that section are
+            design, not recordings. */}
         <Reveal>
           <div style={{ marginTop: "5rem" }}>
-            <SectionHeading kicker="09 · Original Score" title="Music for a Borrowed Moon" />
-            <p style={{ color: "var(--color-mist)", maxWidth: "42rem", marginTop: "1.5rem", marginBottom: "1.5rem" }}>
-              I wrote and recorded the game&apos;s score myself. The main theme carries the knight through the night; the rest
-              theme only surfaces when he stops beneath a willow tree. Play either below.
+            <SectionHeading kicker="13 · Score & Audio Design" title="Music for a Borrowed Moon" />
+            <p style={{ color: "var(--color-mist)", maxWidth: "42rem", marginTop: "1.5rem", marginBottom: "1.75rem" }}>
+              I composed the game&apos;s score, and designed the rules it obeys: where music is
+              allowed to play, what each instrument is permitted to mean, and why most of this
+              game is scored with nothing but footsteps.
             </p>
-            <MoonKnightAudio />
+            <AudioDesign>
+              <MoonKnightAudio />
+            </AudioDesign>
           </div>
         </Reveal>
 
@@ -174,7 +239,7 @@ export default function MoonKnightPage() {
         {p.gallery && (
           <Reveal>
             <div style={{ marginTop: "5rem" }}>
-              <SectionHeading kicker="10 · From the Game" title="Gallery" />
+              <SectionHeading kicker="14 · From the Game" title="Gallery" />
               <div style={{ marginTop: "1.5rem" }}>
                 <Gallery items={p.gallery} />
               </div>

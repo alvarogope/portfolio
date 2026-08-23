@@ -7,6 +7,7 @@ import {
   type MoonPhase,
   type ThemeGlyph,
 } from "@/content/moon-knight-narrative";
+import { MoonPhaseGlyph } from "./MoonPhaseGlyph";
 
 /**
  * Moon-Knight — the narrative design, built to be skimmed before it is read.
@@ -32,32 +33,19 @@ import {
  */
 
 /* ---- moon phases ----
-   Drawn, not typed: the unicode moon characters render as emoji on most
-   platforms, which is the wrong century. Each glyph is the same 20-unit disc —
-   a faint full circle for the moon that is always there, and a lit shape over
-   it for the part currently in sunlight.
-
-   The crescent is the only awkward one. It is the right half of the disc
-   (clockwise, sweep 1) closed by the right half of a narrower ellipse
-   (counter-clockwise, sweep 0), which cuts the terminator back into the lit
-   side and leaves a true sliver rather than a comma. */
-const PHASE_PATH: Record<MoonPhase, string | null> = {
-  crescent: "M12 2 A 10 10 0 0 1 12 22 A 5 10 0 0 0 12 2 Z",
-  half: "M12 2 A 10 10 0 0 1 12 22 Z",
-  full: null,
-};
-
+   The geometry lives in `MoonPhaseGlyph`, shared with the diegetic-design
+   section further down the page, where the same discs are the health readout.
+   Two sections drawing their own crescents drift; one module does not. The
+   classes below are still this section's, so these moons stay silver while the
+   health gradient runs its own colours through the same shapes. */
 function MoonGlyph({ phase }: { phase: MoonPhase }) {
-  const lit = PHASE_PATH[phase];
   return (
-    <svg className="nd-moon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-      <circle className="nd-moon-disc" cx="12" cy="12" r="10" />
-      {lit ? (
-        <path className="nd-moon-lit" d={lit} />
-      ) : (
-        <circle className="nd-moon-lit" cx="12" cy="12" r="10" />
-      )}
-    </svg>
+    <MoonPhaseGlyph
+      phase={phase}
+      className="nd-moon"
+      discClassName="nd-moon-disc"
+      litClassName="nd-moon-lit"
+    />
   );
 }
 

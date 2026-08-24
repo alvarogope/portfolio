@@ -8,6 +8,7 @@ import Reveal from "@/components/layout/Reveal";
 import TransmissionCard from "@/components/project/TransmissionCard";
 import PlanetDossier from "@/components/project/PlanetDossier";
 import ShatteredSkiesSystem from "@/components/project/ShatteredSkiesSystem";
+import NarrativeMap from "@/components/project/NarrativeMap";
 import ProjectNav from "@/components/layout/ProjectNav";
 import { projectNavItems } from "@/content/games";
 import Galaxy from "@/components/effects/Galaxy";
@@ -51,10 +52,20 @@ export default function ShatteredSkiesPage() {
           </div>
         </Reveal>
 
+        {/* The Game — the team's premise, world and narrative structure.
+            Context before contributions: this is the game we made together,
+            and the sections after it are the parts that are mine. */}
+        <Reveal>
+          <div style={{ marginTop: "5rem" }}>
+            <SectionHeading kicker="02 · The Game" title="The Game We Made" />
+            <NarrativeMap />
+          </div>
+        </Reveal>
+
         {/* The Planetary System */}
         <Reveal>
           <div style={{ marginTop: "5rem" }}>
-            <SectionHeading kicker="02 · World Design" title="A System of Five Worlds" />
+            <SectionHeading kicker="03 · World Design" title="A System of Five Worlds" />
             <p style={{ color: "var(--color-mist)", maxWidth: "42rem", marginTop: "1.5rem", marginBottom: "1.5rem" }}>
               A miniature solar system where the physics is the puzzle. Each planet has its own hazard, its own secret, and its own rule for getting through.
             </p>
@@ -70,7 +81,7 @@ export default function ShatteredSkiesPage() {
         {p.communication && (
           <Reveal>
             <div style={{ marginTop: "5rem" }}>
-              <SectionHeading kicker="03 · The Core Mechanic" title="Communication Is the Game" />
+              <SectionHeading kicker="04 · The Core Mechanic" title="Communication Is the Game" />
               <p style={{ color: "var(--color-mist)", maxWidth: "42rem", marginTop: "1.5rem", marginBottom: "1.5rem" }}>
                 Two enemies who cannot understand each other must cooperate to survive. Every channel of communication is deliberately broken, and clarity is the rarest resource in the game.
               </p>
@@ -87,26 +98,9 @@ export default function ShatteredSkiesPage() {
         {p.designChallenge && (
           <Reveal>
             <div style={{ marginTop: "5rem" }}>
-              <SectionHeading kicker="04 · The Hard Part" title="Design Challenge" />
+              <SectionHeading kicker="05 · The Hard Part" title="Design Challenge" />
               <div style={{ marginTop: "1.5rem" }}>
                 <ChallengeQuote challenge={p.designChallenge} />
-              </div>
-            </div>
-          </Reveal>
-        )}
-
-        {/* Three Endings */}
-        {p.endings && (
-          <Reveal>
-            <div style={{ marginTop: "5rem" }}>
-              <SectionHeading kicker="05 · Consequence" title="Three Endings" />
-              <p style={{ color: "var(--color-mist)", maxWidth: "42rem", marginTop: "1.5rem", marginBottom: "1.5rem" }}>
-                What players say in their rare seconds of clear speech, and whether they choose truth or deception, decides which of these they reach.
-              </p>
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: "1.25rem" }}>
-                {p.endings.map((e, i) => (
-                  <TransmissionCard key={e.name} label={e.name} body={e.outcome} delay={i * 400} />
-                ))}
               </div>
             </div>
           </Reveal>

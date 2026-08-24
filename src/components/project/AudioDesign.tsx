@@ -341,7 +341,13 @@ export default function AudioDesign({ children }: { children: ReactNode }) {
         /* ---- 5 · instruments that mean something ----
            "context → instrument" is the whole idea, so it is the heading and it
            is built to survive being the only thing read. */
-        .mkm-meanings { grid-template-columns: repeat(auto-fit, minmax(21rem, 1fr)); }
+        /* TWO COLUMNS, NOT auto-fit. There are exactly four of these, and
+           auto-fit at a 21rem minimum fits three across a normal desktop —
+           which left the fourth alone on its own row, reading as an
+           afterthought rather than the fourth of four. Fixed at two so the
+           set always lands as a square, and the wider column suits cards this
+           text-heavy better than three cramped ones did. */
+        .mkm-meanings { grid-template-columns: repeat(2, minmax(0, 1fr)); }
         .mkm-pair {
           display: flex;
           flex-wrap: wrap;
@@ -387,6 +393,13 @@ export default function AudioDesign({ children }: { children: ReactNode }) {
           letter-spacing: 0.14em;
           text-transform: uppercase;
           color: var(--color-silver);
+        }
+
+        /* Two columns need roughly 21rem each to hold a line of this prose;
+           below that the square becomes a single file rather than two columns
+           too narrow to read. */
+        @media (max-width: 760px) {
+          .mkm-meanings { grid-template-columns: minmax(0, 1fr); }
         }
 
         @media (max-width: 520px) {

@@ -18,16 +18,23 @@
  * (counter-clockwise, sweep 0), which cuts the terminator back into the lit
  * side and leaves a true sliver rather than a comma.
  *
+ * The gibbous is that same construction with the closing sweep flipped: the
+ * ellipse now bows the other way, past the centre line and into the dark side,
+ * so the lit area is more than half a disc. Crescent and gibbous are therefore
+ * literally the same two arcs with one bit changed, which is why they read as
+ * opposite ends of one cycle rather than two unrelated drawings.
+ *
  * COLOUR IS THE CALLER'S. Both the disc and the lit area take their class from
  * props and carry no fill of their own, because the narrative section paints
  * every moon silver while the diegetic section runs them from silver to
  * scarlet as a health gradient. Same shape, different ink.
  */
 
-export type MoonPhaseName = "new" | "crescent" | "half" | "full";
+export type MoonPhaseName = "new" | "crescent" | "half" | "gibbous" | "full";
 
 const CRESCENT = "M12 2 A 10 10 0 0 1 12 22 A 5 10 0 0 0 12 2 Z";
 const HALF = "M12 2 A 10 10 0 0 1 12 22 Z";
+const GIBBOUS = "M12 2 A 10 10 0 0 1 12 22 A 5 10 0 0 1 12 2 Z";
 
 export function MoonPhaseGlyph({
   phase,
@@ -47,6 +54,7 @@ export function MoonPhaseGlyph({
     <svg className={className} viewBox="0 0 24 24" aria-hidden="true" focusable="false">
       <circle className={discClassName} cx="12" cy="12" r="10" />
       {phase === "full" && <circle className={litClassName} cx="12" cy="12" r="10" />}
+      {phase === "gibbous" && <path className={litClassName} d={GIBBOUS} />}
       {phase === "half" && <path className={litClassName} d={HALF} />}
       {phase === "crescent" && <path className={litClassName} d={CRESCENT} />}
       {/* new moon: the disc is all there is, and that is the point */}

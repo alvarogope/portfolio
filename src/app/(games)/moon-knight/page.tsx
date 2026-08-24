@@ -21,6 +21,8 @@ import DiegeticDesign from "@/components/project/DiegeticDesign";
 import Jousting from "@/components/project/Jousting";
 import ArtDirection from "@/components/project/ArtDirection";
 import AudioDesign from "@/components/project/AudioDesign";
+import BeatChart from "@/components/project/BeatChart";
+import Expansions from "@/components/project/Expansions";
 
 export const metadata: Metadata = {
   title: `${p.title} | Álvaro Gómez Pérez`,
@@ -167,11 +169,47 @@ export default function MoonKnightPage() {
           </div>
         </Reveal>
 
+        {/* Level design — the beat chart. Last of the pillars on purpose: it is
+            the only section that plans every other one at once, so the reader
+            needs the creatures, the world, the cast, the story and the look
+            already in hand for a cell reading "Banshees hidden in fog" to be a
+            decision rather than a noun. The moon rail then closes the loop
+            back to the narrative: same four phases, same spine. */}
+        <Reveal>
+          <div style={{ marginTop: "5rem" }}>
+            <SectionHeading kicker="10 · Level Design" title="The Beat Chart" />
+            <p style={{ color: "var(--color-mist)", maxWidth: "42rem", marginTop: "1.5rem", marginBottom: "1.75rem" }}>
+              The sheet the game was actually planned from: four levels against nine design
+              dimensions, with the moon waxing across the top. Pick a level to open its design
+              sheet.
+            </p>
+            <BeatChart />
+          </div>
+        </Reveal>
+
+        {/* Expansions — the "and beyond", and the closer of the world block.
+            It has to come after the beat chart: that section finishes planning
+            the four levels the game HAS, so this is the natural next breath,
+            and the claim only lands once the reader has seen the quantum
+            abilities (03) that both concepts are grown from. Two concepts, no
+            roadmap — narrative range, not a plan to ship. */}
+        <Reveal>
+          <div style={{ marginTop: "5rem" }}>
+            <SectionHeading kicker="11 · And Beyond" title="Where the World Goes Next" />
+            <p style={{ color: "var(--color-mist)", maxWidth: "42rem", marginTop: "1.5rem", marginBottom: "1.75rem" }}>
+              Two expansion concepts, each grown from a quantum mechanic the game already has.
+              Unbuilt, and kept here as evidence of the same thing the rest of the page argues:
+              that these systems generate story on their own.
+            </p>
+            <Expansions />
+          </div>
+        </Reveal>
+
         {/* The joust — a side feature, kept small, sitting with the other
             mechanics rather than among the pillars. */}
         <Reveal>
           <div style={{ marginTop: "5rem" }}>
-            <SectionHeading kicker="10 · A Side Feature" title="The Jousting Minigame" />
+            <SectionHeading kicker="12 · A Side Feature" title="The Jousting Minigame" />
             <p style={{ color: "var(--color-mist)", maxWidth: "42rem", marginTop: "1.5rem", marginBottom: "1.75rem" }}>
               The Woods still keeps the duelling tradition of a fallen noble house, and Orpheus is
               the one who teaches it. Two riders, two lances, and one moment to decide.
@@ -184,7 +222,7 @@ export default function MoonKnightPage() {
         {p.designChallenge && (
           <Reveal>
             <div style={{ marginTop: "5rem" }}>
-              <SectionHeading kicker="11 · The Hard Part" title="Design Challenge" />
+              <SectionHeading kicker="13 · The Hard Part" title="Design Challenge" />
               <div style={{ marginTop: "1.5rem" }}>
                 <ChallengeQuote challenge={p.designChallenge} />
               </div>
@@ -195,7 +233,7 @@ export default function MoonKnightPage() {
         {p.engineeringNote && (
           <Reveal>
             <div style={{ marginTop: "5rem" }}>
-              <SectionHeading kicker="12 · From Design to Engineering" title="Building the Quantum" />
+              <SectionHeading kicker="14 · From Design to Engineering" title="Building the Quantum" />
               <div style={{ marginTop: "1.5rem" }}>
                 <EngineeringNote note={p.engineeringNote} />
               </div>
@@ -223,7 +261,7 @@ export default function MoonKnightPage() {
             design, not recordings. */}
         <Reveal>
           <div style={{ marginTop: "5rem" }}>
-            <SectionHeading kicker="13 · Score & Audio Design" title="Music for a Borrowed Moon" />
+            <SectionHeading kicker="15 · Score & Audio Design" title="Music for a Borrowed Moon" />
             <p style={{ color: "var(--color-mist)", maxWidth: "42rem", marginTop: "1.5rem", marginBottom: "1.75rem" }}>
               I composed the game&apos;s score, and designed the rules it obeys: where music is
               allowed to play, what each instrument is permitted to mean, and why most of this
@@ -239,7 +277,7 @@ export default function MoonKnightPage() {
         {p.gallery && (
           <Reveal>
             <div style={{ marginTop: "5rem" }}>
-              <SectionHeading kicker="14 · From the Game" title="Gallery" />
+              <SectionHeading kicker="16 · From the Game" title="Gallery" />
               <div style={{ marginTop: "1.5rem" }}>
                 <Gallery items={p.gallery} />
               </div>

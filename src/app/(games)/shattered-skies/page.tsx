@@ -5,10 +5,11 @@ import SectionHeading from "@/components/layout/SectionHeading";
 import ProjectHero from "@/components/project/ProjectHero";
 import ChallengeQuote from "@/components/project/ChallengeQuote";
 import Reveal from "@/components/layout/Reveal";
-import TransmissionCard from "@/components/project/TransmissionCard";
 import PlanetDossier from "@/components/project/PlanetDossier";
 import ShatteredSkiesSystem from "@/components/project/ShatteredSkiesSystem";
 import NarrativeMap from "@/components/project/NarrativeMap";
+import ShatterstormWorld from "@/components/project/ShatterstormWorld";
+import ShatteredSkiesMechanics from "@/components/project/ShatteredSkiesMechanics";
 import ProjectNav from "@/components/layout/ProjectNav";
 import { projectNavItems } from "@/content/games";
 import Galaxy from "@/components/effects/Galaxy";
@@ -62,10 +63,20 @@ export default function ShatteredSkiesPage() {
           </div>
         </Reveal>
 
+        {/* The World of Shatterstorm — the setting's soul, placed directly
+            above the planetary dossier, which is its facts. The two are one
+            world-design chapter in two halves: voice first, survey second. */}
+        <Reveal>
+          <div style={{ marginTop: "5rem" }}>
+            <SectionHeading kicker="03 · World Design" title="The World of Shatterstorm" />
+            <ShatterstormWorld />
+          </div>
+        </Reveal>
+
         {/* The Planetary System */}
         <Reveal>
           <div style={{ marginTop: "5rem" }}>
-            <SectionHeading kicker="03 · World Design" title="A System of Five Worlds" />
+            <SectionHeading kicker="04 · World Design" title="A System of Five Worlds" />
             <p style={{ color: "var(--color-mist)", maxWidth: "42rem", marginTop: "1.5rem", marginBottom: "1.5rem" }}>
               A miniature solar system where the physics is the puzzle. Each planet has its own hazard, its own secret, and its own rule for getting through.
             </p>
@@ -77,28 +88,26 @@ export default function ShatteredSkiesPage() {
           </div>
         </Reveal>
 
-        {/* Communication Design */}
-        {p.communication && (
-          <Reveal>
-            <div style={{ marginTop: "5rem" }}>
-              <SectionHeading kicker="04 · The Core Mechanic" title="Communication Is the Game" />
-              <p style={{ color: "var(--color-mist)", maxWidth: "42rem", marginTop: "1.5rem", marginBottom: "1.5rem" }}>
-                Two enemies who cannot understand each other must cooperate to survive. Every channel of communication is deliberately broken, and clarity is the rarest resource in the game.
-              </p>
-              <div className="grid-4">
-                {p.communication.map((c, i) => (
-                  <TransmissionCard key={c.label} label={c.label} body={c.body} delay={i * 300} />
-                ))}
-              </div>
-            </div>
-          </Reveal>
-        )}
+        {/* Core Mechanics — the three systems, with the communication system
+            foregrounded as the signature one. This supersedes the old
+            four-card communication band: the same four channels are in here
+            with their design reasoning, plus the telepathy -> endings figure,
+            so keeping both would have said it twice in a row. */}
+        <Reveal>
+          <div style={{ marginTop: "5rem" }}>
+            <SectionHeading kicker="05 · Core Mechanics" title="Systems That Force You Together" />
+            <p style={{ color: "var(--color-mist)", maxWidth: "42rem", marginTop: "1.5rem", marginBottom: "1.5rem" }}>
+              Three systems, co-designed with the team, that all answer the same question: how do you make two players who cannot understand each other depend on each other anyway?
+            </p>
+            <ShatteredSkiesMechanics />
+          </div>
+        </Reveal>
 
         {/* Design Challenge */}
         {p.designChallenge && (
           <Reveal>
             <div style={{ marginTop: "5rem" }}>
-              <SectionHeading kicker="05 · The Hard Part" title="Design Challenge" />
+              <SectionHeading kicker="06 · The Hard Part" title="Design Challenge" />
               <div style={{ marginTop: "1.5rem" }}>
                 <ChallengeQuote challenge={p.designChallenge} />
               </div>
@@ -109,7 +118,7 @@ export default function ShatteredSkiesPage() {
         {/* Contributions */}
         <Reveal>
           <div style={{ marginTop: "5rem" }}>
-            <SectionHeading kicker="06 · My Role" title="My Contribution" />
+            <SectionHeading kicker="07 · My Role" title="My Contribution" />
             <div style={{ display: "grid", gap: "1.5rem" }}>
               {p.contributions.map((c) => (
                 <div key={c.label}>

@@ -4,6 +4,8 @@ import {
   clockMarks,
   heistPhases,
   loopSummary,
+  gradeTiers,
+  gradingNote,
   loseConditions,
   outcomeNote,
   outcomeThesis,
@@ -489,6 +491,29 @@ function OutcomeBand() {
       </div>
 
       <p className="hl-outcome-note">{outcomeNote}</p>
+
+      {/* The grade. It belongs here rather than in a section of its own: it is
+          the second half of the same question the two cards above answer, and
+          it only applies once they have been answered yes. */}
+      <section className="hl-grades">
+        <div className="hl-grades-head">
+          <h4 className="hl-grades-title">Then it is graded</h4>
+          <p className="mono hl-grades-meta">On the take · once everyone is out</p>
+        </div>
+        <ol className="hl-grade-row">
+          {gradeTiers.map((tier) => (
+            <li key={tier.id} className={`hl-grade is-${tier.id}`}>
+              <p className="hl-grade-mark">{tier.grade}</p>
+              <p className="mono hl-grade-range">{tier.label}</p>
+              <div className="hl-grade-bar" aria-hidden="true">
+                <span className="hl-grade-fill" style={{ width: pct(tier.weight) }} />
+              </div>
+              <p className="hl-grade-body">{tier.body}</p>
+            </li>
+          ))}
+        </ol>
+        <p className="hl-grades-note">{gradingNote}</p>
+      </section>
     </div>
   );
 }
@@ -1010,6 +1035,88 @@ export default function HeistLoop() {
         }
         .hl-condition-detail { font-size: 0.82rem; line-height: 1.5; color: var(--hl-quiet); }
 
+        /* ---- the grade scale ----
+           A row of four, running A down to F so it reads left to right as the
+           take falling away. The bar under each mark is the same 0-1 scale the
+           phase meters use, so the page has one language for "how much". */
+        .hl-grades {
+          display: grid;
+          gap: 0.75rem;
+          padding-top: 1rem;
+          border-top: 1px solid var(--hl-edge);
+        }
+        .hl-grades-head {
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: space-between;
+          align-items: baseline;
+          gap: 0.35rem 1.5rem;
+        }
+        .hl-grades-title {
+          font-family: var(--font-hero);
+          font-size: 0.95rem;
+          letter-spacing: 0.04em;
+          margin: 0;
+          color: var(--color-moonlight);
+        }
+        .hl-grades-meta { margin: 0; font-size: 0.66rem; color: var(--hl-quiet); }
+
+        .hl-grade-row {
+          list-style: none;
+          margin: 0;
+          padding: 0;
+          display: grid;
+          grid-template-columns: repeat(4, minmax(0, 1fr));
+          gap: 1px;
+          background: var(--hl-edge);
+          border: 1px solid var(--hl-edge);
+        }
+        .hl-grade {
+          background: var(--hl-screen);
+          padding: 0.85rem 0.9rem 1rem;
+          display: grid;
+          gap: 0.3rem;
+          align-content: start;
+          min-width: 0;
+        }
+        .hl-grade-mark {
+          margin: 0;
+          font-family: var(--font-hero);
+          font-size: 1.65rem;
+          font-weight: 600;
+          line-height: 1;
+          color: var(--hl-amber);
+        }
+        /* F is the failure case, not the bottom of the scale, so it takes the
+           fail colour rather than a fainter amber. */
+        .hl-grade.is-f .hl-grade-mark { color: var(--hl-fail); }
+        .hl-grade.is-f .hl-grade-fill { background: var(--color-scarlet); }
+        .hl-grade-range {
+          margin: 0;
+          font-size: 0.64rem;
+          letter-spacing: 0.04em;
+          color: var(--color-moonlight);
+        }
+        .hl-grade-bar {
+          margin: 0.15rem 0 0.1rem;
+          height: 3px;
+          background: color-mix(in srgb, var(--color-mist) 26%, transparent);
+        }
+        .hl-grade-fill { display: block; height: 100%; background: var(--hl-amber); }
+        .hl-grade-body {
+          margin: 0;
+          font-size: 0.78rem;
+          line-height: 1.5;
+          color: var(--hl-quiet);
+        }
+        .hl-grades-note {
+          margin: 0;
+          max-width: 58rem;
+          font-size: 0.84rem;
+          line-height: 1.6;
+          color: var(--color-moonlight);
+        }
+
         .hl-outcome-note {
           margin: 0;
           padding-top: 0.9rem;
@@ -1028,6 +1135,7 @@ export default function HeistLoop() {
           .hl-console { padding: 0.9rem; }
           .hl-phases { grid-template-columns: minmax(0, 1fr); }
           .hl-states { grid-template-columns: minmax(0, 1fr); }
+          .hl-grade-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
           .hl-gate-wrap { padding: 0.85rem 0.6rem 1rem; }
         }
 

@@ -78,10 +78,26 @@ export interface ClockMark {
   emphasis?: boolean;
 }
 
+/**
+ * How much of the run is left when the score changes gear. The audio design
+ * specifies the shift by REMAINING time, not elapsed time, so it is written
+ * here the way it was designed and the elapsed position is derived below.
+ * `break-in-audio` reads the same two numbers, which is what stops the phase
+ * clock and the score clock from ever disagreeing about where the mark sits.
+ */
+export const SCORE_SHIFT_REMAINING = 5;
+
+/** The same moment as an elapsed position on the 0–8 clock. */
+export const SCORE_SHIFT_AT = RUN_MINUTES - SCORE_SHIFT_REMAINING;
+
 export const clockMarks: readonly ClockMark[] = [
-  { at: 0, label: "00:00", note: "Four spawns, four places" },
-  { at: 5, label: "05:00", note: "Score tempo shift" },
-  { at: RUN_MINUTES, label: "08:00", note: "Hard fail", emphasis: true },
+  { at: 0, label: clockLabel(0), note: "Four spawns, four places" },
+  {
+    at: SCORE_SHIFT_AT,
+    label: clockLabel(SCORE_SHIFT_AT),
+    note: `Score tempo shift · ${SCORE_SHIFT_REMAINING} min left`,
+  },
+  { at: RUN_MINUTES, label: clockLabel(RUN_MINUTES), note: "Hard fail", emphasis: true },
 ];
 
 /* ---- the four phases ----------------------------------------------------
@@ -317,6 +333,66 @@ export const outcomeNote =
   "Winning is a single AND: every condition, or no win. Losing is an OR — either one is enough on " +
   "its own. That asymmetry is deliberate, and it is what makes the dependency web above matter at " +
   "the table. There is no version of this run where three players succeed and one does not.";
+
+/* ---- the grade ----------------------------------------------------------
+   Winning is binary; the SCORE is not. Once the team is out, the run is graded
+   on the take, which is what turns "did we get out" into "how much did we dare
+   to carry". The two systems are deliberately stacked in that order: the escape
+   is pass/fail so nobody gambles with a teammate's run, and the grade is
+   graduated so there is still a reason to take one more ingot.
+
+   `floor` is what the tier pays out from, in pounds; `label` is the range as it
+   reads on the card. F carries no floor because it is the failure case rather
+   than the bottom of a scale. */
+
+export type GradeId = "a" | "b" | "c" | "f";
+
+export interface GradeTier {
+  id: GradeId;
+  grade: string;
+  /** The range, as written on the card. */
+  label: string;
+  /** What the tier means in a line. */
+  body: string;
+  /** 0-1, where this tier sits on the scale bar. */
+  weight: number;
+}
+
+export const gradeTiers: readonly GradeTier[] = [
+  {
+    id: "a",
+    grade: "A",
+    label: "Over £1,000,000",
+    body: "Both loot paths run, and run greedily. The rack is stripped and the transfer lands.",
+    weight: 1,
+  },
+  {
+    id: "b",
+    grade: "B",
+    label: "£500,000 – £1,000,000",
+    body: "One path finished properly, or both hurried. A clean run that left something behind.",
+    weight: 0.7,
+  },
+  {
+    id: "c",
+    grade: "C",
+    label: "£100,000 – £500,000",
+    body: "Out alive with what was nearest the door. The escape worked; the heist barely did.",
+    weight: 0.4,
+  },
+  {
+    id: "f",
+    grade: "F",
+    label: "Under £100,000, or caught",
+    body: "Caught is an automatic F whatever was banked — the take does not survive the arrest.",
+    weight: 0.12,
+  },
+];
+
+export const gradingNote =
+  "Getting out is pass or fail; what you got out with is graded. That split is the whole risk " +
+  "curve: the escape stays binary so no player can gamble with somebody else's run, and the grade " +
+  "stays graduated so there is always a reason to spend one more second at the rack.";
 
 /* ---- balancing philosophy ----------------------------------------------
    Three principles, each with the one small chart that makes it an argument

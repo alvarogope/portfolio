@@ -12,10 +12,14 @@ import {
   linkTypeOrder,
   linkTouches,
   outgoingLinks,
+  puzzleAsymmetryNote,
   roleLinks,
+  selectionRule,
   type BreakInRole,
   type LinkType,
+  type RoleAbility,
   type RoleId,
+  type RolePuzzle,
 } from "@/content/break-in-roles";
 
 /**
@@ -25,8 +29,26 @@ import {
  * as right-angle conduit, the way wiring is drawn on a security panel. Each
  * node is dressed as a camera feed (CAM tag, REC light, scanlines), and a
  * readout panel beside the diamond expands whichever role is selected into its
- * summary, its abilities, and the two lists that carry the thesis: what it
- * NEEDS, and what it gives.
+ * discipline, its summary, its FULL ABILITY KIT, and the two lists that carry
+ * the thesis: what it NEEDS, and what it gives.
+ *
+ * THE KIT LIVES IN THIS READOUT, not in a section of its own. The diagram
+ * already sends a reader here to find out what a role does, so the detailed
+ * answer belongs in the panel they are already looking at; a separate abilities
+ * list further down the page would repeat the same four names with none of the
+ * dependency context that makes them mean anything. `AbilityKit` below renders
+ * it as labelled items rather than pills for the same reason — an ability with
+ * a cost attached ("within one second", "three per run") stops being a tag.
+ *
+ * TUNING NUMBERS sit in their own chip beside the ability name rather than
+ * buried in its sentence, so the four kits can be compared as budgets: the
+ * Hacker's Vision is five seconds in every thirty-five, the Insider's Disguise
+ * ten in every seventy. Only abilities that are actually tuned carry a chip.
+ *
+ * THE PUZZLE BLOCK closes each readout, and the Insider's says there is no
+ * puzzle — which is the point of having it. An empty slot rendered as an empty
+ * slot reads as an oversight; rendered as a stated decision it reads as design,
+ * so `puzzleAsymmetryNote` is printed under the graph once, for all four.
  *
  * STAGE 2 makes the selection live. It is one piece of state, and click, tap,
  * hover and focus all do the same thing to it — so the ring on the node, the
@@ -331,12 +353,59 @@ function GivesList({ id }: { id: RoleId }) {
   );
 }
 
-function Tags({ abilities }: { abilities: readonly string[] }) {
+/**
+ * The role's mini-game, or the fact that it has none. The absent case is
+ * rendered rather than skipped: three of four roles having a puzzle is a
+ * decision, and a blank where the fourth would be would read as a gap.
+ */
+function PuzzleBlock({ puzzle }: { puzzle: RolePuzzle | null }) {
+  if (!puzzle) {
+    return (
+      <div className="rg-puzzle is-none">
+        <p className="mono rg-puzzle-name">No mini-game &mdash; by design</p>
+        <p className="rg-puzzle-body">{puzzleAsymmetryNote.body}</p>
+      </div>
+    );
+  }
+
   return (
-    <ul className="rg-tags">
-      {abilities.map((a) => (
-        <li key={a} className="mono rg-tag-pill">
-          {a}
+    <div className="rg-puzzle">
+      <p className="mono rg-puzzle-name">{puzzle.name}</p>
+      <p className="rg-puzzle-body">{puzzle.body}</p>
+      {puzzle.fail && (
+        <p className="rg-puzzle-fail">
+          <span className="mono rg-puzzle-fail-label">On a failure</span>
+          {puzzle.fail}
+        </p>
+      )}
+    </div>
+  );
+}
+
+/**
+ * A role's full kit. Labelled items, not pills: every one of these abilities
+ * carries a cost or a dependency ("three per run", "within one second", "only
+ * once the USB lands") and a pill has nowhere to put that.
+ */
+function AbilityKit({ kit }: { kit: readonly RoleAbility[] }) {
+  return (
+    <ul className="rg-kit">
+      {kit.map((ability) => (
+        <li key={ability.name} className="rg-kit-item">
+          <p className="mono rg-kit-head">
+            <span className="rg-kit-name">{ability.name}</span>
+            {/* The tuned numbers, set apart so the kits read as budgets. */}
+            {ability.tuning && <span className="rg-kit-tuning">{ability.tuning}</span>}
+          </p>
+          <p className="rg-kit-body">{ability.body}</p>
+          {ability.note && (
+            <p className="rg-kit-note">
+              <span className="mono rg-kit-note-mark" aria-hidden="true">
+                &rsaquo;
+              </span>
+              {ability.note}
+            </p>
+          )}
         </li>
       ))}
     </ul>
@@ -486,8 +555,12 @@ export default function RoleGraph({
                 r.name
               )}
             </h3>
+            <p className="mono rg-discipline">{r.discipline}</p>
             <p className="rg-card-summary">{r.summary}</p>
-            <Tags abilities={r.abilities} />
+            <p className="mono rg-list-title">Ability kit</p>
+            <AbilityKit kit={r.kit} />
+            <p className="mono rg-list-title">Mini-game</p>
+            <PuzzleBlock puzzle={r.puzzle} />
             <div className="rg-card-links">
               <p className="mono rg-list-title">Needs (incoming)</p>
               <NeedsList id={r.id} />
@@ -520,6 +593,26 @@ export default function RoleGraph({
         </ul>
       </div>
 
+      {/* The lobby rule. It belongs beside the graph rather than in a section
+          of its own because it is what makes the graph binding: every wire
+          above is a dependency you cannot opt out of by picking a second
+          Hacker. */}
+      <div className="rg-notes">
+        <aside className="rg-note">
+          <p className="mono rg-note-tag">Design rule · {selectionRule.headline}</p>
+          <p className="rg-note-body">{selectionRule.body}</p>
+          <p className="rg-note-credit">{selectionRule.credit}</p>
+        </aside>
+
+        {/* The other half of the same argument: the roles are not variants of
+            each other, so they do not all get the same furniture. */}
+        <aside className="rg-note">
+          <p className="mono rg-note-tag">Design rule · {puzzleAsymmetryNote.headline}</p>
+          <p className="rg-note-body">{puzzleAsymmetryNote.body}</p>
+          <p className="rg-note-credit">{puzzleAsymmetryNote.credit}</p>
+        </aside>
+      </div>
+
       <aside className="panel rg-panel">
         {/* Keyed on the role so a change replays the swap rather than editing
             the text in place under the reader's eye. */}
@@ -528,8 +621,14 @@ export default function RoleGraph({
             Readout · {role.orbitLabel} · {role.cam} · {role.location}
           </p>
           <h3 className="rg-panel-name">{role.name}</h3>
+          <p className="mono rg-discipline">{role.discipline}</p>
           <p className="rg-panel-summary">{role.summary}</p>
-          <Tags abilities={role.abilities} />
+
+          <p className="mono rg-list-title">Ability kit</p>
+          <AbilityKit kit={role.kit} />
+
+          <p className="mono rg-list-title">Mini-game</p>
+          <PuzzleBlock puzzle={role.puzzle} />
 
           <p className="mono rg-list-title">Needs (incoming)</p>
           <NeedsList id={selected} />
@@ -806,20 +905,164 @@ export default function RoleGraph({
           color: var(--color-moonlight);
         }
 
-        .rg-tags {
+        /* The seat's job, sitting directly under the role name in both the
+           panel and the roster card. */
+        .rg-discipline {
+          margin: 0.45rem 0 0;
+          font-size: 0.68rem;
+          letter-spacing: 0.08em;
+          color: var(--color-silver);
+        }
+
+        /* ---- ability kit ----
+           Replaces the old pill row. Each ability is a name, a body and an
+           optional consequence line, so the panel can carry a cost ("within
+           one second") that a tag never could. The left rule ties the three
+           parts into one item without boxing them. */
+        .rg-kit {
           list-style: none;
-          margin: 0.7rem 0 0;
+          margin: 0.5rem 0 0;
           padding: 0;
+          display: grid;
+          gap: 0.75rem;
+        }
+        .rg-kit-item {
+          padding-left: 0.75rem;
+          border-left: 1px solid color-mix(in srgb, var(--color-silver) 30%, transparent);
+        }
+        .rg-kit-head {
           display: flex;
           flex-wrap: wrap;
-          gap: 0.4rem;
+          align-items: baseline;
+          gap: 0.35rem 0.6rem;
+          margin: 0;
         }
-        .rg-tag-pill {
-          font-size: 0.7rem;
-          padding: 0.26rem 0.55rem;
-          border: 1px solid color-mix(in srgb, var(--color-silver) 32%, transparent);
+        .rg-kit-name {
+          font-size: 0.72rem;
+          letter-spacing: 0.04em;
           color: var(--color-silver);
-          line-height: 1.4;
+        }
+        /* The tuned numbers. Boxed, so they read as a spec rather than as more
+           sentence, and so two roles' budgets can be compared down the column. */
+        .rg-kit-tuning {
+          font-size: 0.62rem;
+          letter-spacing: 0.04em;
+          padding: 0.12rem 0.4rem;
+          border: 1px solid color-mix(in srgb, var(--color-silver) 30%, transparent);
+          color: var(--rg-quiet);
+          line-height: 1.35;
+          white-space: nowrap;
+        }
+
+        /* ---- the mini-game ----
+           One block per role, including the role that does not have one. */
+        .rg-puzzle {
+          margin-top: 0.5rem;
+          padding: 0.7rem 0.85rem 0.8rem;
+          border: 1px solid var(--rg-edge);
+          background: color-mix(in srgb, var(--color-silver) 5%, transparent);
+          display: grid;
+          gap: 0.25rem;
+        }
+        /* The absent case is stated, not blank: dashed, so it reads as a
+           deliberately empty slot rather than a missing one. */
+        .rg-puzzle.is-none {
+          background: none;
+          border-style: dashed;
+        }
+        .rg-puzzle-name {
+          margin: 0;
+          font-size: 0.7rem;
+          letter-spacing: 0.06em;
+          color: var(--color-silver);
+        }
+        .rg-puzzle.is-none .rg-puzzle-name { color: var(--rg-quiet); }
+        .rg-puzzle-body {
+          margin: 0;
+          font-family: var(--font-body);
+          font-size: 0.84rem;
+          line-height: 1.5;
+          color: var(--color-moonlight);
+        }
+        .rg-puzzle.is-none .rg-puzzle-body { color: var(--rg-quiet); }
+        .rg-puzzle-fail {
+          margin: 0.3rem 0 0;
+          padding-top: 0.5rem;
+          border-top: 1px solid var(--rg-edge);
+          font-family: var(--font-body);
+          font-size: 0.8rem;
+          line-height: 1.45;
+          color: var(--rg-quiet);
+        }
+        .rg-puzzle-fail-label {
+          display: block;
+          font-size: 0.56rem;
+          letter-spacing: 0.16em;
+          color: color-mix(in srgb, var(--color-scarlet) 74%, var(--color-moonlight));
+          margin-bottom: 0.12rem;
+        }
+        .rg-kit-body {
+          margin: 0.18rem 0 0;
+          font-family: var(--font-body);
+          font-size: 0.86rem;
+          line-height: 1.5;
+          color: var(--color-moonlight);
+        }
+        .rg-kit-note {
+          margin: 0.28rem 0 0;
+          font-family: var(--font-body);
+          font-size: 0.8rem;
+          line-height: 1.45;
+          color: var(--rg-quiet);
+        }
+        .rg-kit-note-mark {
+          margin-right: 0.4rem;
+          color: var(--color-silver);
+        }
+
+        /* ---- the two design rules ----
+           Full width under the graph at every band: both are about all four
+           roles at once, so they are the two things here not keyed to the
+           selection. Side by side where there is room, stacked where there
+           is not. */
+        .rg-notes {
+          display: grid;
+          gap: 1rem;
+        }
+        @media (min-width: 1000px) {
+          .rg-notes { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        }
+        .rg-note {
+          border: 1px solid var(--rg-edge);
+          border-left: 2px solid var(--color-silver);
+          background: var(--color-nightfall);
+          padding: 1.1rem 1.25rem;
+          display: grid;
+          gap: 0.5rem;
+        }
+        .rg-note-tag {
+          margin: 0;
+          font-size: 0.68rem;
+          letter-spacing: 0.14em;
+          color: var(--color-silver);
+        }
+        .rg-note-body {
+          margin: 0;
+          font-family: var(--font-body);
+          font-size: 0.88rem;
+          line-height: 1.6;
+          color: var(--color-moonlight);
+          max-width: 54rem;
+        }
+        .rg-note-credit {
+          margin: 0;
+          padding-top: 0.6rem;
+          border-top: 1px solid var(--rg-edge);
+          font-family: var(--font-body);
+          font-size: 0.82rem;
+          line-height: 1.55;
+          color: var(--rg-quiet);
+          max-width: 54rem;
         }
 
         .rg-rows { list-style: none; margin: 0.45rem 0 0; padding: 0; display: grid; gap: 0.5rem; }
@@ -1036,6 +1279,7 @@ export default function RoleGraph({
           .rg-stage { grid-column: 1; grid-row: 1; }
           .rg-key { grid-column: 1; grid-row: 2; }
           .rg-panel { grid-column: 1; grid-row: 3; }
+          .rg-notes { grid-column: 1; grid-row: 4; }
           .rg-panel-detail { max-width: 46rem; }
         }
 
@@ -1044,12 +1288,15 @@ export default function RoleGraph({
         @media (min-width: 1200px) {
           .rg {
             grid-template-columns: minmax(0, 1fr) minmax(21rem, 24rem);
-            grid-template-rows: auto auto;
+            grid-template-rows: auto auto auto;
             row-gap: 1rem;
           }
           .rg-stage { grid-column: 1; grid-row: 1; }
           .rg-key { grid-column: 1; grid-row: 2; align-self: start; }
           .rg-panel { grid-column: 2; grid-row: 1 / span 2; min-height: 100%; }
+          /* The rules are about all four roles, so they span both columns and
+             close the whole diagram rather than sitting in one of them. */
+          .rg-notes { grid-column: 1 / -1; grid-row: 3; }
         }
 
         @media (max-width: 899px) {

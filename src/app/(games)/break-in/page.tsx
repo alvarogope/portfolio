@@ -14,6 +14,7 @@ import RoleGraph from "@/components/project/RoleGraph";
 import LevelFlow from "@/components/project/LevelFlow";
 import HeistLoop from "@/components/project/HeistLoop";
 import BalanceNote from "@/components/project/BalanceNote";
+import DetectionStates from "@/components/project/DetectionStates";
 
 export const metadata: Metadata = {
   title: `${p.title} | Álvaro Gómez`,
@@ -107,10 +108,22 @@ export default function BreakInPage() {
           </div>
         </Reveal>
 
+        {/* Detection — the stealth state machine. Sits right after the level,
+            because the route above is the thing this machine is watching. */}
+        <Reveal>
+          <div style={{ marginTop: "5rem" }}>
+            <SectionHeading kicker="06 · Stealth" title="Being Seen" />
+            <p style={{ color: "var(--color-mist)", maxWidth: "42rem", marginTop: "1.5rem", marginBottom: "1.75rem" }}>
+              <RoleTerms text="Detection is four states and four transitions, and the design is in how loudly it announces itself. From the moment an enemy starts investigating, the player is being told three separate ways at once — a rising white-noise crescendo, an eye on the HUD, and a bar filling above the enemy's head. With no voice channel, nobody can warn you but the game." />
+            </p>
+            <DetectionStates />
+          </div>
+        </Reveal>
+
         {/* The balancing philosophy — the design note under all of it */}
         <Reveal>
           <div style={{ marginTop: "5rem" }}>
-            <SectionHeading kicker="06 · Balance" title="Tuned so nobody can carry" />
+            <SectionHeading kicker="07 · Balance" title="Tuned so nobody can carry" />
             <p style={{ color: "var(--color-mist)", maxWidth: "42rem", marginTop: "1.5rem", marginBottom: "1.75rem" }}>
               <RoleTerms text="Four asymmetric roles only stay interesting if all four stay necessary. Three rules held that line: no role can reach past its quarter of the run, difficulty answers the team's performance instead of sitting still, and the payout is shared before it is individual." />
             </p>
@@ -122,7 +135,7 @@ export default function BreakInPage() {
         {p.designChallenge && (
           <Reveal>
             <div style={{ marginTop: "5rem" }}>
-              <SectionHeading kicker="07 · The Hard Part" title="Design Challenge" />
+              <SectionHeading kicker="08 · The Hard Part" title="Design Challenge" />
               <div style={{ marginTop: "1.5rem" }}>
                 <ChallengeQuote
                   challenge={p.designChallenge}
@@ -136,7 +149,7 @@ export default function BreakInPage() {
         {/* Contributions */}
         <Reveal>
           <div style={{ marginTop: "5rem" }}>
-            <SectionHeading kicker="08 · My Role" title="My Contribution" />
+            <SectionHeading kicker="09 · My Role" title="My Contribution" />
             <div style={{ display: "grid", gap: "1.5rem" }}>
               {p.contributions.map((c) => (
                 <div key={c.label}>

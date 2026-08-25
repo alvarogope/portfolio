@@ -6,6 +6,7 @@ import ProjectHero from "@/components/project/ProjectHero";
 import ChallengeQuote from "@/components/project/ChallengeQuote";
 import Reveal from "@/components/layout/Reveal";
 import SeedsAudio from "@/components/project/SeedsAudio";
+import WeatherSystem from "@/components/project/WeatherSystem";
 import ProjectNav from "@/components/layout/ProjectNav";
 import { projectNavItems } from "@/content/games";
 import SideRays from "@/components/effects/SideRays";
@@ -72,6 +73,10 @@ export default function SeedsOfTomorrowPage() {
               <SectionHeading kicker="03 · The Hard Part" title="A World That Heals" />
               <div style={{ marginTop: "1.5rem" }}>
                 <ChallengeQuote challenge={p.designChallenge} />
+              </div>
+              {/* The claim above, drawn: the sky as the progress readout. */}
+              <div style={{ marginTop: "2.5rem" }}>
+                <WeatherSystem />
               </div>
             </div>
           </Reveal>

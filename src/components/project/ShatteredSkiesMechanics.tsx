@@ -387,19 +387,18 @@ export default function ShatteredSkiesMechanics() {
           </dl>
         </section>
 
+        {/* The three minigames used to be listed here as three cards. They now
+            live in the co-op design section below, taken apart into their
+            asymmetries — so this is a setup and a pointer, and nothing else. */}
         <section className="ssm__aside" aria-labelledby="ssm-repairs-title">
           <h4 className="mono ssm__aside-title" id="ssm-repairs-title">
-            Repair under fire
+            {ship.repairs.label}
           </h4>
-          <p className="ssm__aside-lead">{ship.repairsLead}</p>
-          <ul className="ssm__repairs">
-            {ship.repairs.map((r) => (
-              <li key={r.id} className="ssm__repair">
-                <p className="ssm__repair-name">{r.name}</p>
-                <p className="ssm__repair-body">{r.body}</p>
-              </li>
-            ))}
-          </ul>
+          <p className="ssm__aside-lead">{ship.repairs.body}</p>
+          <p className="ssm__pointer">
+            <span className="mono ssm__pointer-tag">In depth below</span>
+            <span className="ssm__pointer-body">{ship.repairs.pointer}</span>
+          </p>
         </section>
 
         <DesignPoint body={ship.designPoint} />
@@ -896,6 +895,27 @@ export default function ShatteredSkiesMechanics() {
           color: var(--color-moonlight);
         }
 
+        /* Hands the three minigames to the co-op design section below. */
+        .ssm__pointer {
+          margin: 0;
+          max-width: 46rem;
+          display: grid;
+          gap: 0.35rem;
+          padding-left: 0.95rem;
+          border-left: 1px solid var(--ssm-edge);
+        }
+        .ssm__pointer-tag {
+          font-size: 0.6rem;
+          letter-spacing: 0.18em;
+          text-transform: uppercase;
+          color: var(--ssm-cyan);
+        }
+        .ssm__pointer-body {
+          font-size: 0.89rem;
+          line-height: 1.7;
+          color: var(--ssm-quiet);
+        }
+
         /* Ship systems: a reference, kept deliberately small. */
         .ssm__stations {
           margin: 0;
@@ -925,7 +945,6 @@ export default function ShatteredSkiesMechanics() {
           color: var(--ssm-quiet);
         }
 
-        .ssm__repairs,
         .ssm__uses {
           list-style: none;
           margin: 0;
@@ -934,10 +953,8 @@ export default function ShatteredSkiesMechanics() {
           gap: 1rem;
         }
         @media (min-width: 44rem) {
-          .ssm__repairs,
           .ssm__uses { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.25rem; }
         }
-        .ssm__repair,
         .ssm__use {
           display: grid;
           gap: 0.3rem;
@@ -945,20 +962,12 @@ export default function ShatteredSkiesMechanics() {
           border-top: 1px solid var(--ssm-edge);
           min-width: 0;
         }
-        .ssm__repair-name {
-          margin: 0;
-          font-family: var(--font-hero);
-          font-size: 1rem;
-          letter-spacing: 0.02em;
-          color: var(--color-moonlight);
-        }
         .ssm__use-label {
           margin: 0;
           font-size: 0.64rem;
           letter-spacing: 0.16em;
           color: var(--ssm-cyan);
         }
-        .ssm__repair-body,
         .ssm__use-body {
           margin: 0;
           font-size: 0.87rem;

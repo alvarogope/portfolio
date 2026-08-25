@@ -387,10 +387,19 @@ export interface ShipStation {
   role: string;
 }
 
-export interface RepairMinigame {
-  id: string;
-  name: string;
+/**
+ * The three repair minigames are NOT described here. They are the centrepiece
+ * of the co-op design section further down the page
+ * (`shattered-skies-gameplay.ts`), where each one is taken apart into its
+ * asymmetry and its comms-barrier twist. This block names them once and hands
+ * the reader on; if a description of one ever reappears here, delete it.
+ */
+export interface RepairsPointer {
+  label: string;
+  /** Why the ship generates repairs at all — the setup, not the minigames. */
   body: string;
+  /** The one line that hands the depth to the co-op design section. */
+  pointer: string;
 }
 
 export interface ShipSection {
@@ -400,8 +409,7 @@ export interface ShipSection {
   dualControl: Reasoning;
   stationsLabel: string;
   stations: readonly ShipStation[];
-  repairsLead: string;
-  repairs: readonly RepairMinigame[];
+  repairs: RepairsPointer;
   designPoint: string;
 }
 
@@ -472,27 +480,17 @@ export const ship: ShipSection = {
     },
   ],
 
-  repairsLead:
-    "Asteroid fields and the hazards between worlds do real damage, and damage is repaired by " +
-    "hand, mid-flight, while the other player keeps the ship alive. Three minigames, all of them " +
-    "cooperative in practice, because nobody can afford to leave their station for long:",
-  repairs: [
-    {
-      id: "circuit",
-      name: "Circuit Realignment",
-      body: "Reconnect the power nodes and bring a dead system back on line.",
-    },
-    {
-      id: "hull",
-      name: "Seal Hull Breach",
-      body: "Patch a crack in zero-g. Precision and timing, with the ship still moving.",
-    },
-    {
-      id: "sensors",
-      name: "Calibrate Sensors",
-      body: "Match waveforms until the radar reads true again.",
-    },
-  ],
+  repairs: {
+    label: "Repair under fire",
+    body:
+      "Asteroid fields and the hazards between worlds do real damage, and damage is repaired by " +
+      "hand, mid-flight, while the other player keeps the ship alive. Nobody can afford to leave " +
+      "their station for long, so every repair is a second job taken on under load.",
+    pointer:
+      "Three minigames handle it — Circuit Realignment, Seal Hull Breach and Calibrate Sensors. " +
+      "Each one splits the knowledge or the control between the two players in a different way, " +
+      "and all three are taken apart in the co-op design section below.",
+  },
 
   designPoint:
     "The ship is where cooperation stops being a theme and becomes mechanical. You cannot fly it " +

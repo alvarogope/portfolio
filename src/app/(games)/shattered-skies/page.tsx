@@ -6,10 +6,12 @@ import ProjectHero from "@/components/project/ProjectHero";
 import ChallengeQuote from "@/components/project/ChallengeQuote";
 import Reveal from "@/components/layout/Reveal";
 import PlanetDossier from "@/components/project/PlanetDossier";
+import PlanetLevels from "@/components/project/PlanetLevels";
 import ShatteredSkiesSystem from "@/components/project/ShatteredSkiesSystem";
 import NarrativeMap from "@/components/project/NarrativeMap";
 import ShatterstormWorld from "@/components/project/ShatterstormWorld";
 import ShatteredSkiesMechanics from "@/components/project/ShatteredSkiesMechanics";
+import ShatteredSkiesCoop from "@/components/project/ShatteredSkiesCoop";
 import ProjectNav from "@/components/layout/ProjectNav";
 import { projectNavItems } from "@/content/games";
 import Galaxy from "@/components/effects/Galaxy";
@@ -88,6 +90,23 @@ export default function ShatteredSkiesPage() {
           </div>
         </Reveal>
 
+        {/* Planetary Level Design — the dossier's counterpart. The dossier
+            above is what each world IS; this is how each one PLAYS: the
+            teaching progression across the five worlds in play order, with
+            audio folded in as a design dimension. Placed directly after the
+            dossier so the pair read as one world-design chapter, facts then
+            play, and before the mechanics section because a mechanic is
+            easier to read once you know which world taught it. */}
+        <Reveal>
+          <div style={{ marginTop: "5rem" }} id="planetary-level-design">
+            <SectionHeading kicker="05 · Level Design" title="Each Planet Teaches a Skill" />
+            <p style={{ color: "var(--color-mist)", maxWidth: "42rem", marginTop: "1.5rem", marginBottom: "1.5rem" }}>
+              The same five worlds, re-sequenced as a curriculum: what each one is built to teach, the puzzle that teaches it, and what it sounds like while it does.
+            </p>
+            <PlanetLevels />
+          </div>
+        </Reveal>
+
         {/* Core Mechanics — the three systems, with the communication system
             foregrounded as the signature one. This supersedes the old
             four-card communication band: the same four channels are in here
@@ -95,7 +114,7 @@ export default function ShatteredSkiesPage() {
             so keeping both would have said it twice in a row. */}
         <Reveal>
           <div style={{ marginTop: "5rem" }}>
-            <SectionHeading kicker="05 · Core Mechanics" title="Systems That Force You Together" />
+            <SectionHeading kicker="06 · Core Mechanics" title="Systems That Force You Together" />
             <p style={{ color: "var(--color-mist)", maxWidth: "42rem", marginTop: "1.5rem", marginBottom: "1.5rem" }}>
               Three systems, co-designed with the team, that all answer the same question: how do you make two players who cannot understand each other depend on each other anyway?
             </p>
@@ -103,11 +122,27 @@ export default function ShatteredSkiesPage() {
           </div>
         </Reveal>
 
+        {/* Co-op Design — the depth under the mechanics section. The three
+            repair minigames used to be a three-card list up there; they are
+            here now, each broken down into its asymmetry with a diagram of
+            who knows and who controls what, followed by the general co-op
+            puzzle pattern and the knowledge-gating rule. The mechanics
+            section keeps a one-line pointer and no descriptions. */}
+        <Reveal>
+          <div style={{ marginTop: "5rem" }} id="coop-design">
+            <SectionHeading kicker="07 · Co-op Design" title="Split, Distorted, Rebuilt" />
+            <p style={{ color: "var(--color-mist)", maxWidth: "42rem", marginTop: "1.5rem", marginBottom: "1.5rem" }}>
+              How the cooperation actually works, one system at a time: what each minigame takes away from which player, and what the pair have to invent to get it back.
+            </p>
+            <ShatteredSkiesCoop />
+          </div>
+        </Reveal>
+
         {/* Design Challenge */}
         {p.designChallenge && (
           <Reveal>
             <div style={{ marginTop: "5rem" }}>
-              <SectionHeading kicker="06 · The Hard Part" title="Design Challenge" />
+              <SectionHeading kicker="08 · The Hard Part" title="Design Challenge" />
               <div style={{ marginTop: "1.5rem" }}>
                 <ChallengeQuote challenge={p.designChallenge} />
               </div>
@@ -118,7 +153,7 @@ export default function ShatteredSkiesPage() {
         {/* Contributions */}
         <Reveal>
           <div style={{ marginTop: "5rem" }}>
-            <SectionHeading kicker="07 · My Role" title="My Contribution" />
+            <SectionHeading kicker="09 · My Role" title="My Contribution" />
             <div style={{ display: "grid", gap: "1.5rem" }}>
               {p.contributions.map((c) => (
                 <div key={c.label}>

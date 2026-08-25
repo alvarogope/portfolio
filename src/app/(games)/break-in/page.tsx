@@ -12,6 +12,8 @@ import Prism from "@/components/effects/Prism";
 import RoleTerms from "@/components/project/RoleTerms";
 import RoleGraph from "@/components/project/RoleGraph";
 import LevelFlow from "@/components/project/LevelFlow";
+import HeistLoop from "@/components/project/HeistLoop";
+import BalanceNote from "@/components/project/BalanceNote";
 
 export const metadata: Metadata = {
   title: `${p.title} | Álvaro Gómez`,
@@ -57,10 +59,23 @@ export default function BreakInPage() {
           </div>
         </Reveal>
 
+        {/* The run itself — four phases on an eight-minute clock, and how it ends.
+            Deliberately placed BEFORE the role graph and the floor plan: both of
+            those assume the reader already knows what a run is trying to do. */}
+        <Reveal>
+          <div style={{ marginTop: "5rem" }}>
+            <SectionHeading kicker="02 · The Run" title="Eight minutes, four phases" />
+            <p style={{ color: "var(--color-mist)", maxWidth: "42rem", marginTop: "1.5rem", marginBottom: "1.75rem" }}>
+              <RoleTerms text="One run is eight minutes long and reads in four phases: get in, take the vault, take the servers, and get out separately. Two of those phases happen at the same time. Below is the run drawn on its own clock — where the pressure sits, what each player is doing in each window, and the two ways it ends." />
+            </p>
+            <HeistLoop />
+          </div>
+        </Reveal>
+
         {/* Nobody wins alone — the dependency web */}
         <Reveal>
           <div style={{ marginTop: "5rem" }}>
-            <SectionHeading kicker="02 · Signature Systems" title="Nobody wins alone" />
+            <SectionHeading kicker="03 · Signature Systems" title="Nobody wins alone" />
             <p style={{ color: "var(--color-mist)", maxWidth: "42rem", marginTop: "1.5rem", marginBottom: "1.75rem" }}>
               <RoleTerms text="Four cameras, four roles, and seven dependencies wired between them. Every line is something one player can only get from another: an ability switched on, a window opened, a trap taken off the board. Cut any one wire and the run ends." />
             </p>
@@ -72,7 +87,7 @@ export default function BreakInPage() {
         {p.roles && (
           <Reveal>
             <div style={{ marginTop: "5rem" }}>
-              <SectionHeading kicker="03 · The Cast" title="Four Roles, One Web" />
+              <SectionHeading kicker="04 · The Cast" title="Four Roles, One Web" />
               <p style={{ color: "var(--color-mist)", maxWidth: "42rem", marginTop: "1.5rem", marginBottom: "1.5rem" }}>
                 <RoleTerms text="No role can finish the heist alone. Read across the four and the dependency forms a loop: each player holds a key another player needs. Hover any role to see the whole system light up: remove one, and the heist falls apart." />
               </p>
@@ -84,11 +99,22 @@ export default function BreakInPage() {
         {/* Level design — the route and the pacing */}
         <Reveal>
           <div style={{ marginTop: "5rem" }}>
-            <SectionHeading kicker="04 · Level Design" title="The Route" />
+            <SectionHeading kicker="05 · Level Design" title="The Route" />
             <p style={{ color: "var(--color-mist)", maxWidth: "42rem", marginTop: "1.5rem", marginBottom: "1.75rem" }}>
-              <RoleTerms text="The bank is one level with two places the team has to split up and two places it has to be back together. Below: the route through it, the tension curve the five stages are tuned to, and what each stage is actually made of. The quiet stage in the middle is deliberate — it is what the vault is measured against." />
+              <RoleTerms text="The phase clock above was the run in time. This is the same run in space: the bank is one level with two places the team has to split up and two places it has to be back together. Below: the route through it, the tension curve the five stages are tuned to, and what each stage is actually made of. The quiet stage in the middle is deliberate — it is what the vault is measured against." />
             </p>
             <LevelFlow />
+          </div>
+        </Reveal>
+
+        {/* The balancing philosophy — the design note under all of it */}
+        <Reveal>
+          <div style={{ marginTop: "5rem" }}>
+            <SectionHeading kicker="06 · Balance" title="Tuned so nobody can carry" />
+            <p style={{ color: "var(--color-mist)", maxWidth: "42rem", marginTop: "1.5rem", marginBottom: "1.75rem" }}>
+              <RoleTerms text="Four asymmetric roles only stay interesting if all four stay necessary. Three rules held that line: no role can reach past its quarter of the run, difficulty answers the team's performance instead of sitting still, and the payout is shared before it is individual." />
+            </p>
+            <BalanceNote />
           </div>
         </Reveal>
 
@@ -96,7 +122,7 @@ export default function BreakInPage() {
         {p.designChallenge && (
           <Reveal>
             <div style={{ marginTop: "5rem" }}>
-              <SectionHeading kicker="05 · The Hard Part" title="Design Challenge" />
+              <SectionHeading kicker="07 · The Hard Part" title="Design Challenge" />
               <div style={{ marginTop: "1.5rem" }}>
                 <ChallengeQuote
                   challenge={p.designChallenge}
@@ -110,7 +136,7 @@ export default function BreakInPage() {
         {/* Contributions */}
         <Reveal>
           <div style={{ marginTop: "5rem" }}>
-            <SectionHeading kicker="06 · My Role" title="My Contribution" />
+            <SectionHeading kicker="08 · My Role" title="My Contribution" />
             <div style={{ display: "grid", gap: "1.5rem" }}>
               {p.contributions.map((c) => (
                 <div key={c.label}>

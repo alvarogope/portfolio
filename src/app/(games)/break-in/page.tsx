@@ -171,14 +171,6 @@ export default function BreakInPage() {
 
       {/* Two layers */}
       <style>{`
-        /* The route layout paints --color-void on a wrapper div, but the
-           site header and footer are rendered OUTSIDE that wrapper by the
-           root layout, so they keep the ROOT --color-void (#0B0E14) and
-           the page ends on a visible seam against this route's #0A0B0D.
-           This lifts the route's void onto body for as long as this page
-           is mounted, which is what makes the whole page one colour. */
-        body { background: #0A0B0D; }
-
         /* Role cross-references in prose. Colour only — no background, no
            box — so it reads as a linked term rather than a highlighter pen.
            #E5B54D on this page's #0A0B0D is 10.36:1, on .panel 9.35:1. The

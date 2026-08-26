@@ -4,7 +4,6 @@ import {
   diegeticThesis,
   invisibleDesign,
   moonHudStates,
-  uiRationale,
   type DiegeticGlyph,
   type DiegeticMechanic,
 } from "@/content/moon-knight-diegetic";
@@ -26,7 +25,7 @@ import { MoonPhaseGlyph } from "./MoonPhaseGlyph";
  *      object instead of a menu.
  *   4. INVISIBLE DESIGN. Four decisions the player never sees, where the
  *      reasoning IS the content, so they render as decision → why.
- *   5. THE DESIGNER'S NOTE, then core combat kept deliberately small.
+ *   5. CORE COMBAT, kept deliberately small and last.
  *
  * EVERY MECHANIC SHOWS ITS REASONING. The `Why` line is marked in every card,
  * because a reader skimming only the gold `Why` labels should still finish the
@@ -301,29 +300,7 @@ export default function DiegeticDesign() {
         </dl>
       </section>
 
-      {/* 5a — the designer's note. Dashed, and labelled a draft while the copy
-              is still placeholder, so it is never mistaken for finished
-              argument sitting among finished argument. */}
-      <aside
-        className={`mkd-note${uiRationale.placeholder ? " is-draft" : ""}`}
-        aria-labelledby="mkd-note-title"
-      >
-        <p className="mono mkd-note-kicker">
-          <span className="mkd-note-quill" aria-hidden="true" />
-          {uiRationale.kicker}
-          {uiRationale.placeholder && <span className="mkd-note-chip">Draft</span>}
-        </p>
-        <h4 id="mkd-note-title" className="mkd-note-title">
-          {uiRationale.title}
-        </h4>
-        {uiRationale.body.map((paragraph) => (
-          <p key={paragraph.slice(0, 32)} className="mkd-note-body">
-            {paragraph}
-          </p>
-        ))}
-      </aside>
-
-      {/* 5b — the generic verbs, kept small on purpose */}
+      {/* 5 — the generic verbs, kept small on purpose */}
       <section className="mkd-band">
         <h3 className="mono mkd-band-title">Core combat, for completeness</h3>
         <ul className="mkd-verbs">
@@ -633,67 +610,7 @@ export default function DiegeticDesign() {
           color: var(--color-silver);
         }
 
-        /* ---- 5a · the designer's note ----
-           Dashed rather than solid, and gold rather than steel: it is the one
-           block on the page that is me talking about the work instead of the
-           work describing itself, and it should not be mistaken for either. */
-        .mkd-note {
-          border: 1px dashed color-mix(in srgb, var(--color-gold) 42%, transparent);
-          border-left-width: 3px;
-          border-left-style: solid;
-          border-left-color: color-mix(in srgb, var(--color-gold) 62%, transparent);
-          background:
-            linear-gradient(
-              120deg,
-              color-mix(in srgb, var(--color-gold) 5%, transparent),
-              transparent 55%
-            ),
-            var(--color-nightfall);
-          padding: 1.2rem 1.3rem 1.3rem;
-        }
-        .mkd-note-kicker {
-          display: flex;
-          align-items: center;
-          flex-wrap: wrap;
-          gap: 0.5rem;
-          margin: 0;
-          font-size: 0.62rem;
-          color: var(--color-gold);
-        }
-        /* A nib: a small gold square tipped on its corner. */
-        .mkd-note-quill {
-          width: 0.45rem;
-          height: 0.45rem;
-          background: var(--color-gold);
-          transform: rotate(45deg);
-          flex: 0 0 auto;
-        }
-        .mkd-note-chip {
-          padding: 0.1rem 0.42rem;
-          border: 1px solid color-mix(in srgb, var(--mkd-blood) 55%, transparent);
-          font-size: 0.55rem;
-          letter-spacing: 0.16em;
-          text-transform: uppercase;
-          color: var(--mkd-blood-ink);
-        }
-        .mkd-note-title {
-          font-family: var(--font-hero), var(--font-display), serif;
-          font-size: 1.15rem;
-          font-weight: 600;
-          letter-spacing: 0.02em;
-          margin: 0.5rem 0 0;
-          color: var(--color-moonlight);
-        }
-        .mkd-note-body {
-          margin: 0.65rem 0 0;
-          font-family: var(--font-body);
-          font-size: 0.9rem;
-          line-height: 1.7;
-          color: var(--mkd-quiet);
-          max-width: 46rem;
-        }
-
-        /* ---- 5b · core combat ----
+        /* ---- 5 · core combat ----
            Small, quiet and last. These are the verbs every game in the genre
            has; they are here so the section is complete, not so they are read
            first. */

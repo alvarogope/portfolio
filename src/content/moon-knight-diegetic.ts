@@ -199,26 +199,15 @@ export const invisibleDesign: readonly DesignDecision[] = [
   },
 ];
 
-/* ---- why this UI -------------------------------------------------------- */
+/* ---- why this UI --------------------------------------------------------
 
-/**
- * PLACEHOLDER. The real rationale is still to be written; `placeholder` is true
- * so the component can mark it as a draft in the UI rather than pass it off as
- * finished copy. Set it to false when the prose below is replaced.
- */
-export const uiRationale = {
-  kicker: "Designer's note",
-  title: "Why an integrated UI",
-  placeholder: true,
-  body: [
-    "[Placeholder: why the integrated moon-HUD rather than a conventional one — " +
-      "immersion, keeping the player's eyes in the world, reinforcing the moon motif, " +
-      "and avoiding the disconnect of a floating bar that belongs to nobody.]",
-    "[To write properly later: the cost side too — legibility at a glance, what it took " +
-      "to keep the moon readable in a dark scene, and where a conventional HUD would " +
-      "honestly have served the player better.]",
-  ],
-} as const;
+   There is deliberately no separate "designer's note" export here. The case
+   for the integrated UI is made by the four `why` fields on
+   `diegeticMechanics` above — that is what those fields are for, and a fifth
+   block restating them would be the argument talking about itself. If the
+   cost side is ever written (legibility at a glance, keeping the moon readable
+   in a dark scene), it belongs inside the moon-HUD entry's `why`, not in a
+   note of its own. */
 
 /* ---- core combat -------------------------------------------------------- */
 

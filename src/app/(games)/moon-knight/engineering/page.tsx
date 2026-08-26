@@ -4,7 +4,6 @@ import { gameEngineering as g } from "@/content/moon-knight-game-engineering";
 import Section from "@/components/layout/Section";
 import SectionHeading from "@/components/layout/SectionHeading";
 import CodeBlock from "@/components/project/CodeBlock";
-import ScreenshotSlots from "@/components/project/ScreenshotSlots";
 import Reveal from "@/components/layout/Reveal";
 
 export const metadata: Metadata = {
@@ -474,23 +473,37 @@ export default function GameEngineeringPage() {
         </div>
       </Reveal>
 
-      {/* 05 · Editor captures --------------------------------------- */}
-      <Reveal>
-        <div style={{ marginTop: "5rem" }}>
-          <SectionHeading kicker={`04 · ${g.screenshots.kicker}`} title={g.screenshots.title} />
-          <p
-            style={{
-              marginTop: "1rem",
-              maxWidth: "48rem",
-              lineHeight: 1.75,
-              marginBottom: "1.75rem",
-            }}
-          >
-            {g.screenshots.intro}
-          </p>
-          <ScreenshotSlots items={g.screenshots.items} />
-        </div>
-      </Reveal>
+      {/* 05 · Editor captures — NOT RENDERED.
+             The Blueprint-side captures do not exist yet, and the section
+             rendered as five empty dashed frames under an intro that said so.
+             A section announcing its own emptiness is worse than no section,
+             so it is unmounted rather than shipped.
+
+             To bring it back: capture the images, set `src` (and `alt`) on the
+             entries in `gameEngineering.screenshots.items`, restore the block
+             below, and re-add
+               import ScreenshotSlots from "@/components/project/ScreenshotSlots";
+             at the top of this file. The data and `ScreenshotSlots` are both intact — the
+             component renders a real image the moment a slot has a `src`, at
+             the same aspect ratio, so nothing about the layout moves.
+
+        <Reveal>
+          <div style={{ marginTop: "5rem" }}>
+            <SectionHeading kicker={`04 · ${g.screenshots.kicker}`} title={g.screenshots.title} />
+            <p
+              style={{
+                marginTop: "1rem",
+                maxWidth: "48rem",
+                lineHeight: 1.75,
+                marginBottom: "1.75rem",
+              }}
+            >
+              {g.screenshots.intro}
+            </p>
+            <ScreenshotSlots items={g.screenshots.items} />
+          </div>
+        </Reveal>
+      */}
 
       {/* 06 · The quantum branch ------------------------------------ */}
       <Reveal>

@@ -82,8 +82,9 @@ export interface ClockMark {
  * How much of the run is left when the score changes gear. The audio design
  * specifies the shift by REMAINING time, not elapsed time, so it is written
  * here the way it was designed and the elapsed position is derived below.
- * `break-in-audio` reads the same two numbers, which is what stops the phase
- * clock and the score clock from ever disagreeing about where the mark sits.
+ * `break-in-audio.ts` imports both of these rather than restating them, which
+ * is what stops the phase clock in section 02 and the score clock in the audio
+ * section from ever disagreeing about where the mark sits.
  */
 export const SCORE_SHIFT_REMAINING = 5;
 

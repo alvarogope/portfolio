@@ -15,6 +15,7 @@ import LevelFlow from "@/components/project/LevelFlow";
 import HeistLoop from "@/components/project/HeistLoop";
 import BalanceNote from "@/components/project/BalanceNote";
 import DetectionStates from "@/components/project/DetectionStates";
+import BreakInAudio from "@/components/project/BreakInAudio";
 
 export const metadata: Metadata = {
   title: `${p.title} | Álvaro Gómez`,
@@ -120,10 +121,26 @@ export default function BreakInPage() {
           </div>
         </Reveal>
 
+        {/* Audio direction — placed straight after the detection machine
+            because the two share a channel: the crescendo that resolves into
+            the chase theme is designed up there as one of three feedback
+            channels, and this section is the rest of what audio is doing on a
+            page whose whole premise is that nobody can talk. Direction credit,
+            so it is sized as one console rather than a pillar. */}
+        <Reveal>
+          <div style={{ marginTop: "5rem" }}>
+            <SectionHeading kicker="07 · Audio" title="What the heist sounds like" />
+            <p style={{ color: "var(--color-mist)", maxWidth: "42rem", marginTop: "1.5rem", marginBottom: "1.75rem" }}>
+              <RoleTerms text="Take away the voice channel and a four-player stealth game has no way to pass information. I put it in the audio: a score wired to the state of the run, a clock you hear rather than check, and an action set where every move announces itself loudly enough to be read from another room." />
+            </p>
+            <BreakInAudio />
+          </div>
+        </Reveal>
+
         {/* The balancing philosophy — the design note under all of it */}
         <Reveal>
           <div style={{ marginTop: "5rem" }}>
-            <SectionHeading kicker="07 · Balance" title="Tuned so nobody can carry" />
+            <SectionHeading kicker="08 · Balance" title="Tuned so nobody can carry" />
             <p style={{ color: "var(--color-mist)", maxWidth: "42rem", marginTop: "1.5rem", marginBottom: "1.75rem" }}>
               <RoleTerms text="Four asymmetric roles only stay interesting if all four stay necessary. Three rules held that line: no role can reach past its quarter of the run, difficulty answers the team's performance instead of sitting still, and the payout is shared before it is individual." />
             </p>
@@ -135,7 +152,7 @@ export default function BreakInPage() {
         {p.designChallenge && (
           <Reveal>
             <div style={{ marginTop: "5rem" }}>
-              <SectionHeading kicker="08 · The Hard Part" title="Design Challenge" />
+              <SectionHeading kicker="09 · The Hard Part" title="Design Challenge" />
               <div style={{ marginTop: "1.5rem" }}>
                 <ChallengeQuote
                   challenge={p.designChallenge}
@@ -149,7 +166,7 @@ export default function BreakInPage() {
         {/* Contributions */}
         <Reveal>
           <div style={{ marginTop: "5rem" }}>
-            <SectionHeading kicker="09 · My Role" title="My Contribution" />
+            <SectionHeading kicker="10 · My Role" title="My Contribution" />
             <div style={{ display: "grid", gap: "1.5rem" }}>
               {p.contributions.map((c) => (
                 <div key={c.label}>

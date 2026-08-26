@@ -237,7 +237,18 @@ export default function MoonKnightPage() {
               <div style={{ marginTop: "1.5rem" }}>
                 <EngineeringNote note={p.engineeringNote} />
               </div>
-              <div style={{ marginTop: "1.5rem" }}>
+              {/* Two deep-dives now: the game programming is the foundation
+                  and leads, the quantum toolkit is the research grown inside
+                  it. */}
+              <div
+                style={{
+                  marginTop: "1.5rem",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "flex-start",
+                  gap: "0.85rem",
+                }}
+              >
                 <Link
                   href="/moon-knight/engineering"
                   className="mono"
@@ -248,7 +259,19 @@ export default function MoonKnightPage() {
                     paddingBottom: "2px",
                   }}
                 >
-                  Read the engineering deep-dive: the C++ quantum toolkit →
+                  How I programmed the game: the C++ / Blueprint architecture →
+                </Link>
+                <Link
+                  href="/moon-knight/engineering/quantum"
+                  className="mono"
+                  style={{
+                    fontSize: "0.78rem",
+                    color: "var(--color-silver)",
+                    borderBottom: "1px solid color-mix(in srgb, var(--color-silver) 45%, transparent)",
+                    paddingBottom: "2px",
+                  }}
+                >
+                  The research within it: the C++ quantum toolkit →
                 </Link>
               </div>
             </div>

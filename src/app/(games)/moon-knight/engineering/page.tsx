@@ -1,145 +1,549 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { quantumToolkit as q } from "@/content/moon-knight-engineering";
+import { gameEngineering as g } from "@/content/moon-knight-game-engineering";
 import Section from "@/components/layout/Section";
 import SectionHeading from "@/components/layout/SectionHeading";
 import CodeBlock from "@/components/project/CodeBlock";
+import ScreenshotSlots from "@/components/project/ScreenshotSlots";
 import Reveal from "@/components/layout/Reveal";
 
 export const metadata: Metadata = {
-  title: "The Quantum Toolkit | Álvaro Gómez",
-  description: q.tagline,
+  title: "Programming Moon-Knight | Álvaro Gómez",
+  description: g.tagline,
 };
 
-export default function QuantumToolkitPage() {
+/* The three accent roles the state cards use. Kept here rather than in the
+   content file so the content stays free of presentation. */
+const ACCENT: Record<string, string> = {
+  gold: "var(--color-gold)",
+  scarlet: "var(--color-scarlet)",
+  emerald: "var(--color-emerald)",
+};
+
+const HAIRLINE = "1px solid color-mix(in srgb, var(--color-mist) 20%, transparent)";
+
+export default function GameEngineeringPage() {
   return (
     <Section>
-      {/* Back link */}
-      <Link
-        href="/moon-knight"
+      {/* Breadcrumb ------------------------------------------------- */}
+      <nav
+        aria-label="Breadcrumb"
         className="mono"
-        style={{ fontSize: "0.72rem", color: "var(--color-mist)", display: "inline-block", marginTop: "1rem" }}
+        style={{ fontSize: "0.72rem", color: "var(--color-mist)", marginTop: "1rem" }}
       >
-        ← Back to Moon-Knight
-      </Link>
+        <ol
+          style={{
+            display: "flex",
+            flexWrap: "wrap",
+            gap: "0.5rem",
+            listStyle: "none",
+            margin: 0,
+            padding: 0,
+          }}
+        >
+          <li>
+            <Link href="/moon-knight" style={{ color: "var(--color-mist)" }}>
+              Moon-Knight
+            </Link>
+          </li>
+          <li aria-hidden>/</li>
+          <li aria-current="page" style={{ color: "var(--color-silver)" }}>
+            Game engineering
+          </li>
+        </ol>
+      </nav>
 
-      {/* Header */}
+      {/* 01 · Hero and thesis --------------------------------------- */}
       <Reveal>
-        <div style={{ marginTop: "1.5rem", maxWidth: "48rem" }}>
-          <p className="mono" style={{ fontSize: "0.72rem", color: "var(--color-silver)", marginBottom: "1rem" }}>
-            ENGINEERING DEEP-DIVE · C++17 · QUANTUM++ / EIGEN
+        <header style={{ marginTop: "1.5rem", maxWidth: "48rem" }}>
+          <p
+            className="mono"
+            style={{ fontSize: "0.72rem", color: "var(--color-silver)", marginBottom: "1rem" }}
+          >
+            {g.eyebrow}
           </p>
-          <h1 style={{ fontSize: "var(--text-hero)", margin: 0, lineHeight: 1.05, fontFamily: "var(--font-hero)" }}>
-            {q.title}
+          <h1
+            style={{
+              fontSize: "var(--text-hero)",
+              margin: 0,
+              lineHeight: 1.05,
+              fontFamily: "var(--font-hero)",
+            }}
+          >
+            {g.title}
           </h1>
           <p style={{ fontSize: "var(--text-lg)", color: "var(--color-mist)", marginTop: "1rem" }}>
-            {q.tagline}
+            {g.tagline}
           </p>
-          <p style={{ marginTop: "1.5rem", lineHeight: 1.75 }}>{q.intro}</p>
+        </header>
+      </Reveal>
+
+      {/* The thesis, given the weight of a pull quote because the whole
+          page is an argument for it. */}
+      <Reveal>
+        <p
+          className="panel"
+          style={{
+            marginTop: "2.5rem",
+            maxWidth: "48rem",
+            padding: "clamp(1.5rem, 4vw, 2.25rem)",
+            border: HAIRLINE,
+            borderLeft: "3px solid var(--color-gold)",
+            fontFamily: "var(--font-hero)",
+            fontSize: "clamp(1.25rem, 1rem + 1.4vw, 1.9rem)",
+            lineHeight: 1.35,
+            color: "var(--color-moonlight)",
+          }}
+        >
+          {g.thesis}
+        </p>
+      </Reveal>
+
+      <Reveal>
+        <p style={{ marginTop: "2rem", maxWidth: "48rem", lineHeight: 1.75 }}>{g.intro}</p>
+      </Reveal>
+
+      {/* Stack + repo */}
+      <Reveal>
+        <div style={{ marginTop: "2rem", maxWidth: "48rem" }}>
+          <h2 className="sr-only">Technology</h2>
+          <ul
+            style={{
+              display: "flex",
+              flexWrap: "wrap",
+              gap: "0.5rem",
+              listStyle: "none",
+              margin: 0,
+              padding: 0,
+            }}
+          >
+            {g.stack.map((item) => (
+              <li
+                key={item}
+                className="mono"
+                style={{
+                  fontSize: "0.68rem",
+                  letterSpacing: "0.08em",
+                  color: "var(--color-silver)",
+                  border: HAIRLINE,
+                  padding: "0.35rem 0.7rem",
+                }}
+              >
+                {item}
+              </li>
+            ))}
+          </ul>
+          <a
+            href={g.repoUrl}
+            target="_blank"
+            rel="noreferrer"
+            className="mono"
+            style={{
+              display: "inline-block",
+              marginTop: "1.5rem",
+              fontSize: "0.75rem",
+              color: "var(--color-gold)",
+              borderBottom: "1px solid color-mix(in srgb, var(--color-gold) 50%, transparent)",
+              paddingBottom: "2px",
+            }}
+          >
+            {g.repoLabel} ↗
+          </a>
         </div>
       </Reveal>
 
-      {/* Architecture decision */}
+      {/* 02 · The split --------------------------------------------- */}
+      <Reveal>
+        <div style={{ marginTop: "4.5rem" }}>
+          <SectionHeading kicker={`01 · ${g.split.kicker}`} title={g.split.title} />
+          <p style={{ marginTop: "1rem", maxWidth: "48rem", lineHeight: 1.75 }}>
+            {g.split.intro}
+          </p>
+
+          {/* Horizontally scrollable on narrow viewports, and focusable so the
+              scroll is reachable from the keyboard. */}
+          <div
+            role="region"
+            aria-label="Blueprint and C++ system split"
+            tabIndex={0}
+            style={{ marginTop: "1.75rem", overflowX: "auto", border: HAIRLINE }}
+            className="panel"
+          >
+            <table
+              style={{
+                width: "100%",
+                minWidth: "38rem",
+                borderCollapse: "collapse",
+                textAlign: "left",
+              }}
+            >
+              <caption className="sr-only">
+                Which Moon-Knight systems are implemented in Blueprint and which in C++, and the
+                class or asset that owns each.
+              </caption>
+              <thead>
+                <tr>
+                  {["System", "Lives in", "Owner"].map((label) => (
+                    <th
+                      key={label}
+                      scope="col"
+                      className="mono"
+                      style={{
+                        padding: "0.9rem 1.25rem",
+                        fontSize: "0.65rem",
+                        fontWeight: 400,
+                        letterSpacing: "0.14em",
+                        textTransform: "uppercase",
+                        color: "var(--color-silver)",
+                        borderBottom: HAIRLINE,
+                      }}
+                    >
+                      {label}
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {g.split.rows.map((r, i) => (
+                  <tr key={r.system}>
+                    <th
+                      scope="row"
+                      style={{
+                        padding: "1rem 1.25rem",
+                        fontWeight: 400,
+                        borderTop: i === 0 ? "none" : HAIRLINE,
+                        verticalAlign: "top",
+                      }}
+                    >
+                      <span style={{ display: "block", color: "var(--color-moonlight)" }}>
+                        {r.system}
+                      </span>
+                      <span
+                        style={{
+                          display: "block",
+                          marginTop: "0.3rem",
+                          fontSize: "0.85rem",
+                          color: "var(--color-mist)",
+                          lineHeight: 1.55,
+                        }}
+                      >
+                        {r.detail}
+                      </span>
+                    </th>
+                    <td
+                      style={{
+                        padding: "1rem 1.25rem",
+                        borderTop: i === 0 ? "none" : HAIRLINE,
+                        verticalAlign: "top",
+                        whiteSpace: "nowrap",
+                      }}
+                    >
+                      <span
+                        className="mono"
+                        style={{
+                          fontSize: "0.68rem",
+                          letterSpacing: "0.08em",
+                          padding: "0.3rem 0.6rem",
+                          border: `1px solid color-mix(in srgb, ${
+                            r.home === "C++" ? "var(--color-gold)" : "var(--color-silver)"
+                          } 55%, transparent)`,
+                          color:
+                            r.home === "C++" ? "var(--color-gold)" : "var(--color-silver)",
+                        }}
+                      >
+                        {r.home}
+                      </span>
+                    </td>
+                    <td
+                      className="mono"
+                      style={{
+                        padding: "1rem 1.25rem",
+                        borderTop: i === 0 ? "none" : HAIRLINE,
+                        verticalAlign: "top",
+                        fontSize: "0.8rem",
+                        color: "var(--color-silver)",
+                      }}
+                    >
+                      {r.owner}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </Reveal>
+
+      {/* 03 · The coding choices ------------------------------------ */}
+      <Reveal>
+        <div style={{ marginTop: "5rem" }}>
+          <SectionHeading kicker={`02 · ${g.choicesKicker}`} title={g.choicesTitle} />
+          <p style={{ marginTop: "1rem", maxWidth: "48rem", lineHeight: 1.75 }}>
+            {g.choicesIntro}
+          </p>
+        </div>
+      </Reveal>
+
+      {g.choices.map((c, i) => (
+        <Reveal key={c.id}>
+          <article id={c.id} style={{ marginTop: "3.5rem", scrollMarginTop: "2rem" }}>
+            <p
+              className="mono"
+              style={{
+                margin: 0,
+                fontSize: "0.65rem",
+                letterSpacing: "0.14em",
+                textTransform: "uppercase",
+                color: "var(--color-silver)",
+              }}
+            >
+              {String.fromCharCode(97 + i)} · {c.kicker}
+            </p>
+            <h3
+              style={{
+                margin: "0.6rem 0 0",
+                fontSize: "var(--text-lg)",
+                fontFamily: "var(--font-display)",
+                lineHeight: 1.2,
+              }}
+            >
+              {c.title}
+            </h3>
+
+            {/* The decision, stated flatly and set apart from the reasoning. */}
+            <div
+              style={{
+                marginTop: "1.25rem",
+                maxWidth: "48rem",
+                borderLeft: "2px solid var(--color-gold)",
+                paddingLeft: "1.1rem",
+              }}
+            >
+              <span
+                className="mono"
+                style={{
+                  fontSize: "0.62rem",
+                  letterSpacing: "0.14em",
+                  textTransform: "uppercase",
+                  color: "var(--color-gold)",
+                }}
+              >
+                Decision
+              </span>
+              <p
+                style={{
+                  margin: "0.4rem 0 0",
+                  lineHeight: 1.7,
+                  color: "var(--color-moonlight)",
+                }}
+              >
+                {c.decision}
+              </p>
+            </div>
+
+            {/* The reasoning — the part worth reading. */}
+            <div style={{ marginTop: "1.5rem", maxWidth: "48rem" }}>
+              <span
+                className="mono"
+                style={{
+                  fontSize: "0.62rem",
+                  letterSpacing: "0.14em",
+                  textTransform: "uppercase",
+                  color: "var(--color-mist)",
+                }}
+              >
+                Why
+              </span>
+              <ul
+                style={{
+                  margin: "0.6rem 0 0",
+                  padding: 0,
+                  listStyle: "none",
+                  display: "grid",
+                  gap: "0.9rem",
+                }}
+              >
+                {c.why.map((reason) => (
+                  <li
+                    key={reason.slice(0, 40)}
+                    style={{
+                      lineHeight: 1.75,
+                      paddingLeft: "1.1rem",
+                      borderLeft: HAIRLINE,
+                      color: "var(--color-silver)",
+                    }}
+                  >
+                    {reason}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div style={{ marginTop: "1.75rem" }}>
+              <CodeBlock
+                filename={c.code.filename}
+                language={c.code.language}
+                code={c.code.code}
+              />
+            </div>
+          </article>
+        </Reveal>
+      ))}
+
+      {/* 04 · Combat state machine ---------------------------------- */}
+      <Reveal>
+        <div style={{ marginTop: "5rem" }}>
+          <SectionHeading kicker={`03 · ${g.combat.kicker}`} title={g.combat.title} />
+          <p style={{ marginTop: "1rem", maxWidth: "48rem", lineHeight: 1.75 }}>
+            {g.combat.intro}
+          </p>
+          <p style={{ marginTop: "1rem", maxWidth: "48rem", lineHeight: 1.75 }}>
+            {g.combat.detail}
+          </p>
+
+          <ul
+            style={{
+              marginTop: "2rem",
+              padding: 0,
+              listStyle: "none",
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 17rem), 1fr))",
+              gap: "1rem",
+            }}
+          >
+            {g.combat.states.map((s) => {
+              const accent = s.accent ? ACCENT[s.accent] : "var(--color-silver)";
+              return (
+                <li
+                  key={s.name}
+                  className="panel"
+                  style={{
+                    padding: "1.15rem 1.25rem",
+                    border: HAIRLINE,
+                    borderTop: `2px solid ${accent}`,
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: "0.5rem",
+                  }}
+                >
+                  {/* The accent stays on the border rule only. Scarlet and
+                      emerald sit around 2:1 and 3.4:1 against the panel, so
+                      neither is safe to set text in. */}
+                  <span
+                    className="mono"
+                    style={{
+                      fontSize: "0.8rem",
+                      color: "var(--color-moonlight)",
+                      letterSpacing: "0.06em",
+                    }}
+                  >
+                    {s.name}
+                  </span>
+                  <span
+                    style={{ fontSize: "0.9rem", color: "var(--color-mist)", lineHeight: 1.6 }}
+                  >
+                    {s.detail}
+                  </span>
+                  <span
+                    className="mono"
+                    style={{
+                      marginTop: "auto",
+                      paddingTop: "0.6rem",
+                      borderTop: HAIRLINE,
+                      fontSize: "0.65rem",
+                      color: "var(--color-silver)",
+                      lineHeight: 1.5,
+                    }}
+                  >
+                    <span aria-hidden>→ </span>
+                    <span className="sr-only">Transitions to: </span>
+                    {s.exits}
+                  </span>
+                </li>
+              );
+            })}
+          </ul>
+
+          <div style={{ marginTop: "1.75rem" }}>
+            <CodeBlock
+              filename={g.combat.code.filename}
+              language={g.combat.code.language}
+              code={g.combat.code.code}
+            />
+          </div>
+        </div>
+      </Reveal>
+
+      {/* 05 · Editor captures --------------------------------------- */}
+      <Reveal>
+        <div style={{ marginTop: "5rem" }}>
+          <SectionHeading kicker={`04 · ${g.screenshots.kicker}`} title={g.screenshots.title} />
+          <p
+            style={{
+              marginTop: "1rem",
+              maxWidth: "48rem",
+              lineHeight: 1.75,
+              marginBottom: "1.75rem",
+            }}
+          >
+            {g.screenshots.intro}
+          </p>
+          <ScreenshotSlots items={g.screenshots.items} />
+        </div>
+      </Reveal>
+
+      {/* 06 · The quantum branch ------------------------------------ */}
       <Reveal>
         <div
           className="panel"
           style={{
-            marginTop: "3.5rem",
-            border: "1px solid color-mix(in srgb, var(--color-mist) 20%, transparent)",
+            marginTop: "5rem",
+            padding: "clamp(1.75rem, 5vw, 3rem)",
+            border: HAIRLINE,
             borderLeft: "3px solid var(--color-silver)",
-            padding: "clamp(1.5rem, 4vw, 2.5rem)",
             maxWidth: "48rem",
           }}
         >
-          <span className="mono" style={{ fontSize: "0.65rem", color: "var(--color-silver)", letterSpacing: "0.12em" }}>
-            Architecture
-          </span>
-          <h2 style={{ fontSize: "var(--text-xl)", margin: "0.75rem 0 1rem" }}>{q.architecture.title}</h2>
-          <p style={{ margin: 0, lineHeight: 1.75 }}>{q.architecture.body}</p>
-        </div>
-      </Reveal>
-
-      {/* Code sections */}
-      {q.sections.map((s, i) => (
-        <Reveal key={s.title}>
-          <div style={{ marginTop: "4rem" }}>
-            <SectionHeading kicker={`${String(i + 1).padStart(2, "0")} · ${s.kicker}`} title={s.title} />
-            <p style={{ marginTop: "1rem", maxWidth: "48rem", lineHeight: 1.75 }}>{s.body}</p>
-            <div style={{ marginTop: "1.5rem" }}>
-              <CodeBlock filename={s.code.filename} language={s.code.language} code={s.code.body} />
-            </div>
-          </div>
-        </Reveal>
-      ))}
-
-      {/* Honest status */}
-      <Reveal>
-        <div style={{ marginTop: "4rem" }}>
-          <SectionHeading kicker="Status" title={q.status.title} />
-          <p style={{ marginTop: "1rem", maxWidth: "48rem", lineHeight: 1.75, marginBottom: "1.5rem" }}>
-            {q.status.body}
-          </p>
-          <div
-            className="panel"
+          <span
+            className="mono"
             style={{
-              border: "1px solid color-mix(in srgb, var(--color-mist) 20%, transparent)",
-              overflow: "hidden",
+              fontSize: "0.65rem",
+              letterSpacing: "0.14em",
+              textTransform: "uppercase",
+              color: "var(--color-silver)",
             }}
           >
-            {q.status.rows.map((r, i) => (
-              <div
-                key={r.component + r.ability}
-                style={{
-                  display: "grid",
-                  gridTemplateColumns: "minmax(0, 2fr) minmax(0, 1.5fr) minmax(0, 1.5fr)",
-                  gap: "1rem",
-                  padding: "0.9rem 1.25rem",
-                  borderTop: i === 0 ? "none" : "1px solid color-mix(in srgb, var(--color-mist) 15%, transparent)",
-                  alignItems: "center",
-                }}
-              >
-                <span style={{ fontFamily: "var(--font-mono)", fontSize: "0.8rem" }}>{r.component}</span>
-                <span style={{ fontSize: "0.85rem", color: "var(--color-mist)" }}>{r.ability}</span>
-                <span
-                  className="mono"
-                  style={{
-                    fontSize: "0.68rem",
-                    color: r.state.includes("Complete")
-                      ? "var(--color-emerald)"
-                      : r.state.includes("progress")
-                      ? "var(--color-gold)"
-                      : "var(--color-mist)",
-                  }}
-                >
-                  {r.state}
-                </span>
-              </div>
-            ))}
-          </div>
+            {g.quantumCta.kicker}
+          </span>
+          <h2
+            style={{
+              margin: "0.75rem 0 1rem",
+              fontSize: "var(--text-xl)",
+              fontFamily: "var(--font-display)",
+              lineHeight: 1.2,
+            }}
+          >
+            {g.quantumCta.title}
+          </h2>
+          <p style={{ margin: 0, lineHeight: 1.75, color: "var(--color-silver)" }}>
+            {g.quantumCta.body}
+          </p>
+          <Link
+            href={g.quantumCta.href}
+            className="mono"
+            style={{
+              display: "inline-block",
+              marginTop: "1.5rem",
+              fontSize: "0.8rem",
+              color: "var(--color-gold)",
+              borderBottom: "1px solid color-mix(in srgb, var(--color-gold) 50%, transparent)",
+              paddingBottom: "3px",
+            }}
+          >
+            {g.quantumCta.linkLabel} →
+          </Link>
         </div>
       </Reveal>
-
-      {/* Repo link */}
-      {q.repoUrl && q.repoUrl !== "#" && (
-        <Reveal>
-          <div style={{ marginTop: "3rem" }}>
-            <a
-              href={q.repoUrl}
-              target="_blank"
-              rel="noreferrer"
-              className="mono"
-              style={{
-                fontSize: "0.75rem",
-                color: "var(--color-silver)",
-                borderBottom: "1px solid color-mix(in srgb, var(--color-silver) 50%, transparent)",
-                paddingBottom: "2px",
-              }}
-            >
-              View the source on GitHub ↗
-            </a>
-          </div>
-        </Reveal>
-      )}
     </Section>
   );
 }

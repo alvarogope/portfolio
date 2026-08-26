@@ -17,7 +17,7 @@ export const engineering = {
     quantumNote: {
       title: "Quantum-inspired game design",
       body: "My Moon-Knight combat system maps real quantum principles to RPG mechanics, backed by a hand-built C++ quantum toolkit. The deep technical write-up lives on its own page.",
-      href: "/moon-knight/engineering",
+      href: "/moon-knight/engineering/quantum",
       linkLabel: "Read the quantum toolkit deep-dive",
     },
     projects: [

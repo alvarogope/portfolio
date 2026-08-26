@@ -15,7 +15,8 @@ export const moonKnight: Project = {
 
   links: [
     { label: "Design summary (PDF)", url: "#" },
-    { label: "Quantum toolkit repo", url: "/moon-knight/engineering" },
+    { label: "Game engineering", url: "/moon-knight/engineering" },
+    { label: "Quantum toolkit", url: "/moon-knight/engineering/quantum" },
   ],
 
   eyebrow: "UE5 · C++ & BLUEPRINTS · SOLO PROJECT · 2025",

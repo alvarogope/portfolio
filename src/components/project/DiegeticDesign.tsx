@@ -466,7 +466,7 @@ export default function DiegeticDesign() {
           margin: 0;
           padding: 0;
           display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
+          grid-template-columns: repeat(auto-fit, minmax(min(17rem, 100%), 1fr));
           gap: 1px;
           background: var(--mkd-edge);
           border: 1px solid var(--mkd-edge);
@@ -589,7 +589,7 @@ export default function DiegeticDesign() {
         .mkd-decisions {
           margin: 0.3rem 0 0;
           display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(22rem, 1fr));
+          grid-template-columns: repeat(auto-fit, minmax(min(22rem, 100%), 1fr));
           gap: 1.4rem 1.8rem;
         }
         .mkd-decision { min-width: 0; }
@@ -619,7 +619,7 @@ export default function DiegeticDesign() {
           margin: 0.2rem 0 0;
           padding: 0;
           display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(19rem, 1fr));
+          grid-template-columns: repeat(auto-fit, minmax(min(19rem, 100%), 1fr));
           gap: 0.5rem 1.6rem;
         }
         .mkd-verb {

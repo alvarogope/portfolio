@@ -555,65 +555,30 @@ export const puzzlePattern: PuzzleSection = {
 };
 
 /* ==========================================================================
-   KNOWLEDGE-GATED EXPLORATION — compact
+   KNOWLEDGE-GATED EXPLORATION — MOVED
    ==========================================================================
-   The access rule for the solar system. Points at
-   `shattered-skies-planets.ts`; describes no planet. */
+   This section used to describe the access rule in full: free exploration from
+   the first hour, gated by comprehension rather than keys, with the cave whose
+   door is an orbit as the worked example.
 
-export interface GatingSection {
-  meta: BlockMeta;
-  lead: string;
-  rule: Beat;
-  example: Beat;
-  crossRef: Beat;
-  designPoint: string;
-}
+   It now lives with the planetary system further UP the page
+   (`shattered-skies-planets.ts` → `knowledgeGate`, plus `Planet.access` on
+   every world), because that is where the diagram is. The rule is an argument
+   about orbits — a route that opens as a moon travels its arc, a surface
+   gravity you have to out-engineer to leave — and it was being made three
+   thousand words away from the only picture that can show it. The orrery and
+   the dossier own it now: the rule is stated once above the cards, drawn once
+   as an alignment figure, and then every world states its own gate.
 
-export const knowledgeGating: GatingSection = {
-  meta: {
-    id: "knowledge-gating",
-    order: "03",
-    kicker: "Access",
-    title: "A metroidvania of knowledge",
-    standfirst:
-      "The whole system is open from the first hour. What is closed is everything you do not yet " +
-      "understand about how it moves.",
-  },
+   What is left here is `gatingPointer` — one line, no rule, no example. If a
+   description of the access model ever reappears in this file, it is in the
+   wrong one. */
 
-  lead:
-    "There are no keys in Shattered Skies, and no traversal upgrades held back to be handed out " +
-    "later. Players can fly anywhere from the start. The thing that actually gates the world is " +
-    "comprehension: the orbits, the alignments and the conditions each world imposes are the lock, " +
-    "and learning how the system works is the only way to pick it.",
-
-  rule: {
-    label: "The rule",
-    body:
-      "Free exploration from the start, with access gated by knowledge rather than by keys or " +
-      "upgrades. Everything a player needs to reach any place in the game is already in their " +
-      "hands the first time they undock. What they are missing is not equipment — it is the " +
-      "understanding of when and where the system opens.",
-  },
-
-  example: {
-    label: "What that looks like in play",
-    body:
-      "An information note found on one world describes a cave that can only be entered while its " +
-      "planet sits opposite a particular location. Nothing about the cave is locked; the door is " +
-      "the orbit. Read the note, understand the alignment, wait for it or fly to meet it — and a " +
-      "place that was closed the last four times you flew past it is simply open.",
-  },
-
-  crossRef: {
-    label: "Which is why the system was built the way it was",
-    body:
-      "The five worlds, their orbits and the moon that orbits a gas giant instead of the star are " +
-      "surveyed further up this page. That system is not scenery for this rule — it is the rule's " +
-      "content. Every orbital relationship in it is a potential key, which is what let the team " +
-      "build gates without building doors.",
-  },
-
-  designPoint:
-    "Progression you cannot lose, cannot be given and cannot skip: the player unlocks the world by " +
-    "understanding it, and the only thing that carries between sessions is what they now know.",
-};
+export const gatingPointer = {
+  label: "Where access is designed",
+  body:
+    "Access to the five worlds is gated by knowledge rather than by keys, and that rule is part " +
+    "of the planetary system further up this page — stated there, and drawn on the orbits it is " +
+    "actually about. The puzzles below are what happens once a pair is standing somewhere; the " +
+    "system decides where they can usefully stand.",
+} as const;

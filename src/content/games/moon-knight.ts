@@ -116,6 +116,11 @@ export const moonKnight: Project = {
       "Core library and two of five mechanics complete and statistically verified. The remaining mechanics are recombinations of the same verified primitives.",
   },
 
+  /* The controls diagram used to be the third entry here. It is now the
+     coded pad in section 09 (`ControllerMap`), beside the diegetic systems
+     it is evidence for — a picture of a mapping could not be read aloud,
+     themed or corrected. `controls.png` stays in /public as the source the
+     bindings were transcribed from. */
   gallery: [
     {
       src: "/images/moon-knight/boss-werewolf.png",
@@ -126,11 +131,6 @@ export const moonKnight: Project = {
       src: "/images/moon-knight/world-map.jpg",
       alt: "Hand-drawn world map showing regions, rose collectibles, and the Old Gods quest locations",
       caption: "World map. Five regions gated by the White Rose collectibles and the Old Gods quests that grant each power.",
-    },
-    {
-      src: "/images/moon-knight/controls.png",
-      alt: "Controller layout diagram mapping every gameplay action to a gamepad input",
-      caption: "Controls design. The full input map, including the diegetic Raise Weapon action that catches moonlight instead of opening a menu.",
     },
   ],
 };

@@ -18,6 +18,7 @@ import WorldMap from "@/components/project/WorldMap";
 import NarrativeDesign from "@/components/project/NarrativeDesign";
 import Cast from "@/components/project/Cast";
 import DiegeticDesign from "@/components/project/DiegeticDesign";
+import ControllerMap from "@/components/project/ControllerMap";
 import Jousting from "@/components/project/Jousting";
 import ArtDirection from "@/components/project/ArtDirection";
 import AudioDesign from "@/components/project/AudioDesign";
@@ -152,6 +153,22 @@ export default function MoonKnightPage() {
           </div>
         </Reveal>
 
+        {/* Controls — the input map. Directly after the diegetic section
+            because it is that section's evidence: Raise Weapon is a shoulder
+            button rather than a map screen, healing is a face button rather
+            than an inventory, and there is no block bound anywhere on the pad.
+            Replaces the flat controls.png that used to sit in the gallery at
+            the foot of the page, where a picture of a mapping could not be
+            read aloud, themed, or corrected. */}
+        <Reveal>
+          <div style={{ marginTop: "5rem" }}>
+            <SectionHeading kicker="09 · Controls" title="The Input Map" />
+            <div style={{ marginTop: "1.75rem" }}>
+              <ControllerMap />
+            </div>
+          </div>
+        </Reveal>
+
         {/* Art direction — the visual thesis and what it decides. Sits after
             the world, the narrative and the diegetic systems on purpose: the
             Sublime is argued through solitude, ruin and darkness, so the reader
@@ -159,7 +176,7 @@ export default function MoonKnightPage() {
             only lands once the integrated UI has been made the case for. */}
         <Reveal>
           <div style={{ marginTop: "5rem" }}>
-            <SectionHeading kicker="09 · Art Direction" title="The Sublime, Made Playable" />
+            <SectionHeading kicker="10 · Art Direction" title="The Sublime, Made Playable" />
             <p style={{ color: "var(--color-mist)", maxWidth: "42rem", marginTop: "1.5rem", marginBottom: "1.75rem" }}>
               One aesthetic idea decides the whole look of the game — and then keeps going,
               into how the player travels, what the world is made of, and how hard it is to
@@ -177,7 +194,7 @@ export default function MoonKnightPage() {
             back to the narrative: same four phases, same spine. */}
         <Reveal>
           <div style={{ marginTop: "5rem" }}>
-            <SectionHeading kicker="10 · Level Design" title="The Beat Chart" />
+            <SectionHeading kicker="11 · Level Design" title="The Beat Chart" />
             <p style={{ color: "var(--color-mist)", maxWidth: "42rem", marginTop: "1.5rem", marginBottom: "1.75rem" }}>
               The sheet the game was actually planned from: four levels against nine design
               dimensions, with the moon waxing across the top. Pick a level to open its design
@@ -195,7 +212,7 @@ export default function MoonKnightPage() {
             roadmap — narrative range, not a plan to ship. */}
         <Reveal>
           <div style={{ marginTop: "5rem" }}>
-            <SectionHeading kicker="11 · And Beyond" title="Where the World Goes Next" />
+            <SectionHeading kicker="12 · And Beyond" title="Where the World Goes Next" />
             <p style={{ color: "var(--color-mist)", maxWidth: "42rem", marginTop: "1.5rem", marginBottom: "1.75rem" }}>
               Two expansion concepts, each grown from a quantum mechanic the game already has.
               Unbuilt, and kept here as evidence of the same thing the rest of the page argues:
@@ -209,7 +226,7 @@ export default function MoonKnightPage() {
             mechanics rather than among the pillars. */}
         <Reveal>
           <div style={{ marginTop: "5rem" }}>
-            <SectionHeading kicker="12 · A Side Feature" title="The Jousting Minigame" />
+            <SectionHeading kicker="13 · A Side Feature" title="The Jousting Minigame" />
             <p style={{ color: "var(--color-mist)", maxWidth: "42rem", marginTop: "1.5rem", marginBottom: "1.75rem" }}>
               The Woods still keeps the duelling tradition of a fallen noble house, and Orpheus is
               the one who teaches it. Two riders, two lances, and one moment to decide.
@@ -222,7 +239,7 @@ export default function MoonKnightPage() {
         {p.designChallenge && (
           <Reveal>
             <div style={{ marginTop: "5rem" }}>
-              <SectionHeading kicker="13 · The Hard Part" title="Design Challenge" />
+              <SectionHeading kicker="14 · The Hard Part" title="Design Challenge" />
               <div style={{ marginTop: "1.5rem" }}>
                 <ChallengeQuote challenge={p.designChallenge} />
               </div>
@@ -233,7 +250,7 @@ export default function MoonKnightPage() {
         {p.engineeringNote && (
           <Reveal>
             <div style={{ marginTop: "5rem" }}>
-              <SectionHeading kicker="14 · From Design to Engineering" title="Building the Quantum" />
+              <SectionHeading kicker="15 · From Design to Engineering" title="Building the Quantum" />
               <div style={{ marginTop: "1.5rem" }}>
                 <EngineeringNote note={p.engineeringNote} />
               </div>
@@ -284,7 +301,7 @@ export default function MoonKnightPage() {
             design, not recordings. */}
         <Reveal>
           <div style={{ marginTop: "5rem" }}>
-            <SectionHeading kicker="15 · Score & Audio Design" title="Music for a Borrowed Moon" />
+            <SectionHeading kicker="16 · Score & Audio Design" title="Music for a Borrowed Moon" />
             <p style={{ color: "var(--color-mist)", maxWidth: "42rem", marginTop: "1.5rem", marginBottom: "1.75rem" }}>
               I composed the game&apos;s score, and designed the rules it obeys: where music is
               allowed to play, what each instrument is permitted to mean, and why most of this
@@ -300,7 +317,7 @@ export default function MoonKnightPage() {
         {p.gallery && (
           <Reveal>
             <div style={{ marginTop: "5rem" }}>
-              <SectionHeading kicker="16 · From the Game" title="Gallery" />
+              <SectionHeading kicker="17 · From the Game" title="Gallery" />
               <div style={{ marginTop: "1.5rem" }}>
                 <Gallery items={p.gallery} />
               </div>

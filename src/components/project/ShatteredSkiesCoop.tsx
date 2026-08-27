@@ -1,5 +1,5 @@
 import {
-  knowledgeGating,
+  gatingPointer,
   minigames,
   puzzlePattern,
   roleNote,
@@ -706,17 +706,41 @@ export default function ShatteredSkiesCoop() {
         <DesignPoint body={puzzlePattern.designPoint} />
       </article>
 
-      {/* ================= 03 · knowledge-gated exploration ================= */}
-      <article className="ssc__block ssc__block--compact" aria-labelledby="ssc-gating-title">
-        <BlockHeader {...knowledgeGating.meta} titleId="ssc-gating-title" />
-        <p className="ssc__lead">{knowledgeGating.lead}</p>
-        <BeatRail
-          beats={[knowledgeGating.rule, knowledgeGating.example, knowledgeGating.crossRef]}
-        />
-        <DesignPoint body={knowledgeGating.designPoint} />
-      </article>
+      {/* ================= knowledge-gated exploration · POINTER =================
+          The access rule is designed on the planetary system further up the
+          page, where the orbits it is about are actually drawn. This is a
+          signpost, not a section: no rule, no worked example, no design point.
+          Growing it back into a block would put the same argument on the page
+          twice, in the half of it with no diagram. */}
+      <aside className="ssc__pointer" aria-label={gatingPointer.label}>
+        <p className="ssc__pointer-tag">{gatingPointer.label}</p>
+        <p className="ssc__pointer-body">{gatingPointer.body}</p>
+      </aside>
 
       <style>{`
+        .ssc__pointer {
+          display: grid;
+          gap: 0.35rem;
+          padding: 0.95rem 1.15rem;
+          border: 1px solid var(--ssc-edge);
+          border-left: 2px solid color-mix(in srgb, var(--ssc-cyan) 55%, transparent);
+          background: var(--ssc-panel);
+        }
+        .ssc__pointer-tag {
+          margin: 0;
+          font-family: var(--font-mono);
+          font-size: 0.66rem;
+          letter-spacing: 0.14em;
+          text-transform: uppercase;
+          color: var(--ssc-cyan);
+        }
+        .ssc__pointer-body {
+          margin: 0;
+          font-size: 0.88rem;
+          line-height: 1.65;
+          color: var(--ssc-quiet);
+        }
+
         .ssc {
           /* Same palette as the mechanics section directly above, so the two
              read as one document. Cyan is the section colour, gold the warm

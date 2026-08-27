@@ -1,4 +1,6 @@
 import {
+  accessGateMeta,
+  knowledgeGate,
   shatteredSkiesPlanets,
   tidalorHost,
   type Planet,
@@ -30,6 +32,84 @@ const ORBIT_RY = 118;
 
 const stripX = (p: Planet) => SUN_X + p.orbitRadius * SPAN;
 const stripSize = (p: Planet) => 20 + p.renderScale * 50;
+
+/* ---- the alignment figure ------------------------------------------------
+   The one drawing in this section, and it exists because the rule it shows is
+   the only part of the access model that is genuinely GEOMETRIC: a door that
+   is a relationship between two bodies rather than a thing on a wall.
+
+   Deliberately schematic and deliberately unattributed to a planet — the
+   source copy never named the world, so neither does this. One orbit, the body
+   at the point where it lines up through the star with the place it has to
+   reach, and the same body ghosted somewhere else on the arc where the cave is
+   shut. Nothing else, because anything else would make it a second dossier. */
+const FIG_W = 520;
+const FIG_H = 190;
+const FIG_CX = 260;
+const FIG_CY = 96;
+const FIG_RX = 196;
+const FIG_RY = 58;
+
+/* The ghost sits at 300° on the arc: far enough round to read as "somewhere
+   else", high enough not to collide with the alignment line or its caption. */
+const GHOST_A = (300 * Math.PI) / 180;
+const GHOST_X = FIG_CX + FIG_RX * Math.cos(GHOST_A);
+const GHOST_Y = FIG_CY + FIG_RY * Math.sin(GHOST_A);
+
+function AlignmentFigure() {
+  const { figureSummary, figureOpenLabel, figureShutLabel } = knowledgeGate.example;
+  return (
+    <svg
+      className="pd__fig"
+      viewBox={`0 0 ${FIG_W} ${FIG_H}`}
+      role="img"
+      aria-labelledby="pd-fig-title pd-fig-desc"
+      focusable="false"
+    >
+      <title id="pd-fig-title">The door is the orbit</title>
+      <desc id="pd-fig-desc">{figureSummary}</desc>
+
+      <ellipse
+        className="pd__fig-orbit"
+        cx={FIG_CX}
+        cy={FIG_CY}
+        rx={FIG_RX}
+        ry={FIG_RY}
+        fill="none"
+      />
+
+      {/* the alignment: body, star and destination on one line */}
+      <line
+        className="pd__fig-line"
+        x1={FIG_CX - FIG_RX}
+        y1={FIG_CY}
+        x2={FIG_CX + FIG_RX}
+        y2={FIG_CY}
+      />
+
+      <circle className="pd__fig-star" cx={FIG_CX} cy={FIG_CY} r={11} />
+
+      {/* the ghost: same body, wrong part of the arc */}
+      <circle className="pd__fig-ghost" cx={GHOST_X} cy={GHOST_Y} r={9} />
+      <text className="pd__fig-label is-shut" x={GHOST_X} y={GHOST_Y - 18} textAnchor="middle">
+        {figureShutLabel}
+      </text>
+
+      <circle className="pd__fig-body" cx={FIG_CX - FIG_RX} cy={FIG_CY} r={13} />
+      <rect
+        className="pd__fig-target"
+        x={FIG_CX + FIG_RX - 10}
+        y={FIG_CY - 10}
+        width={20}
+        height={20}
+      />
+
+      <text className="pd__fig-label is-open" x={FIG_CX} y={FIG_CY + 34} textAnchor="middle">
+        {figureOpenLabel}
+      </text>
+    </svg>
+  );
+}
 
 export default function PlanetDossier({
   planets = shatteredSkiesPlanets,
@@ -158,6 +238,52 @@ export default function PlanetDossier({
         </svg>
       </div>
 
+      {/* Knowledge-gated access. Sits between the schematic and the cards on
+          purpose: it states the rule, draws the one part of it that is
+          geometric, and then every Access row in the grid below is an instance
+          of it. The reader meets "Access" on a card already knowing what the
+          word is doing. */}
+      <section className="pd__gate" aria-labelledby="pd-gate-title">
+        <header className="pd__gate-head">
+          <p className="pd__kicker">{knowledgeGate.kicker}</p>
+          <h3 className="pd__gate-title" id="pd-gate-title">
+            {knowledgeGate.title}
+          </h3>
+          <p className="pd__gate-standfirst">{knowledgeGate.standfirst}</p>
+        </header>
+
+        <div className="pd__gate-body">
+          <div className="pd__gate-prose">
+            <p className="pd__gate-lead">{knowledgeGate.lead}</p>
+            <div className="pd__gate-beat">
+              <p className="pd__gate-beat-label">{knowledgeGate.rule.label}</p>
+              <p className="pd__gate-beat-body">{knowledgeGate.rule.body}</p>
+            </div>
+          </div>
+
+          <figure className="pd__gate-fig">
+            <AlignmentFigure />
+            <figcaption className="pd__gate-cap">
+              <span className="pd__gate-beat-label">{knowledgeGate.example.label}</span>
+              {knowledgeGate.example.body}
+            </figcaption>
+          </figure>
+        </div>
+
+        <p className="pd__gate-point">{knowledgeGate.designPoint}</p>
+
+        <ul className="pd__gate-legend">
+          {(Object.keys(accessGateMeta) as (keyof typeof accessGateMeta)[]).map((k) => (
+            <li key={k} className="pd__gate-legend-item" data-gate={k}>
+              <span className="pd__gate-chip">{accessGateMeta[k].term}</span>
+              <span className="pd__gate-gloss">{accessGateMeta[k].gloss}</span>
+            </li>
+          ))}
+        </ul>
+
+        <p className="pd__gate-credit">{knowledgeGate.credit}</p>
+      </section>
+
       {/* The stat grid — one column per world, ordered outward from the star. */}
       <ol className="pd__grid">
         {planets.map((p) => (
@@ -207,6 +333,21 @@ export default function PlanetDossier({
             </div>
 
             <p className="pd__note">{p.note}</p>
+
+            {/* The access rule, one world at a time. `gate` drives the chip's
+                tone, and the chip prints its own word, so colour is never
+                carrying the distinction on its own. */}
+            <div className="pd__access" data-gate={p.access.gate}>
+              <p className="pd__access-head">
+                <span className="pd__access-label">Access</span>
+                <span className="pd__access-chip">{p.access.label}</span>
+              </p>
+              <p className="pd__access-rule">{p.access.rule}</p>
+              <p className="pd__access-know">
+                <span className="pd__access-know-label">What you have to know</span>
+                {p.access.knowledge}
+              </p>
+            </div>
           </li>
         ))}
       </ol>
@@ -459,6 +600,223 @@ export default function PlanetDossier({
           font-size: 0.92rem;
           line-height: 1.6;
           color: var(--pd-prose);
+        }
+
+        /* ---- knowledge-gated access ----
+           --pd-gate is set per tone and every chip prints its own word, so
+           the colour is a second read of something the text already carries.
+           Cyan for a window that opens, warm for a condition that holds you,
+           quiet for a world with nothing withheld. */
+        .pd__gate {
+          display: grid;
+          gap: 1.1rem;
+          padding: 1.5rem;
+          border-bottom: 1px solid var(--pd-hairline);
+          background: color-mix(in srgb, var(--color-nightfall) 28%, var(--color-void));
+        }
+        .pd__gate-head { display: grid; gap: 0.5rem; }
+        .pd__gate-title {
+          margin: 0;
+          font-family: var(--font-hero);
+          font-size: clamp(1.15rem, 1rem + 0.8vw, 1.55rem);
+          line-height: 1.2;
+          color: var(--color-moonlight);
+        }
+        .pd__gate-standfirst {
+          margin: 0;
+          max-width: 46rem;
+          font-family: var(--font-body);
+          font-size: 0.98rem;
+          line-height: 1.6;
+          color: var(--color-moonlight);
+        }
+
+        .pd__gate-body {
+          display: grid;
+          grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+          gap: 1.5rem;
+          align-items: start;
+        }
+        .pd__gate-prose { display: grid; gap: 0.9rem; }
+        .pd__gate-lead,
+        .pd__gate-beat-body {
+          margin: 0;
+          font-family: var(--font-body);
+          font-size: 0.92rem;
+          line-height: 1.65;
+          color: var(--pd-prose);
+        }
+        .pd__gate-beat {
+          display: grid;
+          gap: 0.35rem;
+          padding-left: 0.9rem;
+          border-left: 2px solid color-mix(in srgb, var(--color-silver) 45%, transparent);
+        }
+        .pd__gate-beat-label {
+          margin: 0;
+          font-family: var(--font-mono);
+          font-size: 0.68rem;
+          letter-spacing: 0.14em;
+          text-transform: uppercase;
+          color: var(--color-silver);
+        }
+
+        .pd__gate-fig { margin: 0; display: grid; gap: 0.7rem; }
+        .pd__fig {
+          display: block;
+          width: 100%;
+          height: auto;
+          background: var(--color-void);
+          border: 1px solid var(--pd-hairline);
+        }
+        .pd__fig-orbit {
+          stroke: color-mix(in srgb, var(--color-mist) 55%, transparent);
+          stroke-width: 1;
+          stroke-dasharray: 3 7;
+        }
+        .pd__fig-line {
+          stroke: var(--color-silver);
+          stroke-width: 1.4;
+          stroke-dasharray: 6 4;
+        }
+        .pd__fig-star { fill: var(--color-gold); }
+        .pd__fig-body { fill: var(--color-silver); }
+        .pd__fig-target {
+          fill: none;
+          stroke: var(--color-silver);
+          stroke-width: 2;
+        }
+        .pd__fig-ghost {
+          fill: none;
+          stroke: color-mix(in srgb, var(--color-mist) 70%, transparent);
+          stroke-width: 1.4;
+          stroke-dasharray: 3 3;
+        }
+        .pd__fig-label {
+          font-family: var(--font-mono);
+          font-size: 15px;
+          letter-spacing: 0.12em;
+          text-transform: uppercase;
+        }
+        .pd__fig-label.is-open { fill: var(--color-silver); }
+        .pd__fig-label.is-shut { fill: var(--pd-quiet); }
+
+        .pd__gate-cap {
+          margin: 0;
+          display: grid;
+          gap: 0.3rem;
+          font-family: var(--font-body);
+          font-size: 0.88rem;
+          line-height: 1.6;
+          color: var(--pd-prose);
+        }
+
+        .pd__gate-point {
+          margin: 0;
+          padding: 0.85rem 1rem;
+          border: 1px solid color-mix(in srgb, var(--color-silver) 30%, transparent);
+          background: color-mix(in srgb, var(--color-silver) 6%, transparent);
+          font-family: var(--font-body);
+          font-size: 0.95rem;
+          line-height: 1.6;
+          color: var(--color-moonlight);
+        }
+
+        .pd__gate-legend {
+          list-style: none;
+          margin: 0;
+          padding: 0;
+          display: flex;
+          flex-wrap: wrap;
+          gap: 0.5rem 1.5rem;
+        }
+        .pd__gate-legend-item {
+          display: flex;
+          align-items: baseline;
+          gap: 0.5rem;
+          font-family: var(--font-body);
+          font-size: 0.84rem;
+          color: var(--pd-prose);
+        }
+
+        /* the chip, shared by the legend and every card */
+        .pd__gate-chip,
+        .pd__access-chip {
+          flex: 0 0 auto;
+          padding: 0.12rem 0.5rem;
+          border: 1px solid color-mix(in srgb, var(--pd-gate, var(--color-mist)) 55%, transparent);
+          background: color-mix(in srgb, var(--pd-gate, var(--color-mist)) 10%, transparent);
+          font-family: var(--font-mono);
+          font-size: 0.64rem;
+          letter-spacing: 0.12em;
+          text-transform: uppercase;
+          color: var(--pd-gate, var(--pd-quiet));
+          white-space: nowrap;
+        }
+        [data-gate="orbital"] { --pd-gate: var(--color-silver); }
+        [data-gate="gravity"] { --pd-gate: var(--color-gold); }
+        [data-gate="open"]    { --pd-gate: var(--pd-quiet); }
+
+        .pd__gate-credit {
+          margin: 0;
+          padding-top: 0.85rem;
+          border-top: 1px solid var(--pd-hairline);
+          font-family: var(--font-mono);
+          font-size: 0.68rem;
+          letter-spacing: 0.06em;
+          line-height: 1.6;
+          color: var(--pd-quiet);
+        }
+
+        /* ---- the per-card access row ---- */
+        .pd__access {
+          display: grid;
+          gap: 0.5rem;
+          margin-top: auto;
+          padding-top: 0.9rem;
+          border-top: 1px solid var(--pd-hairline);
+        }
+        .pd__access-head {
+          margin: 0;
+          display: flex;
+          flex-wrap: wrap;
+          align-items: center;
+          gap: 0.5rem;
+        }
+        .pd__access-label {
+          font-family: var(--font-mono);
+          font-size: 0.7rem;
+          letter-spacing: 0.14em;
+          text-transform: uppercase;
+          color: var(--pd-quiet);
+        }
+        .pd__access-rule {
+          margin: 0;
+          font-family: var(--font-body);
+          font-size: 0.88rem;
+          line-height: 1.6;
+          color: var(--color-moonlight);
+        }
+        .pd__access-know {
+          margin: 0;
+          display: grid;
+          gap: 0.25rem;
+          font-family: var(--font-body);
+          font-size: 0.86rem;
+          line-height: 1.6;
+          color: var(--pd-prose);
+        }
+        .pd__access-know-label {
+          font-family: var(--font-mono);
+          font-size: 0.62rem;
+          letter-spacing: 0.14em;
+          text-transform: uppercase;
+          color: var(--pd-gate, var(--pd-quiet));
+        }
+
+        @media (max-width: 860px) {
+          .pd__gate-body { grid-template-columns: minmax(0, 1fr); }
+          .pd__gate { padding: 1.25rem 1rem; }
         }
 
         /* ---- temperature ramp ---- */

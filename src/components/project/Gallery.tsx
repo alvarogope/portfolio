@@ -1,7 +1,8 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useRef, useState } from "react";
 import Image from "next/image";
+import Lightbox, { type LightboxItem } from "./Lightbox";
 
 export interface GalleryItem {
   src: string;
@@ -9,36 +10,43 @@ export interface GalleryItem {
   caption: string;
 }
 
+/**
+ * A grid of thumbnails that opens the shared viewer.
+ *
+ * The viewer itself is `Lightbox`, deliberately not inlined here: the overlay
+ * has to portal out to `document.body` to escape the transform `Reveal` leaves
+ * on every section wrapper, and that is a fix every gallery on the site should
+ * get rather than one this component owns privately.
+ *
+ * The gallery keeps only the INDEX of the open item, so the viewer can page
+ * through the set with arrows, swipes and the prev/next buttons. `rootRef` is
+ * handed to the viewer as its theme source — it sits inside the route's font
+ * wrapper, so the portal can copy this page's palette and faces out of it
+ * before it leaves the subtree.
+ */
 export default function Gallery({ items }: { items: GalleryItem[] }) {
-  const [active, setActive] = useState<GalleryItem | null>(null);
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const rootRef = useRef<HTMLDivElement>(null);
 
-  // Close on Escape, and lock body scroll while open
-  useEffect(() => {
-    if (!active) return;
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setActive(null);
-    };
-    document.addEventListener("keydown", onKey);
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.removeEventListener("keydown", onKey);
-      document.body.style.overflow = "";
-    };
-  }, [active]);
+  /* Captions are optional on the viewer's item type; every gallery item has
+     one, so they pass straight through. */
+  const lightboxItems: LightboxItem[] = items;
 
   return (
     <>
       <div
+        ref={rootRef}
         style={{
           display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(360px, 1fr))",
+          gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 360px), 1fr))",
           gap: "1.5rem",
         }}
       >
-        {items.map((item) => (
+        {items.map((item, i) => (
           <figure key={item.src} style={{ margin: 0 }}>
             <button
-              onClick={() => setActive(item)}
+              type="button"
+              onClick={() => setOpenIndex(i)}
               style={{
                 display: "block",
                 width: "100%",
@@ -75,76 +83,13 @@ export default function Gallery({ items }: { items: GalleryItem[] }) {
         ))}
       </div>
 
-      {/* Lightbox overlay */}
-      {active && (
-        <div
-          onClick={() => setActive(null)}
-          style={{
-            position: "fixed",
-            inset: 0,
-            zIndex: 100,
-            background: "color-mix(in srgb, var(--color-void) 92%, black)",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            padding: "clamp(1rem, 5vw, 4rem)",
-            cursor: "zoom-out",
-          }}
-        >
-          <div
-            onClick={(e) => e.stopPropagation()}
-            style={{
-              position: "relative",
-              maxWidth: "min(90vw, 1400px)",
-              maxHeight: "82vh",
-              width: "100%",
-              cursor: "default",
-            }}
-          >
-            <Image
-              src={active.src}
-              alt={active.alt}
-              width={1600}
-              height={900}
-              sizes="90vw"
-              style={{
-                width: "100%",
-                height: "auto",
-                maxHeight: "82vh",
-                objectFit: "contain",
-                border: "1px solid color-mix(in srgb, var(--color-mist) 30%, transparent)",
-              }}
-            />
-          </div>
-          <p
-            style={{
-              marginTop: "1rem",
-              color: "var(--color-moonlight)",
-              fontSize: "0.9rem",
-              maxWidth: "60ch",
-              textAlign: "center",
-            }}
-          >
-            {active.caption}
-          </p>
-          <button
-            onClick={() => setActive(null)}
-            className="mono"
-            style={{
-              marginTop: "0.75rem",
-              background: "none",
-              border: "1px solid var(--color-mist)",
-              color: "var(--color-mist)",
-              padding: "0.45rem 1rem",
-              fontSize: "0.78rem",
-              cursor: "pointer",
-            }}
-          >
-            Close (Esc)
-          </button>
-        </div>
-      )}
+      <Lightbox
+        items={lightboxItems}
+        index={openIndex}
+        onClose={() => setOpenIndex(null)}
+        onIndexChange={setOpenIndex}
+        themeSource={rootRef}
+      />
     </>
   );
 }

@@ -83,6 +83,13 @@ export default function ShatteredSkiesSystem({ children }: { children: React.Rea
             </span>
             <span className="sss__pinned-name">{pinned.name}</span>
             <span className="sss__pinned-note">is pinned — the other worlds are dimmed</span>
+            {/* The access gate travels with the selection, so the rule is
+                readable from the orrery itself and not only from the card it
+                scrolls to. The chip prints its own word; the tone is a second
+                read of it. */}
+            <span className="sss__pinned-gate" data-gate={pinned.access.gate}>
+              {pinned.access.label}
+            </span>
           </p>
           <button type="button" className="sss__clear" onClick={() => setSelected(null)}>
             <span className="sss__clear-x" aria-hidden>
@@ -122,6 +129,22 @@ export default function ShatteredSkiesSystem({ children }: { children: React.Rea
         }
         .sss__pinned-note {
           color: color-mix(in srgb, var(--color-mist) 82%, var(--color-moonlight));
+        }
+        .sss__pinned-gate {
+          padding: 0.1rem 0.5rem;
+          border: 1px solid color-mix(in srgb, var(--sss-gate, var(--color-mist)) 55%, transparent);
+          background: color-mix(in srgb, var(--sss-gate, var(--color-mist)) 10%, transparent);
+          font-family: var(--font-mono);
+          font-size: 0.64rem;
+          letter-spacing: 0.12em;
+          text-transform: uppercase;
+          color: var(--sss-gate, var(--color-mist));
+          white-space: nowrap;
+        }
+        .sss__pinned-gate[data-gate="orbital"] { --sss-gate: var(--color-silver); }
+        .sss__pinned-gate[data-gate="gravity"] { --sss-gate: var(--color-gold); }
+        .sss__pinned-gate[data-gate="open"] {
+          --sss-gate: color-mix(in srgb, var(--color-mist) 82%, var(--color-moonlight));
         }
         .sss__pinned-name {
           font-family: var(--font-display);

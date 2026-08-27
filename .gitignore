@@ -40,8 +40,14 @@ yarn-error.log*
 # vercel
 .vercel
 
+AGENTS.MD
+
+CLAUDE.MD
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts
 
 FIXES.MD
+
+docs/

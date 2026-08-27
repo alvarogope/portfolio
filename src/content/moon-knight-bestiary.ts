@@ -84,6 +84,14 @@ export interface EnemyEntry extends BestiaryEntryBase {
 
 export type BestiaryEntry = BossEntry | EnemyEntry;
 
+/**
+ * ENCOUNTER ORDER, AND IT IS THE NARRATIVE'S. Werewolf on the tutorial island,
+ * Wizard-Knight in the Woods, Centaur-Knight in the Misty Lands, Sun-Knight in
+ * the Frozen Mountains — the order `narrativeActs` and `fullStory` set, the
+ * beat chart plays and the world map indexes by place. `rank` and the array
+ * position say the same thing twice, so they move together; nothing sorts by
+ * `rank`, which means the array is what a reader actually sees.
+ */
 export const bestiaryBosses: readonly BossEntry[] = [
   {
     id: "werewolf",
@@ -104,28 +112,11 @@ export const bestiaryBosses: readonly BossEntry[] = [
       "Sent by the Sun-Knight, captured and tortured. It tries to turn on the soldiers it came with.",
   },
   {
-    id: "centaur-knight",
-    name: "The Centaur-Knight",
-    tier: "boss",
-    rank: 2,
-    rankLabel: "Boss II",
-    isFinal: false,
-    accent: "#3B7A5E",
-    epithet: "Hidden all his life, until alchemy made a place for him.",
-    mechanic: {
-      name: "Master of Matters",
-      description: "Attacks using several states of matter.",
-      diagram: "matters",
-    },
-    lore:
-      "Hid all his life because of his appearance. He found acceptance in alchemy, and alchemy drew him to the Sun-Knight's side.",
-  },
-  {
     id: "wizard-knight",
     name: "The Wizard-Knight",
     tier: "boss",
-    rank: 3,
-    rankLabel: "Boss III",
+    rank: 2,
+    rankLabel: "Boss II",
     isFinal: false,
     accent: "#6F5AA8",
     epithet: "Once a servant of the moon.",
@@ -136,6 +127,23 @@ export const bestiaryBosses: readonly BossEntry[] = [
       diagram: "inversion",
     },
     lore: "Once a servant of the moon, he turned against it.",
+  },
+  {
+    id: "centaur-knight",
+    name: "The Centaur-Knight",
+    tier: "boss",
+    rank: 3,
+    rankLabel: "Boss III",
+    isFinal: false,
+    accent: "#3B7A5E",
+    epithet: "Hidden all his life, until alchemy made a place for him.",
+    mechanic: {
+      name: "Master of Matters",
+      description: "Attacks using several states of matter.",
+      diagram: "matters",
+    },
+    lore:
+      "Hid all his life because of his appearance. He found acceptance in alchemy, and alchemy drew him to the Sun-Knight's side.",
   },
   {
     id: "sun-knight",
@@ -153,7 +161,7 @@ export const bestiaryBosses: readonly BossEntry[] = [
       diagram: "elliptical",
     },
     lore:
-      "Once the Moon-Knight's partner, she betrayed the moon. The last fight in the game: every soldier the player has cut down marched under her sigil.",
+      "Once the Moon-Knight's partner, he betrayed the moon. The last fight in the game: every soldier the player has cut down marched under his sigil.",
   },
 ];
 

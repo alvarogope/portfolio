@@ -7,6 +7,7 @@ import {
   feedbackNote,
   feedbackThesis,
   machineSummary,
+  trapsCounterPointer,
   trapsCredit,
   trapsNote,
   trapsThesis,
@@ -34,10 +35,11 @@ import { getRole } from "@/content/break-in-roles";
  *      passes OVER the Investigating node without touching it. That geometry is
  *      the argument — the bus is drawn long and straight precisely so the state
  *      it skips is visible underneath it.
- *   2. THE TRAP CARDS — the three triggers in full: the mistake, the punishment,
- *      and whose ability answers it. Kept beside the machine rather than in a
- *      section of their own, because a trap is an edge into this graph and
- *      nothing else.
+ *   2. THE TRAP CARDS — the three triggers in full: the mistake, the state it
+ *      forces, and what tripping it costs. NOT who answers it — that is the
+ *      role web's, in §03, and one pointer under the cards says so. Kept
+ *      beside the machine rather than in a section of their own, because a
+ *      trap is an edge into this graph and nothing else.
  *   3. THE TRANSITION TABLE — every ordinary edge in full: what fires it, and
  *      which way it moves. The table is the diagram's text equivalent, so the
  *      SVG can stay short-labelled without losing anything.
@@ -480,37 +482,33 @@ export default function DetectionStates() {
             </p>
           </div>
           <ol className="ds-traps">
-            {alarmTriggers.map((trap) => {
-              const counter = getRole(trap.counterRole);
-              return (
-                <li key={trap.id} className="ds-trap-card">
-                  <p className="mono ds-trap-card-kicker">
-                    <span className="ds-trap-card-index">{trap.index}</span>
-                    <span>{trap.where}</span>
-                  </p>
-                  <h4 className="ds-trap-card-name">{trap.name}</h4>
+            {alarmTriggers.map((trap) => (
+              <li key={trap.id} className="ds-trap-card">
+                <p className="mono ds-trap-card-kicker">
+                  <span className="ds-trap-card-index">{trap.index}</span>
+                  <span>{trap.where}</span>
+                </p>
+                <h4 className="ds-trap-card-name">{trap.name}</h4>
 
-                  <p className="mono ds-trap-card-chain">
-                    <span className="ds-trap-card-mistake">{trap.mistake}</span>
-                    <span className="ds-trap-card-arrow" aria-hidden="true">
-                      →
-                    </span>
-                    <span className="ds-trap-card-state">{getStateName(trap.escalatesTo)}</span>
-                  </p>
+                <p className="mono ds-trap-card-chain">
+                  <span className="ds-trap-card-mistake">{trap.mistake}</span>
+                  <span className="ds-trap-card-arrow" aria-hidden="true">
+                    →
+                  </span>
+                  <span className="ds-trap-card-state">{getStateName(trap.escalatesTo)}</span>
+                </p>
 
-                  <p className="ds-trap-card-cost">{trap.consequence}</p>
-                  <p className="ds-trap-card-detail">{trap.detail}</p>
-
-                  <p className="ds-trap-card-counter">
-                    <span className="mono ds-trap-card-counter-label">
-                      Countered by · {counter.name}
-                    </span>
-                    {trap.counter}
-                  </p>
-                </li>
-              );
-            })}
+                {/* The mistake, the state it forces and the cost. The card
+                    stops there: naming the role that answers it would put the
+                    same fact on two sections of this page, and the one that
+                    draws it as a wire is the better place for it. */}
+                <p className="ds-trap-card-cost">{trap.consequence}</p>
+                <p className="ds-trap-card-detail">{trap.detail}</p>
+              </li>
+            ))}
           </ol>
+          {/* Once, under all three, rather than three times inside them. */}
+          <p className="ds-trap-pointer">{trapsCounterPointer}</p>
           <p className="ds-note">{trapsNote}</p>
           <p className="ds-trap-credit">{trapsCredit}</p>
         </section>
@@ -907,20 +905,18 @@ export default function DetectionStates() {
           line-height: 1.55;
           color: var(--ds-quiet);
         }
-        .ds-trap-card-counter {
-          margin: 0.35rem 0 0;
-          padding-top: 0.6rem;
-          border-top: 1px solid var(--ds-edge);
-          font-size: 0.78rem;
-          line-height: 1.5;
+        /* The hand-off. Amber and ruled like the credit below it, because it
+           is the same kind of line — an aside about the three cards rather
+           than another fact inside them — and it sits directly under the row
+           so the answer is the next thing read after the three problems. */
+        .ds-trap-pointer {
+          margin: 0;
+          padding-left: 0.85rem;
+          border-left: 2px solid var(--ds-amber);
+          max-width: 58rem;
+          font-size: 0.84rem;
+          line-height: 1.6;
           color: var(--color-moonlight);
-        }
-        .ds-trap-card-counter-label {
-          display: block;
-          font-size: 0.58rem;
-          letter-spacing: 0.14em;
-          color: var(--ds-amber);
-          margin-bottom: 0.15rem;
         }
         .ds-trap-credit {
           margin: 0;

@@ -110,9 +110,10 @@ export default function MoonKnightPage() {
           <div style={{ marginTop: "5rem" }}>
             <SectionHeading kicker="05 · The World" title="The World of Kaelum" />
             <p style={{ color: "var(--color-mist)", maxWidth: "42rem", marginTop: "1.5rem", marginBottom: "1.75rem" }}>
-              Four lands around one drowned island, drawn by hand. Three torches mark the fortresses
-              holding the Moon Fragments; the roses mark the ways down into the Old Gods&apos; dungeons.
-              Point at any sigil to read what waits there.
+              Three great lands around one drowned island, drawn by hand. Three torches mark the
+              fortresses holding the Moon Fragments; the roses mark the ways down into the Old
+              Gods&apos; dungeons. Every place is indexed: point at a sigil for its lore, who is
+              there, what guards it, and where it falls in the arc.
             </p>
             <WorldMap />
           </div>

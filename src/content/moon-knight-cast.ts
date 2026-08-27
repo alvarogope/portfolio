@@ -171,3 +171,17 @@ export const moonKnightCast: readonly CastMember[] = [
 
 /** DOM anchor for a character's card, so anything can deep-link to one. */
 export const castAnchor = (id: CastId) => `cast-${id}`;
+
+const castById = new Map(moonKnightCast.map((c) => [c.id, c]));
+
+/**
+ * One character by id. Added for the world map, which indexes Kaelum by place
+ * and needs to turn "the Witch is in the Woods" into her name and her anchor
+ * without holding a second copy of her. Same shape as `getMarker` and
+ * `getBeatLevel` so the three read alike.
+ */
+export function getCastMember(id: CastId): CastMember {
+  const member = castById.get(id);
+  if (!member) throw new Error(`Unknown Moon-Knight cast member: ${id}`);
+  return member;
+}

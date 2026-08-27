@@ -25,7 +25,7 @@ export const breakIn: Project = {
       name: "The Hacker",
       brief: "The eyes. Watches the whole bank through CCTV and guides the team that cannot hear each other.",
       tools: "Hacker Vision highlights enemies through walls (5s, 30s cooldown). Distraction overloads lights and PCs to pull guards off their routes (7s, 10s cooldown). Reveals environmental clues that lower puzzle difficulty.",
-      dependsOn: "The Vaultsnatcher, to unlock the basement cameras.",
+      dependsOn: "The Insider, whose USB in the server room is what wakes the downstairs cameras.",
       neededBy: "Everyone. The Hacker is how a voiceless team sees danger.",
       accent: "silver",
     },
@@ -40,9 +40,9 @@ export const breakIn: Project = {
     {
       name: "The Vaultsnatcher",
       brief: "The hands. Cracks the vault and lifts the gold, one second from setting off the alarm.",
-      tools: "Finds the manager's password to open the vault. Swaps real gold ingots for weight-matched decoys; leaving one unreplaced for more than a second triggers the alarm and a 30-second escape window. Plants a USB in the camera PC to give the Hacker basement CCTV.",
-      dependsOn: "The Insider and Lockpicker to clear the route to the vault.",
-      neededBy: "The Hacker, who only sees the basement once the Vaultsnatcher plants the camera USB.",
+      tools: "Finds the manager's password to open the vault. Swaps real gold ingots for weight-matched decoys; leaving one unreplaced for more than a second triggers the alarm and a 30-second escape window. Carries decoys two at a time, so the trip has to be made more than once.",
+      dependsOn: "The Lockpicker, whose smoke kills the basement lasers on the way in.",
+      neededBy: "The Lockpicker, who cannot start the digital transfer without the manager's password.",
       accent: "gold",
     },
     {

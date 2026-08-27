@@ -7,6 +7,18 @@
  * lives in the component, so the same data can drive the SVG diamond, the
  * mobile roster, or anything added later.
  *
+ * TWO WEBS, ONE GRAPH. The links are not all the same kind of debt. Six say
+ * what a role switches on or opens up for a teammate; three say which of the
+ * three traps a role takes off a teammate's board. Both are dependencies and
+ * both belong on the same picture — a role you need for what it prevents is as
+ * load-bearing as one you need for what it hands you — so `counters` is a link
+ * type beside `unlocks` and `enables` rather than a second diagram.
+ *
+ * THE TRAPS ARE NOT DESCRIBED HERE. A `counters` link carries a `trap` id and
+ * a label naming the counter; what the trap does, what it costs and why it
+ * skips the Investigating state all live in `break-in-detection`. This file
+ * says who saves you, that file says what from.
+ *
  * Stage 1 renders it static with one role pre-selected. Stage 2 wires
  * hover/click to change that selection, which is why every lookup a highlight
  * needs (`linkTouches`, `incomingLinks`, `outgoingLinks`) is a pure function of
@@ -24,15 +36,33 @@
  * starts, not discovered during it.
  */
 
+/* Type-only, and deliberately circular: `break-in-detection` imports `RoleId`
+   back from here. Both edges are `import type`, so both are erased and no
+   module ever waits on the other at runtime. The cycle is the point — a trap
+   knows which role counters it, and a counter-link knows which trap it takes
+   off the board, and neither file should own the other's facts. */
+import type { TrapId } from "./break-in-detection";
+
 export type RoleId = "insider" | "hacker" | "lockpicker" | "vaultsnatcher";
 
 /**
- * How one role acts on another.
+ * How one role acts on another. The four split into TWO WEBS, and the diagram
+ * draws both: what a role switches on for a teammate, and what it takes off
+ * the board for them.
+ *
+ * What a role ENABLES:
  * - `unlocks`  — turns a teammate's ability on; it does not exist until this happens.
  * - `enables`  — makes a teammate's move possible *now*: information, or a window.
- * - `protects` — keeps a teammate alive/undetected rather than granting them anything.
+ *
+ * What a role PROTECTS AGAINST:
+ * - `counters` — takes one NAMED TRAP off the board. Carries a `trap` id, and
+ *   that trap's mechanics are the detection state machine's to state, not this
+ *   file's: here a counter-link says only who holds the answer to which hazard.
+ * - `protects` — keeps the team alive without countering anything specific.
+ *   Exactly one link is this: the escape route, which the diagram draws in its
+ *   own `escape` style because it is the one line all four are on.
  */
-export type LinkType = "unlocks" | "enables" | "protects";
+export type LinkType = "unlocks" | "enables" | "protects" | "counters";
 
 /** `"all"` is the escape route: one link that lands on every other role at once. */
 export type LinkTarget = RoleId | "all";
@@ -101,6 +131,14 @@ export interface RoleLink {
   type: LinkType;
   /** The dependency in one line, as it reads on the wire and in the panel. */
   label: string;
+  /**
+   * Set on `counters` links only: WHICH trap this one takes off the board.
+   * An id, never a description — the trap's cause, consequence and cost are
+   * owned by `break-in-detection`, and the component resolves the id against
+   * `alarmTriggers` to print its T-number. That is the whole reference: this
+   * file says who saves you, that file says what from.
+   */
+  trap?: TrapId;
 }
 
 export const breakInRoles: readonly BreakInRole[] = [
@@ -289,9 +327,20 @@ export const puzzleAsymmetryNote = {
 };
 
 /**
- * The seven dependencies. Six are role-to-role; the last is the escape route,
- * the one line every role is on at once — modelled as a single link to `"all"`
- * rather than three duplicates, so the diagram can draw it as one bus.
+ * The nine dependencies, and they are two webs rather than one list.
+ *
+ * SIX ARE THE ENABLING WEB (`unlocks` / `enables`): what one player switches on
+ * or opens up for another. That was the original diagram.
+ *
+ * THREE ARE THE COUNTER WEB (`counters`): who holds the answer to each of the
+ * three traps. They are drawn because the traps are the other half of the same
+ * argument — a role is load-bearing not only for what it hands a teammate, but
+ * for the hazard it takes off that teammate's board. Every one carries a `trap`
+ * id and nothing else about the trap; the mechanics stay in the detection file.
+ *
+ * The escape route is the ninth and it is its own thing: the one line every
+ * role is on at once, modelled as a single link to `"all"` rather than three
+ * duplicates so the diagram can draw it as one bus.
  */
 export const roleLinks: readonly RoleLink[] = [
   {
@@ -322,12 +371,38 @@ export const roleLinks: readonly RoleLink[] = [
     type: "enables",
     label: "Vision reads the guards through vault walls",
   },
+  /* ---- the counter web: who holds the answer to which trap ---- */
   {
     id: "lockpicker-vaultsnatcher",
     from: "lockpicker",
     to: "vaultsnatcher",
-    type: "protects",
-    label: "Smoke reveals and kills the lasers",
+    type: "counters",
+    trap: "lasers",
+    label: "T1 · smoke kills the lasers",
+  },
+  /* The Hacker's second wire to the Lockpicker, and the reason the counter web
+     was worth drawing at all: the Distraction link above says what the Hacker
+     opens up, this one says what it keeps from happening. Same pair, both
+     webs, which is the clearest case on the diagram for having two. */
+  {
+    id: "hacker-lockpicker-vision",
+    from: "hacker",
+    to: "lockpicker",
+    type: "counters",
+    trap: "failed-lockpick",
+    label: "T3 · vision reads the room first",
+  },
+  /* To "all" because the punishment is: an ingot left off the rack puts the
+     WHOLE team on a thirty-second clock, so swapping the decoy in time is
+     something the Vaultsnatcher does for the other three as much as for
+     themselves. The one trap whose counter sits with the role that trips it. */
+  {
+    id: "vaultsnatcher-all",
+    from: "vaultsnatcher",
+    to: "all",
+    type: "counters",
+    trap: "unreplaced-gold",
+    label: "T2 · decoys swapped in the second",
   },
   {
     id: "vaultsnatcher-lockpicker",
@@ -349,10 +424,17 @@ export const roleLinks: readonly RoleLink[] = [
 export const linkTypeMeta: Record<LinkType, { term: string; gloss: string }> = {
   unlocks: { term: "Unlocks", gloss: "turns an ability on" },
   enables: { term: "Enables", gloss: "opens the window to move" },
+  counters: { term: "Counters", gloss: "takes a named trap off the board" },
   protects: { term: "Protects", gloss: "keeps the team alive" },
 };
 
-export const linkTypeOrder: readonly LinkType[] = ["unlocks", "enables", "protects"];
+/**
+ * The legend's first three rows. `protects` is not among them and that is not
+ * an omission: its only member is the escape route, which the diagram draws in
+ * its own `escape` style, so the fourth legend row is the escape bus and it
+ * borrows this gloss. Every style in the key has wires on the graph.
+ */
+export const linkTypeOrder: readonly LinkType[] = ["unlocks", "enables", "counters"];
 
 /** The role the diagram opens on. The Hacker is the hub: it touches all seven links. */
 export const DEFAULT_ROLE: RoleId = "hacker";

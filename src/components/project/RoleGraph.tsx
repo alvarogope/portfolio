@@ -2,6 +2,7 @@
 
 import { useState, useSyncExternalStore } from "react";
 
+import { alarmTriggers, type AlarmTrigger } from "@/content/break-in-detection";
 import {
   DEFAULT_ROLE,
   breakInRoles,
@@ -23,6 +24,15 @@ import {
 } from "@/content/break-in-roles";
 
 /**
+ * The traps, by id. The ONLY thing this component takes from the detection
+ * file: a T-number and a name, so a counter-link can cite the hazard it
+ * answers. Nothing here knows what a trap does, what it costs, or that all
+ * three skip the Investigating state — that is the state machine's to say,
+ * and saying it twice is how two sections start disagreeing.
+ */
+const trapById = new Map<string, AlarmTrigger>(alarmTriggers.map((t) => [t.id, t]));
+
+/**
  * Break-In — "Nobody wins alone": the role interdependency diagram.
  *
  * The four roles sit in a diamond and the dependencies between them are drawn
@@ -31,6 +41,20 @@ import {
  * readout panel beside the diamond expands whichever role is selected into its
  * discipline, its summary, its FULL ABILITY KIT, and the two lists that carry
  * the thesis: what it NEEDS, and what it gives.
+ *
+ * TWO WEBS ON ONE DIAGRAM. The wires answer two different questions and the
+ * line styles keep them apart: what a role ENABLES for a teammate (`unlocks`,
+ * `enables`) and what it TAKES OFF THAT TEAMMATE'S BOARD (`counters` — one
+ * wire per trap, in gold). Both are the same argument. A role you need because
+ * it hands you a window and a role you need because it kills the laser you
+ * cannot see are equally load-bearing, and a diagram that drew only the first
+ * was showing half the reason nobody wins alone.
+ *
+ * THE TRAPS ARE CITED, NOT EXPLAINED. A counter wire prints the trap's
+ * T-number and the counter, and that is the whole of it: what each trap does,
+ * what it costs and why it skips Investigating belong to the detection state
+ * machine in §05, which is what the pointer under the line key says. This
+ * diagram owns who saves you; that one owns what from.
  *
  * THE KIT LIVES IN THIS READOUT, not in a section of its own. The diagram
  * already sends a reader here to find out what a role does, so the detailed
@@ -113,11 +137,24 @@ interface WireGeo {
   label: { x: number; y: number };
 }
 
-/* Every route is an L or a Z between two node edges. Lanes were picked so the
-   six pairwise wires never cross each other or the perimeter bus: the two
-   Insider/Hacker wires nest in the top-right quadrant, the two
-   Lockpicker/Vaultsnatcher wires nest bottom-left, and Hacker to Lockpicker
-   runs straight through the middle as the spine. */
+/* Every route is an L or a Z between two node edges. Lanes were picked so no
+   wire crosses another or the perimeter bus: the two Insider/Hacker wires nest
+   in the top-right quadrant, the two Lockpicker/Vaultsnatcher wires nest
+   bottom-left, and Hacker to Lockpicker runs straight through the middle as
+   the spine.
+
+   THE TWO COUNTER WIRES TOOK THE LAST TWO EMPTY LANES, which is why they are
+   where they are rather than anywhere prettier. The stage was full: seven
+   labelled wires on an 860x576 box leaves two gaps a 122-unit label plate
+   fits in. The Hacker's second wire to the Lockpicker runs BELOW the spine at
+   y=352 — the band between the spine's plate (which ends at y=301) and the
+   Vaultsnatcher's roof (y=420) — so the pair's two wires read as a pair
+   without either sitting on the other. The Vaultsnatcher's team-wide counter
+   terminates on the escape bus in the bottom-right pocket, the one region
+   below y=466 that no wire crosses; landing an arrow on the perimeter rather
+   than on three separate nodes is the diagram's own vocabulary for "all", and
+   a second full ring 18 units inside the first would have read as a drawing
+   error rather than as a second bus. */
 const WIRES: Record<string, WireGeo> = {
   "insider-hacker": {
     runs: [{ d: "M 530 100 H 660 V 229", arrow: true }],
@@ -138,6 +175,21 @@ const WIRES: Record<string, WireGeo> = {
   "lockpicker-vaultsnatcher": {
     runs: [{ d: "M 150 321 V 444 H 330", arrow: true }],
     label: { x: 166, y: 383 },
+  },
+  /* Down out of the Hacker, west under the spine, up into the Lockpicker. The
+     lane at y=352 clears the spine plate above it and the Vaultsnatcher below,
+     and stops short of x=710 and x=150 so it crosses neither of the verticals
+     dropping past it. */
+  "hacker-lockpicker-vision": {
+    runs: [{ d: "M 660 321 V 352 H 200 V 321", arrow: true }],
+    label: { x: 430, y: 352 },
+  },
+  /* East out of the vault and down onto the escape bus: the trap this counters
+     puts the whole team on a clock, so the wire lands on the line the whole
+     team is on. */
+  "vaultsnatcher-all": {
+    runs: [{ d: "M 530 496 H 764 V 536", arrow: true }],
+    label: { x: 647, y: 496 },
   },
   "vaultsnatcher-lockpicker": {
     runs: [{ d: "M 330 492 H 96 V 321", arrow: true }],
@@ -298,15 +350,24 @@ function WireTag({ x, y, text }: { x: number; y: number; text: string }) {
   );
 }
 
-/** One dependency, as it reads in the readout panel and in the roster. */
+/**
+ * One dependency, as it reads in the readout panel and in the roster.
+ *
+ * A counter-link also prints WHICH trap, as the detection section's own
+ * T-number and name. It is a citation and it is deliberately the shortest one
+ * that works: "T1 · Lasers" is enough to find the trap in §05, and anything
+ * longer would be this component restating a mechanic it does not own.
+ */
 function LinkRow({
   type,
   who,
   label,
+  trap,
 }: {
   type: LinkType | "escape";
   who: string;
   label: string;
+  trap?: AlarmTrigger;
 }) {
   return (
     <li className="rg-row">
@@ -314,11 +375,18 @@ function LinkRow({
       <span className="rg-row-body">
         <span className="mono rg-row-who">{who}</span>
         <span className="rg-row-label">{label}</span>
+        {trap && (
+          <span className="mono rg-row-trap">
+            Trap {trap.index} · {trap.name}
+          </span>
+        )}
       </span>
     </li>
   );
 }
 
+/** Everything pointing AT this role — both webs, since being covered is a
+    dependency exactly like being switched on. */
 function NeedsList({ id }: { id: RoleId }) {
   const rows = incomingLinks(id);
   if (rows.length === 0) return <p className="rg-row-empty">Needs nothing to start.</p>;
@@ -330,14 +398,22 @@ function NeedsList({ id }: { id: RoleId }) {
           type={wireKind(link.id, link.type)}
           who={`From · ${source.name}`}
           label={link.label}
+          trap={link.trap ? trapById.get(link.trap) : undefined}
         />
       ))}
     </ul>
   );
 }
 
+/**
+ * The outgoing links, split by web rather than listed together — which is the
+ * text half of what the two line styles do on the diagram. A reader (or a
+ * screen reader, which never sees the diagram at all) gets the same two
+ * questions answered separately: what does this role switch on, and what does
+ * it take off the board.
+ */
 function GivesList({ id }: { id: RoleId }) {
-  const rows = outgoingLinks(id);
+  const rows = outgoingLinks(id).filter(({ link }) => link.type !== "counters");
   if (rows.length === 0) return <p className="rg-row-empty">Gives nothing on its own.</p>;
   return (
     <ul className="rg-rows">
@@ -347,6 +423,32 @@ function GivesList({ id }: { id: RoleId }) {
           type={wireKind(link.id, link.type)}
           who={targets.length > 1 ? "To · Every role" : `To · ${targets[0].name}`}
           label={link.label}
+        />
+      ))}
+    </ul>
+  );
+}
+
+/**
+ * The counter web for one role. The empty case is stated rather than skipped,
+ * for the same reason the Insider's missing mini-game is: three of the four
+ * roles hold a trap counter, and a role that holds none is a fact about the
+ * design, not a gap in the list.
+ */
+function CountersList({ id }: { id: RoleId }) {
+  const rows = outgoingLinks(id).filter(({ link }) => link.type === "counters");
+  if (rows.length === 0) {
+    return <p className="rg-row-empty">Holds no trap counter.</p>;
+  }
+  return (
+    <ul className="rg-rows">
+      {rows.map(({ link, targets }) => (
+        <LinkRow
+          key={link.id}
+          type="counters"
+          who={targets.length > 1 ? "For · Every role" : `For · ${targets[0].name}`}
+          label={link.label}
+          trap={link.trap ? trapById.get(link.trap) : undefined}
         />
       ))}
     </ul>
@@ -456,7 +558,7 @@ export default function RoleGraph({
             <pattern id="rg-scan" width="4" height="3" patternUnits="userSpaceOnUse">
               <rect className="rg-scanline" width="4" height="1" />
             </pattern>
-            {(["unlocks", "enables", "protects", "escape"] as const).map((kind) => (
+            {(["unlocks", "enables", "counters", "escape"] as const).map((kind) => (
               <marker
                 key={kind}
                 id={`rg-arrow-${kind}`}
@@ -564,8 +666,10 @@ export default function RoleGraph({
             <div className="rg-card-links">
               <p className="mono rg-list-title">Needs (incoming)</p>
               <NeedsList id={r.id} />
-              <p className="mono rg-list-title">Enables / Protects (outgoing)</p>
+              <p className="mono rg-list-title">Gives (outgoing)</p>
               <GivesList id={r.id} />
+              <p className="mono rg-list-title">Counters (traps)</p>
+              <CountersList id={r.id} />
             </div>
           </li>
         ))}
@@ -585,12 +689,24 @@ export default function RoleGraph({
               <span className="rg-legend-gloss">{linkTypeMeta[type].gloss}</span>
             </li>
           ))}
+          {/* The escape bus. It is a `protects` link in the data and the only
+              one, so it takes its gloss from that type rather than repeating
+              it — and its own style, because it is the one line all four are
+              on rather than a wire between two of them. */}
           <li className="rg-legend-row">
             <span className="rg-row-rule rg-row-rule--escape" aria-hidden="true" />
             <span className="mono rg-legend-term">Escape</span>
-            <span className="rg-legend-gloss">the one line all four are on</span>
+            <span className="rg-legend-gloss">{linkTypeMeta.protects.gloss}</span>
           </li>
         </ul>
+        {/* The pointer, and the whole of what this diagram says about trap
+            mechanics. One line, on purpose: the moment it explains what a
+            laser costs, there are two sections to keep in step instead of
+            one. */}
+        <p className="rg-key-pointer">
+          What each trap does — and what tripping it costs the run — belongs to the detection
+          state machine in §05 · Being Seen. The counter wires only say who holds the answer.
+        </p>
       </div>
 
       {/* The lobby rule. It belongs beside the graph rather than in a section
@@ -633,8 +749,11 @@ export default function RoleGraph({
           <p className="mono rg-list-title">Needs (incoming)</p>
           <NeedsList id={selected} />
 
-          <p className="mono rg-list-title">Enables / Protects (outgoing)</p>
+          <p className="mono rg-list-title">Gives (outgoing)</p>
           <GivesList id={selected} />
+
+          <p className="mono rg-list-title">Counters (traps)</p>
+          <CountersList id={selected} />
         </div>
 
         <p className="rg-thesis">Nobody wins alone</p>
@@ -749,13 +868,21 @@ export default function RoleGraph({
         }
         .rg-wire--enables .rg-head { fill: var(--rg-steel); }
 
-        .rg-wire--protects .rg-wire-line {
-          stroke: var(--color-mist);
-          stroke-width: 1.8;
-          stroke-dasharray: 0.1 5;
-          stroke-linecap: round;
+        /* The counter web. Gold rather than steel because it answers a
+           different question from every other wire on the stage, and dash-dot
+           rather than dash or dot because colour is never allowed to be the
+           only carrier: at 1px this reads as a marked-off rail even in
+           greyscale, which is not true of two dash patterns that differ only
+           in length. Gold on the stage is 8.6:1. */
+        .rg-wire--counters .rg-wire-line {
+          stroke: var(--color-gold);
+          stroke-width: 1.7;
+          stroke-dasharray: 10 4 2 4;
         }
-        .rg-wire--protects .rg-head { fill: var(--color-mist); }
+        .rg-wire--counters .rg-head { fill: var(--color-gold); }
+
+        /* There is no --protects wire style, and nothing is missing: the
+           escape route is the only protects link, and it draws as --escape. */
 
         .rg-wire--escape .rg-wire-line {
           stroke: var(--color-scarlet);
@@ -786,6 +913,10 @@ export default function RoleGraph({
           fill: var(--rg-quiet);
         }
         .rg-wire--unlocks.is-active .rg-tag-text { fill: var(--color-silver); }
+        .rg-wire--counters.is-active .rg-tag-text { fill: var(--color-gold); }
+        .rg-wire--counters.is-active .rg-tag-plate {
+          stroke: color-mix(in srgb, var(--color-gold) 55%, transparent);
+        }
 
         /* ---- camera feeds ---- */
         .rg-node-body { fill: var(--rg-feed); }
@@ -1098,8 +1229,36 @@ export default function RoleGraph({
         }
         .rg-row-rule--unlocks { border-top: 2px solid var(--color-silver); }
         .rg-row-rule--enables { border-top: 2px dashed var(--rg-steel); }
-        .rg-row-rule--protects { border-top: 2px dotted var(--color-mist); }
         .rg-row-rule--escape { border-top: 2px dotted var(--color-scarlet); }
+        /* Dash-dot, to match its conduit. A gradient rather than a border,
+           because border-style has no dash-dot and the swatch has to be the
+           same object as the wire it stands for — a dashed gold swatch beside
+           a dash-dot gold wire would make the key the thing you have to
+           decode. */
+        .rg-row-rule--counters {
+          height: 2px;
+          background: repeating-linear-gradient(
+            to right,
+            var(--color-gold) 0 9px,
+            transparent 9px 13px,
+            var(--color-gold) 13px 15px,
+            transparent 15px 19px
+          );
+        }
+
+        /* The trap citation. Gold ties it to the wire, 7.6:1 on .panel, and it
+           is a T-number rather than a sentence so it stays a pointer into §05
+           instead of becoming a second account of the trap. */
+        .rg-row-trap {
+          display: inline-block;
+          margin-top: 0.28rem;
+          padding: 0.08rem 0.4rem;
+          border: 1px solid color-mix(in srgb, var(--color-gold) 42%, transparent);
+          font-size: 0.58rem;
+          letter-spacing: 0.12em;
+          color: var(--color-gold);
+          line-height: 1.5;
+        }
 
         /* Below 900px this is a stacked list under the roster; from 900 up it
            is one strip beneath the stage, the title sitting inline as the
@@ -1135,6 +1294,19 @@ export default function RoleGraph({
           }
           .rg-legend-gloss { white-space: nowrap; }
         }
+        /* Sits under the whole key at every width, including the flex strip
+           above 900px, where the 100% flex-basis is what drops it onto its own
+           row instead of trailing the last legend item. */
+        .rg-key-pointer {
+          flex: 1 0 100%;
+          margin: 0.7rem 0 0;
+          font-family: var(--font-body);
+          font-size: 0.82rem;
+          line-height: 1.5;
+          color: var(--rg-quiet);
+          max-width: 54rem;
+        }
+
         .rg-legend-row .rg-row-rule { align-self: start; }
         .rg-legend-term { font-size: 0.7rem; color: var(--color-moonlight); }
         .rg-legend-gloss {

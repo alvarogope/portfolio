@@ -5,7 +5,6 @@ import SectionHeading from "@/components/layout/SectionHeading";
 import ProjectHero from "@/components/project/ProjectHero";
 import ChallengeQuote from "@/components/project/ChallengeQuote";
 import Reveal from "@/components/layout/Reveal";
-import RoleWeb from "@/components/project/RoleWeb";
 import ProjectNav from "@/components/layout/ProjectNav";
 import { projectNavItems } from "@/content/games";
 import Prism from "@/components/effects/Prism";
@@ -79,29 +78,26 @@ export default function BreakInPage() {
           <div style={{ marginTop: "5rem" }}>
             <SectionHeading kicker="03 · Signature Systems" title="Nobody wins alone" />
             <p style={{ color: "var(--color-mist)", maxWidth: "42rem", marginTop: "1.5rem", marginBottom: "1.75rem" }}>
-              <RoleTerms text="Four cameras, four roles, and seven dependencies wired between them. Every line is something one player can only get from another: an ability switched on, a window opened, a trap taken off the board. Cut any one wire and the run ends." />
+              <RoleTerms text="Four cameras, four roles, and nine dependencies wired between them — and they are two webs, not one. Six lines are what a player switches on for a teammate: an ability turned on, a window opened, patrol positions handed over. Three are counter-lines, and they run the other way round: they are the traps one role takes off another's board, because a teammate you need for the laser you cannot see is as load-bearing as one who hands you a key. Cut any one wire and the run ends." />
             </p>
             <RoleGraph />
           </div>
         </Reveal>
 
-        {/* The Four Roles */}
-        {p.roles && (
-          <Reveal>
-            <div style={{ marginTop: "5rem" }}>
-              <SectionHeading kicker="04 · The Cast" title="Four Roles, One Web" />
-              <p style={{ color: "var(--color-mist)", maxWidth: "42rem", marginTop: "1.5rem", marginBottom: "1.5rem" }}>
-                <RoleTerms text="No role can finish the heist alone. Read across the four and the dependency forms a loop: each player holds a key another player needs. Hover any role to see the whole system light up: remove one, and the heist falls apart." />
-              </p>
-              <RoleWeb roles={p.roles} />
-            </div>
-          </Reveal>
-        )}
+        {/* There is no second role section. "Four Roles, One Web" used to sit
+            here, four cards of brief/tools/depends-on/needed-by, and every fact
+            in it was already in the graph above — with the dependencies drawn
+            as wires rather than restated as prose. The two things it did have
+            of its own were both wrong: it credited the Vaultsnatcher with the
+            server-room USB, which is the Insider's, and it had the Hacker
+            depending on the Vaultsnatcher for the basement cameras. Deleting it
+            is what settled the contradiction. The p.roles data still feeds RoleTerms,
+            which lights the four names wherever they appear in prose. */}
 
         {/* Level design — the route and the pacing */}
         <Reveal>
           <div style={{ marginTop: "5rem" }}>
-            <SectionHeading kicker="05 · Level Design" title="The Route" />
+            <SectionHeading kicker="04 · Level Design" title="The Route" />
             <p style={{ color: "var(--color-mist)", maxWidth: "42rem", marginTop: "1.5rem", marginBottom: "1.75rem" }}>
               <RoleTerms text="The phase clock above was the run in time. This is the same run in space: the bank is one level with two places the team has to split up and two places it has to be back together. Below: the route through it, the tension curve the five stages are tuned to, and what each stage is actually made of. The quiet stage in the middle is deliberate — it is what the vault is measured against." />
             </p>
@@ -113,7 +109,7 @@ export default function BreakInPage() {
             because the route above is the thing this machine is watching. */}
         <Reveal>
           <div style={{ marginTop: "5rem" }}>
-            <SectionHeading kicker="06 · Stealth" title="Being Seen" />
+            <SectionHeading kicker="05 · Stealth" title="Being Seen" />
             <p style={{ color: "var(--color-mist)", maxWidth: "42rem", marginTop: "1.5rem", marginBottom: "1.75rem" }}>
               <RoleTerms text="Detection is four states and four transitions, and the design is in how loudly it announces itself. From the moment an enemy starts investigating, the player is being told three separate ways at once — a rising white-noise crescendo, an eye on the HUD, and a bar filling above the enemy's head. With no voice channel, nobody can warn you but the game." />
             </p>
@@ -129,7 +125,7 @@ export default function BreakInPage() {
             so it is sized as one console rather than a pillar. */}
         <Reveal>
           <div style={{ marginTop: "5rem" }}>
-            <SectionHeading kicker="07 · Audio" title="What the heist sounds like" />
+            <SectionHeading kicker="06 · Audio" title="What the heist sounds like" />
             <p style={{ color: "var(--color-mist)", maxWidth: "42rem", marginTop: "1.5rem", marginBottom: "1.75rem" }}>
               <RoleTerms text="Take away the voice channel and a four-player stealth game has no way to pass information. I put it in the audio: a score wired to the state of the run, a clock you hear rather than check, and an action set where every move announces itself loudly enough to be read from another room." />
             </p>
@@ -140,7 +136,7 @@ export default function BreakInPage() {
         {/* The balancing philosophy — the design note under all of it */}
         <Reveal>
           <div style={{ marginTop: "5rem" }}>
-            <SectionHeading kicker="08 · Balance" title="Tuned so nobody can carry" />
+            <SectionHeading kicker="07 · Balance" title="Tuned so nobody can carry" />
             <p style={{ color: "var(--color-mist)", maxWidth: "42rem", marginTop: "1.5rem", marginBottom: "1.75rem" }}>
               <RoleTerms text="Four asymmetric roles only stay interesting if all four stay necessary. Three rules held that line: no role can reach past its quarter of the run, difficulty answers the team's performance instead of sitting still, and the payout is shared before it is individual." />
             </p>
@@ -152,7 +148,7 @@ export default function BreakInPage() {
         {p.designChallenge && (
           <Reveal>
             <div style={{ marginTop: "5rem" }}>
-              <SectionHeading kicker="09 · The Hard Part" title="Design Challenge" />
+              <SectionHeading kicker="08 · The Hard Part" title="Design Challenge" />
               <div style={{ marginTop: "1.5rem" }}>
                 <ChallengeQuote
                   challenge={p.designChallenge}
@@ -166,7 +162,7 @@ export default function BreakInPage() {
         {/* Contributions */}
         <Reveal>
           <div style={{ marginTop: "5rem" }}>
-            <SectionHeading kicker="10 · My Role" title="My Contribution" />
+            <SectionHeading kicker="09 · My Role" title="My Contribution" />
             <div style={{ display: "grid", gap: "1.5rem" }}>
               {p.contributions.map((c) => (
                 <div key={c.label}>

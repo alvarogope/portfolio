@@ -260,9 +260,17 @@ export const feedbackNote =
    the traps are the places where it stops being either, so a team plans around
    them instead of improvising through them.
 
-   Each one has a designed counter, and none of the counters belongs to the
-   player who trips it — the answer to a laser is somebody else's smoke bomb.
-   `counterRole` is what the component uses to say so by name. */
+   EACH ONE HAS A DESIGNED COUNTER, AND THIS FILE NO LONGER DRAWS IT. Which
+   role takes which trap off the board is the role graph's to say — it draws
+   the three counters as wires beside the six enabling ones — so the cards
+   below carry the mistake, the state it forces and the cost, and a single
+   pointer under them sends a reader one section back for the answer. What a
+   trap does lives here; who saves you from it lives there.
+
+   `counter` and `counterRole` stay as the design record: two of the three
+   counters belong to somebody other than the player who trips them, which is
+   the point of them, and the gold is the exception — the Vaultsnatcher trips
+   that alarm and also holds the decoy that stops it. */
 
 export type TrapId = "lasers" | "unreplaced-gold" | "failed-lockpick";
 
@@ -348,6 +356,16 @@ export const alarmTriggers: readonly AlarmTrigger[] = [
 /** The claim the trap bus exists to make, printed on the wire itself. */
 export const trapsThesis = "Skips S2 — no bar, no way back";
 
+/**
+ * One pointer, under the three cards, and the only thing this section says
+ * about who answers a trap. It exists so the cards do not read as three
+ * problems with no solutions: the solutions are drawn, one section back, as
+ * wires between the roles that hold them.
+ */
+export const trapsCounterPointer =
+  "Every one of the three has a designed counter, and none of them is drawn here: which role " +
+  "takes which trap off the board is the role web's to show, in §03 · Nobody wins alone.";
+
 export const trapsNote =
   "Every trap lands on Chasing, which means every trap skips Investigating. There is no filling " +
   "bar to outrun, no line of sight to break, and none of the three feedback channels gets a chance " +
@@ -359,8 +377,9 @@ export const trapsNote =
 export const trapsCredit =
   "Lead Designer, team of 4. I wanted punishment to be legible rather than fair-feeling: each of " +
   "the three has one cause, one consequence and one counter, and no role holds the counter to its " +
-  "own trap. The laser that kills your run is answered by somebody else's smoke bomb, which is the " +
-  "dependency web arriving as a threat rather than as a favour.";
+  "own trap — except the Vaultsnatcher, who both trips the gold alarm and defuses it. The laser " +
+  "that kills your run is answered by somebody else's smoke bomb, which is the dependency web " +
+  "arriving as a threat rather than as a favour.";
 
 export const voiceConstraint = {
   headline: "No voice channel",

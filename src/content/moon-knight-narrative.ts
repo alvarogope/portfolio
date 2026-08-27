@@ -18,8 +18,11 @@
 
 export type MoonPhase = "crescent" | "half" | "full";
 
+/** Narrowed so the world map can point a region at its act and be checked. */
+export type NarrativeActId = "waking" | "gathering" | "ascent";
+
 export interface NarrativeAct {
-  id: string;
+  id: NarrativeActId;
   /** "Act I" — the label, not derived, so the copy can change without maths. */
   actLabel: string;
   phase: MoonPhase;
@@ -77,6 +80,21 @@ export const narrativeActs: readonly NarrativeAct[] = [
       "Gods of the Gaps stand, or end them.",
   },
 ];
+
+const actById = new Map(narrativeActs.map((a) => [a.id, a]));
+
+/**
+ * One act by id, for the world map: a land needs to say which act it belongs
+ * to and which fragment is in it, and both are already written here. THIS
+ * ORDER IS CANONICAL — Wizard-Knight in the Woods, Centaur-Knight in the Misty
+ * Lands, Sun-Knight in the mountains — and anything that disagrees is the
+ * thing to correct.
+ */
+export function getNarrativeAct(id: NarrativeActId): NarrativeAct {
+  const act = actById.get(id);
+  if (!act) throw new Error(`Unknown Moon-Knight act: ${id}`);
+  return act;
+}
 
 /** The late reversal, and why it is placed late. Spoilers, on purpose. */
 export const reversal = {

@@ -7,9 +7,13 @@ import {
   mapAlt,
   mapMarkers,
   markerTypeMeta,
+  regionProfileLabels,
+  regionProfilePointer,
+  resolveRegion,
   type MapMarker,
   type MarkerId,
   type MarkerType,
+  type ResolvedRegion,
 } from "@/content/moon-knight-map";
 
 /**
@@ -33,6 +37,21 @@ import {
  * The list selects a marker but does not open its popover — hence `from` on the
  * selection. Reading down the list lights the map up in step; it does not throw
  * a panel of text you are already reading over the art.
+ *
+ * EACH PLACE CARRIES A PROFILE, and it is the reason the map earns its section:
+ * beside the lore, a marker says who is here, what guards it, and when in the
+ * story it comes. All of it is resolved from ids by `resolveRegion` — the
+ * creature is the bestiary's entry, the character is the cast's, the level is
+ * the beat chart's — so this component prints names and hrefs and never a
+ * description. The map answers WHAT IS WHERE; the sections it links to answer
+ * what those things are.
+ *
+ * NAMES ARE LINKS IN THE LIST, PLAIN TEXT IN THE POPOVER. The popover is a
+ * `role="tooltip"`, and a tooltip is the wrong place to put a row of links a
+ * reader has to chase a closing panel to click. The list under the map is
+ * always present at every width, is the map's text equivalent, and is where
+ * the same profile appears with every name as a real anchor into §04, §07 and
+ * §11. Nothing is reachable only through the popover.
  *
  * CLOSING. A mouse leaving a marker closes its popover at once, and focus
  * leaving does the same — the ordinary tooltip contract. Three things keep
@@ -108,8 +127,98 @@ type Align = "start" | "center" | "end";
 const alignOf = (xPct: number): Align => (xPct <= 25 ? "start" : xPct >= 75 ? "end" : "center");
 const sideOf = (yPct: number): "above" | "below" => (yPct < 42 ? "below" : "above");
 
+/* ---- the region profile ----
+   One component, three places: over the art, in the phone readout, and in the
+   list. `linked` is the only thing that differs — see the note in the header
+   about why the popover's copy is inert. Rows are omitted rather than blanked:
+   a fortress has no residents and the dungeons have no act, and printing "—"
+   three times would make the profile look like a form nobody filled in. */
+function Names({
+  refs,
+  linked,
+}: {
+  refs: readonly { entry: { name: string }; href: string }[];
+  linked: boolean;
+}) {
+  return (
+    <>
+      {refs.map((ref, i) => (
+        <span key={ref.href}>
+          {i > 0 && <span className="wm-sep" aria-hidden="true"> · </span>}
+          {linked ? (
+            <a className="wm-link" href={ref.href}>
+              {ref.entry.name}
+            </a>
+          ) : (
+            ref.entry.name
+          )}
+        </span>
+      ))}
+    </>
+  );
+}
+
+function ProfileRow({ label, children }: { label: string; children: React.ReactNode }) {
+  return (
+    <div className="wm-prof-row">
+      <dt className="mono wm-prof-label">{label}</dt>
+      <dd className="wm-prof-value">{children}</dd>
+    </div>
+  );
+}
+
+function RegionProfileView({
+  region,
+  linked,
+}: {
+  region: ResolvedRegion;
+  linked: boolean;
+}) {
+  if (region.isEmpty) return null;
+
+  /* The moon phase and the act are the same reading taken twice, so they sit
+     on one line rather than as two rows saying the same progress. */
+  const when = [region.level?.ordinal, region.act?.actLabel, region.level?.phaseLabel]
+    .filter(Boolean)
+    .join(" · ");
+  /* The act names the fragment; the beat chart phrases it as a task. Prefer
+     the act's name where there is one, since that is what the story calls it. */
+  const objective = region.act?.fragment ?? region.level?.cells.objective ?? null;
+
+  return (
+    <dl className="wm-prof">
+      {region.cast.length > 0 && (
+        <ProfileRow label={regionProfileLabels.cast}>
+          <Names refs={region.cast} linked={linked} />
+        </ProfileRow>
+      )}
+
+      {(region.enemies.length > 0 || region.boss) && (
+        <ProfileRow label={regionProfileLabels.guards}>
+          <Names refs={region.enemies} linked={linked} />
+          {region.boss && (
+            <span className="wm-boss">
+              {region.enemies.length > 0 && (
+                <span className="wm-sep" aria-hidden="true"> · </span>
+              )}
+              <span className="mono wm-boss-tag">{regionProfileLabels.boss}</span>{" "}
+              <Names refs={[region.boss]} linked={linked} />
+            </span>
+          )}
+        </ProfileRow>
+      )}
+
+      {when && <ProfileRow label={regionProfileLabels.when}>{when}</ProfileRow>}
+      {objective && (
+        <ProfileRow label={regionProfileLabels.objective}>{objective}</ProfileRow>
+      )}
+    </dl>
+  );
+}
+
 function Popover({ marker, onDismiss }: { marker: MapMarker; onDismiss: () => void }) {
   const meta = markerTypeMeta[marker.type];
+  const region = resolveRegion(marker.id);
   return (
     <div
       className={`wm-pop align-${alignOf(marker.xPct)} side-${sideOf(marker.yPct)}`}
@@ -119,6 +228,7 @@ function Popover({ marker, onDismiss }: { marker: MapMarker; onDismiss: () => vo
       <p className="mono wm-pop-type">{meta.term}</p>
       <p className="wm-pop-name">{marker.label}</p>
       <p className="wm-pop-lore">{marker.lore}</p>
+      {region && !region.isEmpty && <RegionProfileView region={region} linked={false} />}
       <button type="button" className="wm-pop-close" onClick={onDismiss} aria-label="Dismiss">
         <span aria-hidden="true">✕</span>
       </button>
@@ -130,6 +240,7 @@ export default function WorldMap() {
   const [selection, setSelection] = useState<Selection | null>(null);
 
   const selected = selection ? getMarker(selection.id) : null;
+  const selectedRegion = selection ? resolveRegion(selection.id) : null;
 
   const select = (id: MarkerId, from: Source) => setSelection({ id, from });
   const clear = () => setSelection(null);
@@ -229,6 +340,9 @@ export default function WorldMap() {
           <p className="mono wm-readout-type">{markerTypeMeta[selected.type].term}</p>
           <p className="wm-readout-name">{selected.label}</p>
           <p className="wm-readout-lore">{selected.lore}</p>
+          {selectedRegion && !selectedRegion.isEmpty && (
+            <RegionProfileView region={selectedRegion} linked />
+          )}
         </div>
       )}
 
@@ -257,6 +371,7 @@ export default function WorldMap() {
       <ol className="wm-list">
         {mapMarkers.map((marker) => {
           const isSelected = selection?.id === marker.id;
+          const region = resolveRegion(marker.id);
           return (
             <li
               key={marker.id}
@@ -281,10 +396,14 @@ export default function WorldMap() {
               </h3>
               <p className="mono wm-item-type">{markerTypeMeta[marker.type].term}</p>
               <p className="wm-item-lore">{marker.lore}</p>
+              {region && !region.isEmpty && <RegionProfileView region={region} linked />}
             </li>
           );
         })}
       </ol>
+
+      {/* The hand-off, once, under the whole index. */}
+      <p className="wm-pointer">{regionProfilePointer}</p>
 
       <style>{`
         .wm {
@@ -423,7 +542,7 @@ export default function WorldMap() {
           position: absolute;
           z-index: 4;
           width: max-content;
-          max-width: min(19rem, 68vw);
+          max-width: min(23rem, 74vw);
           padding: 0.7rem 0.85rem 0.8rem;
           background: var(--wm-ink);
           border: 1px solid color-mix(in srgb, var(--color-silver) 40%, transparent);
@@ -554,6 +673,86 @@ export default function WorldMap() {
           color: var(--wm-quiet);
         }
         .wm-hint { margin: 0; font-size: 0.64rem; color: var(--wm-quiet); }
+
+        /* ---- the region profile ----
+           A definition list, because that is what it is: four short answers
+           about one place. Two columns where there is room so the labels form
+           a scannable spine, one column below 30rem of card. Kept to names —
+           the descriptions are a click away, which is the whole design. */
+        .wm-prof {
+          margin: 0.7rem 0 0;
+          padding-top: 0.65rem;
+          border-top: 1px solid var(--wm-edge);
+          display: grid;
+          gap: 0.35rem;
+          font-family: var(--font-body);
+          font-size: 0.82rem;
+          line-height: 1.5;
+        }
+        /* Label beside value where the row has room for both, label above it
+           where it does not — done with wrapping rather than a breakpoint,
+           because this same profile renders in a 62rem readout, a ~15rem list
+           card and a popover that sizes itself to its own text. The value's
+           12rem flex-basis is the hinge: below that the line wraps and the
+           spine becomes a stack, with no query to keep in step with the
+           list's auto-fit columns. */
+        .wm-prof-row {
+          display: flex;
+          flex-wrap: wrap;
+          align-items: baseline;
+          gap: 0.1rem 0.6rem;
+        }
+        .wm-prof-label { flex: 0 0 6.4rem; }
+        .wm-prof-value { flex: 1 1 12rem; min-width: 0; }
+        .wm-prof-label {
+          margin: 0;
+          font-size: 0.56rem;
+          letter-spacing: 0.13em;
+          color: var(--wm-quiet);
+          line-height: 1.9;
+        }
+        .wm-prof-value { margin: 0; color: var(--color-moonlight); }
+        .wm-sep { color: var(--wm-quiet); }
+
+        /* The boss is the one name in the row that is not an equal of the
+           others, so it is tagged rather than merely listed last. */
+        .wm-boss-tag {
+          font-size: 0.54rem;
+          letter-spacing: 0.14em;
+          color: var(--color-gold);
+        }
+
+        /* Gold at full strength is 8.4:1 on .panel and 9.6:1 on the popover
+           ink, so the link colour carries on both. Underlined from the start:
+           these are cross-references into other sections and they should look
+           like it before they are hovered. */
+        .wm-link {
+          color: var(--color-gold);
+          text-decoration: underline;
+          text-decoration-color: color-mix(in srgb, var(--color-gold) 45%, transparent);
+          text-underline-offset: 0.18em;
+          /* The list card's hit-area ::after covers the whole card; without
+             this the anchors underneath it would be unclickable. */
+          position: relative;
+          z-index: 1;
+        }
+        .wm-link:hover,
+        .wm-link:focus-visible {
+          text-decoration-color: currentColor;
+        }
+        .wm-link:focus-visible {
+          outline: 2px solid var(--color-lunar-gold);
+          outline-offset: 2px;
+        }
+
+        .wm-pointer {
+          margin: 0;
+          font-family: var(--font-body);
+          font-size: 0.8rem;
+          line-height: 1.55;
+          color: var(--wm-quiet);
+          max-width: 52rem;
+        }
 
         /* ---- the location list ---- */
         .wm-list {

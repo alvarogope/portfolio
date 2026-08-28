@@ -23,13 +23,6 @@
 
 /* ---- attribution -------------------------------------------------------- */
 
-export const roleNote = {
-  role: "World Designer",
-  body:
-    "Shattered Skies was made by a team of five. The world design was mine: the shattered-crust " +
-    "premise below, what it is made of, and the argument it is making.",
-} as const;
-
 /* ---- the lead: the core world-design premise ---------------------------- */
 
 export const lead = {
@@ -124,13 +117,6 @@ export interface Relic {
 }
 
 export const relics: readonly Relic[] = [
-  {
-    id: "veynar",
-    term: "The Veynar",
-    gloss:
-      "The civilisation that built all of it. Engineered the Symbiochord to end war, then went " +
-      "extinct before they could use it.",
-  },
   {
     id: "gravity-stabilizers",
     term: "Gravity stabilizers",

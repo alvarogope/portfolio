@@ -63,7 +63,8 @@ export type MarkerId =
 
 /**
  * What kind of place this is, which picks the sigil and its colour:
- * - `area`     — one of the four lands. Silver diamond.
+ * - `area`     — one of the four locations: Centralis, the prologue island,
+ *                and the three great lands that are the three acts. Silver diamond.
  * - `fortress` — a torch on the map: a Moon Fragment and the boss holding it. Gold flame.
  * - `dungeon`  — a rose on the map: an Old Gods quest, underground. Scarlet rosette.
  */
@@ -77,7 +78,7 @@ export type MarkerType = "area" | "fortress" | "dungeon";
  *
  * All four fields are optional because the markers are not all the same kind
  * of place: a fortress has a boss and no residents, the dungeons have a patron
- * and no act, and the tutorial island has a level but no fragment to fetch.
+ * and no act, and the prologue island has a level but no fragment to fetch.
  */
 export interface RegionProfile {
   /** Who you meet here. Ids into `moon-knight-cast`. */
@@ -112,8 +113,8 @@ export const markerTypeMeta: Record<MarkerType, { term: string; gloss: string }>
   area: {
     term: "Land",
     gloss:
-      "Centralis, the lake island the journey begins on, and the three great lands it leads to — " +
-      "listed in the order they are played.",
+      "Centralis, the lake island the journey begins on — the prologue — and the three great lands " +
+      "it leads to, one per act, listed in the order they are played.",
   },
   fortress: {
     term: "Fortress · Moon Fragment",
@@ -139,9 +140,14 @@ export const mapMarkers: readonly MapMarker[] = [
     yPct: 43.3,
     lore:
       "Where the Moon-Knight wakes from a coma of unknown length. A dark forest on a lake island, " +
-      "its statues deliberately toppled. Death waits here. The journey begins.",
-    /* No act: the waking happens here, but Act I's land is the Woods and its
-       fragment is there. The island is the level before the arc starts. */
+      "its statues deliberately toppled. Death waits here. The prologue: the journey begins on the " +
+      "island, but the first act begins in The Woods.",
+    /* No act, and that is the point: the waking happens here, but Act I's
+       land is the Woods and its fragment is there. The island is the PROLOGUE
+       — a level before the arc starts — which is why the beat chart counts
+       four locations where the narrative counts three acts. Its level carries
+       `stageLabel: "Prologue"`, so the popover says so rather than going
+       blank where the other markers name an act. */
     profile: {
       cast: ["death"],
       enemies: ["soldiers"],

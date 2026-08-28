@@ -515,7 +515,7 @@ export default function LevelFlow() {
           >
             <RouteRibbon />
           </div>
-          <p className="mono lf-scroll-note">Scroll the plan sideways to follow the route →</p>
+          <p className="mono mono-note lf-scroll-note">Scroll the plan sideways to follow the route →</p>
         </section>
 
         {/* 2 — the pacing curve */}

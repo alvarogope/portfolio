@@ -554,7 +554,7 @@ export default function HeistLoop() {
           >
             <ClockTrack />
           </div>
-          <p className="mono hl-scroll-note">Scroll the clock sideways to follow the run →</p>
+          <p className="mono mono-note hl-scroll-note">Scroll the clock sideways to follow the run →</p>
           <p className="hl-band-note">{phaseLevelNote}</p>
         </section>
 

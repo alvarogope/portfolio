@@ -24,6 +24,11 @@ import ArtDirection from "@/components/project/ArtDirection";
 import AudioDesign from "@/components/project/AudioDesign";
 import BeatChart from "@/components/project/BeatChart";
 import Expansions from "@/components/project/Expansions";
+import PageHighlights from "@/components/project/PageHighlights";
+// Quoted verbatim by the highlight band below, by key: the band never
+// retypes a line, so §08 and §15 stay the only home for either idea.
+import { diegeticThesis } from "@/content/moon-knight-diegetic";
+import { silenceThesis } from "@/content/moon-knight-audio";
 
 export const metadata: Metadata = {
   title: `${p.title} | Álvaro Gómez Pérez`,
@@ -79,6 +84,36 @@ export default function MoonKnightPage() {
           </div>
         </Reveal>
 
+        {/* Skim band. The reading-load audit measured this page putting its
+            design thesis at 51% depth and the best audio idea in the portfolio
+            at 99% — both past where a first-pass reader stops. Its prescription
+            was "a pull quote, not a move", and moving §15 up would not have
+            fixed it anyway: even directly after §10 it would still sit at ~72%.
+            So both lines are surfaced here at ~4% depth and link down. Verbatim,
+            by key. Nothing is reworded and nothing is re-homed — §08 and §15
+            still own and explain both ideas. */}
+        <Reveal>
+          <div style={{ marginTop: "4rem" }}>
+            <PageHighlights
+              accent="var(--color-lunar-gold)"
+              items={[
+                {
+                  section: "08 · Diegetic Design",
+                  title: "Mechanics That Hide in the World",
+                  href: "#diegetic-design",
+                  quote: diegeticThesis.line,
+                },
+                {
+                  section: "15 · Score & Audio Design",
+                  title: "Music for a Borrowed Moon",
+                  href: "#score-and-audio",
+                  quote: silenceThesis.line,
+                },
+              ]}
+            />
+          </div>
+        </Reveal>
+
         {/* Abilities — the signature section */}
         {p.abilities && (
           <Reveal>
@@ -110,10 +145,11 @@ export default function MoonKnightPage() {
           <div style={{ marginTop: "5rem" }}>
             <SectionHeading kicker="05 · The World" title="The World of Kaelum" />
             <p style={{ color: "var(--color-mist)", maxWidth: "42rem", marginTop: "1.5rem", marginBottom: "1.75rem" }}>
-              Three great lands around one drowned island, drawn by hand. Three torches mark the
-              fortresses holding the Moon Fragments; the roses mark the ways down into the Old
-              Gods&apos; dungeons. Every place is indexed: point at a sigil for its lore, who is
-              there, what guards it, and where it falls in the arc.
+              Three great lands around one drowned island, drawn by hand — the island is the
+              prologue, the lands are the three acts. Three torches mark the fortresses holding the
+              Moon Fragments; the roses mark the ways down into the Old Gods&apos; dungeons. Every
+              place is indexed: point at a sigil for its lore, who is there, what guards it, and
+              where it falls in the arc.
             </p>
             <WorldMap />
           </div>
@@ -124,8 +160,9 @@ export default function MoonKnightPage() {
           <div style={{ marginTop: "5rem" }}>
             <SectionHeading kicker="06 · Narrative Design" title="Three Acts, One Moon" />
             <p style={{ color: "var(--color-mist)", maxWidth: "42rem", marginTop: "1.5rem", marginBottom: "1.75rem" }}>
-              The story is told by the world, not by cutscenes. Three acts, three moon phases, three
-              ages of a life — and a reversal in the last one that re-reads everything before it.
+              The story is told by the world, not by cutscenes. Centralis is the prologue; the three
+              acts that follow are the three lands — three moon phases, three ages of a life — and a
+              reversal in the last one that re-reads everything before it.
             </p>
             <NarrativeDesign />
           </div>
@@ -143,7 +180,7 @@ export default function MoonKnightPage() {
             the narrative and the cast because the moon HUD only lands once the
             reader knows what the moon means. */}
         <Reveal>
-          <div style={{ marginTop: "5rem" }}>
+          <div style={{ marginTop: "5rem" }} id="diegetic-design">
             <SectionHeading kicker="08 · Diegetic Design" title="Mechanics That Hide in the World" />
             <p style={{ color: "var(--color-mist)", maxWidth: "42rem", marginTop: "1.5rem", marginBottom: "1.75rem" }}>
               The health bar is the moon on the knight&apos;s back, experience is a rose stained in a
@@ -192,14 +229,16 @@ export default function MoonKnightPage() {
             needs the creatures, the world, the cast, the story and the look
             already in hand for a cell reading "Banshees hidden in fog" to be a
             decision rather than a noun. The moon rail then closes the loop
-            back to the narrative: same four phases, same spine. */}
+            back to the narrative: same moon, same spine — four skies over
+            four locations here, three fragments over three acts there, with
+            the note under the rail joining the two readings. */}
         <Reveal>
           <div style={{ marginTop: "5rem" }}>
             <SectionHeading kicker="11 · Level Design" title="The Beat Chart" />
             <p style={{ color: "var(--color-mist)", maxWidth: "42rem", marginTop: "1.5rem", marginBottom: "1.75rem" }}>
-              The sheet the game was actually planned from: four levels against nine design
-              dimensions, with the moon waxing across the top. Pick a level to open its design
-              sheet.
+              The sheet the game was actually planned from: four levels — the prologue on Centralis
+              and then one per act — against nine design dimensions, with the moon waxing across the
+              top. Pick a level to open its design sheet.
             </p>
             <BeatChart />
           </div>
@@ -240,21 +279,25 @@ export default function MoonKnightPage() {
         {p.designChallenge && (
           <Reveal>
             <div style={{ marginTop: "5rem" }}>
-              <SectionHeading kicker="14 · The Hard Part" title="Design Challenge" />
+              {/* Retitled when the engineering timeline was merged in below: the
+                  section is no longer just the challenge, it is the challenge and
+                  what came out of it. "Design Challenge" named only the first
+                  half. */}
+              <SectionHeading kicker="14 · The Hard Part" title="What Broke, and What I Built" />
               <div style={{ marginTop: "1.5rem" }}>
                 <ChallengeQuote challenge={p.designChallenge} />
               </div>
-            </div>
-          </Reveal>
-        )}
-        {/* Design to Engineering */}
-        {p.engineeringNote && (
-          <Reveal>
-            <div style={{ marginTop: "5rem" }}>
-              <SectionHeading kicker="15 · From Design to Engineering" title="Building the Quantum" />
-              <div style={{ marginTop: "1.5rem" }}>
-                <EngineeringNote note={p.engineeringNote} />
-              </div>
+              {/* One section, not two. The quote ends on "documented the
+                  feasibility gap and carried it into a standalone C++ toolkit"
+                  and the note below is that sentence as a timeline — so a
+                  heading between them made a claim and its own restatement
+                  read as two separate findings. Problem, then what was done
+                  about it, then where to read the code. */}
+              {p.engineeringNote && (
+                <div style={{ marginTop: "2.5rem" }}>
+                  <EngineeringNote note={p.engineeringNote} />
+                </div>
+              )}
               {/* Two deep-dives now: the game programming is the foundation
                   and leads, the quantum toolkit is the research grown inside
                   it. */}
@@ -301,8 +344,8 @@ export default function MoonKnightPage() {
             is ever added here — the other pieces described in that section are
             design, not recordings. */}
         <Reveal>
-          <div style={{ marginTop: "5rem" }}>
-            <SectionHeading kicker="16 · Score & Audio Design" title="Music for a Borrowed Moon" />
+          <div style={{ marginTop: "5rem" }} id="score-and-audio">
+            <SectionHeading kicker="15 · Score & Audio Design" title="Music for a Borrowed Moon" />
             <p style={{ color: "var(--color-mist)", maxWidth: "42rem", marginTop: "1.5rem", marginBottom: "1.75rem" }}>
               I composed the game&apos;s score, and designed the rules it obeys: where music is
               allowed to play, what each instrument is permitted to mean, and why most of this
@@ -318,7 +361,7 @@ export default function MoonKnightPage() {
         {p.gallery && (
           <Reveal>
             <div style={{ marginTop: "5rem" }}>
-              <SectionHeading kicker="17 · From the Game" title="Gallery" />
+              <SectionHeading kicker="16 · From the Game" title="Gallery" />
               <div style={{ marginTop: "1.5rem" }}>
                 <Gallery items={p.gallery} />
               </div>

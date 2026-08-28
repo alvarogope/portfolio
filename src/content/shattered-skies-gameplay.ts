@@ -59,21 +59,6 @@ export interface Beat {
 
 /* ---- attribution -------------------------------------------------------- */
 
-export interface RoleNote {
-  role: string;
-  headline: string;
-  body: string;
-}
-
-export const roleNote: RoleNote = {
-  role: "Systems & World Designer",
-  headline: "Co-designed with the team",
-  body:
-    "Team of five. The minigames, the puzzle pattern and the gating rule below were worked out " +
-    "together — pitched, argued over and cut down in playtests — with systems and world design " +
-    "as my seat at that table. This is the reasoning behind them, not a claim to have authored " +
-    "them alone.",
-};
 
 /* ---- the thesis ---------------------------------------------------------
    One claim. The three minigames are three materials for it. */
@@ -196,6 +181,22 @@ export interface MinigameSection {
   games: readonly Minigame[];
   close: string;
 }
+
+/**
+ * The payoff sentence of the waveform repair, lifted out as its own key.
+ *
+ * The ownership map calls the paragraph it sits in "the best paragraph on the
+ * page", and the reading-load audit measures it landing at 70-98% page depth -
+ * past the point any first-pass reader reaches. The highlight band at the top
+ * of the page quotes this line and links down here.
+ *
+ * It is exported rather than retyped up there so there is still exactly ONE
+ * copy of the sentence: `barrierTwist.body` below composes it back into the
+ * paragraph, which renders unchanged. Edit it here and both move together.
+ */
+export const waveformPayoff =
+  "Pairs end up humming the target: louder for amplitude, faster for frequency, the filter " +
+  "mangling the timbre but leaving the shape.";
 
 export const minigames: MinigameSection = {
   meta: {
@@ -411,9 +412,9 @@ export const minigames: MinigameSection = {
         label: "The twist",
         body:
           "A number is the one thing the distortion destroys completely, so the reader has to " +
-          "become the instrument instead of describing it. Pairs end up humming the target: " +
-          "louder for amplitude, faster for frequency, the filter mangling the timbre but leaving " +
-          "the shape. It is the clearest moment in the game of players routing around the barrier " +
+          "become the instrument instead of describing it. " +
+          waveformPayoff +
+          " It is the clearest moment in the game of players routing around the barrier " +
           "rather than fighting it — and the one where you can hear a partnership improving, " +
           "because the second calibration always takes a fraction of the first.",
       },

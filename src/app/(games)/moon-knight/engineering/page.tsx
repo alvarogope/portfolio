@@ -396,9 +396,6 @@ export default function GameEngineeringPage() {
           <p style={{ marginTop: "1rem", maxWidth: "48rem", lineHeight: 1.75 }}>
             {g.combat.intro}
           </p>
-          <p style={{ marginTop: "1rem", maxWidth: "48rem", lineHeight: 1.75 }}>
-            {g.combat.detail}
-          </p>
 
           <ul
             style={{

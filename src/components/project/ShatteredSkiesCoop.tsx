@@ -2,7 +2,6 @@ import {
   gatingPointer,
   minigames,
   puzzlePattern,
-  roleNote,
   thesis,
   type Beat,
   type BlockMeta,
@@ -567,14 +566,12 @@ function DesignPoint({ body }: { body: string }) {
 export default function ShatteredSkiesCoop() {
   return (
     <div className="ssc">
-      {/* The credit comes first, and says co-designed in that word. */}
-      <p className="mono ssc__role">
-        <span className="ssc__role-mark" aria-hidden="true" />
-        <span>
-          <strong className="ssc__role-name">{roleNote.headline}</strong> · {roleNote.role} ·{" "}
-          {roleNote.body}
-        </span>
-      </p>
+      {/* No credit block here. The page states its attribution once, in
+          §02's teamNote — team of five, my seat was systems and world
+          design — and §05's levelsCredit is the only other one, because it
+          makes a distinction (audio mine, level design shared) rather than a
+          disclaimer. Four near-identical restatements of the same sentence
+          made a strong page read as an anxious one. */}
 
       {/* ---- the thesis the three figures are three versions of ---- */}
       <section className="ssc__thesis" aria-labelledby="ssc-thesis-title">

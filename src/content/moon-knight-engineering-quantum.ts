@@ -2,7 +2,6 @@
     title: "The Quantum Toolkit",
     tagline: "Real quantum simulation for game combat, in C++, and proven statistically.",
   
-    repoUrl: "#",
   
     intro:
       "Moon-Knight's combat mechanics are built on real quantum computing principles. Not quantum-flavoured randomness, but an actual quantum simulation: a C++17 library wrapping Quantum++ and Eigen that models qubits, gates, measurement, and noise, then exposes a small game-facing API so the mechanics can be tuned by designers who never touch the physics. This page is the engineering behind the design.",

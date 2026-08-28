@@ -12,6 +12,14 @@
  * THE SPINE is the moon. Crescent, half and full are at once the three
  * fragments, the three lands, the three acts, and the three ages of a life.
  * Every list below is in that order, so the motif does the structural work.
+ *
+ * THREE ACTS, AND A PROLOGUE BEFORE THEM. The waking on Centralis is played as
+ * a level — it is the tutorial island — but it is NOT an act: there is no
+ * fragment on it and no land is claimed there. `prologueNote` says so on the
+ * page, which is what keeps this section's three moons from reading as a
+ * disagreement with the beat chart's four (`moon-knight-levels.ts`, where the
+ * fourth moon is the prologue's sky). Acts are counted here; locations are
+ * counted there.
  */
 
 /* ---- the arc ------------------------------------------------------------ */
@@ -81,6 +89,24 @@ export const narrativeActs: readonly NarrativeAct[] = [
   },
 ];
 
+/**
+ * The prologue, stated once and owned here.
+ *
+ * Centralis is the only place on this page where the act count and the level
+ * count can look like they disagree, so the arc names it before it counts to
+ * three. Structure only — the waking itself is Act I's beat and the island's
+ * lore belongs to the world map; this says what KIND of thing the island is.
+ */
+export const prologueNote = {
+  label: "Prologue · Centralis",
+  line:
+    "The waking on the lake island is the prologue: a level to play, but not an act — no fragment " +
+    "is taken there and no land is claimed. The three acts are the three lands that follow it, one " +
+    "fragment each, which is why the beat chart plans four locations while the arc tells three " +
+    "acts. The moons above are the fragments recovered; the moons on the chart are the skies they " +
+    "are taken under.",
+};
+
 const actById = new Map(narrativeActs.map((a) => [a.id, a]));
 
 /**
@@ -128,15 +154,6 @@ export interface NarrativeTheme {
 }
 
 export const narrativeThemes: readonly NarrativeTheme[] = [
-  {
-    id: "phases",
-    glyph: "phases",
-    title: "Three phases, three ages",
-    line:
-      "Crescent, half and full are also childhood, adulthood and elderhood. The moon in the sky ages " +
-      "with the player's progress and with the story, so how far through a life the Moon-Knight is " +
-      "can be read by looking up.",
-  },
   {
     id: "willow",
     glyph: "willow",
@@ -190,14 +207,6 @@ export const storyThroughMechanics = {
         "being true.",
     },
     {
-      id: "willows",
-      mechanic: "Willow trees → the checkpoints",
-      meaning:
-        "No healing during combat, and no full heal away from a willow. They are deliberately scarce " +
-        "and deliberately visible, so the tree that means mourning is the thing the player scans every " +
-        "horizon for.",
-    },
-    {
       id: "gods",
       mechanic: "The Power of the Gods → the fallacy, playable",
       meaning:
@@ -224,8 +233,9 @@ export const fullStory: readonly string[] = [
     "own, cut against fast close combat with knights, banshees, ghosts, goblins, wizards and worse.",
 
   "They wake from a coma on Centralis, a lake island in the middle of the continent, and meet Death — " +
-    "a strange figure who promises to revive them every time they die. The task is to restore the " +
-    "Moon Goddess by recovering the three fragments she was broken into.",
+    "a strange figure who promises to revive them every time they die. The island is the prologue; " +
+    "the three acts begin when they leave it. The task is to restore the Moon Goddess by recovering " +
+    "the three fragments she was broken into.",
 
   "Each fragment sits at the end of a fairy-tale set piece: the Crescent in The Woods behind the " +
     "Wizard-Knight, the Half-Moon in the Misty Lands behind the Centaur-Knight, and the Full Moon in " +

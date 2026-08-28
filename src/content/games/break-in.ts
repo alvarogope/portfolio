@@ -63,11 +63,17 @@ export const breakIn: Project = {
     resolution: "Replaced voice chat with three diegetic coordination channels.",
   },
 
+  /* Every bullet below maps to a section that shows the work. "The game modes,
+     and the monetisation model" used to close the first one and no longer does:
+     the game was never shipped, so there was no monetisation — that chapter was
+     a GDD-completeness requirement rather than a designed deliverable — and the
+     extra modes were an idea that was never built. Neither is a contribution to
+     claim, so both were removed rather than given a section. Do not re-add them. */
   contributions: [
     {
       label: "Lead design & direction",
       description:
-        "Led the design across a team of four, setting the direction and authoring most of the design document: the four roles, the mechanics, the puzzle styles, the balancing, the game modes, and the monetisation model.",
+        "Led the design across a team of four, setting the direction and authoring most of the design document: the four roles, the mechanics, the puzzle styles, and the balancing.",
     },
     {
       label: "Role & interdependency design",

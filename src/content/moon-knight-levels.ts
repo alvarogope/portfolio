@@ -11,6 +11,14 @@
  * `moon-knight-audio.ts`. Repeating them here would turn a chart into an essay
  * and cost it the one thing it is for, which is being read ACROSS.
  *
+ * FOUR LOCATIONS, THREE ACTS. Centralis — the lake island the Moon-Knight
+ * wakes on — is the PROLOGUE. It is played as a level, but it sits OUTSIDE the
+ * act count: no fragment is there and no land is claimed, and the story proper
+ * starts when the first fragment does. The three acts are the three lands
+ * (`moon-knight-narrative.ts`), one fragment each. `stageLabel` below stamps
+ * that on every level, so a count of FOUR on this page is always a count of
+ * locations and a count of THREE is always a count of acts.
+ *
  * THE MOON IS THE PROGRESSION. Each level is stamped with the phase the game is
  * in when the player plays it, and the phases WAX: crescent, first quarter,
  * gibbous, full. That is not decoration — the moon is the spine of the whole
@@ -18,6 +26,11 @@
  * `moon-knight-diegetic.ts`), so the level order and the lunar cycle are the
  * same line drawn twice. By the last level the moon is full, which is exactly
  * when the Sun-Knight arrives.
+ *
+ * The narrative's three moons are not a second cycle disagreeing with this
+ * one. An act's moon is the FRAGMENT recovered in it — crescent, half, full —
+ * and a level's moon is the SKY it is played under. Four skies over four
+ * locations, three fragments across three acts, one motif.
  *
  * `phase` reuses the vocabulary of `MoonPhaseGlyph` so the discs on this chart
  * are the SAME discs as the ones crowning the narrative arc. Do not invent a
@@ -95,6 +108,13 @@ export interface BeatLevel {
   id: LevelId;
   /** "Level 01". Authored, not derived, so the copy can change without maths. */
   ordinal: string;
+  /**
+   * Where the level sits in the NARRATIVE structure: "Prologue" for Centralis,
+   * then "Act I"–"Act III", one per land. Authored to match `actLabel` in
+   * `moon-knight-narrative.ts`, and the field that stops four levels and three
+   * acts reading as two different counts.
+   */
+  stageLabel: string;
   name: string;
   /** The place, in a few words. Sits under the moon on the rail. */
   subtitle: string;
@@ -119,6 +139,7 @@ export const beatLevels: readonly BeatLevel[] = [
   {
     id: "tutorial",
     ordinal: "Level 01",
+    stageLabel: "Prologue",
     name: "Tutorial",
     subtitle: "Lake Island",
     phase: "crescent",
@@ -143,6 +164,7 @@ export const beatLevels: readonly BeatLevel[] = [
   {
     id: "woods",
     ordinal: "Level 02",
+    stageLabel: "Act I",
     name: "The Woods",
     subtitle: "Talking woods & the cemetery",
     phase: "half",
@@ -167,6 +189,7 @@ export const beatLevels: readonly BeatLevel[] = [
   {
     id: "misty-lands",
     ordinal: "Level 03",
+    stageLabel: "Act II",
     name: "Misty Lands",
     subtitle: "City of Mists & the Haunted Castle",
     phase: "gibbous",
@@ -190,6 +213,7 @@ export const beatLevels: readonly BeatLevel[] = [
   {
     id: "frozen-mountains",
     ordinal: "Level 04",
+    stageLabel: "Act III",
     name: "Frozen Mountains",
     subtitle: "The catacombs & the astronomers' castle",
     phase: "full",
@@ -226,10 +250,22 @@ export const emptyCellLabel = "Not part of this level";
  * so a reader who gives this section five seconds still leaves with the claim.
  */
 export const beatChartThesis =
-  "Four levels, planned as one line. Each is stamped with the moon phase the game is in when it " +
-  "is played, and every dimension is tuned to wax with it: the light, the weather, the sound and " +
-  "what hides inside it all escalate together, from a silent island to a full moon over the " +
-  "Sun-Knight.";
+  "Four levels, planned as one line: a prologue on the lake island, then one act per land. Each is " +
+  "stamped with the moon phase the game is in when it is played, and every dimension is tuned to " +
+  "wax with it: the light, the weather, the sound and what hides inside it all escalate together, " +
+  "from a silent island to a full moon over the Sun-Knight.";
+
+/**
+ * The line that reconciles the two counts, printed under the rail. The page
+ * shows four moons here and three above the narrative arc, and this is the one
+ * place that says why — so a reader counting moons is never left to guess
+ * whether they are looking at one cycle or two.
+ */
+export const beatStructureNote =
+  "Centralis is the prologue: a level to play, but before the arc — no fragment, no act. The three " +
+  "acts are the three lands that follow it, one fragment each. So the sky waxes across four " +
+  "locations while the story runs in three: the moons crowning the narrative arc are the fragments " +
+  "recovered, and the moons on this rail are the nights they are taken under.";
 
 export const arcCaption =
   "The escalation, read across: what you see · what you hear · what fights you.";

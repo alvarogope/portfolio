@@ -145,27 +145,12 @@ export default function QuantumToolkitPage() {
         </div>
       </Reveal>
 
-      {/* Repo link */}
-      {q.repoUrl && q.repoUrl !== "#" && (
-        <Reveal>
-          <div style={{ marginTop: "3rem" }}>
-            <a
-              href={q.repoUrl}
-              target="_blank"
-              rel="noreferrer"
-              className="mono"
-              style={{
-                fontSize: "0.75rem",
-                color: "var(--color-silver)",
-                borderBottom: "1px solid color-mix(in srgb, var(--color-silver) 50%, transparent)",
-                paddingBottom: "2px",
-              }}
-            >
-              View the source on GitHub ↗
-            </a>
-          </div>
-        </Reveal>
-      )}
+      {/* No repo link. The toolkit is not published yet, and the data carried
+          a repoUrl of "#" that this block guarded against — so the link never
+          rendered and the field was a dead value pretending to be one. To
+          bring it back: add repoUrl to moonKnightQuantum and restore this
+          block. Same treatment as the unmounted screenshot band on the game
+          engineering page. */}
     </Section>
   );
 }

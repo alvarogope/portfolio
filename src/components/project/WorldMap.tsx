@@ -177,8 +177,15 @@ function RegionProfileView({
   if (region.isEmpty) return null;
 
   /* The moon phase and the act are the same reading taken twice, so they sit
-     on one line rather than as two rows saying the same progress. */
-  const when = [region.level?.ordinal, region.act?.actLabel, region.level?.phaseLabel]
+     on one line rather than as two rows saying the same progress. The stage
+     comes off the LEVEL, not the act, because Centralis has a level and no act
+     — it is the prologue — and that is exactly the marker where this line has
+     to keep saying something true. */
+  const when = [
+    region.level?.ordinal,
+    region.level?.stageLabel ?? region.act?.actLabel,
+    region.level?.phaseLabel,
+  ]
     .filter(Boolean)
     .join(" · ");
   /* The act names the fragment; the beat chart phrases it as a task. Prefer

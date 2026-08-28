@@ -8,7 +8,6 @@ import {
   rewardSplit,
   soloReach,
   targetBand,
-  teamNote,
   type BalanceChart,
 } from "@/content/break-in-overview";
 import { getRole } from "@/content/break-in-roles";
@@ -320,9 +319,10 @@ export default function BalanceNote() {
       <div className="panel bn-console">
         <div className="bn-console-head">
           <p className="mono bn-console-tag">Design note · balancing</p>
-          <p className="mono bn-console-meta">
-            {teamNote.role} · {teamNote.headline.split(" · ")[1] ?? teamNote.headline}
-          </p>
+          {/* No credit line. The attribution is §02s, on the phase clock,
+              and printing it again here was the second render of the same
+              block rather than a second fact. */}
+          <p className="mono bn-console-meta">{balancingPillars.length} tuning rules</p>
         </div>
 
         <p className="bn-intro">{balancingIntro}</p>

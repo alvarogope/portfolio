@@ -62,21 +62,6 @@ export interface Reasoning {
 
 /* ---- attribution -------------------------------------------------------- */
 
-export interface RoleNote {
-  role: string;
-  headline: string;
-  body: string;
-}
-
-export const roleNote: RoleNote = {
-  role: "Systems & World Designer",
-  headline: "Co-designed with the team",
-  body:
-    "Shattered Skies was made by a team of five. The three systems below were designed " +
-    "collaboratively — argued out on whiteboards and settled in playtests — and my seat at that " +
-    "table was systems and world design. What follows is the reasoning behind them, not a claim " +
-    "to have authored them alone.",
-};
 
 /* ---- the spine ----------------------------------------------------------
    One claim, stated once, that the three mechanics below are each an instance

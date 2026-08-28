@@ -6,6 +6,7 @@ import {
   beatChartThesis,
   beatDimensions,
   beatLevels,
+  beatStructureNote,
   dimensionGroups,
   emptyCell,
   emptyCellLabel,
@@ -26,7 +27,11 @@ import { MoonPhaseGlyph } from "./MoonPhaseGlyph";
  *      horizontal line, each marked by the moon phase the game is in when it
  *      is played, WAXING left to right: crescent, first quarter, gibbous,
  *      full. The moon is the spine of this project, so the level order and the
- *      lunar cycle are drawn as the same line. The rail also selects.
+ *      lunar cycle are drawn as the same line. The rail also selects, and each
+ *      station is stamped with its `stageLabel` — Prologue, then Acts I–III.
+ *      That stamp plus `beatStructureNote` under the rail is what keeps four
+ *      moons here from contradicting the three above the narrative arc:
+ *      Centralis is a location, not an act, and the note says so.
  *   2. THE MATRIX — nine dimensions against four levels. The dense view, and
  *      the one worth reading in both directions: down a column is a level,
  *      across a row is an escalation. The boss row is emphasised because it is
@@ -157,7 +162,10 @@ export default function BeatChart() {
               onClick={() => setSelected(l.id)}
               onKeyDown={(event) => onRailKeyDown(event, i)}
             >
-              <span className="mono bc-station-ord">{l.ordinal}</span>
+              <span className="mono bc-station-ord">
+                <span className="bc-station-num">{l.ordinal}</span>
+                <span className="bc-station-stage">{l.stageLabel}</span>
+              </span>
 
               {/* Rule, moon, rule — the same crown the narrative acts wear. The
                   segments run edge to edge with no gutter between stations, so
@@ -175,6 +183,10 @@ export default function BeatChart() {
           );
         })}
       </div>
+
+      {/* The reconciliation, printed once and directly under the moons it
+          explains: four locations, three acts. */}
+      <p className="bc-structure">{beatStructureNote}</p>
 
       {/* 2a — the matrix, wide screens. A real table: the dimension is the row
           header, the level is the column header, and every cell is announced
@@ -257,7 +269,7 @@ export default function BeatChart() {
               />
               <div className="bc-card-id">
                 <p className="mono bc-card-ord">
-                  {l.ordinal} · {l.phaseLabel}
+                  {l.ordinal} · {l.stageLabel} · {l.phaseLabel}
                 </p>
                 <h4 className="bc-card-name">{l.name}</h4>
               </div>
@@ -305,7 +317,7 @@ export default function BeatChart() {
           />
           <div className="bc-sheet-id">
             <p className="mono bc-sheet-kicker">
-              {level.ordinal} · {level.phaseLabel}
+              {level.ordinal} · {level.stageLabel} · {level.phaseLabel}
             </p>
             <h4 className="bc-sheet-name">{level.name}</h4>
             <p className="mono bc-sheet-sub">{level.subtitle}</p>
@@ -444,10 +456,35 @@ export default function BeatChart() {
         .bc-station-sub,
         .bc-station-phase { padding-inline: 0.5rem; }
 
+        /* Ordinal and act stamp on one line: the level number the chart
+           counts in, and the narrative slot it fills. Centralis reads
+           "Level 01 · Prologue", which is the whole resolution in four
+           words. */
         .bc-station-ord {
+          display: flex;
+          justify-content: center;
+          align-items: baseline;
+          gap: 0.45rem;
           font-size: 0.6rem;
           color: var(--color-gold);
           letter-spacing: 0.08em;
+        }
+        .bc-station-stage {
+          color: var(--bc-quiet);
+          letter-spacing: 0.06em;
+        }
+
+        /* Sits between the rail and the matrix, at note weight: it explains
+           the rail rather than competing with the thesis above it. */
+        .bc-structure {
+          margin: -0.9rem 0 0;
+          padding-left: 0.9rem;
+          border-left: 1px solid var(--bc-hair);
+          font-family: var(--font-body);
+          font-size: 0.85rem;
+          line-height: 1.6;
+          color: var(--bc-quiet);
+          max-width: 46rem;
         }
 
         /* The rail itself. Each segment brightens with the step, so the line

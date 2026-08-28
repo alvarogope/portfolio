@@ -49,10 +49,57 @@ h1, h2, h3 {
   letter-spacing: 0.02em;
 }
 
+/* ============================================
+   MONO LABELS
+   ============================================
+   ~350 elements site-wide carry `.mono`: section eyebrows, band titles, band
+   meta lines, chips, legend terms, matrix keys. It is the site's label voice,
+   so its defaults are load-bearing - and until now they were body typography
+   with `uppercase` bolted on top.
+
+   Uppercase at 8-12px is a different typographic problem from uppercase at
+   heading size. Caps have no ascenders or descenders to hold them apart, so at
+   label size they need markedly more tracking, one step more weight, and much
+   tighter leading than running text. None of that was set here, so:
+
+     - 88 of the 238 label classes set no tracking of their own and rendered at
+       0.08em, which is running-text tracking, not caps tracking;
+     - the other 150 each corrected it locally, at nineteen different values
+       from 0.03em to 0.30em. 0.14em and 0.16em are by far the most common -
+       i.e. the components that read well were the ones overriding this rule;
+     - leading fell through to body's 1.7, so any label that wrapped read as
+       two unrelated lines rather than one label;
+     - weight fell through to the element, so `<p class="mono">` was 400 while
+       `<h3 class="mono">` picked up the h1-h3 rule's 600. JetBrains Mono only
+       ships 400 and 500 here, so those band titles were being faux-bolded by
+       the browser - the same label rendering differently by tag.
+
+   The defaults below are the ones most components had already corrected to.
+   Component classes that set their own tracking still win; this only fixes the
+   ones that were falling through. */
+
 .mono {
   font-family: var(--font-mono);
-  letter-spacing: 0.08em;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  line-height: 1.35;
   text-transform: uppercase;
+  /* Mono ligatures are a code feature: without this, JetBrains rewrites "->",
+     "!=" and "--" inside a label into single glyphs. Tabular figures keep the
+     "01 ·" section numbers on one width down the section rail. */
+  font-variant-ligatures: none;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Mono text that is a sentence rather than a label - scroll hints, tier notes,
+   captions. Same voice, same font, but uppercasing a phrase that carries
+   commas, a colon or a "→" reads as shouting rather than as a label, and the
+   caps tracking above pulls it apart. Use this instead of re-declaring
+   `text-transform` per component. */
+.mono-note {
+  text-transform: none;
+  letter-spacing: 0.06em;
+  line-height: 1.5;
 }
 
 a   { color: inherit; text-decoration: none; }

@@ -138,7 +138,9 @@ export const gameEngineering = {
       decision:
         "Every gameplay Blueprint is reparented to a C++ class. Blueprint calls DOWN into C++ through BlueprintCallable; C++ calls UP into Blueprint through BlueprintImplementableEvent.",
       why: [
-        "The two languages are not peers here. C++ owns the decision — when an attack is allowed to start, when a parry window is open, when the player is dead. Blueprint owns the presentation of that decision — which montage plays, which particle spawns, how long the camera shakes.",
+        /* The boundary itself is stated by the thesis, the intro and
+           split.intro before this point. What follows are its consequences,
+           which is what this list is for. */
         "That gives one direction of authority and no ambiguity about where a bug lives. If the wrong thing happened, it is C++. If the right thing happened and looked wrong, it is Blueprint.",
         "It also keeps iteration cheap exactly where iteration is needed. Retiming a combo is a Blueprint tweak and a Play-In-Editor press; it never costs a compile.",
       ],
@@ -491,8 +493,6 @@ protected:
     title: "The combat state machine",
     intro:
       "Moon-Knight has no block. Defence is a parry or it is a dodge, and both cost commitment, which is what makes aggression the correct answer rather than the reckless one. That design reads straight off the state machine: there is no defensive state you can simply hold.",
-    detail:
-      "ECombatState drives everything. Attacking chains up to four hits through a ComboCounter with an auto-reset timer, so dropping the rhythm drops you back to Idle rather than parking you mid-combo. Dodging and Parrying are timed windows, and a successful parry negates the damage inside TakeDamage rather than reducing it. Staggered is the punishment state; Dead routes through the Game Instance to respawn the player at the last Willow Tree.",
     states: [
       {
         name: "Idle",

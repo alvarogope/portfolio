@@ -150,6 +150,77 @@ export const diegeticMechanics: readonly DiegeticMechanic[] = [
   },
 ];
 
+/* ---- what the roses buy --------------------------------------------------
+   The dual skill tree. `contributions[0]` on this project claims "a dual skill
+   tree" and until now nothing on any page showed one — see
+   docs/section-ownership-map.md, Gap G3.
+
+   NOTHING HERE IS INVENTED, AND THE LIMIT IS THE POINT. The repo names exactly
+   two progression lines and no more:
+
+     · the SWORD line — `white-rose-xp` above: "each stained rose is one point
+       toward the next sword tier. The last tier costs two."
+     · the BOW line — `moon-knight-game-engineering.ts` ships a tuning header
+       whose `//--- Skill tree caps ---` section holds one constant,
+       `MaxBowDamageBonus = 100.0f`.
+
+   Two lines, one currency: that is the "dual" in dual skill tree, and it is
+   all the repo records. No node graph, no tier count and no per-tier effect is
+   claimed here, because none is written down anywhere. If those get recorded
+   later this block is where they go.
+
+   THE CURRENCY IS NOT RE-EXPLAINED. `white-rose-xp` owns the rose economy —
+   bosses only, nothing to farm. This block spends what that one earns and
+   points back at it rather than restating it. */
+
+export interface SkillBranch {
+  id: string;
+  /** Rendered as the branch number. */
+  index: string;
+  name: string;
+  /** The weapon line, in the language a player would use. */
+  kind: string;
+  /** What the roses buy on this branch, as the repo records it. */
+  body: string;
+  /** The one hard fact the codebase pins this branch to, and where it lives. */
+  pin: { value: string; source: string };
+}
+
+export const skillTree = {
+  kicker: "What the roses buy",
+  /** One line: the tree in a sentence. */
+  line: "Two weapon lines, one currency, and the currency is a boss you beat.",
+  body:
+    "The roses are the only experience in the game, and they spend in two places. " +
+    "Both lines are capped rather than open-ended, which is the same decision as the " +
+    "no-farming rule one card up: the ceiling is fixed so the difficulty curve stays " +
+    "the story's to set, not the player's to grind past.",
+  /** Where the currency itself is explained — not restated here. */
+  currency: { label: "The White-Rose XP System", id: "white-rose-xp" },
+  branches: [
+    {
+      id: "sword",
+      index: "B1",
+      name: "The sword line",
+      kind: "Melee",
+      body:
+        "Each stained rose is one point toward the next sword tier, and the last tier " +
+        "costs two — so the final upgrade is deliberately the one you cannot stumble into.",
+      pin: { value: "Last tier costs 2 roses", source: "Diegetic design · white-rose-xp" },
+    },
+    {
+      id: "bow",
+      index: "B2",
+      name: "The bow line",
+      kind: "Ranged",
+      body:
+        "The ranged half of the tree, and the one the build actually pins a number to: " +
+        "the bow's damage bonus is capped in the tuning header rather than left to scale.",
+      pin: { value: "MaxBowDamageBonus = 100.0f", source: "Engineering · tuning constants" },
+    },
+  ] as readonly SkillBranch[],
+} as const;
+
 /* ---- invisible design --------------------------------------------------- */
 
 /**

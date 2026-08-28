@@ -14,7 +14,8 @@ export const moonKnight: Project = {
   },
 
   links: [
-    { label: "Design summary (PDF)", url: "#" },
+    /* No "Design summary (PDF)" entry until the PDF exists — the links list renders
+       unconditionally, so a "#" url ships as a live link to nowhere. */
     { label: "Game engineering", url: "/moon-knight/engineering" },
     { label: "Quantum toolkit", url: "/moon-knight/engineering/quantum" },
   ],
@@ -60,10 +61,6 @@ export const moonKnight: Project = {
         "Built the game in Unreal Engine 5 with C++ and Blueprints, including behaviour-tree AI, data-driven equipment, and a Game Instance persistence layer, and am now rebuilding the quantum mechanics as a standalone C++ library.",
     },
   ],
-
-  videoId: undefined,
-  videoCaption:
-    "Gameplay demo. The design summary documents which mechanics the prototype realised and which exceeded what Blueprints can simulate.",
 
   abilities: [
     {
@@ -126,11 +123,6 @@ export const moonKnight: Project = {
       src: "/images/moon-knight/boss-werewolf.png",
       alt: "The Werewolf boss encounter at night, with a named enemy health bar",
       caption: "Boss encounter. The Werewolf, one of the fights that teaches a quantum ability under pressure, with the named enemy health bar.",
-    },
-    {
-      src: "/images/moon-knight/world-map.jpg",
-      alt: "Hand-drawn world map showing regions, rose collectibles, and the Old Gods quest locations",
-      caption: "World map. Five regions gated by the White Rose collectibles and the Old Gods quests that grant each power.",
     },
   ],
 };

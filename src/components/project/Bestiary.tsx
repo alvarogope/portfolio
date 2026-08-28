@@ -56,7 +56,7 @@ export default function Bestiary({ kicker }: { kicker?: string }) {
       <div className="mkb__tier">
         <h3 className="mono mkb__tier-name">The Four Bosses</h3>
         <span className="mkb__tier-rule" aria-hidden />
-        <p className="mono mkb__tier-note">One quantum mechanic each</p>
+        <p className="mono mono-note mkb__tier-note">One quantum mechanic each</p>
       </div>
 
       <div className="mkb__bosses">
@@ -69,7 +69,7 @@ export default function Bestiary({ kicker }: { kicker?: string }) {
       <div className="mkb__tier">
         <h3 className="mono mkb__tier-name">The Common Ranks</h3>
         <span className="mkb__tier-rule" aria-hidden />
-        <p className="mono mkb__tier-note">Learn the weakness, then commit</p>
+        <p className="mono mono-note mkb__tier-note">Learn the weakness, then commit</p>
       </div>
 
       <div className="mkb__enemies">
@@ -153,12 +153,12 @@ export default function Bestiary({ kicker }: { kicker?: string }) {
           height: 1px;
           background: var(--mkb-hair);
         }
+        /* Casing and tracking come from the shared .mono-note modifier in
+           globals.css - this used to undo .mono's uppercase locally. */
         .mkb__tier-note {
           font-size: 0.66rem;
           color: var(--mkb-quiet);
           margin: 0;
-          text-transform: none;
-          letter-spacing: 0.12em;
         }
 
         /* ---- grids ---- */

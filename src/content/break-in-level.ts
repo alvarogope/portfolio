@@ -12,7 +12,9 @@
  *    turns tracks into lanes and ranks into columns.
  *
  * 2. THE STAGES — the five design beats, each with the one number that matters
- *    here: `tension`. Read in order those five numbers ARE the pacing curve,
+ *    here: `tension`, and the one id that is easiest to get wrong: `roleFocus`,
+ *    which names the role that GATES the stage rather than the one that
+ *    benefits from it. See the field's own note before changing one. Read in order those five numbers ARE the pacing curve,
  *    and the shape is the argument: open with a moderate entry, drop to the
  *    quietest point of the run in the offices, then climb without a break to
  *    the vault. The dip is not a gap in the design; it is the design. Tension
@@ -140,7 +142,20 @@ export interface LevelStage {
   objective: string;
   /** The system the stage is built on. */
   mechanic: string;
-  /** The role the stage is tuned around, or `"all"` when every role is on the clock. */
+  /**
+   * The role the stage is tuned around, or `"all"` when every role is on the
+   * clock.
+   *
+   * THE RULE, because this field drifted once: it is the role whose action
+   * GATES the stage — the one without which nothing else in it can happen —
+   * not the role that benefits from it. The Insider plants the USB in the
+   * server room and the Hacker acts on what it opens; the Lockpicker's smoke
+   * kills the laser grid and the Vaultsnatcher walks the corridor it clears.
+   * In both cases the gate is the focus. Anything set here must be provable
+   * from `roleLinks` in `break-in-roles` and the phase beats in
+   * `break-in-overview`, and `"all"` is only for a stage where no single
+   * action opens it.
+   */
   roleFocus: RoleId | "all";
   hazards: readonly string[];
   /** The feeling the stage is tuned for. Doubles as its label on the curve. */
@@ -179,21 +194,31 @@ export const levelStages: readonly LevelStage[] = [
   {
     id: "server-room",
     order: 3,
+    /* The Insider's stage, not the Hacker's. The security card opens this room
+       and the USB goes into a live server here; the downstairs cameras stay
+       dark until it lands, so the Hacker acts on what this stage unlocks from
+       the security office rather than in it. `roleLinks: "insider-hacker"` and
+       `heistPhases.digital.beats[0]` both say so. */
     name: "Server Room",
-    objective: "Disable alarms / cameras, unlock secure doors",
-    mechanic: "Hacking puzzle",
-    roleFocus: "hacker",
+    objective: "Get in on the security card, plant the USB in a live server",
+    mechanic: "USB plant",
+    roleFocus: "insider",
     hazards: ["Surveillance", "Guards"],
-    experience: "Strategic puzzle",
+    experience: "Strategic setup",
     tension: 0.55,
   },
   {
     id: "vault-corridor",
     order: 4,
+    /* The laser grid on the basement approach — T1 in `break-in-detection`,
+       `counterRole: "lockpicker"`. Smoke is the only thing that reveals and
+       kills the beams, three bombs for the whole run, and it is what the
+       Vaultsnatcher's way in depends on. The Insider has no ability that
+       reaches down here. */
     name: "Vault Corridor",
     objective: "Bypass layered defences",
     mechanic: "Timing & coordination",
-    roleFocus: "insider",
+    roleFocus: "lockpicker",
     hazards: ["Lasers", "Motion detectors"],
     experience: "Precision stealth",
     tension: 0.75,
@@ -247,7 +272,7 @@ export const tensionPeak: TensionPoint = byTension[byTension.length - 1];
 export const pacingSummary =
   "Tension opens moderate in the Lobby, falls to its lowest in the Offices — the one deliberate " +
   "breather, where the team hides up and plans — then climbs without a break: the Server Room's " +
-  "puzzle, the Vault Corridor's precision stealth, and the spike at the Vault. The dip is what " +
+  "USB plant, the Vault Corridor's precision stealth, and the spike at the Vault. The dip is what " +
   "makes the last third read as pressure rather than noise.";
 
 /** Tension as a word, for the readouts that carry the numbers in text. */

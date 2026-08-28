@@ -4,7 +4,6 @@ import {
   metaphor,
   relics,
   relicsLead,
-  roleNote,
   textures,
   whoRemains,
 } from "@/content/shattered-skies-world";
@@ -110,14 +109,12 @@ function FractureRule({ id }: { id: string }) {
 export default function ShatterstormWorld() {
   return (
     <div className="sw">
-      {/* The credit is one line, not a panel: this section is my work, and the
-          team attribution for the game itself is already up the page. */}
-      <p className="mono sw__role">
-        <span className="sw__role-mark" aria-hidden="true" />
-        <span>
-          <strong className="sw__role-name">{roleNote.role}</strong> · {roleNote.body}
-        </span>
-      </p>
+      {/* No credit block here. The page states its attribution once, in
+          §02's teamNote — team of five, my seat was systems and world
+          design — and §05's levelsCredit is the only other one, because it
+          makes a distinction (audio mine, level design shared) rather than a
+          disclaimer. Four near-identical restatements of the same sentence
+          made a strong page read as an anxious one. */}
 
       {/* ---- 1 · the premise ---- */}
       <div className="sw__lead">

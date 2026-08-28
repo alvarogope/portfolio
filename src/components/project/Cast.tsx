@@ -57,7 +57,7 @@ export default function Cast({ kicker }: { kicker?: string }) {
       <div className="mkc__band">
         <h3 className="mono mkc__band-name">The One You Play</h3>
         <span className="mkc__band-rule" aria-hidden />
-        <p className="mono mkc__band-note">Silence, by design</p>
+        <p className="mono mono-note mkc__band-note">Silence, by design</p>
       </div>
 
       <article
@@ -101,7 +101,7 @@ export default function Cast({ kicker }: { kicker?: string }) {
       <div className="mkc__band">
         <h3 className="mono mkc__band-name">Who Finds You</h3>
         <span className="mkc__band-rule" aria-hidden />
-        <p className="mono mkc__band-note">One gives, one is taken</p>
+        <p className="mono mono-note mkc__band-note">One gives, one is taken</p>
       </div>
 
       <div className="mkc__encounters">
@@ -114,7 +114,7 @@ export default function Cast({ kicker }: { kicker?: string }) {
       <div className="mkc__band">
         <h3 className="mono mkc__band-name">Two Answers, One Truth</h3>
         <span className="mkc__band-rule" aria-hidden />
-        <p className="mono mkc__band-note">The Witch · The Druid</p>
+        <p className="mono mono-note mkc__band-note">The Witch · The Druid</p>
       </div>
 
       <div className="mkc__keystone">
@@ -286,12 +286,12 @@ function CastStyles() {
         margin: 0;
       }
       .mkc__band-rule { flex: 1 1 3rem; height: 1px; background: var(--mkc-hair); }
+      /* Casing and tracking come from the shared .mono-note modifier in
+         globals.css - this used to undo .mono's uppercase locally. */
       .mkc__band-note {
         font-size: 0.66rem;
         color: var(--mkc-quiet);
         margin: 0;
-        text-transform: none;
-        letter-spacing: 0.12em;
       }
 
       /* ---- shared card shell ---- */

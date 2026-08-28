@@ -24,6 +24,11 @@
  * COLOUR IS NEVER LOAD-BEARING. Every zone prints its state as a word, every
  * weather prints its role as a word, and the roster repeats all of it as prose.
  *
+ * NOT THE PACING. The loop the sky change lands in — fight, recover the seed,
+ * solve the place, the sky turns — belongs to `seeds-levels.ts` and its own
+ * section. This file names it once in `loopPointer` and stops. If a description
+ * of the four beats ever reappears here, it is in the wrong file.
+ *
  * GEOMETRY lives in `WeatherSystem`. Nothing here knows a pixel.
  */
 
@@ -204,9 +209,9 @@ export const flip = {
   direction: "One-way · per place",
   body:
     "One trigger, one direction, and it reaches every sky. Solving the puzzle that heals a place " +
-    "is the only thing that changes the weather over it: the acid rain stops being acid, and the " +
-    "hard weather stops. The change belongs to that place rather than to a global counter, and " +
-    "there is no meter filling toward it — a place is poisoned until it is solved.",
+    "is the only thing that changes the weather over it. The change belongs to that place rather " +
+    "than to a global counter, and there is no meter filling toward it — a place is poisoned " +
+    "until it is solved.",
   /** The same rule in one line, printed on the diagram's lane. */
   rule: "Acid rain stops being acid · hard weather stops",
 };
@@ -219,60 +224,24 @@ export const flip = {
 export const rejectedReadout = {
   label: "Progress bar",
   strapline: "The readout I did not build",
-  body:
-    "A HUD bar would have told the player the same fact in a corner of the screen, and it would " +
-    "have told them about the game rather than about the world. Putting the readout in the sky " +
-    "costs a channel the player cannot look away from, and buys a fiction where restoring the " +
-    "Earth is something you feel in the weather rather than something you read off a meter.",
 };
 
-/* ---- the loop the weather sits inside ------------------------------------ */
+/* ---- the loop this sky closes ------------------------------------------
+   A pointer, not a copy. The four-beat pacing loop used to be this file's last
+   block and the weather diagram's third band; it is the credited level-design
+   work, so it moved to `seeds-levels.ts` and got a section of its own. What
+   stays here is one line saying where it went. See
+   docs/section-ownership-map.md, Gap G1. */
 
-export interface LoopStep {
-  id: string;
-  index: string;
-  name: string;
-  body: string;
-  /** True for the step where the sky changes — the loop's payoff beat. */
-  isPayoff?: boolean;
-}
+export const loopPointer = {
+  label: "The loop this closes",
+  href: "#level-design",
+  body:
+    "The sky turning is the last beat of a four-step loop — fight, recover the seed, solve the " +
+    "place, and then this. The pacing is the level-design section above.",
+};
 
-export const loopSteps: readonly LoopStep[] = [
-  {
-    id: "fight",
-    index: "01",
-    name: "Fight",
-    body: "A burst of tension against the monsters the pollution twisted out of the place.",
-  },
-  {
-    id: "recover",
-    index: "02",
-    name: "Recover the seed",
-    body: "The Seeds of Tomorrow are the means of bringing life back, and they have to be found.",
-  },
-  {
-    id: "solve",
-    index: "03",
-    name: "Solve the place",
-    body:
-      "The quieter, restorative half of the rhythm: the puzzle that heals the area, and the planting.",
-  },
-  {
-    id: "turn",
-    index: "04",
-    name: "The sky turns",
-    body: "The acid rain over that place runs clean and life returns to it. Then the next place.",
-    isPayoff: true,
-  },
-];
-
-export const loopNote =
-  "The weather is the last beat of the loop, not a layer over it. I paced the game as combat " +
-  "resolving into restoration — tension, then the quieter work of solving a place — and the sky " +
-  "turning is the resolution at the end of that arc. Which is why it had to be the world and not " +
-  "a meter: a bar ticking up cannot be the emotional payoff of a fight.";
-
-/* ---- screen-reader summaries -------------------------------------------- */
+/* ---- screen-reader summary ---------------------------------------------- */
 
 /** The flip diagram, said once in prose, for the SVG's `desc`. */
 export const flipSummary =
@@ -282,12 +251,6 @@ export const flipSummary =
   "from one to the other — solving that place's puzzle — drawn as a one-way crossing. The same " +
   "trigger reaches every sky: acid rain stops being acid, and hard weather stops. Underneath, " +
   "struck through, the progress bar this system was built instead of.";
-
-/** The loop diagram, said once in prose, for the SVG's `desc`. */
-export const loopSummary =
-  "A four-step loop: fight the monsters, recover the seed, solve the place and plant it, and then " +
-  "the sky turns clean over it. The loop then returns to the first step at the next place. The " +
-  "weather change is the last beat, the payoff at the end of the arc.";
 
 /* ---- attribution --------------------------------------------------------- */
 

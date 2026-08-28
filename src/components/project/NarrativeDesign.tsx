@@ -2,6 +2,7 @@ import {
   fullStory,
   narrativeActs,
   narrativeThemes,
+  prologueNote,
   reversal,
   storyThroughMechanics,
   type MoonPhase,
@@ -14,10 +15,10 @@ import { MoonPhaseGlyph } from "./MoonPhaseGlyph";
  *
  * Three bands, in descending density:
  *
- *   1. THE ARC. Three act cards, each crowned with the moon phase that act is
- *      tuned to, then the reversal as its own panel. A reader who gives this
- *      section ten seconds gets the shape of the story and the payoff, and
- *      nothing else is asked of them.
+ *   1. THE ARC. The prologue note, then three act cards, each crowned with the
+ *      moon phase that act is tuned to, then the reversal as its own panel. A
+ *      reader who gives this section ten seconds gets the shape of the story
+ *      and the payoff, and nothing else is asked of them.
  *   2. THEMES. Four symbols, a glyph and a line each.
  *   3. STORY THROUGH MECHANICS. The thesis, then four system-to-meaning pairs.
  *
@@ -30,6 +31,12 @@ import { MoonPhaseGlyph } from "./MoonPhaseGlyph";
  * fragments, the three lands, the three acts and the three ages of a life, so
  * the glyph crowning each card is doing structural work rather than
  * decoration: it is the one image that indexes everything else.
+ *
+ * THE PROLOGUE NOTE IS LOAD-BEARING, NOT A CAPTION. Three moons here and four
+ * on the beat chart is the one place the motif can look like it disagrees with
+ * itself, so the note is printed BEFORE the cards: it names Centralis as a
+ * level outside the act count, and it is the only sentence on the page that
+ * reconciles the two readings. Do not move it below the arc or fold it away.
  */
 
 /* ---- moon phases ----
@@ -142,6 +149,14 @@ export default function NarrativeDesign() {
       {/* 1 — the arc */}
       <section className="nd-band">
         <h3 className="mono nd-band-title">The three-act arc</h3>
+
+        {/* Before the count: what the island is, and why the chart plans one
+            more location than the story has acts. */}
+        <p className="nd-prologue">
+          <span className="mono nd-prologue-label">{prologueNote.label}</span>
+          {prologueNote.line}
+        </p>
+
         <ol className="nd-acts">
           {narrativeActs.map((act) => (
             <ActCard key={act.id} act={act} />
@@ -231,7 +246,27 @@ export default function NarrativeDesign() {
         }
 
         /* ---- 1 · the arc ----
-           Three columns held as long as a column can carry a sentence; the
+           The prologue note first, set as an aside rather than a fourth card:
+           it is structure, not a beat, and a card would put it back inside the
+           count it exists to stand outside of. */
+        .nd-prologue {
+          margin: 0 0 0.35rem;
+          padding-left: 0.9rem;
+          border-left: 1px solid var(--nd-hair);
+          font-family: var(--font-body);
+          font-size: 0.85rem;
+          line-height: 1.6;
+          color: var(--nd-quiet);
+          max-width: 46rem;
+        }
+        .nd-prologue-label {
+          display: block;
+          font-size: 0.62rem;
+          color: var(--color-gold);
+          margin-bottom: 0.3rem;
+        }
+
+        /* Three columns held as long as a column can carry a sentence; the
            moons then stack and the spine runs down the page instead of across
            it, which is the same reading either way. */
         .nd-acts {

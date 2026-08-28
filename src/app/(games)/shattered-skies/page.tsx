@@ -15,6 +15,11 @@ import ShatteredSkiesCoop from "@/components/project/ShatteredSkiesCoop";
 import ProjectNav from "@/components/layout/ProjectNav";
 import { projectNavItems } from "@/content/games";
 import Galaxy from "@/components/effects/Galaxy";
+import PageHighlights from "@/components/project/PageHighlights";
+// Quoted verbatim by the highlight band below, by key: the band never
+// retypes a line, so §05 and §07 stay the only home for either idea.
+import { levelsCredit } from "@/content/shattered-skies-levels";
+import { waveformPayoff } from "@/content/shattered-skies-gameplay";
 
 export const metadata: Metadata = {
   title: `${p.title} | Álvaro Gómez`,
@@ -55,6 +60,36 @@ export default function ShatteredSkiesPage() {
           </div>
         </Reveal>
 
+        {/* Skim band. This is the longest page on the site, and the audit put
+            its solo audio credit at 30-41% depth and the waveform paragraph it
+            calls the best on the page at 70-98%. Neither section can move: §05
+            is deliberately after the dossier (facts, then play) and §07 is the
+            payoff §06 hands off to, so reordering either would break a setup.
+            The audit's own instruction for both is a pull quote — so both are
+            surfaced here at ~1% depth, verbatim and by key, linking down to the
+            sections that still own them. */}
+        <Reveal>
+          <div style={{ marginTop: "4rem" }}>
+            <PageHighlights
+              accent="var(--color-silver)"
+              items={[
+                {
+                  section: "05 · Level Design",
+                  title: "Each Planet Teaches a Skill",
+                  href: "#planetary-level-design",
+                  quote: levelsCredit.lines[0].body,
+                },
+                {
+                  section: "07 · Co-op Design",
+                  title: "Split, Distorted, Rebuilt",
+                  href: "#coop-design",
+                  quote: waveformPayoff,
+                },
+              ]}
+            />
+          </div>
+        </Reveal>
+
         {/* The Game — the team's premise, world and narrative structure.
             Context before contributions: this is the game we made together,
             and the sections after it are the parts that are mine. */}
@@ -82,6 +117,16 @@ export default function ShatteredSkiesPage() {
             <p style={{ color: "var(--color-mist)", maxWidth: "42rem", marginTop: "1.5rem", marginBottom: "1.5rem" }}>
               A miniature solar system where the physics is the puzzle. Each planet has its own hazard, its own secret, and its own rule for getting through.
             </p>
+            {/* The challenge quote is the standfirst of this section rather
+                than a section of its own four screens down. It IS the orrery's
+                thesis — a metroidvania rebuilt around a solar system — and it
+                names Tidalor's tides and Dunestorm's gravity lock, which are
+                two of the worlds in the diagram directly below it. */}
+            {p.designChallenge && (
+              <div style={{ marginTop: "1.5rem", marginBottom: "2rem" }}>
+                <ChallengeQuote challenge={p.designChallenge} />
+              </div>
+            )}
             {/* The dossier is passed as children so it stays a server component;
                 the wrapper only owns the active-world state. */}
             <ShatteredSkiesSystem>
@@ -138,22 +183,10 @@ export default function ShatteredSkiesPage() {
           </div>
         </Reveal>
 
-        {/* Design Challenge */}
-        {p.designChallenge && (
-          <Reveal>
-            <div style={{ marginTop: "5rem" }}>
-              <SectionHeading kicker="08 · The Hard Part" title="Design Challenge" />
-              <div style={{ marginTop: "1.5rem" }}>
-                <ChallengeQuote challenge={p.designChallenge} />
-              </div>
-            </div>
-          </Reveal>
-        )}
-
         {/* Contributions */}
         <Reveal>
           <div style={{ marginTop: "5rem" }}>
-            <SectionHeading kicker="09 · My Role" title="My Contribution" />
+            <SectionHeading kicker="08 · My Role" title="My Contribution" />
             <div style={{ display: "grid", gap: "1.5rem" }}>
               {p.contributions.map((c) => (
                 <div key={c.label}>

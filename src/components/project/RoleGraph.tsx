@@ -462,10 +462,14 @@ function CountersList({ id }: { id: RoleId }) {
  */
 function PuzzleBlock({ puzzle }: { puzzle: RolePuzzle | null }) {
   if (!puzzle) {
+    /* Headline only. The full note is printed once under the graph, in the
+       design-rules band, because it is an argument about all four roles
+       rather than about this one — and rendering both put the same
+       paragraph on screen twice whenever the Insider was selected. */
     return (
       <div className="rg-puzzle is-none">
         <p className="mono rg-puzzle-name">No mini-game &mdash; by design</p>
-        <p className="rg-puzzle-body">{puzzleAsymmetryNote.body}</p>
+        <p className="rg-puzzle-body">{puzzleAsymmetryNote.headline}, and the reason is under the graph.</p>
       </div>
     );
   }

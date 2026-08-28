@@ -1,9 +1,7 @@
 import {
   flip,
   flipSummary,
-  loopNote,
-  loopSteps,
-  loopSummary,
+  loopPointer,
   rejectedReadout,
   rosterThesis,
   weatherCredit,
@@ -33,11 +31,11 @@ import {
  *      the rule the flip is one instance of: the acid rain stops being acid,
  *      the hard weather stops. Two of them also carry the score line I wrote
  *      for their level, which is the "see AND hear" half of the same system.
- *   3. THE LOOP — where the sky change sits in the rhythm of a place: fight,
- *      recover, solve, and then the weather turns. Drawn as a loop with the
- *      payoff on the last node, because the whole point is that the reward
- *      lands at the end of the arc rather than on a meter throughout it.
- *   4. THE CREDIT — a team of five, and which part of it is mine.
+ *   3. THE CREDIT — a team of five, and which part of it is mine, with one
+ *      pointer up to the level-design section that owns the pacing loop this
+ *      sky change is the last beat of. The loop used to be a third band in
+ *      here; it is the credited level-design work and now has its own section,
+ *      so what is left of it here is a link. See the ownership map, Gap G1.
  *
  * COLOUR IS NEVER LOAD-BEARING. Each zone prints its state as a word
  * ("Poisoned", "Healed") beside its sky, each weather prints its job as a word
@@ -529,113 +527,6 @@ function WeatherGlyph({ id }: { id: WeatherId }) {
   );
 }
 
-/* ---- 3 · the loop --------------------------------------------------------
-   Four beats and a return, drawn on one line. The return arc runs under the
-   row rather than through it so the payoff node keeps a clean right edge — it
-   is the beat everything else is arranged around. */
-
-const LOOP_W = 1000;
-const LOOP_H = 210;
-const LOOP_PAD = 18;
-const LOOP_NODE_H = 92;
-const LOOP_GAP = 44;
-const LOOP_NODE_W = (LOOP_W - LOOP_PAD * 2 - LOOP_GAP * (loopSteps.length - 1)) / loopSteps.length;
-const LOOP_Y = 26;
-const LOOP_MID = LOOP_Y + LOOP_NODE_H / 2;
-const RETURN_Y = 168;
-
-function loopBox(i: number) {
-  const x = LOOP_PAD + i * (LOOP_NODE_W + LOOP_GAP);
-  return { x, w: LOOP_NODE_W, right: x + LOOP_NODE_W, cx: x + LOOP_NODE_W / 2 };
-}
-
-function Loop() {
-  const last = loopBox(loopSteps.length - 1);
-  const first = loopBox(0);
-
-  return (
-    <svg
-      className="sw-loop"
-      viewBox={`0 0 ${LOOP_W} ${LOOP_H}`}
-      role="img"
-      aria-labelledby="sw-loop-title sw-loop-desc"
-    >
-      <title id="sw-loop-title">Where the sky change sits in the loop of a place</title>
-      <desc id="sw-loop-desc">{loopSummary}</desc>
-
-      <defs>
-        <marker
-          id="sw-loop-arrow"
-          viewBox="0 0 8 8"
-          refX="7.4"
-          refY="4"
-          markerWidth="8"
-          markerHeight="8"
-          markerUnits="userSpaceOnUse"
-          orient="auto"
-        >
-          <path className="sw-head" d="M 0 0 L 8 4 L 0 8 Z" />
-        </marker>
-      </defs>
-
-      {loopSteps.map((step, i) => {
-        const box = loopBox(i);
-        return (
-          <g key={step.id} className={`sw-loop-node${step.isPayoff ? " is-payoff" : ""}`}>
-            <rect
-              className="sw-loop-body"
-              x={box.x}
-              y={LOOP_Y}
-              width={box.w}
-              height={LOOP_NODE_H}
-              rx={10}
-            />
-            <rect
-              className="sw-loop-frame"
-              x={box.x + 0.5}
-              y={LOOP_Y + 0.5}
-              width={box.w - 1}
-              height={LOOP_NODE_H - 1}
-              rx={10}
-            />
-            <text className="sw-loop-index" x={box.cx} y={LOOP_Y + 28} textAnchor="middle">
-              {step.index}
-              {step.isPayoff ? " · THE SKY TURNS" : ""}
-            </text>
-            <text className="sw-loop-name" x={box.cx} y={LOOP_Y + 56} textAnchor="middle">
-              {step.name}
-            </text>
-            {step.isPayoff && (
-              <text className="sw-loop-foot" x={box.cx} y={LOOP_Y + 76} textAnchor="middle">
-                THE PAYOFF BEAT
-              </text>
-            )}
-          </g>
-        );
-      })}
-
-      {loopSteps.slice(0, -1).map((step, i) => (
-        <path
-          key={step.id}
-          className="sw-loop-edge"
-          d={`M ${loopBox(i).right + 8} ${LOOP_MID} H ${loopBox(i + 1).x - 12}`}
-          markerEnd="url(#sw-loop-arrow)"
-        />
-      ))}
-
-      {/* The return: out of the payoff, under the row, back to the fight. */}
-      <path
-        className="sw-loop-edge is-return"
-        d={`M ${last.cx} ${LOOP_Y + LOOP_NODE_H} V ${RETURN_Y} H ${first.cx} V ${LOOP_Y + LOOP_NODE_H + 8}`}
-        markerEnd="url(#sw-loop-arrow)"
-      />
-      <text className="sw-lane-label" x={LOOP_W - LOOP_PAD} y={RETURN_Y + 24} textAnchor="end">
-        THEN THE NEXT PLACE
-      </text>
-    </svg>
-  );
-}
-
 /* ---- the frame ----------------------------------------------------------- */
 
 const ROLE_ORDER: Weather["role"][] = ["signal", "hazard"];
@@ -669,7 +560,7 @@ export default function WeatherSystem() {
           >
             <Flip />
           </div>
-          <p className="mono sw-scroll-note">Scroll the world sideways to cross it →</p>
+          <p className="mono mono-note sw-scroll-note">Scroll the world sideways to cross it →</p>
 
           <ol className="sw-zones">
             {zones.map((zone) => (
@@ -696,11 +587,11 @@ export default function WeatherSystem() {
               <h4 className="sw-split-name">{flip.trigger}</h4>
               <p className="sw-split-body">{flip.body}</p>
             </aside>
-            <aside className="sw-split is-reject">
-              <p className="mono sw-split-tag">{rejectedReadout.strapline}</p>
-              <h4 className="sw-split-name sw-struck">{rejectedReadout.label}</h4>
-              <p className="sw-split-body">{rejectedReadout.body}</p>
-            </aside>
+            {/* The rejected readout is not restated here. The diagram above
+                draws it struck through under the trigger lane, and the design
+                quote at the top of the section rejects it in Alvaros own
+                words — a third telling in prose was the one that added
+                nothing. */}
           </div>
         </section>
 
@@ -741,41 +632,17 @@ export default function WeatherSystem() {
           </ul>
         </section>
 
-        {/* 3 — where the sky change lands in the rhythm */}
-        <section className="sw-band">
-          <div className="sw-band-head">
-            <h3 className="sw-band-title">The loop the weather closes</h3>
-            <p className="mono sw-band-meta">Fight · recover · solve · the sky turns</p>
-          </div>
-          <div
-            className="sw-screen sw-loop-scroll"
-            role="group"
-            aria-label="The loop of a place, scrolls horizontally"
-            tabIndex={0}
-          >
-            <Loop />
-          </div>
-          <ol className="sw-steps">
-            {loopSteps.map((step) => (
-              <li key={step.id} className={`sw-step${step.isPayoff ? " is-payoff" : ""}`}>
-                <p className="mono sw-step-index">{step.index}</p>
-                <div>
-                  <h4 className="sw-step-name">{step.name}</h4>
-                  <p className="sw-step-body">{step.body}</p>
-                </div>
-              </li>
-            ))}
-          </ol>
-          <p className="sw-note">{loopNote}</p>
-        </section>
-
-        {/* 4 — whose design this is */}
+        {/* 3 — whose design this is, and where the loop went */}
         <section className="sw-band">
           <aside className="sw-credit">
             <p className="mono sw-credit-tag">
               Design note · {weatherCredit.role} · {weatherCredit.team}
             </p>
             <p className="sw-credit-body">{weatherCredit.body}</p>
+            <p className="sw-credit-pointer">
+              <a href={loopPointer.href}>{loopPointer.label} &uarr;</a>
+              <span>{loopPointer.body}</span>
+            </p>
           </aside>
         </section>
       </div>
@@ -852,10 +719,8 @@ export default function WeatherSystem() {
           border: 1px solid var(--sw-edge);
           border-radius: 12px;
         }
-        .sw-flip-scroll,
-        .sw-loop-scroll { overflow-x: auto; overscroll-behavior-x: contain; }
-        .sw-flip-scroll:focus-visible,
-        .sw-loop-scroll:focus-visible {
+        .sw-flip-scroll { overflow-x: auto; overscroll-behavior-x: contain; }
+        .sw-flip-scroll:focus-visible {
           outline: 2px solid var(--color-lunar-gold);
           outline-offset: 2px;
         }
@@ -863,7 +728,6 @@ export default function WeatherSystem() {
            cards under it carry both states in full anyway, so a squinting
            diagram would buy nothing. */
         .sw-flip { display: block; width: 100%; min-width: 1120px; height: auto; }
-        .sw-loop { display: block; width: 100%; min-width: 900px; height: auto; }
         .sw-scroll-note { margin: 0; font-size: 0.62rem; color: var(--sw-quiet); }
 
         /* ---- 1 · the flip ---- */
@@ -1283,95 +1147,7 @@ export default function WeatherSystem() {
           color: var(--sw-leaf-text);
         }
 
-        /* ---- 3 · the loop ---- */
-        .sw-loop-body { fill: color-mix(in srgb, var(--color-moonlight) 4%, var(--sw-screen)); }
-        .sw-loop-frame { fill: none; stroke: var(--sw-edge); stroke-width: 1; }
-        .sw-loop-node.is-payoff .sw-loop-body {
-          fill: color-mix(in srgb, var(--sw-leaf) 12%, var(--sw-screen));
-        }
-        .sw-loop-node.is-payoff .sw-loop-frame { stroke: var(--sw-leaf); stroke-width: 1.6; }
-        .sw-loop-index {
-          font-family: var(--font-mono);
-          font-size: 9.5px;
-          letter-spacing: 0.16em;
-          fill: var(--sw-quiet);
-        }
-        .sw-loop-node.is-payoff .sw-loop-index { fill: var(--sw-leaf-text); }
-        .sw-loop-name {
-          font-family: var(--font-hero);
-          font-size: 16px;
-          font-weight: 600;
-          fill: var(--color-moonlight);
-        }
-        .sw-loop-foot {
-          font-family: var(--font-mono);
-          font-size: 9px;
-          letter-spacing: 0.14em;
-          fill: var(--sw-leaf-text);
-        }
-        .sw-loop-edge {
-          fill: none;
-          stroke: color-mix(in srgb, var(--color-mist) 78%, var(--color-moonlight));
-          stroke-width: 1.5;
-        }
-        .sw-loop-edge.is-return {
-          stroke: var(--sw-leaf-text);
-          stroke-dasharray: 6 5;
-        }
-
-        .sw-steps {
-          list-style: none;
-          margin: 0.35rem 0 0;
-          padding: 0;
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
-          gap: 1px;
-          background: var(--sw-edge);
-          border: 1px solid var(--sw-edge);
-          border-radius: 12px;
-          overflow: hidden;
-        }
-        .sw-step {
-          background: var(--sw-screen);
-          padding: 1rem 1.1rem 1.1rem;
-          display: grid;
-          grid-template-columns: 2rem minmax(0, 1fr);
-          gap: 0.2rem 0.4rem;
-          align-content: start;
-          min-width: 0;
-        }
-        .sw-step.is-payoff { background: color-mix(in srgb, var(--sw-leaf) 9%, var(--sw-screen)); }
-        .sw-step-index {
-          margin: 0;
-          font-size: 0.66rem;
-          letter-spacing: 0.12em;
-          color: var(--sw-quiet);
-          padding-top: 0.2rem;
-        }
-        .sw-step.is-payoff .sw-step-index { color: var(--sw-leaf-text); }
-        .sw-step-name {
-          font-family: var(--font-hero);
-          font-size: 1rem;
-          font-weight: 600;
-          margin: 0;
-          color: var(--color-moonlight);
-        }
-        .sw-step-body {
-          margin: 0.25rem 0 0;
-          font-size: 0.82rem;
-          line-height: 1.55;
-          color: var(--sw-quiet);
-        }
-
-        .sw-note {
-          margin: 0;
-          max-width: 58rem;
-          font-size: 0.86rem;
-          line-height: 1.6;
-          color: var(--color-moonlight);
-        }
-
-        /* ---- 4 · the credit ---- */
+        /* ---- 3 · the credit ---- */
         .sw-credit {
           border: 1px solid var(--sw-edge);
           border-left: 3px solid var(--sw-leaf);
@@ -1393,6 +1169,22 @@ export default function WeatherSystem() {
           line-height: 1.65;
           color: var(--color-moonlight);
         }
+        .sw-credit-pointer {
+          margin: 0.25rem 0 0;
+          display: grid;
+          gap: 0.2rem;
+          font-size: 0.78rem;
+          line-height: 1.5;
+          color: var(--sw-quiet);
+        }
+        .sw-credit-pointer a {
+          font-family: var(--font-mono);
+          font-size: 0.66rem;
+          letter-spacing: 0.12em;
+          color: var(--sw-leaf-text);
+          text-decoration: underline;
+          text-underline-offset: 3px;
+        }
 
         /* ---- responsive ---- */
         @media (max-width: 860px) {
@@ -1401,7 +1193,6 @@ export default function WeatherSystem() {
         }
         @media (max-width: 700px) {
           .sw-frame { padding: 0.9rem; }
-          .sw-step { grid-template-columns: 1.7rem minmax(0, 1fr); }
         }
 
         /* The rain is the only motion in here, and it stops dead. Its lattice

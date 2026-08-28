@@ -85,7 +85,7 @@ export interface EnemyEntry extends BestiaryEntryBase {
 export type BestiaryEntry = BossEntry | EnemyEntry;
 
 /**
- * ENCOUNTER ORDER, AND IT IS THE NARRATIVE'S. Werewolf on the tutorial island,
+ * ENCOUNTER ORDER, AND IT IS THE NARRATIVE'S. Werewolf on the prologue island,
  * Wizard-Knight in the Woods, Centaur-Knight in the Misty Lands, Sun-Knight in
  * the Frozen Mountains — the order `narrativeActs` and `fullStory` set, the
  * beat chart plays and the world map indexes by place. `rank` and the array

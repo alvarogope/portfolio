@@ -94,8 +94,6 @@ export interface Contribution {
   
     vision: string;
     contributions: Contribution[];
-    videoId?: string;
-    videoCaption?: string;
   
     abilities?: Ability[];
     designDecisions?: DesignDecision[];
@@ -110,8 +108,5 @@ export interface Contribution {
     };
 
     roles?: Role[];
-    endings?: Ending[];
     worlds?: World[];
-
-    communication?: { label: string; body: string }[];
   }

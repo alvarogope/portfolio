@@ -469,7 +469,7 @@ export default function DetectionStates() {
           >
             <Machine />
           </div>
-          <p className="mono ds-scroll-note">Scroll the machine sideways to follow it →</p>
+          <p className="mono mono-note ds-scroll-note">Scroll the machine sideways to follow it →</p>
         </section>
 
         {/* 2 — the traps, in full. Beside the machine, because a trap is an

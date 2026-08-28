@@ -2,6 +2,7 @@ import {
   coreCombat,
   diegeticMechanics,
   diegeticThesis,
+  skillTree,
   invisibleDesign,
   moonHudStates,
   type DiegeticGlyph,
@@ -281,7 +282,39 @@ export default function DiegeticDesign() {
         </ul>
       </section>
 
-      {/* 4 — decisions with no surface at all */}
+      {/* 4 — the dual skill tree, which the role bullet claims and nothing on
+          any page showed. Sits directly under the mechanic cards because the
+          rose card one band up is the currency this spends: two weapon lines,
+          one currency, and only the two facts the repo actually records. See
+          docs/section-ownership-map.md, Gap G3. */}
+      <section className="mkd-band">
+        <h3 className="mono mkd-band-title">{skillTree.kicker}</h3>
+        <p className="mkd-thesis-body">{skillTree.line}</p>
+        <ol className="mkd-branches">
+          {skillTree.branches.map((b) => (
+            <li key={b.id} className="mkd-branch">
+              <p className="mono mkd-branch-kicker">
+                <span className="mkd-branch-index">{b.index}</span>
+                <span>{b.kind}</span>
+              </p>
+              <h4 className="mkd-branch-name">{b.name}</h4>
+              <p className="mkd-branch-body">{b.body}</p>
+              <p className="mkd-branch-pin">
+                <span className="mono mkd-branch-pin-value">{b.pin.value}</span>
+                <span className="mono mkd-branch-pin-source">{b.pin.source}</span>
+              </p>
+            </li>
+          ))}
+        </ol>
+        <p className="mkd-branch-note">
+          {skillTree.body}{" "}
+          <span className="mkd-branch-currency">
+            The currency itself is the {skillTree.currency.label} above.
+          </span>
+        </p>
+      </section>
+
+      {/* 5 — decisions with no surface at all */}
       <section className="mkd-band">
         <h3 className="mono mkd-band-title">Invisible design</h3>
         <p className="mkd-lede">
@@ -300,7 +333,7 @@ export default function DiegeticDesign() {
         </dl>
       </section>
 
-      {/* 5 — the generic verbs, kept small on purpose */}
+      {/* 6 — the generic verbs, kept small on purpose */}
       <section className="mkd-band">
         <h3 className="mono mkd-band-title">Core combat, for completeness</h3>
         <ul className="mkd-verbs">
@@ -585,7 +618,82 @@ export default function DiegeticDesign() {
           color: var(--color-gold);
         }
 
-        /* ---- 4 · invisible design ---- */
+        /* ---- 4 · the dual skill tree ----
+           Two cards, deliberately spare. The pin row is the point: each branch
+           carries the one hard fact the codebase records for it, with where
+           that fact lives, so the block reads as evidence rather than as a
+           second claim. */
+        .mkd-branches {
+          list-style: none;
+          margin: 0.3rem 0 0;
+          padding: 0;
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(min(20rem, 100%), 1fr));
+          gap: 1px;
+          background: var(--mkd-edge);
+          border: 1px solid var(--mkd-edge);
+          border-radius: 12px;
+          overflow: hidden;
+        }
+        .mkd-branch {
+          background: var(--color-void);
+          padding: 1.05rem 1.15rem 1.15rem;
+          display: grid;
+          gap: 0.35rem;
+          align-content: start;
+          border-top: 2px solid var(--mkd-hair);
+          min-width: 0;
+        }
+        .mkd-branch-kicker {
+          margin: 0;
+          display: flex;
+          flex-wrap: wrap;
+          align-items: baseline;
+          gap: 0.55rem;
+          font-size: 0.64rem;
+          letter-spacing: 0.14em;
+          color: var(--color-gold);
+        }
+        .mkd-branch-index { color: var(--mkd-quiet); }
+        .mkd-branch-name {
+          margin: 0;
+          font-family: var(--font-hero), var(--font-display), serif;
+          font-size: 1rem;
+          font-weight: 600;
+          letter-spacing: 0.02em;
+          color: var(--color-moonlight);
+        }
+        .mkd-branch-body {
+          margin: 0.15rem 0 0;
+          font-family: var(--font-body);
+          font-size: 0.85rem;
+          line-height: 1.6;
+          color: var(--color-silver);
+        }
+        .mkd-branch-pin {
+          margin: 0.5rem 0 0;
+          padding-top: 0.55rem;
+          border-top: 1px solid var(--mkd-edge);
+          display: grid;
+          gap: 0.15rem;
+        }
+        .mkd-branch-pin-value { font-size: 0.7rem; color: var(--color-moonlight); }
+        .mkd-branch-pin-source {
+          font-size: 0.62rem;
+          letter-spacing: 0.1em;
+          color: var(--mkd-quiet);
+        }
+        .mkd-branch-note {
+          margin: 0.2rem 0 0;
+          font-family: var(--font-body);
+          font-size: 0.85rem;
+          line-height: 1.6;
+          color: var(--color-silver);
+          max-width: 60ch;
+        }
+        .mkd-branch-currency { color: var(--mkd-quiet); }
+
+        /* ---- 5 · invisible design ---- */
         .mkd-decisions {
           margin: 0.3rem 0 0;
           display: grid;
@@ -610,7 +718,7 @@ export default function DiegeticDesign() {
           color: var(--color-silver);
         }
 
-        /* ---- 5 · core combat ----
+        /* ---- 6 · core combat ----
            Small, quiet and last. These are the verbs every game in the genre
            has; they are here so the section is complete, not so they are read
            first. */

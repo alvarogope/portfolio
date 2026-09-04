@@ -622,35 +622,61 @@ void AMKPlayerCharacter::Respawn()
     kicker: "From the editor",
     title: "The Blueprint side",
     intro:
-      "These captures are the Blueprint half of the split — the work that is genuinely easier to read as a graph than as code. The slots are reserved; images go in as they are captured.",
+      "These captures are the Blueprint half of the split. Some of them are also its history: the combat chain and the sword trace were prototyped as the graphs below and later moved into C++, because iterating a montage window in Blueprint takes seconds and shipping it does not. What survives in Blueprint is what genuinely reads better as a graph than as code — the trees, the tuning, the generation. Click any capture to read it full size.",
     items: [
       {
         id: "bt-standard",
         label: "Behaviour Tree — standard enemy",
         caption:
-          "The patrol / investigate / chase selector, reading the TargetActor and InvestigateLocation keys the C++ controller writes.",
+          "The patrol / investigate / chase selector, reading the TargetActor and InvestigateLocation keys the C++ controller writes. Still Blueprint: a decision tree is a diagram, and it is easier to reason about as one.",
+        src: "/images/moon-knight/BT_AI.png",
+        alt:
+          "Unreal Behaviour Tree for the standard enemy: a root selector branching into patrol, investigate and chase sequences, with Blackboard decorators gating each branch.",
       },
       {
         id: "bt-werewolf",
         label: "Behaviour Tree — werewolf",
         caption:
-          "The boss variant. Same Blackboard contract, different decision structure and a more aggressive chase decorator.",
+          "The boss variant. Same Blackboard contract, different decision structure and a more aggressive chase decorator — which is the point of keeping the contract in C++ and the decisions in the tree.",
+        src: "/images/moon-knight/BT_Werewolf.png",
+        alt:
+          "Unreal Behaviour Tree for the werewolf boss: the same Blackboard keys as the standard enemy driving a shallower, more aggressive branch structure.",
       },
       {
         id: "combo-chain",
         label: "Combo chain — BPC_Attack System",
-        caption: "The 4-hit montage sequencing, driven by the ComboCounter that C++ owns.",
+        caption:
+          "The 4-hit montage sequencing and the combo-continuation gate. Prototyped here, then reimplemented in C++ so the ComboCounter has one owner and the window timing survives a level load.",
+        src: "/images/moon-knight/Combat_System_Blueprints.png",
+        alt:
+          "The whole BPC_Attack System graph: attack input, montage sequencing, the combo continuation gate, and the stop-combo path, drawn as one Blueprint.",
       },
       {
         id: "sword-trace",
         label: "Sword trace & ApplyDamage",
         caption:
-          "The weapon trace during the active frames of each swing, funnelling into the engine's damage pipeline.",
+          "The weapon trace during the active frames of each swing — sphere radius 12, base damage 20, filtered on a Damageable tag — funnelling into the engine's damage pipeline. The trace stayed Blueprint while it was being tuned and moved to C++ once the numbers stopped changing.",
+        src: "/images/moon-knight/Sword_Trace.png",
+        alt:
+          "Blueprint sword trace: a sphere trace along the blade during the active frames, tag-filtered, calling ApplyDamage into Unreal's own damage pipeline.",
       },
       {
         id: "target-lock",
         label: "Target lock",
-        caption: "Lock-on selection and the camera behaviour that follows it.",
+        caption:
+          "Lock-on selection and the camera behaviour that follows it: a 200-unit sphere trace against PhysicsBody and Pawn, tag-filtered, storing the actor the camera then tracks.",
+        src: "/images/moon-knight/Target_Lock.png",
+        alt:
+          "Blueprint target-lock graph: a 200-unit sphere trace selecting the nearest tagged enemy and storing it for the camera to follow.",
+      },
+      {
+        id: "pcg-forest",
+        label: "PCG forest — the level's ground cover",
+        caption:
+          "Three labelled lanes — rocks, trees, grass — each sampling the terrain and then differencing against the others so nothing spawns inside anything else. This is the graph behind the claim on the level-design page that the forest is authored, not randomised, and it is the clearest case for the split: nobody wants to tune this in code.",
+        src: "/images/moon-knight/PCG_Forest.png",
+        alt:
+          "Unreal PCG graph with three lanes for rocks, trees and grass, each sampling the landscape and differencing against the other lanes so placements never overlap.",
       },
     ] as ScreenshotSlot[],
   },

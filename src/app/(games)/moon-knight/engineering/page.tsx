@@ -4,6 +4,7 @@ import { gameEngineering as g } from "@/content/moon-knight-game-engineering";
 import Section from "@/components/layout/Section";
 import SectionHeading from "@/components/layout/SectionHeading";
 import CodeBlock from "@/components/project/CodeBlock";
+import ScreenshotSlots from "@/components/project/ScreenshotSlots";
 import Reveal from "@/components/layout/Reveal";
 
 export const metadata: Metadata = {
@@ -54,7 +55,7 @@ export default function GameEngineeringPage() {
 
       {/* 01 · Hero and thesis --------------------------------------- */}
       <Reveal>
-        <header style={{ marginTop: "1.5rem", maxWidth: "48rem" }}>
+        <header style={{ marginTop: "1.5rem", maxWidth: "38rem" }}>
           <p
             className="mono"
             style={{ fontSize: "0.72rem", color: "var(--color-silver)", marginBottom: "1rem" }}
@@ -84,7 +85,7 @@ export default function GameEngineeringPage() {
           className="panel"
           style={{
             marginTop: "2.5rem",
-            maxWidth: "48rem",
+            maxWidth: "38rem",
             padding: "clamp(1.5rem, 4vw, 2.25rem)",
             border: HAIRLINE,
             borderLeft: "3px solid var(--color-gold)",
@@ -99,12 +100,12 @@ export default function GameEngineeringPage() {
       </Reveal>
 
       <Reveal>
-        <p style={{ marginTop: "2rem", maxWidth: "48rem", lineHeight: 1.75 }}>{g.intro}</p>
+        <p style={{ marginTop: "2rem", maxWidth: "38rem", lineHeight: 1.75 }}>{g.intro}</p>
       </Reveal>
 
       {/* Stack + repo */}
       <Reveal>
-        <div style={{ marginTop: "2rem", maxWidth: "48rem" }}>
+        <div style={{ marginTop: "2rem", maxWidth: "38rem" }}>
           <h2 className="sr-only">Technology</h2>
           <ul
             style={{
@@ -155,7 +156,7 @@ export default function GameEngineeringPage() {
       <Reveal>
         <div style={{ marginTop: "4.5rem" }}>
           <SectionHeading kicker={`01 · ${g.split.kicker}`} title={g.split.title} />
-          <p style={{ marginTop: "1rem", maxWidth: "48rem", lineHeight: 1.75 }}>
+          <p style={{ marginTop: "1rem", maxWidth: "38rem", lineHeight: 1.75 }}>
             {g.split.intro}
           </p>
 
@@ -189,7 +190,7 @@ export default function GameEngineeringPage() {
                       className="mono"
                       style={{
                         padding: "0.9rem 1.25rem",
-                        fontSize: "0.65rem",
+                        fontSize: "0.71rem",
                         fontWeight: 400,
                         letterSpacing: "0.14em",
                         textTransform: "uppercase",
@@ -277,7 +278,7 @@ export default function GameEngineeringPage() {
       <Reveal>
         <div style={{ marginTop: "5rem" }}>
           <SectionHeading kicker={`02 · ${g.choicesKicker}`} title={g.choicesTitle} />
-          <p style={{ marginTop: "1rem", maxWidth: "48rem", lineHeight: 1.75 }}>
+          <p style={{ marginTop: "1rem", maxWidth: "38rem", lineHeight: 1.75 }}>
             {g.choicesIntro}
           </p>
         </div>
@@ -290,7 +291,7 @@ export default function GameEngineeringPage() {
               className="mono"
               style={{
                 margin: 0,
-                fontSize: "0.65rem",
+                fontSize: "0.71rem",
                 letterSpacing: "0.14em",
                 textTransform: "uppercase",
                 color: "var(--color-silver)",
@@ -313,7 +314,7 @@ export default function GameEngineeringPage() {
             <div
               style={{
                 marginTop: "1.25rem",
-                maxWidth: "48rem",
+                maxWidth: "38rem",
                 borderLeft: "2px solid var(--color-gold)",
                 paddingLeft: "1.1rem",
               }}
@@ -321,7 +322,7 @@ export default function GameEngineeringPage() {
               <span
                 className="mono"
                 style={{
-                  fontSize: "0.62rem",
+                  fontSize: "0.70rem",
                   letterSpacing: "0.14em",
                   textTransform: "uppercase",
                   color: "var(--color-gold)",
@@ -341,11 +342,11 @@ export default function GameEngineeringPage() {
             </div>
 
             {/* The reasoning — the part worth reading. */}
-            <div style={{ marginTop: "1.5rem", maxWidth: "48rem" }}>
+            <div style={{ marginTop: "1.5rem", maxWidth: "38rem" }}>
               <span
                 className="mono"
                 style={{
-                  fontSize: "0.62rem",
+                  fontSize: "0.70rem",
                   letterSpacing: "0.14em",
                   textTransform: "uppercase",
                   color: "var(--color-mist)",
@@ -393,7 +394,7 @@ export default function GameEngineeringPage() {
       <Reveal>
         <div style={{ marginTop: "5rem" }}>
           <SectionHeading kicker={`03 · ${g.combat.kicker}`} title={g.combat.title} />
-          <p style={{ marginTop: "1rem", maxWidth: "48rem", lineHeight: 1.75 }}>
+          <p style={{ marginTop: "1rem", maxWidth: "38rem", lineHeight: 1.75 }}>
             {g.combat.intro}
           </p>
 
@@ -446,7 +447,7 @@ export default function GameEngineeringPage() {
                       marginTop: "auto",
                       paddingTop: "0.6rem",
                       borderTop: HAIRLINE,
-                      fontSize: "0.65rem",
+                      fontSize: "0.71rem",
                       color: "var(--color-silver)",
                       lineHeight: 1.5,
                     }}
@@ -470,37 +471,31 @@ export default function GameEngineeringPage() {
         </div>
       </Reveal>
 
-      {/* 05 · Editor captures — NOT RENDERED.
-             The Blueprint-side captures do not exist yet, and the section
-             rendered as five empty dashed frames under an intro that said so.
-             A section announcing its own emptiness is worse than no section,
-             so it is unmounted rather than shipped.
+      {/* 04 · Editor captures ---------------------------------------
+             Live again. This block was unmounted while the captures did not
+             exist and the section rendered as five empty dashed frames; all
+             six slots now carry a real `src` in the content file.
 
-             To bring it back: capture the images, set `src` (and `alt`) on the
-             entries in `gameEngineering.screenshots.items`, restore the block
-             below, and re-add
-               import ScreenshotSlots from "@/components/project/ScreenshotSlots";
-             at the top of this file. The data and `ScreenshotSlots` are both intact — the
-             component renders a real image the moment a slot has a `src`, at
-             the same aspect ratio, so nothing about the layout moves.
-
-        <Reveal>
-          <div style={{ marginTop: "5rem" }}>
-            <SectionHeading kicker={`04 · ${g.screenshots.kicker}`} title={g.screenshots.title} />
-            <p
-              style={{
-                marginTop: "1rem",
-                maxWidth: "48rem",
-                lineHeight: 1.75,
-                marginBottom: "1.75rem",
-              }}
-            >
-              {g.screenshots.intro}
-            </p>
-            <ScreenshotSlots items={g.screenshots.items} />
-          </div>
-        </Reveal>
-      */}
+             `ScreenshotSlots` fits every capture with `contain` rather than
+             `cover` — a 1920px node graph centre-cropped into a 20rem tile is
+             unreadable — and each filled slot opens the shared Lightbox at
+             full resolution, because a graph has to be read, not glanced at. */}
+      <Reveal>
+        <div style={{ marginTop: "5rem" }}>
+          <SectionHeading kicker={`04 · ${g.screenshots.kicker}`} title={g.screenshots.title} />
+          <p
+            style={{
+              marginTop: "1rem",
+              maxWidth: "38rem",
+              lineHeight: 1.75,
+              marginBottom: "1.75rem",
+            }}
+          >
+            {g.screenshots.intro}
+          </p>
+          <ScreenshotSlots items={g.screenshots.items} />
+        </div>
+      </Reveal>
 
       {/* 06 · The quantum branch ------------------------------------ */}
       <Reveal>
@@ -511,13 +506,13 @@ export default function GameEngineeringPage() {
             padding: "clamp(1.75rem, 5vw, 3rem)",
             border: HAIRLINE,
             borderLeft: "3px solid var(--color-silver)",
-            maxWidth: "48rem",
+            maxWidth: "38rem",
           }}
         >
           <span
             className="mono"
             style={{
-              fontSize: "0.65rem",
+              fontSize: "0.71rem",
               letterSpacing: "0.14em",
               textTransform: "uppercase",
               color: "var(--color-silver)",

@@ -416,7 +416,7 @@ export default function BalanceNote() {
         .bn-pillar-text { display: grid; gap: 0.45rem; align-content: start; }
         .bn-pillar-index {
           margin: 0;
-          font-size: 0.66rem;
+          font-size: 0.72rem;
           letter-spacing: 0.2em;
           color: var(--bn-amber);
         }
@@ -539,7 +539,7 @@ export default function BalanceNote() {
           display: flex;
           align-items: center;
           gap: 0.45rem;
-          font-size: 0.66rem;
+          font-size: 0.72rem;
           color: var(--bn-quiet);
         }
         .bn-swatch { width: 16px; height: 2px; flex: none; }
@@ -575,7 +575,7 @@ export default function BalanceNote() {
         .bn-split-row { display: grid; gap: 0.1rem; }
         .bn-split-term {
           margin: 0;
-          font-size: 0.64rem;
+          font-size: 0.71rem;
           letter-spacing: 0.1em;
           color: var(--bn-amber);
         }
@@ -596,7 +596,7 @@ export default function BalanceNote() {
           gap: 0.3rem;
         }
         .bn-pill {
-          font-size: 0.62rem;
+          font-size: 0.70rem;
           padding: 0.2rem 0.42rem;
           border: 1px solid color-mix(in srgb, var(--color-mist) 34%, transparent);
           color: var(--bn-quiet);

@@ -9,13 +9,14 @@ import PlanetDossier from "@/components/project/PlanetDossier";
 import PlanetLevels from "@/components/project/PlanetLevels";
 import ShatteredSkiesSystem from "@/components/project/ShatteredSkiesSystem";
 import NarrativeMap from "@/components/project/NarrativeMap";
+import PlateGrid from "@/components/project/PlateGrid";
 import ShatterstormWorld from "@/components/project/ShatterstormWorld";
 import ShatteredSkiesMechanics from "@/components/project/ShatteredSkiesMechanics";
 import ShatteredSkiesCoop from "@/components/project/ShatteredSkiesCoop";
 import ProjectNav from "@/components/layout/ProjectNav";
 import { projectNavItems } from "@/content/games";
 import Galaxy from "@/components/effects/Galaxy";
-import PageHighlights from "@/components/project/PageHighlights";
+import OpeningStatement from "@/components/project/OpeningStatement";
 // Quoted verbatim by the highlight band below, by key: the band never
 // retypes a line, so §05 and §07 stay the only home for either idea.
 import { levelsCredit } from "@/content/shattered-skies-levels";
@@ -52,25 +53,21 @@ export default function ShatteredSkiesPage() {
       </div>
 
       <Section>
-        {/* Vision */}
-        <Reveal>
-          <div style={{ maxWidth: "42rem" }}>
-            <SectionHeading kicker="01 · Overview" title="The Vision" />
-            <p style={{ marginTop: "1rem" }}>{p.vision}</p>
-          </div>
-        </Reveal>
+        {/* THE OPENING STATEMENT. See OpeningStatement.tsx for why this is a
+            pull quote rather than a band.
 
-        {/* Skim band. This is the longest page on the site, and the audit put
-            its solo audio credit at 30-41% depth and the waveform paragraph it
-            calls the best on the page at 70-98%. Neither section can move: §05
-            is deliberately after the dossier (facts, then play) and §07 is the
-            payoff §06 hands off to, so reordering either would break a setup.
-            The audit's own instruction for both is a pull quote — so both are
-            surfaced here at ~1% depth, verbatim and by key, linking down to the
-            sections that still own them. */}
+            This is the longest page on the site. The audit put the solo audio
+            credit at 30-41% depth and the paragraph it calls the best on the
+            page at 70-98%. Neither section can move: §05 is deliberately after
+            the dossier (facts, then play) and §07 is the payoff §06 hands off
+            to, so reordering either would break a setup.
+
+            Both lines are QUOTED BY KEY from the sections that own them and
+            link back down — §05 and §07 stay the only places either is
+            explained. */}
         <Reveal>
-          <div style={{ marginTop: "4rem" }}>
-            <PageHighlights
+          <div style={{ marginBottom: "5rem" }}>
+            <OpeningStatement
               accent="var(--color-silver)"
               items={[
                 {
@@ -90,6 +87,14 @@ export default function ShatteredSkiesPage() {
           </div>
         </Reveal>
 
+        {/* Vision */}
+        <Reveal>
+          <div style={{ maxWidth: "35rem" }}>
+            <SectionHeading kicker="01 · Overview" title="The Vision" />
+            <p style={{ marginTop: "1rem" }}>{p.vision}</p>
+          </div>
+        </Reveal>
+
         {/* The Game — the team's premise, world and narrative structure.
             Context before contributions: this is the game we made together,
             and the sections after it are the parts that are mine. */}
@@ -97,6 +102,42 @@ export default function ShatteredSkiesPage() {
           <div style={{ marginTop: "5rem" }}>
             <SectionHeading kicker="02 · The Game" title="The Game We Made" />
             <NarrativeMap />
+
+            {/* Two plates: the structure we authored, and the build it
+                actually became. The build shot carries the placeholder note
+                itself rather than in a footnote — the planets on that wall are
+                stand-ins, and §04 below is where the five designed worlds
+                live. Saying so here is what stops the two sections
+                contradicting each other. */}
+            <div style={{ marginTop: "3rem" }}>
+              <PlateGrid
+                minWidth="29rem"
+                items={[
+                  {
+                    src: "/images/shattered-skies/story-beats.jpg",
+                    label: "The structure",
+                    alt: "The narrative structure chart: two backstories for Drayk and Aevi converging through four story beats into four endings — Unity, two Betrayal variants, and Extinction.",
+                    caption:
+                      "The branch structure as it was authored. Two protagonists, four shared beats, and four endings that turn on one question: whether each player chooses selflessness.",
+                  },
+                  {
+                    video: "/images/shattered-skies/menu.mp4",
+                    src: "",
+                    label: "The front door",
+                    alt: "The Shattered Skies title screen and menu.",
+                    caption:
+                      "How the game introduces itself: the title screen the module was demoed from.",
+                  },
+                  {
+                    src: "/images/shattered-skies/shattered-skies-spaceship.png",
+                    label: "The build",
+                    alt: "In-engine view of the ship on the hub floor with a wall of planets behind it. The planet textures are placeholders from a stock solar-system set, not the five designed worlds.",
+                    caption:
+                      "The hub as it stood at the end of the module. The planets on that wall are placeholder textures from a stock solar-system set \u2014 we ran out of time to swap them, and the five worlds they stand in for are designed in \u00a704 below, not here.",
+                  },
+                ]}
+              />
+            </div>
           </div>
         </Reveal>
 
@@ -114,7 +155,7 @@ export default function ShatteredSkiesPage() {
         <Reveal>
           <div style={{ marginTop: "5rem" }}>
             <SectionHeading kicker="04 · World Design" title="A System of Five Worlds" />
-            <p style={{ color: "var(--color-mist)", maxWidth: "42rem", marginTop: "1.5rem", marginBottom: "1.5rem" }}>
+            <p style={{ color: "var(--color-mist)", maxWidth: "35rem", marginTop: "1.5rem", marginBottom: "1.5rem" }}>
               A miniature solar system where the physics is the puzzle. Each planet has its own hazard, its own secret, and its own rule for getting through.
             </p>
             {/* The challenge quote is the standfirst of this section rather
@@ -145,7 +186,7 @@ export default function ShatteredSkiesPage() {
         <Reveal>
           <div style={{ marginTop: "5rem" }} id="planetary-level-design">
             <SectionHeading kicker="05 · Level Design" title="Each Planet Teaches a Skill" />
-            <p style={{ color: "var(--color-mist)", maxWidth: "42rem", marginTop: "1.5rem", marginBottom: "1.5rem" }}>
+            <p style={{ color: "var(--color-mist)", maxWidth: "35rem", marginTop: "1.5rem", marginBottom: "1.5rem" }}>
               The same five worlds, re-sequenced as a curriculum: what each one is built to teach, the puzzle that teaches it, and what it sounds like while it does.
             </p>
             <PlanetLevels />
@@ -160,10 +201,29 @@ export default function ShatteredSkiesPage() {
         <Reveal>
           <div style={{ marginTop: "5rem" }}>
             <SectionHeading kicker="06 · Core Mechanics" title="Systems That Force You Together" />
-            <p style={{ color: "var(--color-mist)", maxWidth: "42rem", marginTop: "1.5rem", marginBottom: "1.5rem" }}>
+            <p style={{ color: "var(--color-mist)", maxWidth: "35rem", marginTop: "1.5rem", marginBottom: "1.5rem" }}>
               Three systems, co-designed with the team, that all answer the same question: how do you make two players who cannot understand each other depend on each other anyway?
             </p>
             <ShatteredSkiesMechanics />
+
+            {/* The communication system as an interface rather than as a
+                claim: the Conversation Panel is on screen, under fire, beside
+                the objective and the weapon slot. */}
+            <div style={{ marginTop: "2.5rem", maxWidth: "54rem" }}>
+              <PlateGrid
+                minWidth="100%"
+                aspect="1728 / 1079"
+                items={[
+                  {
+                    src: "/images/shattered-skies/shattered-skies-gameplay-ui.png",
+                    label: "The communication channel, on screen",
+                    alt: "In-game view of a corridor fight: the objective panel top-left, the weapon slot bottom-left, and the Conversation Panel bottom-right — the interface two players who cannot understand each other have to talk through.",
+                    caption:
+                      "The Conversation Panel, bottom right, sitting in the HUD next to the objective and the weapon slot. It is the only channel the two players get, and it is deliberately as load-bearing on screen as the ammo count.",
+                  },
+                ]}
+              />
+            </div>
           </div>
         </Reveal>
 
@@ -176,10 +236,39 @@ export default function ShatteredSkiesPage() {
         <Reveal>
           <div style={{ marginTop: "5rem" }} id="coop-design">
             <SectionHeading kicker="07 · Co-op Design" title="Split, Distorted, Rebuilt" />
-            <p style={{ color: "var(--color-mist)", maxWidth: "42rem", marginTop: "1.5rem", marginBottom: "1.5rem" }}>
+            <p style={{ color: "var(--color-mist)", maxWidth: "35rem", marginTop: "1.5rem", marginBottom: "1.5rem" }}>
               How the cooperation actually works, one system at a time: what each minigame takes away from which player, and what the pair have to invent to get it back.
             </p>
             <ShatteredSkiesCoop />
+
+            {/* The minigames above repair subsystems. This is the ship those
+                subsystems are ON: the schematic that names and places them,
+                and the ship in flight so the repairs have somewhere to matter.
+                The schematic is a working annotation sheet, drawn while the
+                systems were being divided up \u2014 which is why the labels sit at
+                the angles they do. */}
+            <div style={{ marginTop: "3rem" }}>
+              <PlateGrid
+                minWidth="26rem"
+                items={[
+                  {
+                    src: "/images/shattered-skies/spaceship.png",
+                    label: "The ship, annotated",
+                    alt: "Hand-annotated schematic of the ship from above, marking the weapons, defence, radar, steering, landing gear, resource collection and the two entry points.",
+                    caption:
+                      "The working schematic. Every subsystem the repair minigames take away from one player and hand to the other is named and placed here \u2014 weapons, defence, radar, steering, landing gear, resource collection, and the two ways in.",
+                  },
+                  {
+                    video: "/images/shattered-skies/ship.mp4",
+                    src: "",
+                    label: "The ship, flying",
+                    alt: "The ship in flight between worlds, the state the repair minigames exist to preserve.",
+                    caption:
+                      "And the thing itself, working. This is the state the whole co-op layer exists to hold together: break any of the systems on the left and this is what stops.",
+                  },
+                ]}
+              />
+            </div>
           </div>
         </Reveal>
 
@@ -193,7 +282,7 @@ export default function ShatteredSkiesPage() {
                   <span className="mono" style={{ fontSize: "0.75rem", color: "var(--color-silver)" }}>
                     {c.label}
                   </span>
-                  <p style={{ marginTop: "0.4rem", maxWidth: "42rem" }}>{c.description}</p>
+                  <p style={{ marginTop: "0.4rem", maxWidth: "35rem" }}>{c.description}</p>
                 </div>
               ))}
             </div>

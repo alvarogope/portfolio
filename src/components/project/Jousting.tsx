@@ -122,7 +122,7 @@ export default function Jousting() {
         .mkj-figure { margin: 0; display: grid; gap: 0.5rem; }
         .mkj-caption {
           margin: 0;
-          font-size: 0.6rem;
+          font-size: 0.70rem;
           line-height: 1.5;
           color: var(--mkj-quiet);
         }
@@ -153,7 +153,7 @@ export default function Jousting() {
         .mkj-col,
         .mkj-row {
           background: var(--color-void);
-          font-size: 0.58rem;
+          font-size: 0.68rem;
           font-weight: 400;
           color: var(--color-gold);
           padding: 0.45rem 0.5rem;
@@ -221,7 +221,7 @@ export default function Jousting() {
         .mkj-design-key {
           display: inline-block;
           margin-right: 0.5rem;
-          font-size: 0.58rem;
+          font-size: 0.68rem;
           letter-spacing: 0.16em;
           text-transform: uppercase;
           color: var(--color-gold);
@@ -234,7 +234,7 @@ export default function Jousting() {
           display: grid;
           gap: 0.3rem;
         }
-        .mkj-spinout-kicker { margin: 0; font-size: 0.6rem; color: var(--color-gold); }
+        .mkj-spinout-kicker { margin: 0; font-size: 0.70rem; color: var(--color-gold); }
         .mkj-spinout-body {
           margin: 0;
           font-family: var(--font-body);

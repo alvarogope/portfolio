@@ -726,7 +726,7 @@ export default function ShatteredSkiesCoop() {
         .ssc__pointer-tag {
           margin: 0;
           font-family: var(--font-mono);
-          font-size: 0.66rem;
+          font-size: 0.72rem;
           letter-spacing: 0.14em;
           text-transform: uppercase;
           color: var(--ssc-cyan);
@@ -803,7 +803,7 @@ export default function ShatteredSkiesCoop() {
         }
         .ssc__thesis-tag {
           margin: 0;
-          font-size: 0.62rem;
+          font-size: 0.70rem;
           letter-spacing: 0.2em;
           text-transform: uppercase;
           color: var(--ssc-warm);
@@ -847,7 +847,7 @@ export default function ShatteredSkiesCoop() {
           display: flex;
           align-items: baseline;
           gap: 0.55rem;
-          font-size: 0.66rem;
+          font-size: 0.72rem;
           letter-spacing: 0.18em;
           text-transform: uppercase;
           color: var(--ssc-cyan);
@@ -876,7 +876,7 @@ export default function ShatteredSkiesCoop() {
           display: flex;
           align-items: baseline;
           gap: 0.85rem;
-          font-size: 0.66rem;
+          font-size: 0.72rem;
           letter-spacing: 0.2em;
           text-transform: uppercase;
         }
@@ -947,7 +947,7 @@ export default function ShatteredSkiesCoop() {
         }
         .ssc__game-tag {
           margin: 0;
-          font-size: 0.64rem;
+          font-size: 0.71rem;
           letter-spacing: 0.16em;
           text-transform: uppercase;
           color: var(--ssc-cyan);
@@ -979,7 +979,7 @@ export default function ShatteredSkiesCoop() {
         }
         .ssc__fig-cap {
           margin: 0;
-          font-size: 0.62rem;
+          font-size: 0.70rem;
           letter-spacing: 0.18em;
           text-transform: uppercase;
           color: var(--ssc-quiet);
@@ -1200,7 +1200,7 @@ export default function ShatteredSkiesCoop() {
           color: var(--ssc-quiet);
         }
         .ssc__side-key {
-          font-size: 0.6rem;
+          font-size: 0.70rem;
           letter-spacing: 0.16em;
           text-transform: uppercase;
           color: var(--ssc-quiet);
@@ -1212,7 +1212,7 @@ export default function ShatteredSkiesCoop() {
           display: flex;
           align-items: center;
           gap: 0.55rem;
-          font-size: 0.64rem;
+          font-size: 0.71rem;
           letter-spacing: 0.14em;
           text-transform: uppercase;
           color: var(--ssc-warm);
@@ -1241,7 +1241,7 @@ export default function ShatteredSkiesCoop() {
           min-width: 0;
         }
         .ssc__beat-term {
-          font-size: 0.62rem;
+          font-size: 0.70rem;
           letter-spacing: 0.18em;
           text-transform: uppercase;
           color: var(--ssc-cyan);
@@ -1264,7 +1264,7 @@ export default function ShatteredSkiesCoop() {
         }
         .ssc__aside-title {
           margin: 0;
-          font-size: 0.62rem;
+          font-size: 0.70rem;
           letter-spacing: 0.2em;
           text-transform: uppercase;
           color: var(--ssc-warm);
@@ -1287,7 +1287,7 @@ export default function ShatteredSkiesCoop() {
         .ssc__step:first-child { padding-top: 0; border-top: 0; }
         .ssc__step-order {
           margin: 0;
-          font-size: 0.66rem;
+          font-size: 0.72rem;
           letter-spacing: 0.14em;
           color: var(--ssc-cyan);
           padding-top: 0.15rem;
@@ -1348,7 +1348,7 @@ export default function ShatteredSkiesCoop() {
           border-top: 1px solid var(--ssc-edge);
         }
         .ssc__point-tag {
-          font-size: 0.62rem;
+          font-size: 0.70rem;
           letter-spacing: 0.18em;
           text-transform: uppercase;
           color: var(--ssc-warm);

@@ -233,7 +233,7 @@ export default function ArtDirection() {
           align-items: baseline;
           gap: 0.45rem;
           margin: 0;
-          font-size: 0.6rem;
+          font-size: 0.70rem;
         }
         .mka-move-index { color: var(--mka-quiet); }
         .mka-move-sep { color: var(--mka-edge); }
@@ -245,7 +245,7 @@ export default function ArtDirection() {
         .mka-move-chip {
           padding: 0.1rem 0.45rem;
           border: 1px solid color-mix(in srgb, var(--color-gold) 55%, transparent);
-          font-size: 0.55rem;
+          font-size: 0.68rem;
           letter-spacing: 0.14em;
           text-transform: uppercase;
           color: var(--color-gold);
@@ -284,7 +284,7 @@ export default function ArtDirection() {
         .mka-why-key {
           display: inline-block;
           margin-right: 0.5rem;
-          font-size: 0.58rem;
+          font-size: 0.68rem;
           letter-spacing: 0.16em;
           text-transform: uppercase;
           color: var(--color-gold);
@@ -336,7 +336,7 @@ export default function ArtDirection() {
           margin: 0;
           padding: 0;
           display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(8.5rem, 1fr));
+          grid-template-columns: repeat(auto-fit, minmax(min(100%, 8.5rem), 1fr));
           gap: 1.25rem 1rem;
         }
         .mka-swatch {
@@ -356,7 +356,7 @@ export default function ArtDirection() {
           box-shadow: inset 0 0 0 3px color-mix(in srgb, var(--color-void) 45%, transparent);
         }
         .mka-hex {
-          font-size: 0.66rem;
+          font-size: 0.72rem;
           letter-spacing: 0.08em;
           color: var(--color-moonlight);
         }
@@ -404,7 +404,7 @@ export default function ArtDirection() {
            claim — one image states what the game is about — is checkable. */
         .mka-pillars {
           display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+          grid-template-columns: repeat(auto-fit, minmax(min(100%, 11rem), 1fr));
           gap: 0.6rem 1rem;
           margin-top: 0.85rem;
         }
@@ -422,7 +422,7 @@ export default function ArtDirection() {
           color: var(--color-moonlight);
         }
         .mka-pillar-stands {
-          font-size: 0.56rem;
+          font-size: 0.68rem;
           letter-spacing: 0.16em;
           text-transform: uppercase;
           color: var(--color-gold);

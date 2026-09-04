@@ -341,7 +341,7 @@ export default function ShatterstormWorld() {
         }
         .sw__texture-label {
           margin: 0;
-          font-size: 0.66rem;
+          font-size: 0.72rem;
           letter-spacing: 0.18em;
           text-transform: uppercase;
           color: var(--sw-cyan);

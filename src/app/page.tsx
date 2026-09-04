@@ -498,7 +498,7 @@ export default function Home() {
           gap: 8px;
           margin-top: 18px;
           font-family: var(--font-mono);
-          font-size: 12px;
+          font-size: 13px;
           letter-spacing: 0.14em;
           color: var(--color-silver);
           text-decoration: none;

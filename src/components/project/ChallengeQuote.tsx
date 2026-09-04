@@ -31,7 +31,7 @@ export default function ChallengeQuote({
         Design Challenge
       </span>
 
-      <p style={{ fontSize: "var(--text-lg)", lineHeight: 1.6, margin: "1rem 0 1.5rem", maxWidth: "48rem" }}>
+      <p style={{ fontSize: "var(--text-lg)", lineHeight: 1.6, margin: "1rem 0 1.5rem", maxWidth: "38rem" }}>
         {renderProse ? renderProse(challenge.quote) : challenge.quote}
       </p>
 

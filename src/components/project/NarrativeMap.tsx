@@ -963,7 +963,7 @@ export default function NarrativeMap() {
         }
         .nm__beat-index {
           margin: 0;
-          font-size: 0.66rem;
+          font-size: 0.72rem;
           letter-spacing: 0.18em;
           text-transform: uppercase;
           color: var(--nm-quiet);
@@ -1036,7 +1036,7 @@ export default function NarrativeMap() {
         }
         .nm__ending-cond {
           margin: 0;
-          font-size: 0.66rem;
+          font-size: 0.72rem;
           letter-spacing: 0.12em;
           text-transform: uppercase;
           color: var(--nm-quiet);

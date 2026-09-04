@@ -31,12 +31,48 @@
    BASE DEFAULTS
    ============================================ */
 
-html { scroll-behavior: smooth; }
+/* ============================================
+   THE ROOT SCALE
+   ============================================
+   One number sets the size of the whole site.
+
+   Every type size, every gap, every padding and every prose column in this
+   project is expressed in `rem`, including the four `--text-*` steps above and
+   both terms of each `clamp()` that is not a `vw`. So the root font-size is
+   not "the body text size" — it is the scale factor for the entire system,
+   and moving it moves headings, labels, spacing and measure together. That is
+   why the sizing pass is one declaration rather than several hundred edits:
+   anything else would have grown the body and left the headings behind.
+
+   16px (the browser default this inherited before) put running prose at 16px
+   and pushed most component copy — set at 0.88-0.95rem — down to 14-15px, i.e.
+   below the readable floor. 112.5% puts the root at 18px: bare prose is 18px,
+   0.9rem copy is 16.2px, and nothing that carries a sentence sits under 16px.
+
+   Because the measure is ALSO in rem, line length in characters is unchanged
+   by this — a 35rem column is the same number of characters at any root. The
+   prose columns were narrowed separately, at their call sites.
+
+   Phones step back to 17px. Not because the type is too large there, but
+   because the horizontal budget is fixed: at 18px a 35rem column no longer
+   fits a 390px screen without the padding eating into it, and one step down
+   restores the margin while staying above the 16px floor. */
+html {
+  font-size: 112.5%; /* 18px */
+  scroll-behavior: smooth;
+}
+
+@media (max-width: 640px) {
+  html { font-size: 106.25%; } /* 17px */
+}
 
 body {
   background: var(--color-void);
   color: var(--color-moonlight);
   font-family: var(--font-body);
+  /* Stated rather than inherited, so the floor is a fact of the stylesheet
+     and not of the browser's default. */
+  font-size: 1rem;
   line-height: 1.7;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
@@ -284,7 +320,7 @@ img { max-width: 100%; display: block; }
 .about-character-file .about-inspect__section-label,
 .about-dialogue .about-inspect__section-label { margin: 0 0 1.5rem; }
 .about-character-file__class { display: grid; gap: 0.45rem; }
-.about-character-file__class > span { color: var(--color-silver); font-size: 0.66rem; }
+.about-character-file__class > span { color: var(--color-silver); font-size: 0.72rem; }
 .about-character-file__class h2 {
   margin: 0;
   font-family: var(--font-body);
@@ -330,7 +366,7 @@ img { max-width: 100%; display: block; }
   letter-spacing: 0.1em;
   padding-top: 0.35rem;
 }
-.about-lore__kicker { margin: 0; color: var(--color-silver); font-size: 0.63rem; }
+.about-lore__kicker { margin: 0; color: var(--color-silver); font-size: 0.71rem; }
 .about-lore__entry h2 {
   margin: 0.4rem 0 0;
   font-family: var(--font-body);

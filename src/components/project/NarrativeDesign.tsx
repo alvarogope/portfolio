@@ -261,7 +261,7 @@ export default function NarrativeDesign() {
         }
         .nd-prologue-label {
           display: block;
-          font-size: 0.62rem;
+          font-size: 0.70rem;
           color: var(--color-gold);
           margin-bottom: 0.3rem;
         }
@@ -294,7 +294,7 @@ export default function NarrativeDesign() {
           align-items: baseline;
           gap: 0.5rem;
           margin: 0;
-          font-size: 0.62rem;
+          font-size: 0.70rem;
         }
         .nd-act-label { color: var(--color-gold); }
         .nd-act-stage { color: var(--nd-quiet); }
@@ -329,7 +329,7 @@ export default function NarrativeDesign() {
         .nd-act-meta,
         .nd-act-guard {
           margin: 0;
-          font-size: 0.6rem;
+          font-size: 0.70rem;
           color: var(--nd-quiet);
           text-align: center;
           line-height: 1.5;
@@ -352,7 +352,7 @@ export default function NarrativeDesign() {
         }
         .nd-reversal-kicker {
           margin: 0;
-          font-size: 0.62rem;
+          font-size: 0.70rem;
           color: var(--nd-blood-ink);
         }
         .nd-reversal-title {
@@ -389,7 +389,7 @@ export default function NarrativeDesign() {
           margin: 0;
           padding: 0;
           display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+          grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
           gap: 1px;
           background: var(--nd-edge);
           border: 1px solid var(--nd-edge);
@@ -443,7 +443,7 @@ export default function NarrativeDesign() {
         .nd-pairs {
           margin: 0.4rem 0 0;
           display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(19rem, 1fr));
+          grid-template-columns: repeat(auto-fit, minmax(min(100%, 19rem), 1fr));
           gap: 1.1rem 1.8rem;
         }
         .nd-pair {
@@ -452,7 +452,7 @@ export default function NarrativeDesign() {
           min-width: 0;
         }
         .nd-pair-mech {
-          font-size: 0.66rem;
+          font-size: 0.72rem;
           color: var(--color-gold);
           line-height: 1.5;
         }

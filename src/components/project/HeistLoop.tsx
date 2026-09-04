@@ -673,7 +673,7 @@ export default function HeistLoop() {
           margin: 0;
           color: var(--color-moonlight);
         }
-        .hl-band-meta { margin: 0; font-size: 0.66rem; color: var(--hl-quiet); }
+        .hl-band-meta { margin: 0; font-size: 0.72rem; color: var(--hl-quiet); }
         .hl-band-note {
           margin: 0.35rem 0 0;
           max-width: 58rem;
@@ -801,7 +801,7 @@ export default function HeistLoop() {
           fill: color-mix(in srgb, var(--hl-amber) 7%, var(--hl-screen));
         }
 
-        .hl-scroll-note { display: none; margin: 0; font-size: 0.64rem; color: var(--hl-quiet); }
+        .hl-scroll-note { display: none; margin: 0; font-size: 0.71rem; color: var(--hl-quiet); }
         @media (max-width: 1120px) { .hl-scroll-note { display: block; } }
 
         /* ---- 2 · phase panels ----
@@ -838,7 +838,7 @@ export default function HeistLoop() {
           align-items: baseline;
           gap: 0.3rem 0.6rem;
           margin: 0;
-          font-size: 0.62rem;
+          font-size: 0.70rem;
           color: var(--hl-quiet);
         }
         .hl-phase-mech { color: var(--color-moonlight); }
@@ -856,7 +856,7 @@ export default function HeistLoop() {
           align-items: center;
           gap: 0.4rem;
           margin: 0;
-          font-size: 0.62rem;
+          font-size: 0.70rem;
         }
         .hl-phase-clock { color: var(--hl-amber); letter-spacing: 0.08em; }
         .hl-lane-tag {
@@ -871,7 +871,7 @@ export default function HeistLoop() {
         }
 
         .hl-field { display: grid; gap: 0.25rem; }
-        .hl-field-label { margin: 0; font-size: 0.58rem; color: var(--hl-amber); }
+        .hl-field-label { margin: 0; font-size: 0.68rem; color: var(--hl-amber); }
         .hl-objective {
           margin: 0;
           font-size: 0.84rem;
@@ -882,7 +882,7 @@ export default function HeistLoop() {
         .hl-beats { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.5rem; }
         .hl-beat { display: grid; gap: 0.12rem; }
         .hl-beat-role {
-          font-size: 0.6rem;
+          font-size: 0.70rem;
           letter-spacing: 0.1em;
           color: var(--hl-amber);
         }
@@ -901,7 +901,7 @@ export default function HeistLoop() {
           gap: 0.3rem;
         }
         .hl-task {
-          font-size: 0.62rem;
+          font-size: 0.70rem;
           padding: 0.2rem 0.42rem;
           border: 1px solid color-mix(in srgb, var(--color-mist) 34%, transparent);
           color: var(--hl-quiet);
@@ -917,7 +917,7 @@ export default function HeistLoop() {
           gap: 0.35rem;
           border-top: 1px solid var(--hl-edge);
         }
-        .hl-risk-label { margin: 0; font-size: 0.58rem; color: var(--hl-amber); }
+        .hl-risk-label { margin: 0; font-size: 0.68rem; color: var(--hl-amber); }
         .hl-risk {
           margin: 0;
           font-size: 0.78rem;
@@ -930,7 +930,7 @@ export default function HeistLoop() {
           background: color-mix(in srgb, var(--color-mist) 26%, transparent);
         }
         .hl-meter-fill { display: block; height: 100%; background: var(--hl-amber); }
-        .hl-meter-read { margin: 0; font-size: 0.58rem; color: var(--hl-quiet); }
+        .hl-meter-read { margin: 0; font-size: 0.68rem; color: var(--hl-quiet); }
 
         /* ---- 3 · outcome ---- */
         .hl-outcome { display: grid; gap: 1.1rem; }
@@ -1017,7 +1017,7 @@ export default function HeistLoop() {
           align-items: center;
           gap: 0.45rem;
           margin: 0 0 0.75rem;
-          font-size: 0.66rem;
+          font-size: 0.72rem;
           letter-spacing: 0.16em;
         }
         .hl-state-dot { width: 7px; height: 7px; border-radius: 50%; flex: none; }
@@ -1059,7 +1059,7 @@ export default function HeistLoop() {
           margin: 0;
           color: var(--color-moonlight);
         }
-        .hl-grades-meta { margin: 0; font-size: 0.66rem; color: var(--hl-quiet); }
+        .hl-grades-meta { margin: 0; font-size: 0.72rem; color: var(--hl-quiet); }
 
         .hl-grade-row {
           list-style: none;
@@ -1093,7 +1093,7 @@ export default function HeistLoop() {
         .hl-grade.is-f .hl-grade-fill { background: var(--color-scarlet); }
         .hl-grade-range {
           margin: 0;
-          font-size: 0.64rem;
+          font-size: 0.71rem;
           letter-spacing: 0.04em;
           color: var(--color-moonlight);
         }

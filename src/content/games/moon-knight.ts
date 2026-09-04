@@ -118,11 +118,35 @@ export const moonKnight: Project = {
      it is evidence for — a picture of a mapping could not be read aloud,
      themed or corrected. `controls.png` stays in /public as the source the
      bindings were transcribed from. */
+  /* Frames from the game. Stills crop to fill their tile and open the viewer;
+     entries with `video` are silent loops that play in place.
+
+     The annotated level-design plates are NOT here — they live under §11,
+     where the callouts are the point and a crop would destroy them. Nothing
+     appears in both places. */
   gallery: [
     {
       src: "/images/moon-knight/boss-werewolf.png",
       alt: "The Werewolf boss encounter at night, with a named enemy health bar",
       caption: "Boss encounter. The Werewolf, one of the fights that teaches a quantum ability under pressure, with the named enemy health bar.",
+    },
+    {
+      src: "",
+      video: "/images/moon-knight/combo.mp4",
+      alt: "The four-hit sword combo chaining, each input landing inside the previous swing's continuation window",
+      caption: "The combo chain in motion. Four hits, each one only continuing if the next input lands inside the previous swing's window — the timing no still can show. The graph behind it is on the engineering page.",
+    },
+    {
+      src: "",
+      video: "/images/moon-knight/miniboss.mp4",
+      alt: "The mini-boss encounter in play: the enemy towering over the knight, and the dodge used to get out of its swing",
+      caption: "The mini-boss. Scale is the mechanic here — the thing is far bigger than you, so the dodge stops being optional and starts being the only answer to its reach.",
+    },
+    {
+      src: "",
+      video: "/images/moon-knight/werewolf_dodge_attack.mp4",
+      alt: "The Werewolf boss fight: dodging through an attack and answering it in the recovery window",
+      caption: "The Werewolf, fought rather than framed. Dodge through the swing, answer in its recovery — the loop the whole encounter is tuned around. The still above is the moment you meet it; §11 is the arena it happens in.",
     },
   ],
 };

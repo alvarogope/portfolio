@@ -5,6 +5,8 @@ import AbilityCard from "@/components/project/AbilityCard";
 import ProjectHero from "@/components/project/ProjectHero";
 import SectionHeading from "@/components/layout/SectionHeading";
 import Gallery from "@/components/project/Gallery";
+import PlateGrid from "@/components/project/PlateGrid";
+import LoopingVideo from "@/components/project/LoopingVideo";
 import EngineeringNote from "@/components/project/EngineeringNote";
 import ChallengeQuote from "@/components/project/ChallengeQuote";
 import Reveal from "@/components/layout/Reveal";
@@ -24,7 +26,7 @@ import ArtDirection from "@/components/project/ArtDirection";
 import AudioDesign from "@/components/project/AudioDesign";
 import BeatChart from "@/components/project/BeatChart";
 import Expansions from "@/components/project/Expansions";
-import PageHighlights from "@/components/project/PageHighlights";
+import OpeningStatement from "@/components/project/OpeningStatement";
 // Quoted verbatim by the highlight band below, by key: the band never
 // retypes a line, so §08 and §15 stay the only home for either idea.
 import { diegeticThesis } from "@/content/moon-knight-diegetic";
@@ -59,42 +61,22 @@ export default function MoonKnightPage() {
       </div>
 
       <Section>
-        {/* Vision */}
-        <Reveal>
-          <div style={{ maxWidth: "42rem" }}>
-            <SectionHeading kicker="01 · Overview" title="The Vision" />
-            <p style={{ marginTop: "1rem" }}>{p.vision}</p>
-          </div>
-        </Reveal>
+        {/* THE OPENING STATEMENT. Not a nav band and not a summary: the two
+            strongest lines on this page, said before the page starts, in the
+            place a magazine puts a standfirst.
 
-        {/* Contributions */}
-        <Reveal>
-          <div style={{ marginTop: "5rem" }}>
-            <SectionHeading kicker="02 · My Role" title="My Contribution" />
-            <div style={{ display: "grid", gap: "1.5rem" }}>
-              {p.contributions.map((c) => (
-                <div key={c.label}>
-                  <span className="mono" style={{ fontSize: "0.75rem", color: "var(--color-lunar-gold)" }}>
-                    {c.label}
-                  </span>
-                  <p style={{ marginTop: "0.4rem", maxWidth: "42rem" }}>{c.description}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </Reveal>
+            The reading-load audit measured the design thesis landing at 51%
+            depth and the best audio idea in the portfolio at 99% — both past
+            where a first-pass reader stops — and prescribed "a pull quote, not
+            a move". Moving §15 up would not have fixed it: even directly after
+            §10 it would still sit at ~72%.
 
-        {/* Skim band. The reading-load audit measured this page putting its
-            design thesis at 51% depth and the best audio idea in the portfolio
-            at 99% — both past where a first-pass reader stops. Its prescription
-            was "a pull quote, not a move", and moving §15 up would not have
-            fixed it anyway: even directly after §10 it would still sit at ~72%.
-            So both lines are surfaced here at ~4% depth and link down. Verbatim,
-            by key. Nothing is reworded and nothing is re-homed — §08 and §15
-            still own and explain both ideas. */}
+            Both lines are QUOTED BY KEY from the sections that own them and
+            link back down. Nothing is reworded, nothing is re-homed: §08 and
+            §15 remain the only places either idea is explained. */}
         <Reveal>
-          <div style={{ marginTop: "4rem" }}>
-            <PageHighlights
+          <div style={{ marginBottom: "5rem" }}>
+            <OpeningStatement
               accent="var(--color-lunar-gold)"
               items={[
                 {
@@ -114,12 +96,37 @@ export default function MoonKnightPage() {
           </div>
         </Reveal>
 
+        {/* Vision */}
+        <Reveal>
+          <div style={{ maxWidth: "35rem" }}>
+            <SectionHeading kicker="01 · Overview" title="The Vision" />
+            <p style={{ marginTop: "1rem" }}>{p.vision}</p>
+          </div>
+        </Reveal>
+
+        {/* Contributions */}
+        <Reveal>
+          <div style={{ marginTop: "5rem" }}>
+            <SectionHeading kicker="02 · My Role" title="My Contribution" />
+            <div style={{ display: "grid", gap: "1.5rem" }}>
+              {p.contributions.map((c) => (
+                <div key={c.label}>
+                  <span className="mono" style={{ fontSize: "0.75rem", color: "var(--color-lunar-gold)" }}>
+                    {c.label}
+                  </span>
+                  <p style={{ marginTop: "0.4rem", maxWidth: "35rem" }}>{c.description}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </Reveal>
+
         {/* Abilities — the signature section */}
         {p.abilities && (
           <Reveal>
             <div style={{ marginTop: "5rem" }}>
               <SectionHeading kicker="03 · Signature Systems" title="The Power of the Gods" />
-              <p style={{ color: "var(--color-mist)", maxWidth: "42rem", marginTop: "3rem", marginBottom: "1.5rem" }}>
+              <p style={{ color: "var(--color-mist)", maxWidth: "35rem", marginTop: "3rem", marginBottom: "1.5rem" }}>
                 Five optional abilities, each built on a real quantum computing principle. One equipped at a time, high risk, high reward.
               </p>
               <div style={{ display: "grid", gap: "1rem" }}>
@@ -144,7 +151,7 @@ export default function MoonKnightPage() {
         <Reveal>
           <div style={{ marginTop: "5rem" }}>
             <SectionHeading kicker="05 · The World" title="The World of Kaelum" />
-            <p style={{ color: "var(--color-mist)", maxWidth: "42rem", marginTop: "1.5rem", marginBottom: "1.75rem" }}>
+            <p style={{ color: "var(--color-mist)", maxWidth: "35rem", marginTop: "1.5rem", marginBottom: "1.75rem" }}>
               Three great lands around one drowned island, drawn by hand — the island is the
               prologue, the lands are the three acts. Three torches mark the fortresses holding the
               Moon Fragments; the roses mark the ways down into the Old Gods&apos; dungeons. Every
@@ -159,7 +166,7 @@ export default function MoonKnightPage() {
         <Reveal>
           <div style={{ marginTop: "5rem" }}>
             <SectionHeading kicker="06 · Narrative Design" title="Three Acts, One Moon" />
-            <p style={{ color: "var(--color-mist)", maxWidth: "42rem", marginTop: "1.5rem", marginBottom: "1.75rem" }}>
+            <p style={{ color: "var(--color-mist)", maxWidth: "35rem", marginTop: "1.5rem", marginBottom: "1.75rem" }}>
               The story is told by the world, not by cutscenes. Centralis is the prologue; the three
               acts that follow are the three lands — three moon phases, three ages of a life — and a
               reversal in the last one that re-reads everything before it.
@@ -182,7 +189,7 @@ export default function MoonKnightPage() {
         <Reveal>
           <div style={{ marginTop: "5rem" }} id="diegetic-design">
             <SectionHeading kicker="08 · Diegetic Design" title="Mechanics That Hide in the World" />
-            <p style={{ color: "var(--color-mist)", maxWidth: "42rem", marginTop: "1.5rem", marginBottom: "1.75rem" }}>
+            <p style={{ color: "var(--color-mist)", maxWidth: "35rem", marginTop: "1.5rem", marginBottom: "1.75rem" }}>
               The health bar is the moon on the knight&apos;s back, experience is a rose stained in a
               boss&apos;s blood, and the map is a blade held up to the moonlight. Nothing here is a
               menu — every system is an object, a gesture or a place.
@@ -204,6 +211,31 @@ export default function MoonKnightPage() {
             <div style={{ marginTop: "1.75rem" }}>
               <ControllerMap />
             </div>
+
+            {/* The map above says which button. This says what the button
+                does \u2014 one press, one montage, the recovery window the next
+                input has to land inside. Placed here rather than in the
+                gallery because it is the input map's payoff, not a highlight
+                reel: the combo chain that builds on it is §16's. */}
+            <figure style={{ margin: "2.5rem 0 0", maxWidth: "52rem" }}>
+              <LoopingVideo
+                src="/images/moon-knight/attack1.mp4"
+                label="The first attack of the chain: wind-up, the active frames where the sword trace is live, and the recovery window the next input has to land inside"
+              />
+              <figcaption
+                style={{
+                  marginTop: "0.7rem",
+                  fontSize: "0.9rem",
+                  color: "var(--color-mist)",
+                  lineHeight: 1.6,
+                }}
+              >
+                One press, in full. The wind-up, the active frames where the blade actually traces,
+                and the recovery the next input has to land inside \u2014 the animation and the combat
+                system are the same object, and this is where a controller diagram stops being able
+                to show it.
+              </figcaption>
+            </figure>
           </div>
         </Reveal>
 
@@ -215,11 +247,33 @@ export default function MoonKnightPage() {
         <Reveal>
           <div style={{ marginTop: "5rem" }}>
             <SectionHeading kicker="10 · Art Direction" title="The Sublime, Made Playable" />
-            <p style={{ color: "var(--color-mist)", maxWidth: "42rem", marginTop: "1.5rem", marginBottom: "1.75rem" }}>
+            <p style={{ color: "var(--color-mist)", maxWidth: "35rem", marginTop: "1.5rem", marginBottom: "1.75rem" }}>
               One aesthetic idea decides the whole look of the game — and then keeps going,
               into how the player travels, what the world is made of, and how hard it is to
               see what is about to kill you.
             </p>
+            {/* The aesthetic argued below, stated first by the thing a player
+                actually meets first. The menu is where the look is committed
+                to before a single mechanic runs. */}
+            <figure style={{ margin: "0 0 2.5rem", maxWidth: "52rem" }}>
+              <LoopingVideo
+                src="/images/moon-knight/menu.mp4"
+                label="The Moon-Knight title screen: the moon held over a dark landscape, with the menu set into the scene rather than over it"
+              />
+              <figcaption
+                style={{
+                  marginTop: "0.7rem",
+                  fontSize: "0.9rem",
+                  color: "var(--color-mist)",
+                  lineHeight: 1.6,
+                }}
+              >
+                The title screen. The first thing the game shows is the moon over a dark landscape,
+                and the menu sits inside that scene rather than on top of it \u2014 the same rule §08
+                applies to the HUD, applied before the game has started.
+              </figcaption>
+            </figure>
+
             <ArtDirection />
           </div>
         </Reveal>
@@ -235,12 +289,79 @@ export default function MoonKnightPage() {
         <Reveal>
           <div style={{ marginTop: "5rem" }}>
             <SectionHeading kicker="11 · Level Design" title="The Beat Chart" />
-            <p style={{ color: "var(--color-mist)", maxWidth: "42rem", marginTop: "1.5rem", marginBottom: "1.75rem" }}>
+            <p style={{ color: "var(--color-mist)", maxWidth: "35rem", marginTop: "1.5rem", marginBottom: "1.75rem" }}>
               The sheet the game was actually planned from: four levels — the prologue on Centralis
               and then one per act — against nine design dimensions, with the moon waxing across the
               top. Pick a level to open its design sheet.
             </p>
             <BeatChart />
+
+            {/* The annotated level plates. Kept as their own band under the
+                chart, and deliberately NOT folded into the gallery: the
+                gallery is frames FROM the game and crops to fill its tiles,
+                which would destroy a callout. These three were drawn together
+                — one annotation language, gold label, leader line to the thing
+                being argued — so they read as one document, and PlateGrid
+                fits them with `contain` and opens them full size. */}
+            <div style={{ marginTop: "3rem" }}>
+              <h3
+                className="mono"
+                style={{
+                  fontSize: "0.72rem",
+                  letterSpacing: "0.16em",
+                  textTransform: "uppercase",
+                  color: "var(--color-silver)",
+                  margin: "0 0 0.75rem",
+                }}
+              >
+                The level, annotated
+              </h3>
+              <p
+                style={{
+                  color: "var(--color-mist)",
+                  maxWidth: "35rem",
+                  marginTop: 0,
+                  marginBottom: "1.75rem",
+                }}
+              >
+                The same four levels seen from inside them. Each plate carries the reasoning on the
+                shot itself, which is how these were reviewed while the level was being built.
+              </p>
+              {/* Capped rather than run to the full 68rem column. The plates
+                  are 3840px wide, but a full-width box asked the optimiser for
+                  a variant it then had to upscale, and upscaled type is soft
+                  type. At 58rem the served variant is larger than the box it
+                  lands in, so the callouts stay crisp \u2014 slightly smaller on
+                  screen, and markedly sharper. */}
+              <div style={{ maxWidth: "58rem" }}>
+              <PlateGrid
+                minWidth="100%"
+                items={[
+                  {
+                    src: "/images/moon-knight/centralis.png",
+                    label: "Centralis · the whole level",
+                    alt: "Annotated overhead of the Centralis level: callouts marking the PCG forest used as natural blocking, the spawn view holding the moon, the NPC and the sword in one frame, the sword lit beside the willow tree, and the layout withheld until the sword is picked up.",
+                    caption:
+                      "Four decisions on one frame: the forest as natural blocking rather than randomised scatter, a spawn view that holds all three guides at once, the sword lit as the brightest point after the moon, and the layout deliberately withheld until the player picks it up.",
+                  },
+                  {
+                    src: "/images/moon-knight/forest.png",
+                    label: "Centralis · at eye level",
+                    alt: "Annotated night shot from inside the forest: callouts on the moon as both light source and compass, and on enemy placement in the dark between the trees.",
+                    caption:
+                      "The same level from the floor. The moon does two jobs — the only real light, and the direction of the objective — and the enemies are placed in the dark between the trees, which is what makes the forest read as short-range and fast.",
+                  },
+                  {
+                    src: "/images/moon-knight/boss_arena.png",
+                    label: "The werewolf arena",
+                    alt: "Annotated boss arena: the werewolf placed on a raised mound so it stays readable from anywhere in the arena, with the arena sized for dodging room.",
+                    caption:
+                      "The boss stands on a rise so it stays readable from anywhere in the arena, and the arena is sized for the dodge rather than for the fight — the last beat on the chart above.",
+                  },
+                ]}
+              />
+              </div>
+            </div>
           </div>
         </Reveal>
 
@@ -253,7 +374,7 @@ export default function MoonKnightPage() {
         <Reveal>
           <div style={{ marginTop: "5rem" }}>
             <SectionHeading kicker="12 · And Beyond" title="Where the World Goes Next" />
-            <p style={{ color: "var(--color-mist)", maxWidth: "42rem", marginTop: "1.5rem", marginBottom: "1.75rem" }}>
+            <p style={{ color: "var(--color-mist)", maxWidth: "35rem", marginTop: "1.5rem", marginBottom: "1.75rem" }}>
               Two expansion concepts, each grown from a quantum mechanic the game already has.
               Unbuilt, and kept here as evidence of the same thing the rest of the page argues:
               that these systems generate story on their own.
@@ -267,7 +388,7 @@ export default function MoonKnightPage() {
         <Reveal>
           <div style={{ marginTop: "5rem" }}>
             <SectionHeading kicker="13 · A Side Feature" title="The Jousting Minigame" />
-            <p style={{ color: "var(--color-mist)", maxWidth: "42rem", marginTop: "1.5rem", marginBottom: "1.75rem" }}>
+            <p style={{ color: "var(--color-mist)", maxWidth: "35rem", marginTop: "1.5rem", marginBottom: "1.75rem" }}>
               The Woods still keeps the duelling tradition of a fallen noble house, and Orpheus is
               the one who teaches it. Two riders, two lances, and one moment to decide.
             </p>
@@ -346,7 +467,7 @@ export default function MoonKnightPage() {
         <Reveal>
           <div style={{ marginTop: "5rem" }} id="score-and-audio">
             <SectionHeading kicker="15 · Score & Audio Design" title="Music for a Borrowed Moon" />
-            <p style={{ color: "var(--color-mist)", maxWidth: "42rem", marginTop: "1.5rem", marginBottom: "1.75rem" }}>
+            <p style={{ color: "var(--color-mist)", maxWidth: "35rem", marginTop: "1.5rem", marginBottom: "1.75rem" }}>
               I composed the game&apos;s score, and designed the rules it obeys: where music is
               allowed to play, what each instrument is permitted to mean, and why most of this
               game is scored with nothing but footsteps.

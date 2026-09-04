@@ -119,7 +119,7 @@ export default function Expansions() {
           align-items: center;
           gap: 0.75rem;
           margin: 0;
-          font-size: 0.62rem;
+          font-size: 0.70rem;
         }
         .ex-kicker-label {
           color: var(--color-gold);
@@ -130,7 +130,7 @@ export default function Expansions() {
         .ex-tag {
           flex: 0 0 auto;
           padding: 0.1rem 0.4rem;
-          font-size: 0.53rem;
+          font-size: 0.68rem;
           letter-spacing: 0.14em;
           text-transform: uppercase;
           color: var(--ex-quiet);
@@ -156,7 +156,7 @@ export default function Expansions() {
           gap: 0.1rem;
         }
         .ex-mechanic-key {
-          font-size: 0.55rem;
+          font-size: 0.68rem;
           letter-spacing: 0.14em;
           text-transform: uppercase;
           color: var(--color-gold);
@@ -169,7 +169,7 @@ export default function Expansions() {
           color: var(--color-silver);
         }
         .ex-mechanic-note {
-          font-size: 0.6rem;
+          font-size: 0.70rem;
           line-height: 1.5;
           color: var(--ex-quiet);
         }
@@ -196,7 +196,7 @@ export default function Expansions() {
         .ex-why-key {
           display: block;
           margin-bottom: 0.3rem;
-          font-size: 0.58rem;
+          font-size: 0.68rem;
           letter-spacing: 0.14em;
           text-transform: uppercase;
           color: var(--color-gold);

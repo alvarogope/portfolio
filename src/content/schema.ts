@@ -77,7 +77,8 @@ export interface Contribution {
     title: string;
     tagline: string;
     pillar: boolean;
-    gallery?: { src: string; alt: string; caption: string }[];
+    /** `video` makes a tile a silent gameplay loop; `src` is then unused. */
+    gallery?: { src: string; alt: string; caption: string; video?: string }[];
   
     facts: ProjectFacts;
   

@@ -579,7 +579,7 @@ export default function WorldMap() {
 
         .wm-pop-type {
           margin: 0;
-          font-size: 0.6rem;
+          font-size: 0.70rem;
           color: var(--wm-quiet);
           padding-right: 1.2rem;
         }
@@ -633,7 +633,7 @@ export default function WorldMap() {
           background: var(--wm-ink);
           border: 1px solid color-mix(in srgb, var(--color-silver) 34%, transparent);
         }
-        .wm-readout-type { margin: 0; font-size: 0.62rem; color: var(--wm-quiet); }
+        .wm-readout-type { margin: 0; font-size: 0.70rem; color: var(--wm-quiet); }
         .wm-readout-name {
           margin: 0.25rem 0 0;
           font-family: var(--font-hero);
@@ -662,7 +662,7 @@ export default function WorldMap() {
           padding: 0.9rem 0 0;
           border-top: 1px solid var(--wm-edge);
           display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+          grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
           gap: 0.9rem 1.6rem;
         }
         .wm-key-row.is-area { color: var(--color-silver); }
@@ -671,7 +671,7 @@ export default function WorldMap() {
         .wm-key-head { display: flex; align-items: center; gap: 0.45rem; }
         .wm-key-sigil { display: inline-grid; place-items: center; width: 1.05rem; height: 1.05rem; }
         .wm-key-sigil svg { width: 100%; height: 100%; }
-        .wm-key-term { font-size: 0.64rem; color: var(--wm-quiet); }
+        .wm-key-term { font-size: 0.71rem; color: var(--wm-quiet); }
         .wm-key-gloss {
           margin: 0.3rem 0 0;
           font-family: var(--font-body);
@@ -679,7 +679,7 @@ export default function WorldMap() {
           line-height: 1.5;
           color: var(--wm-quiet);
         }
-        .wm-hint { margin: 0; font-size: 0.64rem; color: var(--wm-quiet); }
+        .wm-hint { margin: 0; font-size: 0.71rem; color: var(--wm-quiet); }
 
         /* ---- the region profile ----
            A definition list, because that is what it is: four short answers
@@ -713,7 +713,7 @@ export default function WorldMap() {
         .wm-prof-value { flex: 1 1 12rem; min-width: 0; }
         .wm-prof-label {
           margin: 0;
-          font-size: 0.56rem;
+          font-size: 0.68rem;
           letter-spacing: 0.13em;
           color: var(--wm-quiet);
           line-height: 1.9;
@@ -724,7 +724,7 @@ export default function WorldMap() {
         /* The boss is the one name in the row that is not an equal of the
            others, so it is tagged rather than merely listed last. */
         .wm-boss-tag {
-          font-size: 0.54rem;
+          font-size: 0.68rem;
           letter-spacing: 0.14em;
           color: var(--color-gold);
         }
@@ -767,7 +767,7 @@ export default function WorldMap() {
           margin: 0;
           padding: 0;
           display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+          grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
           gap: 1px;
           background: var(--wm-edge);
           border: 1px solid var(--wm-edge);
@@ -819,7 +819,7 @@ export default function WorldMap() {
         .wm-item.is-fortress .wm-item-sigil { color: var(--color-gold); }
         .wm-item.is-dungeon .wm-item-sigil { color: var(--wm-rose); }
 
-        .wm-item-type { margin: 0; font-size: 0.6rem; color: var(--wm-quiet); }
+        .wm-item-type { margin: 0; font-size: 0.70rem; color: var(--wm-quiet); }
         .wm-item-lore {
           margin: 0.25rem 0 0;
           font-family: var(--font-body);

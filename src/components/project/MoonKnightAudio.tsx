@@ -300,7 +300,7 @@ export default function MoonKnightAudio() {
               </div>
 
               {missing && (
-                <span className="mono" style={{ fontSize: "0.65rem", color: "var(--color-mist)" }}>
+                <span className="mono" style={{ fontSize: "0.71rem", color: "var(--color-mist)" }}>
                   Recording not available yet
                 </span>
               )}

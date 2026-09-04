@@ -316,7 +316,7 @@ export default function BreakInAudio() {
           margin: 0;
           color: var(--color-moonlight);
         }
-        .ba-band-meta { margin: 0; font-size: 0.66rem; color: var(--ba-quiet); }
+        .ba-band-meta { margin: 0; font-size: 0.72rem; color: var(--ba-quiet); }
 
         .ba-prose {
           margin: 0;
@@ -330,7 +330,7 @@ export default function BreakInAudio() {
         .ba-key {
           display: inline-block;
           margin-right: 0.5rem;
-          font-size: 0.6rem;
+          font-size: 0.70rem;
           letter-spacing: 0.14em;
           color: var(--ba-amber);
         }
@@ -349,7 +349,7 @@ export default function BreakInAudio() {
         }
         .ba-credit-tag {
           margin: 0;
-          font-size: 0.66rem;
+          font-size: 0.72rem;
           letter-spacing: 0.14em;
           color: var(--ba-amber);
         }
@@ -393,7 +393,7 @@ export default function BreakInAudio() {
         .ba-state.is-alert { border-top-color: var(--ba-alert); }
         .ba-state-index {
           margin: 0;
-          font-size: 0.6rem;
+          font-size: 0.70rem;
           letter-spacing: 0.16em;
           color: var(--ba-quiet);
         }
@@ -490,7 +490,7 @@ export default function BreakInAudio() {
         }
         .ba-table thead th {
           font-family: var(--font-mono);
-          font-size: 0.62rem;
+          font-size: 0.70rem;
           font-weight: 400;
           letter-spacing: 0.14em;
           text-transform: uppercase;
@@ -511,7 +511,7 @@ export default function BreakInAudio() {
         .ba-table tbody th { display: grid; gap: 0.25rem; align-content: start; }
         .ba-cue-action { color: var(--color-moonlight); }
         .ba-cue-role {
-          font-size: 0.6rem;
+          font-size: 0.70rem;
           letter-spacing: 0.12em;
           color: var(--ba-quiet);
         }
@@ -520,7 +520,7 @@ export default function BreakInAudio() {
           margin-top: 0.15rem;
           padding: 0.08rem 0.4rem;
           border: 1px solid color-mix(in srgb, var(--ba-alert) 60%, transparent);
-          font-size: 0.55rem;
+          font-size: 0.68rem;
           letter-spacing: 0.16em;
           text-transform: uppercase;
           color: var(--ba-alert);
@@ -539,7 +539,7 @@ export default function BreakInAudio() {
         }
         .ba-pointer-tag {
           margin: 0;
-          font-size: 0.64rem;
+          font-size: 0.71rem;
           letter-spacing: 0.14em;
           color: var(--ba-quiet);
         }

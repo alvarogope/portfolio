@@ -676,7 +676,7 @@ export default function DetectionStates() {
           margin: 0;
           color: var(--color-moonlight);
         }
-        .ds-band-meta { margin: 0; font-size: 0.66rem; color: var(--ds-quiet); }
+        .ds-band-meta { margin: 0; font-size: 0.72rem; color: var(--ds-quiet); }
 
         .ds-screen { background: var(--ds-screen); border: 1px solid var(--ds-edge); }
 
@@ -866,7 +866,7 @@ export default function DetectionStates() {
           align-items: baseline;
           gap: 0.3rem 0.8rem;
           margin: 0;
-          font-size: 0.62rem;
+          font-size: 0.70rem;
           letter-spacing: 0.1em;
           color: var(--ds-quiet);
         }
@@ -928,7 +928,7 @@ export default function DetectionStates() {
           color: var(--ds-quiet);
         }
 
-        .ds-scroll-note { display: none; margin: 0; font-size: 0.64rem; color: var(--ds-quiet); }
+        .ds-scroll-note { display: none; margin: 0; font-size: 0.71rem; color: var(--ds-quiet); }
         @media (max-width: 1200px) { .ds-scroll-note { display: block; } }
 
         /* ---- 2 · transitions ---- */
@@ -968,7 +968,7 @@ export default function DetectionStates() {
           align-items: center;
           gap: 0.5rem;
           margin: 0;
-          font-size: 0.64rem;
+          font-size: 0.71rem;
           letter-spacing: 0.06em;
           color: var(--ds-quiet);
         }
@@ -982,7 +982,7 @@ export default function DetectionStates() {
         .ds-rule.is-terminal { border-top: 3px solid var(--color-scarlet); }
 
         .ds-transition-body { display: grid; gap: 0.2rem; min-width: 0; }
-        .ds-transition-trigger { margin: 0; font-size: 0.62rem; color: var(--ds-amber); }
+        .ds-transition-trigger { margin: 0; font-size: 0.70rem; color: var(--ds-amber); }
         .ds-transition-detail {
           margin: 0;
           font-size: 0.84rem;
@@ -1019,7 +1019,7 @@ export default function DetectionStates() {
           align-items: center;
           gap: 0.45rem;
           margin: 0;
-          font-size: 0.62rem;
+          font-size: 0.70rem;
           letter-spacing: 0.12em;
         }
         .ds-state-dot { width: 7px; height: 7px; border-radius: 50%; flex: none; }
@@ -1101,7 +1101,7 @@ export default function DetectionStates() {
 
         .ds-channel-tag {
           margin: 0;
-          font-size: 0.6rem;
+          font-size: 0.70rem;
           letter-spacing: 0.16em;
           color: var(--ds-amber);
         }
@@ -1129,7 +1129,7 @@ export default function DetectionStates() {
         }
         .ds-channel-catches-label {
           display: block;
-          font-size: 0.58rem;
+          font-size: 0.68rem;
           letter-spacing: 0.16em;
           color: var(--ds-amber);
           margin-bottom: 0.15rem;
@@ -1162,13 +1162,13 @@ export default function DetectionStates() {
 
         .ds-constraint-tag {
           margin: 0;
-          font-size: 0.66rem;
+          font-size: 0.72rem;
           letter-spacing: 0.14em;
           color: var(--ds-fail-text);
         }
         .ds-credit-tag {
           margin: 0;
-          font-size: 0.66rem;
+          font-size: 0.72rem;
           letter-spacing: 0.14em;
           color: var(--ds-amber);
         }
@@ -1183,7 +1183,7 @@ export default function DetectionStates() {
           margin: 0;
           padding-top: 0.6rem;
           border-top: 1px solid var(--ds-edge);
-          font-size: 0.66rem;
+          font-size: 0.72rem;
           color: var(--ds-quiet);
         }
 

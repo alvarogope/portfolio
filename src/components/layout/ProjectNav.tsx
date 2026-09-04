@@ -368,7 +368,7 @@ function NavContent({
           margin-left: 1rem;
           color: var(--accent-color);
           font-family: var(--font-mono);
-          font-size: 0.6rem;
+          font-size: 0.70rem;
           letter-spacing: 0.13em;
           text-transform: uppercase;
         }
@@ -388,7 +388,7 @@ function NavContent({
           .project-nav__link { grid-template-columns: 1.6rem 2.1rem minmax(0, 1fr) auto; gap: 0.5rem; }
           .project-nav__marker { width: 2.1rem; }
           .project-nav__label { font-size: 1.15rem; }
-          .project-nav__current { margin-left: 0.6rem; font-size: 0.54rem; }
+          .project-nav__current { margin-left: 0.6rem; font-size: 0.68rem; }
         }
 
         /* ---- the rail ----------------------------------------------
@@ -420,7 +420,7 @@ function NavContent({
         }
         .project-nav--rail .project-nav__kicker {
           margin-bottom: 1rem;
-          font-size: 0.55rem;
+          font-size: 0.68rem;
           line-height: 1.5;
         }
         .project-nav--rail .project-nav__list { width: 100%; gap: 0.7rem; }

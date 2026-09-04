@@ -51,7 +51,7 @@ export default function QuantumToolkitPage() {
 
       {/* Header */}
       <Reveal>
-        <div style={{ marginTop: "1.5rem", maxWidth: "48rem" }}>
+        <div style={{ marginTop: "1.5rem", maxWidth: "38rem" }}>
           <p className="mono" style={{ fontSize: "0.72rem", color: "var(--color-silver)", marginBottom: "1rem" }}>
             ENGINEERING DEEP-DIVE · C++17 · QUANTUM++ / EIGEN
           </p>
@@ -74,10 +74,10 @@ export default function QuantumToolkitPage() {
             border: "1px solid color-mix(in srgb, var(--color-mist) 20%, transparent)",
             borderLeft: "3px solid var(--color-silver)",
             padding: "clamp(1.5rem, 4vw, 2.5rem)",
-            maxWidth: "48rem",
+            maxWidth: "38rem",
           }}
         >
-          <span className="mono" style={{ fontSize: "0.65rem", color: "var(--color-silver)", letterSpacing: "0.12em" }}>
+          <span className="mono" style={{ fontSize: "0.71rem", color: "var(--color-silver)", letterSpacing: "0.12em" }}>
             Architecture
           </span>
           <h2 style={{ fontSize: "var(--text-xl)", margin: "0.75rem 0 1rem" }}>{q.architecture.title}</h2>
@@ -90,7 +90,7 @@ export default function QuantumToolkitPage() {
         <Reveal key={s.title}>
           <div style={{ marginTop: "4rem" }}>
             <SectionHeading kicker={`${String(i + 1).padStart(2, "0")} · ${s.kicker}`} title={s.title} />
-            <p style={{ marginTop: "1rem", maxWidth: "48rem", lineHeight: 1.75 }}>{s.body}</p>
+            <p style={{ marginTop: "1rem", maxWidth: "38rem", lineHeight: 1.75 }}>{s.body}</p>
             <div style={{ marginTop: "1.5rem" }}>
               <CodeBlock filename={s.code.filename} language={s.code.language} code={s.code.body} />
             </div>
@@ -102,7 +102,7 @@ export default function QuantumToolkitPage() {
       <Reveal>
         <div style={{ marginTop: "4rem" }}>
           <SectionHeading kicker="Status" title={q.status.title} />
-          <p style={{ marginTop: "1rem", maxWidth: "48rem", lineHeight: 1.75, marginBottom: "1.5rem" }}>
+          <p style={{ marginTop: "1rem", maxWidth: "38rem", lineHeight: 1.75, marginBottom: "1.5rem" }}>
             {q.status.body}
           </p>
           <div

@@ -139,7 +139,7 @@ export default function DialogueTree({ lines }: { lines: Line[] }) {
         .dlg-avatar-alcove__label {
           color: var(--color-silver);
           font-family: var(--font-mono);
-          font-size: 0.62rem;
+          font-size: 0.70rem;
           letter-spacing: 0.14em;
         }
 

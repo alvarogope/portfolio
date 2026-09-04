@@ -156,7 +156,7 @@ export default function Bestiary({ kicker }: { kicker?: string }) {
         /* Casing and tracking come from the shared .mono-note modifier in
            globals.css - this used to undo .mono's uppercase locally. */
         .mkb__tier-note {
-          font-size: 0.66rem;
+          font-size: 0.72rem;
           color: var(--mkb-quiet);
           margin: 0;
         }
@@ -218,7 +218,7 @@ export default function Bestiary({ kicker }: { kicker?: string }) {
         .mkb__card-head { text-align: center; }
         .mkb__rank {
           display: inline-block;
-          font-size: 0.62rem;
+          font-size: 0.70rem;
           letter-spacing: 0.28em;
           color: var(--color-gold);
           margin: 0.9rem 0 0.45rem;
@@ -254,7 +254,7 @@ export default function Bestiary({ kicker }: { kicker?: string }) {
           padding: 0.9rem 1rem 1rem;
         }
         .mkb__mech-kicker {
-          font-size: 0.6rem;
+          font-size: 0.70rem;
           letter-spacing: 0.26em;
           color: var(--mkb-quiet);
           margin: 0;
@@ -287,7 +287,7 @@ export default function Bestiary({ kicker }: { kicker?: string }) {
           color: var(--mkb-prose);
         }
         .mkb__lore-label {
-          font-size: 0.6rem;
+          font-size: 0.70rem;
           letter-spacing: 0.26em;
           color: var(--mkb-quiet);
           margin: 0 0 0.4rem;
@@ -307,7 +307,7 @@ export default function Bestiary({ kicker }: { kicker?: string }) {
 
         /* ---- weakness tag ---- */
         .mkb__weak-label {
-          font-size: 0.6rem;
+          font-size: 0.70rem;
           letter-spacing: 0.26em;
           color: var(--mkb-quiet);
           margin: 0 0 0.5rem;

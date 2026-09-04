@@ -615,7 +615,7 @@ export default function ShatteredSkiesMechanics() {
         }
         .ssm__reason-term {
           margin: 0;
-          font-size: 0.64rem;
+          font-size: 0.71rem;
           letter-spacing: 0.16em;
           color: var(--ssm-warm);
         }
@@ -671,7 +671,7 @@ export default function ShatteredSkiesMechanics() {
         }
         .ssm__channel-tag {
           margin: 0.3rem 0 0;
-          font-size: 0.64rem;
+          font-size: 0.71rem;
           letter-spacing: 0.14em;
           color: var(--ssm-quiet);
         }
@@ -679,7 +679,7 @@ export default function ShatteredSkiesMechanics() {
           margin: 0;
           grid-column: 2;
           justify-self: start;
-          font-size: 0.6rem;
+          font-size: 0.70rem;
           letter-spacing: 0.16em;
           padding: 0.25rem 0.5rem;
           border: 1px solid var(--ssm-edge);
@@ -812,7 +812,7 @@ export default function ShatteredSkiesMechanics() {
         }
         .ssm__step-tag {
           margin: 0;
-          font-size: 0.62rem;
+          font-size: 0.70rem;
           letter-spacing: 0.18em;
           color: var(--ssm-cyan);
         }
@@ -864,7 +864,7 @@ export default function ShatteredSkiesMechanics() {
         /* ---- 02 + 03 · compact furniture ---- */
         .ssm__ref {
           margin: 0;
-          font-size: 0.64rem;
+          font-size: 0.71rem;
           letter-spacing: 0.16em;
           color: var(--ssm-quiet);
         }
@@ -880,7 +880,7 @@ export default function ShatteredSkiesMechanics() {
         .ssm__aside { display: grid; gap: 0.85rem; }
         .ssm__aside-title {
           margin: 0;
-          font-size: 0.66rem;
+          font-size: 0.72rem;
           letter-spacing: 0.18em;
           color: var(--ssm-cyan);
         }
@@ -902,7 +902,7 @@ export default function ShatteredSkiesMechanics() {
           border-left: 1px solid var(--ssm-edge);
         }
         .ssm__pointer-tag {
-          font-size: 0.6rem;
+          font-size: 0.70rem;
           letter-spacing: 0.18em;
           text-transform: uppercase;
           color: var(--ssm-cyan);
@@ -961,7 +961,7 @@ export default function ShatteredSkiesMechanics() {
         }
         .ssm__use-label {
           margin: 0;
-          font-size: 0.64rem;
+          font-size: 0.71rem;
           letter-spacing: 0.16em;
           color: var(--ssm-cyan);
         }
@@ -1005,7 +1005,7 @@ export default function ShatteredSkiesMechanics() {
         }
         .ssm__body-build {
           margin: 0;
-          font-size: 0.62rem;
+          font-size: 0.70rem;
           letter-spacing: 0.16em;
           color: var(--ssm-quiet);
         }
@@ -1051,7 +1051,7 @@ export default function ShatteredSkiesMechanics() {
           border-top: 1px solid var(--ssm-edge);
         }
         .ssm__point-tag {
-          font-size: 0.62rem;
+          font-size: 0.70rem;
           letter-spacing: 0.18em;
           color: var(--ssm-warm);
         }

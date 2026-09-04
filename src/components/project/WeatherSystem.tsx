@@ -712,7 +712,7 @@ export default function WeatherSystem() {
           margin: 0;
           color: var(--color-moonlight);
         }
-        .sw-band-meta { margin: 0; font-size: 0.66rem; color: var(--sw-quiet); }
+        .sw-band-meta { margin: 0; font-size: 0.72rem; color: var(--sw-quiet); }
 
         .sw-screen {
           background: var(--sw-screen);
@@ -728,7 +728,7 @@ export default function WeatherSystem() {
            cards under it carry both states in full anyway, so a squinting
            diagram would buy nothing. */
         .sw-flip { display: block; width: 100%; min-width: 1120px; height: auto; }
-        .sw-scroll-note { margin: 0; font-size: 0.62rem; color: var(--sw-quiet); }
+        .sw-scroll-note { margin: 0; font-size: 0.70rem; color: var(--sw-quiet); }
 
         /* ---- 1 · the flip ---- */
         .sw-sky { fill: var(--sw-sky-acid); }
@@ -923,7 +923,7 @@ export default function WeatherSystem() {
           align-items: center;
           gap: 0.5rem;
           margin: 0;
-          font-size: 0.64rem;
+          font-size: 0.71rem;
           letter-spacing: 0.14em;
           color: var(--sw-quiet);
         }
@@ -958,7 +958,7 @@ export default function WeatherSystem() {
         }
         .sw-zone-reads-label {
           display: block;
-          font-size: 0.58rem;
+          font-size: 0.68rem;
           letter-spacing: 0.16em;
           margin-bottom: 0.15rem;
           color: var(--sw-acid);
@@ -984,7 +984,7 @@ export default function WeatherSystem() {
         .sw-split.is-reject { border-left: 3px solid color-mix(in srgb, var(--color-mist) 60%, transparent); }
         .sw-split-tag {
           margin: 0;
-          font-size: 0.64rem;
+          font-size: 0.71rem;
           letter-spacing: 0.14em;
           color: var(--sw-leaf-text);
         }
@@ -1024,7 +1024,7 @@ export default function WeatherSystem() {
           margin: 0.35rem 0 0;
           padding: 0;
           display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+          grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
           gap: 1rem;
         }
         .sw-weather {
@@ -1086,7 +1086,7 @@ export default function WeatherSystem() {
           align-items: baseline;
           gap: 0.25rem 0.8rem;
           margin: 0;
-          font-size: 0.6rem;
+          font-size: 0.70rem;
           letter-spacing: 0.14em;
           color: var(--sw-quiet);
         }
@@ -1101,7 +1101,7 @@ export default function WeatherSystem() {
         }
         .sw-weather-where {
           margin: 0;
-          font-size: 0.6rem;
+          font-size: 0.70rem;
           letter-spacing: 0.1em;
           color: var(--sw-quiet);
         }
@@ -1123,7 +1123,7 @@ export default function WeatherSystem() {
         }
         .sw-weather-after-label {
           display: block;
-          font-size: 0.56rem;
+          font-size: 0.68rem;
           letter-spacing: 0.16em;
           margin-bottom: 0.15rem;
           color: var(--sw-leaf-text);
@@ -1140,7 +1140,7 @@ export default function WeatherSystem() {
         }
         .sw-weather-scored-label {
           display: block;
-          font-size: 0.56rem;
+          font-size: 0.68rem;
           letter-spacing: 0.16em;
           font-style: normal;
           margin-bottom: 0.15rem;
@@ -1159,7 +1159,7 @@ export default function WeatherSystem() {
         }
         .sw-credit-tag {
           margin: 0;
-          font-size: 0.66rem;
+          font-size: 0.72rem;
           letter-spacing: 0.14em;
           color: var(--sw-leaf-text);
         }
@@ -1179,7 +1179,7 @@ export default function WeatherSystem() {
         }
         .sw-credit-pointer a {
           font-family: var(--font-mono);
-          font-size: 0.66rem;
+          font-size: 0.72rem;
           letter-spacing: 0.12em;
           color: var(--sw-leaf-text);
           text-decoration: underline;

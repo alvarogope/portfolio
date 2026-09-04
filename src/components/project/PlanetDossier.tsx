@@ -543,7 +543,7 @@ export default function PlanetDossier({
           align-self: flex-start;
           padding: 0.15rem 0.4rem;
           border: 1px solid color-mix(in srgb, var(--pd-accent) 55%, transparent);
-          font-size: 0.6rem;
+          font-size: 0.70rem;
           letter-spacing: 0.14em;
           color: var(--pd-accent);
         }
@@ -747,7 +747,7 @@ export default function PlanetDossier({
           border: 1px solid color-mix(in srgb, var(--pd-gate, var(--color-mist)) 55%, transparent);
           background: color-mix(in srgb, var(--pd-gate, var(--color-mist)) 10%, transparent);
           font-family: var(--font-mono);
-          font-size: 0.64rem;
+          font-size: 0.71rem;
           letter-spacing: 0.12em;
           text-transform: uppercase;
           color: var(--pd-gate, var(--pd-quiet));
@@ -808,7 +808,7 @@ export default function PlanetDossier({
         }
         .pd__access-know-label {
           font-family: var(--font-mono);
-          font-size: 0.62rem;
+          font-size: 0.70rem;
           letter-spacing: 0.14em;
           text-transform: uppercase;
           color: var(--pd-gate, var(--pd-quiet));

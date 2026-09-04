@@ -478,7 +478,7 @@ export default function DiegeticDesign() {
 
         .mkd-hud-label {
           margin: 0.65rem 0 0;
-          font-size: 0.64rem;
+          font-size: 0.71rem;
           color: var(--color-silver);
         }
         .is-half .mkd-hud-label { color: var(--color-gold); }
@@ -565,7 +565,7 @@ export default function DiegeticDesign() {
           align-items: baseline;
           gap: 0.4rem;
           margin: 0;
-          font-size: 0.6rem;
+          font-size: 0.70rem;
         }
         .mkd-replaces-key { color: var(--mkd-quiet); }
         .mkd-replaces-sep { color: var(--mkd-edge); }
@@ -612,7 +612,7 @@ export default function DiegeticDesign() {
         .mkd-why-key {
           display: inline-block;
           margin-right: 0.5rem;
-          font-size: 0.58rem;
+          font-size: 0.68rem;
           letter-spacing: 0.16em;
           text-transform: uppercase;
           color: var(--color-gold);
@@ -650,7 +650,7 @@ export default function DiegeticDesign() {
           flex-wrap: wrap;
           align-items: baseline;
           gap: 0.55rem;
-          font-size: 0.64rem;
+          font-size: 0.71rem;
           letter-spacing: 0.14em;
           color: var(--color-gold);
         }
@@ -679,7 +679,7 @@ export default function DiegeticDesign() {
         }
         .mkd-branch-pin-value { font-size: 0.7rem; color: var(--color-moonlight); }
         .mkd-branch-pin-source {
-          font-size: 0.62rem;
+          font-size: 0.70rem;
           letter-spacing: 0.1em;
           color: var(--mkd-quiet);
         }
@@ -739,7 +739,7 @@ export default function DiegeticDesign() {
           border-bottom: 1px solid color-mix(in srgb, var(--color-mist) 18%, transparent);
           min-width: 0;
         }
-        .mkd-verb-name { font-size: 0.64rem; color: var(--color-silver); flex: 0 0 auto; }
+        .mkd-verb-name { font-size: 0.71rem; color: var(--color-silver); flex: 0 0 auto; }
         .mkd-verb-note {
           font-family: var(--font-body);
           font-size: 0.82rem;

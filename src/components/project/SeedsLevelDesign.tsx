@@ -306,7 +306,7 @@ export default function SeedsLevelDesign() {
           margin: 0;
           color: var(--color-moonlight);
         }
-        .sl-band-meta { margin: 0; font-size: 0.66rem; color: var(--sl-quiet); }
+        .sl-band-meta { margin: 0; font-size: 0.72rem; color: var(--sl-quiet); }
 
         .sl-thesis {
           margin: 0;
@@ -329,7 +329,7 @@ export default function SeedsLevelDesign() {
         /* Below its floor the loop scrolls rather than shrinking: the beat list
            under it carries all four in full anyway. */
         .sl-loop { display: block; width: 100%; min-width: 900px; height: auto; }
-        .sl-scroll-note { margin: 0; font-size: 0.62rem; color: var(--sl-quiet); }
+        .sl-scroll-note { margin: 0; font-size: 0.70rem; color: var(--sl-quiet); }
 
         /* ---- 1 · the loop ---- */
         .sl-head { fill: var(--sl-leaf-text); }
@@ -400,7 +400,7 @@ export default function SeedsLevelDesign() {
           margin: 0.35rem 0 0;
           padding: 0;
           display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+          grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
           gap: 1px;
           background: var(--sl-edge);
           border: 1px solid var(--sl-edge);
@@ -418,7 +418,7 @@ export default function SeedsLevelDesign() {
         }
         .sl-half-tag {
           margin: 0;
-          font-size: 0.66rem;
+          font-size: 0.72rem;
           letter-spacing: 0.14em;
           color: var(--sl-amber-text);
         }
@@ -436,7 +436,7 @@ export default function SeedsLevelDesign() {
           margin: 0.35rem 0 0;
           padding: 0;
           display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+          grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
           gap: 1px;
           background: var(--sl-edge);
           border: 1px solid var(--sl-edge);
@@ -455,7 +455,7 @@ export default function SeedsLevelDesign() {
         .sl-step.is-payoff { background: color-mix(in srgb, var(--sl-leaf) 9%, var(--sl-screen)); }
         .sl-step-index {
           margin: 0;
-          font-size: 0.66rem;
+          font-size: 0.72rem;
           letter-spacing: 0.12em;
           color: var(--sl-quiet);
           padding-top: 0.2rem;
@@ -470,7 +470,7 @@ export default function SeedsLevelDesign() {
         }
         .sl-step-half {
           margin: 0.2rem 0 0;
-          font-size: 0.62rem;
+          font-size: 0.70rem;
           letter-spacing: 0.14em;
           text-transform: uppercase;
           color: var(--sl-quiet);
@@ -491,7 +491,7 @@ export default function SeedsLevelDesign() {
         }
         .sl-step-pointer a {
           font-family: var(--font-mono);
-          font-size: 0.66rem;
+          font-size: 0.72rem;
           letter-spacing: 0.12em;
           color: var(--sl-leaf-text);
           text-decoration: underline;
@@ -500,7 +500,7 @@ export default function SeedsLevelDesign() {
 
         /* ---- 3 · the puzzles and the credit ---- */
         .sl-close {
-          grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+          grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
           gap: 1rem;
         }
         .sl-puzzle,
@@ -517,13 +517,13 @@ export default function SeedsLevelDesign() {
         .sl-credit { border-left: 3px solid var(--sl-leaf); }
         .sl-puzzle-tag {
           margin: 0;
-          font-size: 0.66rem;
+          font-size: 0.72rem;
           letter-spacing: 0.14em;
           color: var(--sl-amber-text);
         }
         .sl-credit-tag {
           margin: 0;
-          font-size: 0.66rem;
+          font-size: 0.72rem;
           letter-spacing: 0.14em;
           color: var(--sl-leaf-text);
         }

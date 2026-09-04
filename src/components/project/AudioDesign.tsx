@@ -197,7 +197,7 @@ export default function AudioDesign({ children }: { children: ReactNode }) {
           align-items: center;
           gap: 0.5rem;
           margin: 0;
-          font-size: 0.62rem;
+          font-size: 0.70rem;
           letter-spacing: 0.16em;
           text-transform: uppercase;
           color: var(--color-gold);
@@ -288,7 +288,7 @@ export default function AudioDesign({ children }: { children: ReactNode }) {
         .mkm-why-key {
           display: inline-block;
           margin-right: 0.5rem;
-          font-size: 0.58rem;
+          font-size: 0.68rem;
           letter-spacing: 0.16em;
           text-transform: uppercase;
           color: var(--color-gold);
@@ -307,7 +307,7 @@ export default function AudioDesign({ children }: { children: ReactNode }) {
           background: var(--mkm-edge);
           border: 1px solid var(--mkm-edge);
         }
-        .mkm-villages { grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); }
+        .mkm-villages { grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr)); }
         .mkm-village,
         .mkm-meaning {
           background: var(--color-nightfall);
@@ -324,7 +324,7 @@ export default function AudioDesign({ children }: { children: ReactNode }) {
 
         .mkm-village-tag {
           margin: 0;
-          font-size: 0.6rem;
+          font-size: 0.70rem;
           letter-spacing: 0.16em;
           text-transform: uppercase;
           color: var(--color-silver);
@@ -369,7 +369,7 @@ export default function AudioDesign({ children }: { children: ReactNode }) {
           align-items: baseline;
           gap: 0.4rem;
           margin: 0.35rem 0 0;
-          font-size: 0.58rem;
+          font-size: 0.68rem;
           letter-spacing: 0.14em;
           text-transform: uppercase;
           color: var(--mkm-quiet);
@@ -389,7 +389,7 @@ export default function AudioDesign({ children }: { children: ReactNode }) {
           padding: 0.32rem 0.6rem;
           border: 1px solid var(--mkm-edge);
           background: color-mix(in srgb, var(--color-nightfall) 70%, transparent);
-          font-size: 0.6rem;
+          font-size: 0.70rem;
           letter-spacing: 0.14em;
           text-transform: uppercase;
           color: var(--color-silver);

@@ -289,7 +289,7 @@ function CastStyles() {
       /* Casing and tracking come from the shared .mono-note modifier in
          globals.css - this used to undo .mono's uppercase locally. */
       .mkc__band-note {
-        font-size: 0.66rem;
+        font-size: 0.72rem;
         color: var(--mkc-quiet);
         margin: 0;
       }
@@ -335,7 +335,7 @@ function CastStyles() {
 
       /* ---- names and labels ---- */
       .mkc__title-label {
-        font-size: 0.62rem;
+        font-size: 0.70rem;
         letter-spacing: 0.28em;
         color: var(--mkc-quiet);
         margin: 0;
@@ -373,7 +373,7 @@ function CastStyles() {
         margin-top: auto;
       }
       .mkc__purpose-label {
-        font-size: 0.6rem;
+        font-size: 0.70rem;
         letter-spacing: 0.26em;
         color: var(--color-gold);
         margin: 0 0 0.45rem;
@@ -470,7 +470,7 @@ function CastStyles() {
         padding: 1.15rem 1.35rem 1.25rem;
       }
       .mkc__keystone-label {
-        font-size: 0.6rem;
+        font-size: 0.70rem;
         letter-spacing: 0.28em;
         color: var(--color-gold);
         margin: 0;
@@ -482,7 +482,7 @@ function CastStyles() {
         margin: 0.6rem 0 0.55rem;
       }
       .mkc__keystone-note {
-        font-size: 0.62rem;
+        font-size: 0.70rem;
         letter-spacing: 0.22em;
         color: var(--mkc-quiet);
         margin: 0;

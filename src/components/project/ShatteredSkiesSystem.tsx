@@ -135,7 +135,7 @@ export default function ShatteredSkiesSystem({ children }: { children: React.Rea
           border: 1px solid color-mix(in srgb, var(--sss-gate, var(--color-mist)) 55%, transparent);
           background: color-mix(in srgb, var(--sss-gate, var(--color-mist)) 10%, transparent);
           font-family: var(--font-mono);
-          font-size: 0.64rem;
+          font-size: 0.71rem;
           letter-spacing: 0.12em;
           text-transform: uppercase;
           color: var(--sss-gate, var(--color-mist));

@@ -520,7 +520,7 @@ export default function PlanetLevels() {
           align-items: baseline;
         }
         .pl-credit-disc {
-          font-size: 0.6rem;
+          font-size: 0.70rem;
           letter-spacing: 0.1em;
           text-transform: uppercase;
           color: var(--pl-quiet);
@@ -566,7 +566,7 @@ export default function PlanetLevels() {
         .pl-railwrap { display: grid; gap: 0.6rem; }
         .pl-rail-caption {
           margin: 0;
-          font-size: 0.62rem;
+          font-size: 0.70rem;
           letter-spacing: 0.1em;
           text-transform: uppercase;
           color: var(--pl-warm);
@@ -608,7 +608,7 @@ export default function PlanetLevels() {
         .pl-station-name,
         .pl-station-skill { padding-inline: 0.4rem; }
         .pl-station-ord {
-          font-size: 0.58rem;
+          font-size: 0.68rem;
           letter-spacing: 0.1em;
           color: var(--pl-warm);
         }
@@ -675,7 +675,7 @@ export default function PlanetLevels() {
         }
         .pl-station.is-selected .pl-station-name { color: var(--tone, var(--pl-cyan)); }
         .pl-station-skill {
-          font-size: 0.56rem;
+          font-size: 0.68rem;
           letter-spacing: 0.09em;
           text-transform: uppercase;
           line-height: 1.5;
@@ -730,7 +730,7 @@ export default function PlanetLevels() {
           outline-offset: -2px;
         }
         .pl-colbtn-ord {
-          font-size: 0.54rem;
+          font-size: 0.68rem;
           letter-spacing: 0.1em;
           color: var(--pl-warm);
         }
@@ -743,7 +743,7 @@ export default function PlanetLevels() {
         }
         .pl-colhead.is-active .pl-colbtn-name { color: var(--tone, var(--pl-cyan)); }
         .pl-colbtn-kind {
-          font-size: 0.54rem;
+          font-size: 0.68rem;
           letter-spacing: 0.08em;
           text-transform: uppercase;
           color: var(--pl-quiet);
@@ -752,7 +752,7 @@ export default function PlanetLevels() {
         .pl-rowhead {
           text-align: left;
           vertical-align: top;
-          font-size: 0.62rem;
+          font-size: 0.70rem;
           font-weight: 400;
           letter-spacing: 0.08em;
           text-transform: uppercase;
@@ -791,7 +791,7 @@ export default function PlanetLevels() {
           display: inline-block;
           margin-left: 0.4rem;
           padding: 0.08rem 0.35rem;
-          font-size: 0.5rem;
+          font-size: 0.68rem;
           letter-spacing: 0.14em;
           text-transform: uppercase;
           color: var(--pl-cyan);
@@ -833,7 +833,7 @@ export default function PlanetLevels() {
         .pl-sheet-id { min-width: 0; }
         .pl-sheet-kicker {
           margin: 0;
-          font-size: 0.6rem;
+          font-size: 0.70rem;
           letter-spacing: 0.1em;
           text-transform: uppercase;
           color: var(--tone, var(--pl-cyan));
@@ -848,7 +848,7 @@ export default function PlanetLevels() {
         }
         .pl-sheet-skill {
           margin: 0.25rem 0 0;
-          font-size: 0.62rem;
+          font-size: 0.70rem;
           letter-spacing: 0.08em;
           text-transform: uppercase;
           color: var(--pl-quiet);
@@ -867,7 +867,7 @@ export default function PlanetLevels() {
 
         .pl-groups {
           display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+          grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
           gap: 1.4rem 2rem;
           align-items: start;
         }
@@ -875,7 +875,7 @@ export default function PlanetLevels() {
         .pl-group-title {
           margin: 0 0 0.7rem;
           padding-bottom: 0.4rem;
-          font-size: 0.6rem;
+          font-size: 0.70rem;
           font-weight: 400;
           letter-spacing: 0.12em;
           text-transform: uppercase;
@@ -892,7 +892,7 @@ export default function PlanetLevels() {
         .pl-group-dl { margin: 0; display: grid; gap: 0.9rem; }
         .pl-group-row { min-width: 0; }
         .pl-group-key {
-          font-size: 0.56rem;
+          font-size: 0.68rem;
           letter-spacing: 0.1em;
           text-transform: uppercase;
           color: var(--pl-warm);
@@ -927,7 +927,7 @@ export default function PlanetLevels() {
         }
         .pl-rewards-key {
           display: block;
-          font-size: 0.52rem;
+          font-size: 0.68rem;
           letter-spacing: 0.12em;
           text-transform: uppercase;
           color: var(--pl-warm);
@@ -970,7 +970,7 @@ export default function PlanetLevels() {
         }
         .pl-gem-source {
           margin: 0;
-          font-size: 0.54rem;
+          font-size: 0.68rem;
           letter-spacing: 0.12em;
           text-transform: uppercase;
           color: var(--pl-quiet);
@@ -980,7 +980,7 @@ export default function PlanetLevels() {
           display: flex;
           align-items: center;
           gap: 0.45rem;
-          font-size: 0.58rem;
+          font-size: 0.68rem;
           letter-spacing: 0.13em;
           text-transform: uppercase;
           color: var(--pl-cyan);
@@ -1010,7 +1010,7 @@ export default function PlanetLevels() {
         }
         .pl-notes-kicker {
           margin: 0;
-          font-size: 0.62rem;
+          font-size: 0.70rem;
           letter-spacing: 0.13em;
           text-transform: uppercase;
           color: var(--pl-cyan);
@@ -1028,7 +1028,7 @@ export default function PlanetLevels() {
            added to the data without touching this rule. */
         .pl-gems {
           display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+          grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
           gap: 0.9rem;
           align-items: start;
         }
@@ -1043,7 +1043,7 @@ export default function PlanetLevels() {
         }
         .pl-ship-kicker {
           margin: 0;
-          font-size: 0.56rem;
+          font-size: 0.68rem;
           letter-spacing: 0.12em;
           text-transform: uppercase;
           color: var(--pl-quiet);
@@ -1069,7 +1069,7 @@ export default function PlanetLevels() {
           margin: 0 0 0.8rem;
           padding-bottom: 0.5rem;
           border-bottom: 1px solid var(--pl-line);
-          font-size: 0.62rem;
+          font-size: 0.70rem;
           letter-spacing: 0.08em;
           color: var(--pl-warm);
         }
@@ -1097,7 +1097,7 @@ export default function PlanetLevels() {
         }
         .pl-arc-beat.is-active { opacity: 1; }
         .pl-arc-skill {
-          font-size: 0.55rem;
+          font-size: 0.68rem;
           letter-spacing: 0.11em;
           text-transform: uppercase;
           color: var(--pl-warm);
@@ -1175,7 +1175,7 @@ export default function PlanetLevels() {
           .pl-card-id { min-width: 0; }
           .pl-card-ord {
             margin: 0;
-            font-size: 0.55rem;
+            font-size: 0.68rem;
             letter-spacing: 0.1em;
             text-transform: uppercase;
             color: var(--tone, var(--pl-cyan));
@@ -1198,7 +1198,7 @@ export default function PlanetLevels() {
             align-items: baseline;
           }
           .pl-card-key {
-            font-size: 0.54rem;
+            font-size: 0.68rem;
             letter-spacing: 0.09em;
             text-transform: uppercase;
             color: var(--pl-warm);

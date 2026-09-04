@@ -610,7 +610,7 @@ export default function LevelFlow() {
         }
         .lf-band-meta {
           margin: 0;
-          font-size: 0.66rem;
+          font-size: 0.72rem;
           color: var(--lf-quiet);
         }
 
@@ -684,7 +684,7 @@ export default function LevelFlow() {
         .lf-scroll-note {
           display: none;
           margin: 0;
-          font-size: 0.64rem;
+          font-size: 0.71rem;
           color: var(--lf-quiet);
         }
         @media (max-width: 1180px) {
@@ -745,7 +745,7 @@ export default function LevelFlow() {
           left: 0.5rem;
           transform: translateY(-100%);
           padding-bottom: 0.2rem;
-          font-size: 0.62rem;
+          font-size: 0.70rem;
           color: var(--lf-quiet);
           pointer-events: none;
         }
@@ -775,19 +775,19 @@ export default function LevelFlow() {
         }
         .lf-axis-num {
           display: none;
-          font-size: 0.62rem;
+          font-size: 0.70rem;
           color: var(--lf-quiet);
         }
         .lf-axis-name {
           display: block;
-          font-size: 0.66rem;
+          font-size: 0.72rem;
           color: var(--color-moonlight);
           line-height: 1.35;
         }
         .lf-axis-exp {
           display: block;
           margin-top: 0.2rem;
-          font-size: 0.6rem;
+          font-size: 0.70rem;
           color: var(--lf-quiet);
           line-height: 1.35;
         }
@@ -833,7 +833,7 @@ export default function LevelFlow() {
           align-items: baseline;
           gap: 0.3rem 0.6rem;
           margin: 0;
-          font-size: 0.62rem;
+          font-size: 0.70rem;
           color: var(--lf-quiet);
         }
         .lf-stage-mech { color: var(--color-moonlight); }
@@ -849,7 +849,7 @@ export default function LevelFlow() {
         .lf-field { display: grid; gap: 0.22rem; }
         .lf-field-label {
           margin: 0;
-          font-size: 0.58rem;
+          font-size: 0.68rem;
           color: var(--lf-amber);
         }
         .lf-objective {
@@ -875,7 +875,7 @@ export default function LevelFlow() {
           gap: 0.3rem;
         }
         .lf-hazard {
-          font-size: 0.62rem;
+          font-size: 0.70rem;
           padding: 0.2rem 0.42rem;
           border: 1px solid color-mix(in srgb, var(--color-mist) 34%, transparent);
           color: var(--lf-quiet);
@@ -892,7 +892,7 @@ export default function LevelFlow() {
         }
         .lf-exp {
           margin: 0;
-          font-size: 0.64rem;
+          font-size: 0.71rem;
           color: var(--color-moonlight);
         }
         .lf-meter {
@@ -902,7 +902,7 @@ export default function LevelFlow() {
         .lf-meter-fill { display: block; height: 100%; background: var(--lf-amber); }
         .lf-meter-read {
           margin: 0;
-          font-size: 0.58rem;
+          font-size: 0.68rem;
           color: var(--lf-quiet);
         }
 

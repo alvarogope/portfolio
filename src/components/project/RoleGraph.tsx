@@ -1080,7 +1080,7 @@ export default function RoleGraph({
         /* The tuned numbers. Boxed, so they read as a spec rather than as more
            sentence, and so two roles' budgets can be compared down the column. */
         .rg-kit-tuning {
-          font-size: 0.62rem;
+          font-size: 0.70rem;
           letter-spacing: 0.04em;
           padding: 0.12rem 0.4rem;
           border: 1px solid color-mix(in srgb, var(--color-silver) 30%, transparent);
@@ -1131,7 +1131,7 @@ export default function RoleGraph({
         }
         .rg-puzzle-fail-label {
           display: block;
-          font-size: 0.56rem;
+          font-size: 0.68rem;
           letter-spacing: 0.16em;
           color: color-mix(in srgb, var(--color-scarlet) 74%, var(--color-moonlight));
           margin-bottom: 0.12rem;
@@ -1205,7 +1205,7 @@ export default function RoleGraph({
         .rg-row-body { display: block; }
         .rg-row-who {
           display: block;
-          font-size: 0.66rem;
+          font-size: 0.72rem;
           color: var(--rg-quiet);
         }
         .rg-row-label {
@@ -1258,7 +1258,7 @@ export default function RoleGraph({
           margin-top: 0.28rem;
           padding: 0.08rem 0.4rem;
           border: 1px solid color-mix(in srgb, var(--color-gold) 42%, transparent);
-          font-size: 0.58rem;
+          font-size: 0.68rem;
           letter-spacing: 0.12em;
           color: var(--color-gold);
           line-height: 1.5;

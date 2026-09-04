@@ -465,7 +465,7 @@ export default function BeatChart() {
           justify-content: center;
           align-items: baseline;
           gap: 0.45rem;
-          font-size: 0.6rem;
+          font-size: 0.70rem;
           color: var(--color-gold);
           letter-spacing: 0.08em;
         }
@@ -555,12 +555,12 @@ export default function BeatChart() {
           color: var(--color-moonlight);
         }
         .bc-station-sub {
-          font-size: 0.6rem;
+          font-size: 0.70rem;
           line-height: 1.45;
           color: var(--bc-quiet);
         }
         .bc-station-phase {
-          font-size: 0.56rem;
+          font-size: 0.68rem;
           letter-spacing: 0.09em;
           text-transform: uppercase;
           color: color-mix(in srgb, var(--color-silver) 62%, var(--bc-quiet));
@@ -625,7 +625,7 @@ export default function BeatChart() {
           color: var(--color-moonlight);
         }
         .bc-colbtn-sub {
-          font-size: 0.55rem;
+          font-size: 0.68rem;
           letter-spacing: 0.09em;
           text-transform: uppercase;
           color: var(--bc-quiet);
@@ -634,7 +634,7 @@ export default function BeatChart() {
         .bc-rowhead {
           text-align: left;
           vertical-align: top;
-          font-size: 0.62rem;
+          font-size: 0.70rem;
           font-weight: 400;
           letter-spacing: 0.07em;
           text-transform: uppercase;
@@ -678,7 +678,7 @@ export default function BeatChart() {
           display: inline-block;
           margin-left: 0.45rem;
           padding: 0.08rem 0.35rem;
-          font-size: 0.52rem;
+          font-size: 0.68rem;
           letter-spacing: 0.14em;
           text-transform: uppercase;
           color: var(--bc-blood-ink);
@@ -711,7 +711,7 @@ export default function BeatChart() {
         .bc-sheet-id { min-width: 0; }
         .bc-sheet-kicker {
           margin: 0;
-          font-size: 0.6rem;
+          font-size: 0.70rem;
           letter-spacing: 0.09em;
           text-transform: uppercase;
           color: var(--color-gold);
@@ -726,7 +726,7 @@ export default function BeatChart() {
         }
         .bc-sheet-sub {
           margin: 0.2rem 0 0;
-          font-size: 0.62rem;
+          font-size: 0.70rem;
           color: var(--bc-quiet);
         }
 
@@ -743,14 +743,14 @@ export default function BeatChart() {
 
         .bc-groups {
           display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+          grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
           gap: 1.2rem 1.8rem;
         }
         .bc-group { min-width: 0; }
         .bc-group-title {
           margin: 0 0 0.6rem;
           padding-bottom: 0.35rem;
-          font-size: 0.6rem;
+          font-size: 0.70rem;
           font-weight: 400;
           letter-spacing: 0.12em;
           text-transform: uppercase;
@@ -766,7 +766,7 @@ export default function BeatChart() {
         .bc-group-dl { margin: 0; display: grid; gap: 0.55rem; }
         .bc-group-row { min-width: 0; }
         .bc-group-key {
-          font-size: 0.56rem;
+          font-size: 0.68rem;
           letter-spacing: 0.09em;
           text-transform: uppercase;
           color: var(--color-gold);
@@ -783,7 +783,7 @@ export default function BeatChart() {
         .bc-arc { margin: 0; }
         .bc-arc-caption {
           margin: 0 0 0.75rem;
-          font-size: 0.62rem;
+          font-size: 0.70rem;
           letter-spacing: 0.07em;
           color: var(--color-gold);
           padding-bottom: 0.5rem;
@@ -813,7 +813,7 @@ export default function BeatChart() {
         }
         .bc-arc-beat.is-active { opacity: 1; }
         .bc-arc-name {
-          font-size: 0.55rem;
+          font-size: 0.68rem;
           letter-spacing: 0.11em;
           text-transform: uppercase;
           color: var(--bc-quiet);
@@ -886,7 +886,7 @@ export default function BeatChart() {
           .bc-card-id { min-width: 0; }
           .bc-card-ord {
             margin: 0;
-            font-size: 0.56rem;
+            font-size: 0.68rem;
             letter-spacing: 0.09em;
             text-transform: uppercase;
             color: var(--color-gold);
@@ -909,7 +909,7 @@ export default function BeatChart() {
             align-items: baseline;
           }
           .bc-card-key {
-            font-size: 0.54rem;
+            font-size: 0.68rem;
             letter-spacing: 0.08em;
             text-transform: uppercase;
             color: var(--color-gold);

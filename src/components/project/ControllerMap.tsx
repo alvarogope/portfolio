@@ -370,7 +370,7 @@ export default function ControllerMap() {
           line-height: 1.65;
           color: color-mix(in srgb, var(--color-moonlight) 55%, var(--color-mist));
         }
-        .cm__hint { margin: 0; font-size: 0.66rem; color: var(--cm-quiet); }
+        .cm__hint { margin: 0; font-size: 0.72rem; color: var(--cm-quiet); }
 
         /* ---- the pairing ---- */
         .cm__grid {
@@ -528,7 +528,7 @@ export default function ControllerMap() {
         .cm__readout-idle {
           margin: 0;
           font-family: var(--font-mono);
-          font-size: 0.66rem;
+          font-size: 0.72rem;
           letter-spacing: 0.12em;
           line-height: 1.7;
           color: var(--cm-quiet);
@@ -574,7 +574,7 @@ export default function ControllerMap() {
         .cm__group { display: grid; gap: 0.4rem; align-content: start; }
         .cm__group-title {
           margin: 0;
-          font-size: 0.64rem;
+          font-size: 0.71rem;
           color: var(--color-lunar-gold);
           padding-bottom: 0.3rem;
           border-bottom: 1px solid var(--cm-edge);
@@ -609,7 +609,7 @@ export default function ControllerMap() {
               var(--cm-hue) calc(var(--cm-on) * 100%),
               color-mix(in srgb, var(--color-mist) 45%, transparent)
             );
-          font-size: 0.64rem;
+          font-size: 0.71rem;
           letter-spacing: 0.08em;
           color: color-mix(
             in srgb,
@@ -636,7 +636,7 @@ export default function ControllerMap() {
         .cm__combat-tag {
           padding: 0.06rem 0.4rem;
           border: 1px solid color-mix(in srgb, var(--color-scarlet) 50%, transparent);
-          font-size: 0.56rem;
+          font-size: 0.68rem;
           letter-spacing: 0.14em;
           color: color-mix(in srgb, var(--color-scarlet) 52%, var(--color-moonlight));
           white-space: nowrap;
@@ -683,7 +683,7 @@ export default function ControllerMap() {
           border-left: 2px solid color-mix(in srgb, var(--color-lunar-gold) 60%, transparent);
           background: var(--cm-panel);
         }
-        .cm__context-label { margin: 0; font-size: 0.66rem; color: var(--color-lunar-gold); }
+        .cm__context-label { margin: 0; font-size: 0.72rem; color: var(--color-lunar-gold); }
         .cm__context-body {
           margin: 0;
           font-size: 0.9rem;

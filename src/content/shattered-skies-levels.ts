@@ -476,12 +476,23 @@ export const spaceAudio = {
 /* ---- framing ------------------------------------------------------------ */
 
 /** The chart's claim, above everything. */
+/**
+ * THE ENUMERATION WAS CUT, AND ON PURPOSE.
+ *
+ * This used to name all five worlds and their skills in one sentence — "the
+ * core loop on Pyroterra, navigation and decryption on Dunestorm, …". The
+ * curriculum rail immediately below prints exactly those five skills under
+ * exactly those five worlds, and the matrix's "Teaches" row prints them a
+ * third time as full sentences. Three statements of one list inside one
+ * screen, and the two that stayed are the two that are also a control and a
+ * table you can read across.
+ *
+ * What is left is the CLAIM, which is the part no diagram can carry.
+ */
 export const teachingThesis =
-  "Five worlds, sequenced as a curriculum. Each one teaches a different skill and then assumes " +
-  "it forever: the core loop on Pyroterra, navigation and decryption on Dunestorm, traversal and " +
-  "resource management on Tidalor, advanced puzzles on Cryonix, and stealth and combat on " +
-  "Remnara — which is the skill set the finale is built out of. Played in that order, the game " +
-  "never explains the same thing twice.";
+  "Five worlds, sequenced as a curriculum: each one teaches a different skill and then assumes " +
+  "it forever, so the last world is built out of everything the first four taught. Played in " +
+  "that order, the game never explains the same thing twice.";
 
 /** Says out loud what this section is NOT, so the dossier is not re-read. */
 export const dossierPointer =

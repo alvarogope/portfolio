@@ -23,7 +23,13 @@
  *
  * `id` is the React key AND the emblem selector in `CastEmblems.tsx`
  * (`EMBLEMS[id]`), so adding a character means adding an emblem of that id.
+ *
+ * WHERE THE CARDS RENDER. On the deep-dive subpage, `/moon-knight/world` —
+ * not on the main page any more. Anything linking to a character must use
+ * `castHref` at the foot of this file, never a bare fragment.
  */
+
+import { deepDivePath } from "./moon-knight-deep-dive";
 
 export type CastId = "moon-knight" | "death" | "witch" | "druid" | "orpheus";
 
@@ -171,6 +177,24 @@ export const moonKnightCast: readonly CastMember[] = [
 
 /** DOM anchor for a character's card, so anything can deep-link to one. */
 export const castAnchor = (id: CastId) => `cast-${id}`;
+
+/**
+ * A LINK to a character's card — path included.
+ *
+ * WHY THIS IS NOT JUST `#${castAnchor(id)}` ANY MORE. The cast used to sit on
+ * the main page, so a fragment alone reached it. It now lives on the deep-dive
+ * subpage while the world map — which links to five characters by name — stayed
+ * on the main page, so those links have to carry the path or they resolve to a
+ * fragment that does not exist on the page the reader is standing on. That
+ * failure is SILENT: no error, no console line, the page simply does not
+ * scroll. Every link to a cast card must be built here.
+ *
+ * `base` is a parameter rather than a constant so the subpage itself can pass
+ * `""` and keep its own internal links as plain fragments — same-page links
+ * should not force a navigation.
+ */
+export const castHref = (id: CastId, base: string = deepDivePath) =>
+  `${base}#${castAnchor(id)}`;
 
 const castById = new Map(moonKnightCast.map((c) => [c.id, c]));
 

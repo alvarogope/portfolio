@@ -670,6 +670,15 @@ void AMKPlayerCharacter::Respawn()
           "Blueprint target-lock graph: a 200-unit sphere trace selecting the nearest tagged enemy and storing it for the camera to follow.",
       },
       {
+        id: "wb-equipment",
+        label: "WB_Equipment — the equipment screen",
+        caption:
+          "The one conventional menu in the game, and the reason the diegetic thesis on the main page is scoped rather than absolute. Swapping a sword for a bow is a rare, deliberate act performed in safety, and it wants a grid you can compare in — not a gesture. Built in UMG against the DB_Items data table, so a new item is a row rather than a widget.",
+        src: "/images/moon-knight/WB_Equipment.png",
+        alt:
+          "The WB_Equipment widget open in Unreal's UMG designer: a canvas with the character viewport in the centre and labelled Bow, Sword and Armor equipment slots down the right, with the widget hierarchy listed beside it.",
+      },
+      {
         id: "pcg-forest",
         label: "PCG forest — the level's ground cover",
         caption:

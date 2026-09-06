@@ -155,10 +155,12 @@ export const whoRemains = {
     "war over what is left of it.",
 } as const;
 
-/* ---- the handover -------------------------------------------------------
-   The one line that points at the planetary dossier. Deliberately carries no
-   planet names, no stats and no hazards: the survey does that itself, and
-   saying it twice would make the reader read it neither time. */
+/* ---- the handover: DELETED, and deliberately not replaced ---------------
+   There used to be a `bridge` const here — one line handing the reader from
+   this section to the planetary survey. The two sections have since MERGED
+   into one (`05 · The World & the Five Worlds` on the main page), which turned
+   that sentence into a pointer at the block it was already inside.
 
-export const bridge =
-  "What that premise became, world by world, is the survey below.";
+   Adjacency replaced it, exactly as it did in the Moon-Knight world/level
+   merge. If a handover line ever reappears here, check first whether the thing
+   it points at is still a separate section. */

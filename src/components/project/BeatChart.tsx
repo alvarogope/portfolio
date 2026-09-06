@@ -15,11 +15,12 @@ import {
   type LevelId,
 } from "@/content/moon-knight-levels";
 import { MoonPhaseGlyph } from "./MoonPhaseGlyph";
+import InteractiveHint from "./InteractiveHint";
 
 /**
  * Moon-Knight — the level design beat chart.
  *
- * The planning artifact for the whole game: four levels, nine design
+ * The planning artifact for the whole game: four levels, six design
  * dimensions, one screen. Four bands, in the order the chart is meant to be
  * read:
  *
@@ -32,7 +33,7 @@ import { MoonPhaseGlyph } from "./MoonPhaseGlyph";
  *      That stamp plus `beatStructureNote` under the rail is what keeps four
  *      moons here from contradicting the three above the narrative arc:
  *      Centralis is a location, not an act, and the note says so.
- *   2. THE MATRIX — nine dimensions against four levels. The dense view, and
+ *   2. THE MATRIX — six dimensions against four levels. The dense view, and
  *      the one worth reading in both directions: down a column is a level,
  *      across a row is an escalation. The boss row is emphasised because it is
  *      the one row where a cell is a whole encounter.
@@ -134,6 +135,7 @@ export default function BeatChart() {
 
   return (
     <div className="bc">
+      <InteractiveHint what="level" does="its full design sheet opens below the chart" />
       <p className="bc-thesis">{beatChartThesis}</p>
 
       {/* 1 — the moon rail */}
@@ -160,6 +162,12 @@ export default function BeatChart() {
                 tabRefs.current[l.id] = node;
               }}
               onClick={() => setSelected(l.id)}
+              /* Focus selects. The tablist was already on automatic
+                 activation for the arrow keys; making focus do it too means a
+                 link to `#bc-tab-<level>` — which the world map above now
+                 emits — actually opens that level's sheet, because a browser
+                 focuses a focusable fragment target. */
+              onFocus={() => setSelected(l.id)}
               onKeyDown={(event) => onRailKeyDown(event, i)}
             >
               <span className="mono bc-station-ord">
@@ -251,7 +259,7 @@ export default function BeatChart() {
         </table>
       </div>
 
-      {/* 2b — the matrix, narrow screens. Same nine dimensions, one level per
+      {/* 2b — the matrix, narrow screens. Same six dimensions, one level per
           card. Not interactive: the rail above is still on screen and is the
           only selector, so a phone gets one control surface, not two. */}
       <ul className="bc-cards">

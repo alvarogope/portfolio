@@ -86,6 +86,8 @@ export interface Contribution {
   
     eyebrow: string;
     systemsHook: string;
+    /** Optional. What of the project actually runs — see `moon-knight.ts`. */
+    built?: string;
     disciplines: string;
     scope: string;
     routingVerb: string;

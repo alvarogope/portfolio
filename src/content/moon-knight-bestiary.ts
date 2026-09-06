@@ -63,6 +63,23 @@ interface BestiaryEntryBase {
   accent: string;
 }
 
+/**
+ * A real capture of the fight, shown on the boss's own card.
+ *
+ * ABSORBED FROM THE OLD GALLERY. `boss-werewolf.png` used to sit in a strip of
+ * thumbnails at the foot of the page, roughly 1,500 words away from this entry,
+ * under a caption that re-explained the fight the card already describes. A
+ * picture of a boss belongs on that boss, where it is evidence for the claim
+ * beside it rather than decoration at the end — so the gallery dissolved and
+ * the image came here. `caption` says what the SHOT shows; it must never
+ * restate `lore` or `mechanic`, which the card already owns.
+ */
+export interface BossPlate {
+  src: string;
+  alt: string;
+  caption: string;
+}
+
 export interface BossEntry extends BestiaryEntryBase {
   tier: "boss";
   /** 1-based order the player meets them in. */
@@ -73,6 +90,8 @@ export interface BossEntry extends BestiaryEntryBase {
   /** One line, set in italics under the name. Drawn from the lore below. */
   epithet: string;
   mechanic: QuantumMechanic;
+  /** Present only where a capture of the fight exists. Most have none. */
+  plate?: BossPlate;
 }
 
 export interface EnemyEntry extends BestiaryEntryBase {
@@ -110,6 +129,12 @@ export const bestiaryBosses: readonly BossEntry[] = [
     },
     lore:
       "Sent by the Sun-Knight, captured and tortured. It tries to turn on the soldiers it came with.",
+    plate: {
+      src: "/images/moon-knight/boss-werewolf.png",
+      alt: "The Werewolf boss encounter at night: the knight facing the werewolf, with the named enemy health bar across the top of the screen.",
+      caption:
+        "The encounter as the player meets it. The named health bar is the one piece of conventional UI a boss fight is allowed — it marks the fight as an event.",
+    },
   },
   {
     id: "wizard-knight",

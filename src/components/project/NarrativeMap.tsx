@@ -1,6 +1,7 @@
 import {
   hiddenChoice,
   hosts,
+  mapNotes,
   mapSummary,
   premise,
   storyBeats,
@@ -8,6 +9,8 @@ import {
   teamNote,
   worldNotes,
 } from "@/content/shattered-skies-overview";
+import type { SsVariant } from "@/content/shattered-skies-deep-dive";
+import InteractiveHint from "./InteractiveHint";
 
 /**
  * Shattered Skies — "The Game": the context section, with the narrative
@@ -34,13 +37,26 @@ import {
  *   4. THE BEATS and THE ENDINGS as real HTML text.
  *
  * WHY 3 AND 4 BOTH EXIST. The map carries only names; the prose under it
- * carries the actual beats. That split is what makes the narrow-screen
- * fallback honest rather than lossy: below 900px the drawing is switched off
- * with `display: none` and the same content is already on the page as a
- * vertical rail of beats with the endings under it — nothing is lost but the
- * picture. It is also why the SVG is a single `role="img"` with a `<desc>`:
- * a screen reader gets one summary of the shape instead of forty loose
- * fragments of node text, then reads the real content below.
+ * carries the actual beats. It is also why the SVG is a single `role="img"`
+ * with a `<desc>`: a screen reader gets one summary of the shape instead of
+ * forty loose fragments of node text, then reads the real content below.
+ *
+ * SPLIT ACROSS TWO PAGES. `variant="main"` renders bands 1 and 3 plus the beat
+ * NAMES — the team context, the two hosts and the shape of the story, which is
+ * what the systems further down the main page need in order to land.
+ * `variant="deep"` renders band 2 and the written form of band 4: the world
+ * notes, each beat's body, the sealed-choice mechanism and the three endings.
+ *
+ * THE DIAGRAM STAYS ON MAIN, and is not drawn twice. It is built entirely from
+ * keys — `mapLabel`, `mapTag`, host names — so it costs the condensed page
+ * almost nothing in words while carrying the whole structure. The deep dive
+ * gets the prose the diagram is a picture OF, which is the split working: one
+ * literal per sentence, one render site each.
+ *
+ * BELOW 900px ON MAIN the drawing is switched off with `display: none` and the
+ * beat NAMES remain as a vertical rail. That is lossy compared with the old
+ * single-page version, which is why `mapNotes.narrow` says what is happening
+ * rather than implying the reader has everything.
  *
  * Static server component: no state, no client JavaScript.
  */
@@ -444,105 +460,134 @@ function NarrativeDiagram() {
   );
 }
 
-export default function NarrativeMap() {
-  return (
-    <div className="nm">
-      {/* ---- attribution, before anything it might be mistaken for ---- */}
-      <aside className="nm__credit" aria-label="Attribution">
-        <p className="mono nm__credit-tag">{teamNote.headline}</p>
-        <p className="nm__credit-role">
-          My role on it: <strong>{teamNote.role}</strong>
-        </p>
-        <p className="nm__credit-body">{teamNote.body}</p>
-      </aside>
+export default function NarrativeMap({ variant = "main" }: { variant?: SsVariant }) {
+  const deep = variant === "deep";
 
-      <p className="nm__premise">{premise}</p>
+  return (
+    <div className="nm" data-variant={variant}>
+      {/* ---- attribution, before anything it might be mistaken for ----
+          MAIN ONLY, and deliberately. `teamNote` is the page's canonical
+          "team of five, my role was Systems & World Designer" statement, and
+          the ownership map's rule is that no other section repeats it. The
+          deep dive links back to this section rather than restating it. */}
+      {!deep && (
+        <aside className="nm__credit" aria-label="Attribution">
+          <p className="mono nm__credit-tag">{teamNote.headline}</p>
+          <p className="nm__credit-role">
+            My role on it: <strong>{teamNote.role}</strong>
+          </p>
+          <p className="nm__credit-body">{teamNote.body}</p>
+        </aside>
+      )}
+
+      {!deep && <p className="nm__premise">{premise}</p>}
 
       {/* ---- the two hosts: also the map's colour key ---- */}
-      <ul className="nm__hosts">
-        {hosts.map((host) => (
-          <li key={host.id} className="nm__host" data-host={host.id}>
-            <p className="mono nm__host-tag">
-              <span className="nm__host-dot" aria-hidden="true" />
-              {host.tag}
-            </p>
-            <h3 className="nm__host-name">{host.name}</h3>
-            <p className="nm__host-body">{host.backstory}</p>
-          </li>
-        ))}
-      </ul>
-
-      {/* ---- the world ---- */}
-      <section className="nm__band" aria-labelledby="nm-world-title">
-        <h3 className="nm__band-title" id="nm-world-title">
-          The world
-        </h3>
-        <dl className="nm__world">
-          {worldNotes.map((note) => (
-            <div key={note.id} className="nm__world-note">
-              <dt className="mono nm__world-label">{note.label}</dt>
-              <dd className="nm__world-body">{note.body}</dd>
-            </div>
+      {!deep && (
+        <ul className="nm__hosts">
+          {hosts.map((host) => (
+            <li key={host.id} className="nm__host" data-host={host.id}>
+              <p className="mono nm__host-tag">
+                <span className="nm__host-dot" aria-hidden="true" />
+                {host.tag}
+              </p>
+              <h3 className="nm__host-name">{host.name}</h3>
+              <p className="nm__host-body">{host.backstory}</p>
+            </li>
           ))}
-        </dl>
-      </section>
+        </ul>
+      )}
 
-      {/* ---- the map ---- */}
-      <figure className="nm__figure">
-        <figcaption className="nm__figcap">
-          <h3 className="nm__band-title">Narrative structure</h3>
-          <p className="mono nm__figcap-meta">
-            Two backstories · {storyBeats.length} beats · {storyEndings.length} endings
-          </p>
-        </figcaption>
+      {/* ---- the world — DEEP DIVE ---- */}
+      {deep && (
+        <section className="nm__band" aria-labelledby="nm-world-title">
+          <h3 className="nm__band-title" id="nm-world-title">
+            The world
+          </h3>
+          <dl className="nm__world">
+            {worldNotes.map((note) => (
+              <div key={note.id} className="nm__world-note">
+                <dt className="mono nm__world-label">{note.label}</dt>
+                <dd className="nm__world-body">{note.body}</dd>
+              </div>
+            ))}
+          </dl>
+        </section>
+      )}
 
-        <div
-          className="nm__map"
-          role="group"
-          aria-label="Narrative structure map, scrolls horizontally"
-          tabIndex={0}
-        >
-          <NarrativeDiagram />
-        </div>
+      {/* ---- the map — MAIN ONLY ---- */}
+      {!deep && (
+        <figure className="nm__figure">
+          <figcaption className="nm__figcap">
+            <h3 className="nm__band-title">Narrative structure</h3>
+            <p className="mono nm__figcap-meta">
+              Two backstories · {storyBeats.length} beats · {storyEndings.length} endings
+            </p>
+          </figcaption>
 
-        <p className="nm__map-note nm__map-note--wide">
-          Every beat and every ending below is the same content, in full.
-        </p>
-        <p className="nm__map-note nm__map-note--narrow">
-          The map is drawn on wider screens. The same structure reads top to bottom here: the two
-          hosts above, the five beats below, then the three endings they lead to.
-        </p>
-      </figure>
+          {/* The site's shared chip, in pan mode. This figure has no targets —
+              nothing in it responds to a pointer — so it must NOT claim the
+              select-mode affordance. What it does have is a wide drawing in a
+              focusable, horizontally scrollable frame, and it used to say so
+              only inside an aria-label, where a sighted reader never met it. */}
+          <InteractiveHint
+            mode="pan"
+            what="map"
+            does="it is wider than the column on smaller screens"
+          />
 
-      {/* ---- the beats: the spine as real text, and the narrow-screen map ---- */}
-      <ol className="nm__beats">
+          <div
+            className="nm__map"
+            role="group"
+            aria-label="Narrative structure map, scrolls horizontally"
+            tabIndex={0}
+          >
+            <NarrativeDiagram />
+          </div>
+
+          <p className="nm__map-note nm__map-note--wide">{mapNotes.main}</p>
+          <p className="nm__map-note nm__map-note--narrow">{mapNotes.narrow}</p>
+        </figure>
+      )}
+
+      {/* ---- the beats ----
+          MAIN gets the spine as names: index and title, which is the same
+          content the diagram nodes carry and costs the condensed page nothing.
+          DEEP gets the written beat under each name. */}
+      <ol className="nm__beats" data-mode={deep ? "full" : "spine"}>
         {storyBeats.map((beat) => (
           <li key={beat.id} className="nm__beat" data-decisive={beat.decisive ? "true" : undefined}>
             <p className="mono nm__beat-index">{beat.index}</p>
             <h4 className="nm__beat-title">{beat.title}</h4>
-            <p className="nm__beat-body">{beat.body}</p>
+            {deep && <p className="nm__beat-body">{beat.body}</p>}
           </li>
         ))}
       </ol>
 
-      {/* ---- the mechanism the endings hang on ---- */}
-      <section className="nm__gatebox" aria-labelledby="nm-gate-title">
-        <h3 className="nm__band-title" id="nm-gate-title">
-          {hiddenChoice.label}
-        </h3>
-        <p className="nm__gatebox-body">{hiddenChoice.body}</p>
-      </section>
+      {/* ---- the mechanism the endings hang on — DEEP DIVE ---- */}
+      {deep && (
+        <section className="nm__gatebox" aria-labelledby="nm-gate-title">
+          <h3 className="nm__band-title" id="nm-gate-title">
+            {hiddenChoice.label}
+          </h3>
+          <p className="nm__gatebox-body">{hiddenChoice.body}</p>
+        </section>
+      )}
 
-      {/* ---- the endings ---- */}
-      <ul className="nm__endings">
-        {storyEndings.map((ending) => (
-          <li key={ending.id} className="nm__ending" data-tone={ending.tone}>
-            <h4 className="nm__ending-name">{ending.name}</h4>
-            <p className="mono nm__ending-cond">{ending.condition}</p>
-            <p className="nm__ending-body">{ending.outcome}</p>
-          </li>
-        ))}
-      </ul>
+      {/* ---- the endings — DEEP DIVE ----
+          The diagram on the main page names all three; what it cannot carry is
+          the pair of choices each one takes and what it costs. That is here. */}
+      {deep && (
+        <ul className="nm__endings">
+          {storyEndings.map((ending) => (
+            <li key={ending.id} className="nm__ending" data-tone={ending.tone}>
+              <h4 className="nm__ending-name">{ending.name}</h4>
+              <p className="mono nm__ending-cond">{ending.condition}</p>
+              <p className="nm__ending-body">{ending.outcome}</p>
+            </li>
+          ))}
+        </ul>
+      )}
 
       <style>{`
         .nm {
@@ -930,6 +975,24 @@ export default function NarrativeMap() {
           padding: 0;
           display: grid;
           gap: 1.4rem;
+        }
+        /* SPINE MODE (main page): five names, no bodies. Laid out as columns
+           rather than a tall rail, because five one-line entries stacked
+           vertically read as a list of missing paragraphs, where five across
+           read as a structure. The connector rule is dropped with them — it
+           joins beats down a column and there is no column any more. */
+        .nm__beats[data-mode="spine"] {
+          grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+          gap: 0.9rem 1.25rem;
+        }
+        .nm__beats[data-mode="spine"] .nm__beat {
+          padding-left: 0;
+          padding-top: 0.7rem;
+          border-top: 1px solid var(--nm-edge);
+        }
+        .nm__beats[data-mode="spine"] .nm__beat::before { display: none; }
+        .nm__beats[data-mode="spine"] .nm__beat[data-decisive="true"] {
+          border-top-color: color-mix(in srgb, var(--color-gold) 60%, transparent);
         }
         .nm__beat {
           position: relative;

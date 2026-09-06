@@ -7,7 +7,10 @@ export const shatteredSkies: Project = {
   pillar: true,
 
   facts: { engine: "Unity", role: "Systems & World Designer", team: "Team of 5", year: "2025" },
-  links: [],
+  /* The subpage. The main page was condensed to the built, working game; the
+     full story, the world's soul and the design reasoning live here. Named for
+     what a reader gets rather than for the site's structure. */
+  links: [{ label: "The world & the reasoning", url: "/shattered-skies/world" }],
 
   eyebrow: "UNITY · TEAM OF 5 · 2025",
   systemsHook: "Two players share one life and cannot understand each other. What you say in five clear seconds decides how it ends.",
@@ -17,8 +20,13 @@ export const shatteredSkies: Project = {
 
   posterAlt: "Shattered Skies key art placeholder",
 
+  /* The parasite's MECHANICS are deliberately not described here. `premise` in
+     shattered-skies-overview.ts owns them and states them two sections later,
+     and §07's telepathy block states their consequence. The vision names the
+     Symbiochord and moves on to what I designed, which is what this paragraph
+     is for. */
   vision:
-    "Shattered Skies binds two soldiers of enemy species to a single parasite, the Symbiochord: it fuses their fates so that if one dies, both die, and it inflicts pain when they fight or drift apart. They cannot speak a shared language. Across a hand-built miniature solar system, they must cooperate to survive, and along the way decide whether to trust the person they were raised to hate. I designed the world they move through and the systems that force them together: the planets and their physics, the interdependent puzzles, the traversal, and the knowledge-gated progression that turns understanding the universe into the way forward.",
+    "Shattered Skies binds two soldiers of enemy species to a single parasite, the Symbiochord, and gives them no shared language. Across a hand-built miniature solar system they have to cooperate to survive, and decide along the way whether to trust the person they were raised to hate. I designed the world they move through and the systems that force them together: the planets and their physics, the interdependent puzzles, the traversal, and the knowledge-gated progression that turns understanding the universe into the way forward.",
 
   /* The five worlds now live in src/content/shattered-skies-planets.ts, with the
      full survey data the planetary dossier and the orrery both read. */
@@ -31,26 +39,38 @@ export const shatteredSkies: Project = {
     resolution: "Knowledge-gated a five-planet system where understanding the physics is the upgrade.",
   },
 
+  /* ONE LINE EACH, AND THAT IS THE WHOLE POINT.
+
+     This block used to be the last thing on an 8,000-word page: four
+     paragraphs re-describing the jetpacks, the collision booster, the planetary
+     system and the gating rule, all of which are designed in full further down.
+     The ownership map called it "a fourth recap after 8,000 words".
+
+     It now sits at position 04, directly after the team context, where the same
+     four claims read as a promise of what is coming rather than a summary of
+     what has gone. Moving it without cutting it would only have relocated the
+     recap, so each entry is one sentence that NAMES the contribution and hands
+     off. Nothing here explains a mechanic; the sections below do that, once. */
   contributions: [
     {
       label: "The planetary system & world design",
       description:
-        "Designed the entire five-planet solar system: each planet's ecosystem, hazards, and secrets, researched against real gravity and orbital behaviour so that physics is a mechanic. This is level design at the scale of a solar system.",
+        "Five worlds researched against real gravity, orbit and tide behaviour, so the physics of the system is the thing the player is actually learning.",
     },
     {
       label: "Interdependent puzzle design",
       description:
-        "Designed the cooperative puzzles so that neither player can solve them alone, requiring simultaneous action, shared timing, and each player's asymmetric ability to complete.",
+        "Puzzles neither player can finish alone — built on simultaneous action, shared timing and the two characters' asymmetry.",
     },
     {
       label: "Traversal & asymmetry",
       description:
-        "Designed all traversal: the fuel-limited, weight-sensitive jetpacks (lighter Aevi flies better), the mid-air collision booster that rewards moving as one, and the character asymmetry where Drayk builds with the environment while Aevi moves objects without changing them, abilities that look alike but play completely differently.",
+        "All movement design: two bodies with opposite strengths, a weight-sensitive jetpack on a shared fuel supply, and a boost that only exists when both players commit at once.",
     },
     {
       label: "Knowledge-gated progression",
       description:
-        "Built the metroidvania progression around understanding rather than upgrades: players unlock the system by learning how it works, turning observation and deduction into the core advancement loop.",
+        "A metroidvania built around comprehension instead of upgrades: the system opens as the players work out how it moves.",
     },
   ],
 };

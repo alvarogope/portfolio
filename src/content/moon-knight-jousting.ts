@@ -15,6 +15,12 @@
 /* ---- the framing -------------------------------------------------------- */
 
 export const joustingIntro = {
+  /* NO `teacher` FIELD, DELIBERATELY. One was drafted — a six-word clause
+     introducing Orpheus — for the case where the joust sat on the main page
+     and the cast did not. The joust now renders on the deep dive, two
+     sections below the cast that owns him, so the clause would be a second
+     introduction to a character already described on the same page. It was
+     never rendered, and it is gone. */
   /** How the player meets it, and what it is for. Two sentences, no more. */
   tournament:
     "A best-of-three tournament against progressively harder knights. Win it for a " +

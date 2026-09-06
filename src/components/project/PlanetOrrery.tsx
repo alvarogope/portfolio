@@ -8,6 +8,7 @@ import {
   type PlanetId,
 } from "@/content/shattered-skies-planets";
 import { PlanetGlyph } from "./PlanetGlyphs";
+import InteractiveHint from "./InteractiveHint";
 
 /**
  * Shattered Skies — interactive orrery.
@@ -156,6 +157,16 @@ export default function PlanetOrrery({
     >
       <p className="orr__kicker">Orrery · Top-down system view</p>
 
+      {/* The chip goes ABOVE the stage, in the site's shared words. This
+          component used to carry its own quiet hint at the BOTTOM, inside the
+          status readout, where it was both the smallest text in the figure and
+          underneath the thing it was explaining. The readout now says only what
+          is selected; the instruction is here, where it is read first. */}
+      <InteractiveHint
+        what="world"
+        does="its survey entry opens below and the other four dim"
+      />
+
       {/* The backdrop click is a redundant shortcut for clearing — Escape and the
           Clear button do the same thing, so there is no keyboard-only path here. */}
       <div className="orr__stage" onClick={onStageClick}>
@@ -277,7 +288,9 @@ export default function PlanetOrrery({
             </>
           ) : (
             <span className="orr__status-hint">
-              Point at a world to preview it, or pick one to jump to its survey entry.
+              {/* No instruction here any more — it is in the chip above the
+                  stage. This says only what state the figure is in. */}
+              No world selected.
             </span>
           )}
         </p>
@@ -434,6 +447,21 @@ export default function PlanetOrrery({
           aspect-ratio: 1;
           border-radius: 50%;
           transition: box-shadow 260ms ease;
+          /* THE RESTING AFFORDANCE, and it is half of the pair the chip above
+             is the other half of. Telling a reader a figure is interactive
+             does not excuse a figure that looks inert, and five painted discs
+             on five rings look exactly like an illustration of a solar system.
+
+             A faint accent ring at rest says "these are objects, not
+             decoration". It is deliberately weak — the point is that hover and
+             selection have somewhere to escalate TO, so the three states read
+             as one scale rather than as on and off. */
+          box-shadow: 0 0 0 1px color-mix(in srgb, var(--orr-accent) 34%, transparent);
+        }
+        .orr__world:hover .orr__body,
+        .orr__world:focus-visible .orr__body,
+        .orr__world[data-state="active"] .orr__body {
+          box-shadow: 0 0 0 1.5px color-mix(in srgb, var(--orr-accent) 72%, transparent);
         }
         /* The pinned marker: a gap of void, then a hard accent ring. */
         .orr__world[aria-pressed="true"] .orr__body {

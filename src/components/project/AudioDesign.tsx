@@ -47,7 +47,30 @@ import {
  * hairlines, which reduced-motion turns off.
  */
 
-export default function AudioDesign({ children }: { children: ReactNode }) {
+/**
+ * TWO DEPTHS, ONE OWNER — see the same note on `DiegeticDesign`.
+ *
+ * `short` (main page) is the credit, `silenceThesis.line`, and the two real
+ * recordings. That is the deliberate deviation from "move the music wholesale":
+ * a recruiter pressing play and hearing a real score in ten seconds is
+ * EVIDENCE, not enthusiast depth. The 900 words of composer reasoning around it
+ * are the depth, and those move.
+ *
+ * `full` (deep-dive page) is the section unchanged, recordings included — the
+ * two pages both render `children`, and the caller decides which players to
+ * pass. Nothing is duplicated in text: the short variant renders
+ * `composerCredit` and `silenceThesis.line` by key and withholds
+ * `silenceThesis.body`, `villageThemes`, `instrumentMeanings` and
+ * `soundFeedback` entirely.
+ */
+export default function AudioDesign({
+  children,
+  variant = "full",
+}: {
+  children: ReactNode;
+  variant?: "full" | "short";
+}) {
+  const short = variant === "short";
   return (
     <div className="mkm">
       {/* 1 — whose music this is */}
@@ -66,11 +89,12 @@ export default function AudioDesign({ children }: { children: ReactNode }) {
       <section className="mkm-band">
         <h3 className="mono mkm-band-title">{silenceThesis.kicker}</h3>
         <p className="mkm-thesis">{silenceThesis.line}</p>
-        {silenceThesis.body.map((paragraph) => (
-          <p key={paragraph.slice(0, 32)} className="mkm-thesis-body">
-            {paragraph}
-          </p>
-        ))}
+        {!short &&
+          silenceThesis.body.map((paragraph) => (
+            <p key={paragraph.slice(0, 32)} className="mkm-thesis-body">
+              {paragraph}
+            </p>
+          ))}
       </section>
 
       {/* 3 — the two real tracks, untouched */}
@@ -82,78 +106,86 @@ export default function AudioDesign({ children }: { children: ReactNode }) {
         <div className="mkm-players">{children}</div>
       </section>
 
-      {/* 4 — the safe places, and the only calm music in the game */}
-      <section className="mkm-band">
-        <h3 className="mono mkm-band-title">The three village themes</h3>
-        <p className="mkm-lede">
-          The villages are where the knight is allowed to stop, so they get the only calm music
-          in the game — slow, and each one written to tell its own place&apos;s story.
-        </p>
-        <ul className="mkm-villages">
-          {villageThemes.map((v) => (
-            <li key={v.id} className="mkm-village">
-              <p className="mono mkm-village-tag">{v.instrumentation}</p>
-              <h4 className="mkm-village-place">{v.place}</h4>
-              <p className="mkm-body">{v.sound}</p>
-              <p className="mkm-why">
-                <span className="mono mkm-why-key">Why</span>
-                {v.why}
-              </p>
-            </li>
-          ))}
-        </ul>
-      </section>
-
-      {/* 5 — where the instrument itself is the information */}
-      <section className="mkm-band">
-        <h3 className="mono mkm-band-title">Instruments that mean something</h3>
-        <p className="mkm-lede">
-          The score is medieval folk almost everywhere. These four are where it deliberately
-          stops being that — and each break is telling the player something no line of dialogue
-          does.
-        </p>
-        <ul className="mkm-meanings">
-          {instrumentMeanings.map((m) => (
-            <li key={m.id} className="mkm-meaning">
-              <h4 className="mkm-pair">
-                <span className="mkm-pair-context">{m.context}</span>
-                <span className="mkm-pair-arrow" aria-hidden="true">
-                  →
-                </span>
-                <span className="mkm-pair-instrument">{m.instrument}</span>
-              </h4>
-              {m.echo && (
-                <p className="mono mkm-echo">
-                  <span className="mkm-echo-key">Echoes</span>
-                  {m.echo}
+      {/* Bands 4-6 are the composer's reasoning: the village themes, the
+          instrument meanings and the sound feedback. Deep-dive only, and not
+          rendered at all on the main page rather than hidden — hiding still
+          ships ~800 words into a document that was condensed to shrink. */}
+      {!short && (
+        <>
+        {/* 4 — the safe places, and the only calm music in the game */}
+        <section className="mkm-band">
+          <h3 className="mono mkm-band-title">The three village themes</h3>
+          <p className="mkm-lede">
+            The villages are where the knight is allowed to stop, so they get the only calm music
+            in the game — slow, and each one written to tell its own place&apos;s story.
+          </p>
+          <ul className="mkm-villages">
+            {villageThemes.map((v) => (
+              <li key={v.id} className="mkm-village">
+                <p className="mono mkm-village-tag">{v.instrumentation}</p>
+                <h4 className="mkm-village-place">{v.place}</h4>
+                <p className="mkm-body">{v.sound}</p>
+                <p className="mkm-why">
+                  <span className="mono mkm-why-key">Why</span>
+                  {v.why}
                 </p>
-              )}
-              <p className="mkm-body">{m.sound}</p>
-              <p className="mkm-why">
-                <span className="mono mkm-why-key">Why</span>
-                {m.why}
-              </p>
-            </li>
-          ))}
-        </ul>
-      </section>
+              </li>
+            ))}
+          </ul>
+        </section>
 
-      {/* 6 — the effects, kept small on purpose */}
-      <section className="mkm-band">
-        <h3 className="mono mkm-band-title">{soundFeedback.kicker}</h3>
-        <p className="mkm-body mkm-body--wide">{soundFeedback.line}</p>
-        <ul className="mkm-actions">
-          {soundFeedback.actions.map((a) => (
-            <li key={a} className="mono mkm-action">
-              {a}
-            </li>
-          ))}
-        </ul>
-        <p className="mkm-why">
-          <span className="mono mkm-why-key">Why</span>
-          {soundFeedback.why}
-        </p>
-      </section>
+        {/* 5 — where the instrument itself is the information */}
+        <section className="mkm-band">
+          <h3 className="mono mkm-band-title">Instruments that mean something</h3>
+          <p className="mkm-lede">
+            The score is medieval folk almost everywhere. These four are where it deliberately
+            stops being that — and each break is telling the player something no line of dialogue
+            does.
+          </p>
+          <ul className="mkm-meanings">
+            {instrumentMeanings.map((m) => (
+              <li key={m.id} className="mkm-meaning">
+                <h4 className="mkm-pair">
+                  <span className="mkm-pair-context">{m.context}</span>
+                  <span className="mkm-pair-arrow" aria-hidden="true">
+                    →
+                  </span>
+                  <span className="mkm-pair-instrument">{m.instrument}</span>
+                </h4>
+                {m.echo && (
+                  <p className="mono mkm-echo">
+                    <span className="mkm-echo-key">Echoes</span>
+                    {m.echo}
+                  </p>
+                )}
+                <p className="mkm-body">{m.sound}</p>
+                <p className="mkm-why">
+                  <span className="mono mkm-why-key">Why</span>
+                  {m.why}
+                </p>
+              </li>
+            ))}
+          </ul>
+        </section>
+
+        {/* 6 — the effects, kept small on purpose */}
+        <section className="mkm-band">
+          <h3 className="mono mkm-band-title">{soundFeedback.kicker}</h3>
+          <p className="mkm-body mkm-body--wide">{soundFeedback.line}</p>
+          <ul className="mkm-actions">
+            {soundFeedback.actions.map((a) => (
+              <li key={a} className="mono mkm-action">
+                {a}
+              </li>
+            ))}
+          </ul>
+          <p className="mkm-why">
+            <span className="mono mkm-why-key">Why</span>
+            {soundFeedback.why}
+          </p>
+        </section>
+        </>
+      )}
 
       <style>{`
         .mkm {

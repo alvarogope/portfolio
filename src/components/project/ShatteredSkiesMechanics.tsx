@@ -6,6 +6,11 @@ import {
   traversal,
   type Reasoning,
 } from "@/content/shattered-skies-mechanics";
+import type { SsVariant } from "@/content/shattered-skies-deep-dive";
+import { mainHref } from "@/content/shattered-skies-deep-dive";
+import DecodeOnView from "./DecodeOnView";
+import InteractiveHint from "./InteractiveHint";
+import Link from "next/link";
 
 /**
  * Shattered Skies — the core mechanics: three systems, one argument.
@@ -38,7 +43,34 @@ import {
  * further up the page on purpose; the two diagrams are describing the same
  * three endings and should not disagree about what colour Betrayal is.
  *
- * Static server component: no state, no client JavaScript.
+ * SPLIT ACROSS TWO PAGES, AND SPLIT BY KIND. `variant="main"` renders what the
+ * mechanic IS — the spine, each channel's label, tag and body, the telepathy
+ * figure, the ship's stations, the two traversal bodies and the booster.
+ * `variant="deep"` renders the `decision → why → impact` rails, which are the
+ * argument rather than the description. A reader on the main page learns what
+ * the systems do; a reader who follows the ramp learns why each one is shaped
+ * that way.
+ *
+ * No sentence renders on both pages. A channel's `label` does, because it is
+ * the key that joins a condensed entry to its reasoning — that is the whole
+ * mechanism of a keys-not-copy split.
+ *
+ * `block` exists because the deep dive splits this file's material across TWO
+ * of its sections — the communication reasoning is its own chapter, and the
+ * ship and traversal reasoning share another. One component with a block
+ * filter keeps a single stylesheet and a single set of class names; two
+ * components would have meant duplicating the CSS or hoisting it, and the CSS
+ * is the part most likely to drift.
+ *
+ * THE FOUR CHANNEL BODIES DECODE ON THE MAIN PAGE. `DecodeOnView` scrambles
+ * each one and resolves it when it scrolls into view — the effect this page
+ * used to carry on the same copy, before the four-card transmission band was
+ * superseded by this component and the effect went with the band by accident.
+ * It runs on the bodies only, never on the reasoning: decoding an argument
+ * withholds it, where decoding a one-line description performs it. The glyph
+ * noise is tinted with `--color-emerald`, the route's terminal green.
+ *
+ * Server component. `DecodeOnView` is the one client child.
  */
 
 /* ---- the telepathy figure: geometry -------------------------------------
@@ -254,197 +286,293 @@ function DesignPoint({ body }: { body: string }) {
   );
 }
 
-export default function ShatteredSkiesMechanics() {
+export default function ShatteredSkiesMechanics({
+  variant = "main",
+  /** Which material to render. See the `block` note in the file header. */
+  block = "all",
+}: {
+  variant?: SsVariant;
+  block?: "all" | "language" | "ship";
+}) {
+  const deep = variant === "deep";
+  const showLanguage = block === "all" || block === "language";
+  const showShip = block === "all" || block === "ship";
+
   return (
-    <div className="ssm">
+    <div className="ssm" data-variant={variant}>
       {/* No credit block here. The page states its attribution once, in
-          §02's teamNote — team of five, my seat was systems and world
-          design — and §05's levelsCredit is the only other one, because it
+          §03's teamNote — team of five, my seat was systems and world
+          design — and §06's levelsCredit is the only other one, because it
           makes a distinction (audio mine, level design shared) rather than a
           disclaimer. Four near-identical restatements of the same sentence
           made a strong page read as an anxious one. */}
 
-      {/* ---- the spine ---- */}
-      <section className="ssm__spine" aria-labelledby="ssm-spine-title">
-        <p className="mono ssm__spine-tag" id="ssm-spine-title">
-          {spine.tag}
-        </p>
-        <p className="ssm__spine-body">{spine.body}</p>
-        <p className="ssm__spine-note">{spine.note}</p>
-      </section>
+      {/* ---- the spine — MAIN ONLY ----
+          It is the claim the three blocks are each an instance of, and the
+          main page is where the claim is made. The deep dive is already
+          inside the argument by the time a reader arrives. */}
+      {!deep && (
+        <section className="ssm__spine" aria-labelledby="ssm-spine-title">
+          <p className="mono ssm__spine-tag" id="ssm-spine-title">
+            {spine.tag}
+          </p>
+          <p className="ssm__spine-body">{spine.body}</p>
+          <p className="ssm__spine-note">{spine.note}</p>
+        </section>
+      )}
 
       {/* ================= 01 · communication ================= */}
-      <article className="ssm__block ssm__block--signature" aria-labelledby="ssm-communication-title">
-        <BlockHeader {...communication.meta} titleId="ssm-communication-title" />
+      {showLanguage && (
+        <article
+          className="ssm__block ssm__block--signature"
+          aria-labelledby="ssm-communication-title"
+        >
+          {!deep && <BlockHeader {...communication.meta} titleId="ssm-communication-title" />}
+          {deep && (
+            <h3 className="ssm__deep-title" id="ssm-communication-title">
+              {communication.meta.title}
+            </h3>
+          )}
 
-        <p className="ssm__lead">{communication.lead}</p>
+          {!deep && <p className="ssm__lead">{communication.lead}</p>}
 
-        <ol className="ssm__channels">
-          {communication.channels.map((c) => (
-            <li key={c.id} className="ssm__channel" data-emphasis={c.emphasis ?? "none"}>
-              <div className="ssm__channel-head">
-                <p className="mono ssm__channel-order" aria-hidden="true">
-                  {c.order}
-                </p>
-                <div className="ssm__channel-titles">
-                  <h4 className="ssm__channel-label">{c.label}</h4>
-                  <p className="mono ssm__channel-tag">{c.tag}</p>
+          <ol className="ssm__channels" data-mode={deep ? "reasoning" : "body"}>
+            {communication.channels.map((c, i) => (
+              <li key={c.id} className="ssm__channel" data-emphasis={c.emphasis ?? "none"}>
+                <div className="ssm__channel-head">
+                  <p className="mono ssm__channel-order" aria-hidden="true">
+                    {c.order}
+                  </p>
+                  <div className="ssm__channel-titles">
+                    <h4 className="ssm__channel-label">{c.label}</h4>
+                    {!deep && <p className="mono ssm__channel-tag">{c.tag}</p>}
+                  </div>
+                  {c.emphasis && !deep && (
+                    <p className="mono ssm__channel-badge">{EMPHASIS_BADGE[c.emphasis]}</p>
+                  )}
                 </div>
-                {c.emphasis && (
-                  <p className="mono ssm__channel-badge">{EMPHASIS_BADGE[c.emphasis]}</p>
+
+                {/* The transmission. Staggered so four channels arrive as a
+                    queue rather than as one animation. */}
+                {!deep && (
+                  <p className="ssm__channel-body">
+                    <DecodeOnView text={c.body} delay={i * 260} />
+                  </p>
                 )}
-              </div>
-              <p className="ssm__channel-body">{c.body}</p>
-              <ReasoningRail reasoning={c.reasoning} />
-            </li>
-          ))}
-        </ol>
 
-        {/* ---- the figure: telepathy → the endings ---- */}
-        <figure className="ssm__flow" aria-labelledby="ssm-flow-heading">
-          <figcaption className="ssm__flow-cap">
-            <h4 className="ssm__flow-title" id="ssm-flow-heading">
-              {telepathyFlow.title}
-            </h4>
-            <p className="ssm__flow-sub">{telepathyFlow.caption}</p>
-          </figcaption>
-
-          {/* Scrolls rather than shrinks below about 1080px: the mono labels
-              are 10px in viewBox units and stop being readable well before the
-              picture stops fitting. Focusable so a keyboard can scroll it. */}
-          <div className="ssm__flow-frame" tabIndex={0} role="group" aria-label={telepathyFlow.title}>
-            <TelepathyFigure />
-          </div>
-          <p className="ssm__flow-hint">
-            The drawing scrolls sideways on narrow screens — the same flow is written out below it.
-          </p>
-
-          {/* The same flow as real text, at every width. The drawing is the
-              quick read; this is the one that survives everything. */}
-          <ol className="ssm__steps">
-            <li className="ssm__step">
-              <p className="mono ssm__step-tag">{telepathyFlow.window.column}</p>
-              <p className="ssm__step-body">
-                <strong>{telepathyFlow.window.label}.</strong> {telepathyFlow.window.detail}
-              </p>
-            </li>
-            <li className="ssm__step">
-              <p className="mono ssm__step-tag">{telepathyFlow.choicesLabel}</p>
-              <ul className="ssm__step-list">
-                {telepathyFlow.choices.map((c) => (
-                  <li key={c.id} data-tone={c.tone}>
-                    <strong>{c.label}.</strong> {c.gloss}
-                  </li>
-                ))}
-              </ul>
-            </li>
-            <li className="ssm__step">
-              <p className="mono ssm__step-tag">{telepathyFlow.endingsLabel}</p>
-              <ul className="ssm__step-list">
-                {telepathyFlow.endings.map((e) => (
-                  <li key={e.id} data-tone={e.tone}>
-                    <strong>{e.name}</strong> — <em>{e.combo}.</em> {e.gloss}
-                  </li>
-                ))}
-              </ul>
-            </li>
-          </ol>
-
-          <p className="ssm__flow-note">{telepathyFlow.note}</p>
-        </figure>
-
-        <p className="ssm__close">{communication.close}</p>
-      </article>
-
-      {/* ================= 02 · the ship ================= */}
-      <article className="ssm__block" aria-labelledby="ssm-ship-title">
-        <BlockHeader {...ship.meta} titleId="ssm-ship-title" />
-
-        <p className="mono ssm__ref">
-          Reference · <span className="ssm__ref-name">{ship.inspiration.ref}</span>
-        </p>
-        <p className="ssm__ref-body">{ship.inspiration.body}</p>
-
-        <p className="ssm__lead">{ship.lead}</p>
-
-        <ReasoningRail reasoning={ship.dualControl} />
-
-        {/* Small on purpose: this is a reference, not the argument. */}
-        <section className="ssm__aside" aria-labelledby="ssm-stations-title">
-          <h4 className="mono ssm__aside-title" id="ssm-stations-title">
-            {ship.stationsLabel}
-          </h4>
-          <dl className="ssm__stations">
-            {ship.stations.map((s) => (
-              <div key={s.id} className="ssm__station">
-                <dt className="mono ssm__station-name">{s.name}</dt>
-                <dd className="ssm__station-role">{s.role}</dd>
-              </div>
-            ))}
-          </dl>
-        </section>
-
-        {/* The three minigames used to be listed here as three cards. They now
-            live in the co-op design section below, taken apart into their
-            asymmetries — so this is a setup and a pointer, and nothing else. */}
-        <section className="ssm__aside" aria-labelledby="ssm-repairs-title">
-          <h4 className="mono ssm__aside-title" id="ssm-repairs-title">
-            {ship.repairs.label}
-          </h4>
-          <p className="ssm__aside-lead">{ship.repairs.body}</p>
-          <p className="ssm__pointer">
-            <span className="mono ssm__pointer-tag">In depth below</span>
-            <span className="ssm__pointer-body">{ship.repairs.pointer}</span>
-          </p>
-        </section>
-
-        <DesignPoint body={ship.designPoint} />
-      </article>
-
-      {/* ================= 03 · traversal ================= */}
-      <article className="ssm__block" aria-labelledby="ssm-traversal-title">
-        <BlockHeader {...traversal.meta} titleId="ssm-traversal-title" />
-
-        <p className="ssm__lead">{traversal.lead}</p>
-
-        {/* Same two colours the narrative map uses for the two hosts. */}
-        <ul className="ssm__bodies" aria-label={traversal.bodiesLabel}>
-          {traversal.bodies.map((b) => (
-            <li key={b.id} className="ssm__body" data-host={b.id}>
-              <p className="ssm__body-name">{b.name}</p>
-              <p className="mono ssm__body-build">{b.build}</p>
-              <p className="ssm__body-copy">{b.body}</p>
-            </li>
-          ))}
-        </ul>
-
-        <section className="ssm__aside" aria-labelledby="ssm-jetpack-title">
-          <h4 className="mono ssm__aside-title" id="ssm-jetpack-title">
-            {traversal.jetpackLabel}
-          </h4>
-          <p className="ssm__aside-lead">{traversal.jetpackBody}</p>
-          <ul className="ssm__uses">
-            {traversal.jetpackUses.map((u) => (
-              <li key={u.id} className="ssm__use">
-                <p className="mono ssm__use-label">{u.label}</p>
-                <p className="ssm__use-body">{u.body}</p>
+                {deep && <ReasoningRail reasoning={c.reasoning} />}
               </li>
             ))}
-          </ul>
-        </section>
+          </ol>
 
-        {/* The highlight of the block: emergent cooperation, so it gets the
-            panel and the reasoning rail. */}
-        <section className="ssm__highlight" aria-labelledby="ssm-booster-title">
-          <h4 className="ssm__highlight-title" id="ssm-booster-title">
-            {traversal.booster.label}
-          </h4>
-          <p className="ssm__highlight-body">{traversal.booster.body}</p>
-          <ReasoningRail reasoning={traversal.booster.reasoning} />
-        </section>
+          {/* ---- the figure: telepathy → the endings — MAIN ONLY ---- */}
+          {!deep && (
+            <figure className="ssm__flow" aria-labelledby="ssm-flow-heading">
+              <figcaption className="ssm__flow-cap">
+                <h4 className="ssm__flow-title" id="ssm-flow-heading">
+                  {telepathyFlow.title}
+                </h4>
+                <p className="ssm__flow-sub">{telepathyFlow.caption}</p>
+              </figcaption>
 
-        <DesignPoint body={traversal.designPoint} />
-      </article>
+              {/* Scrolls rather than shrinks below about 1080px: the mono labels
+                  are 10px in viewBox units and stop being readable well before the
+                  picture stops fitting. Focusable so a keyboard can scroll it —
+                  which is an affordance, so it gets the shared chip in pan mode
+                  rather than the ad-hoc line that used to sit under the frame. */}
+              <InteractiveHint
+                mode="pan"
+                what="flow"
+                does="it runs wider than the column on smaller screens"
+              />
+              <div
+                className="ssm__flow-frame"
+                tabIndex={0}
+                role="group"
+                aria-label={telepathyFlow.title}
+              >
+                <TelepathyFigure />
+              </div>
+              <p className="ssm__flow-hint">
+                The same flow is written out below it, at every width.
+              </p>
+
+              {/* The same flow as real text, at every width. The drawing is the
+                  quick read; this is the one that survives everything. */}
+              <ol className="ssm__steps">
+                <li className="ssm__step">
+                  <p className="mono ssm__step-tag">{telepathyFlow.window.column}</p>
+                  <p className="ssm__step-body">
+                    <strong>{telepathyFlow.window.label}.</strong> {telepathyFlow.window.detail}
+                  </p>
+                </li>
+                <li className="ssm__step">
+                  <p className="mono ssm__step-tag">{telepathyFlow.choicesLabel}</p>
+                  <ul className="ssm__step-list">
+                    {telepathyFlow.choices.map((c) => (
+                      <li key={c.id} data-tone={c.tone}>
+                        <strong>{c.label}.</strong> {c.gloss}
+                      </li>
+                    ))}
+                  </ul>
+                </li>
+                <li className="ssm__step">
+                  <p className="mono ssm__step-tag">{telepathyFlow.endingsLabel}</p>
+                  <ul className="ssm__step-list">
+                    {telepathyFlow.endings.map((e) => (
+                      <li key={e.id} data-tone={e.tone}>
+                        <strong>{e.name}</strong> — <em>{e.combo}.</em> {e.gloss}
+                      </li>
+                    ))}
+                  </ul>
+                </li>
+              </ol>
+
+              <p className="ssm__flow-note">{telepathyFlow.note}</p>
+            </figure>
+          )}
+
+          {!deep && <p className="ssm__close">{communication.close}</p>}
+        </article>
+      )}
+
+      {/* ================= 02 · the ship ================= */}
+      {showShip && (
+        <article className="ssm__block" aria-labelledby="ssm-ship-title">
+          {!deep && <BlockHeader {...ship.meta} titleId="ssm-ship-title" />}
+          {deep && (
+            <h3 className="ssm__deep-title" id="ssm-ship-title">
+              {ship.meta.title}
+            </h3>
+          )}
+
+          {!deep && (
+            <>
+              <p className="mono ssm__ref">
+                Reference · <span className="ssm__ref-name">{ship.inspiration.ref}</span>
+              </p>
+              <p className="ssm__ref-body">{ship.inspiration.body}</p>
+
+              <p className="ssm__lead">{ship.lead}</p>
+
+              {/* Small on purpose: this is a reference, not the argument. */}
+              <section className="ssm__aside" aria-labelledby="ssm-stations-title">
+                <h4 className="mono ssm__aside-title" id="ssm-stations-title">
+                  {ship.stationsLabel}
+                </h4>
+                <dl className="ssm__stations">
+                  {ship.stations.map((st) => (
+                    <div key={st.id} className="ssm__station">
+                      <dt className="mono ssm__station-name">{st.name}</dt>
+                      <dd className="ssm__station-role">{st.role}</dd>
+                    </div>
+                  ))}
+                </dl>
+              </section>
+
+              {/* The three minigames used to be listed here as three cards. They
+                  now live in the co-op design section, taken apart into their
+                  asymmetries — so this is a setup and a pointer, and nothing else.
+
+                  S2: the pointer is a LINK, and its address is resolved from
+                  `mainHref` rather than typed, because this block renders on the
+                  main page and on the deep dive and "below" is only true on one
+                  of them. */}
+              <section className="ssm__aside" aria-labelledby="ssm-repairs-title">
+                <h4 className="mono ssm__aside-title" id="ssm-repairs-title">
+                  {ship.repairs.label}
+                </h4>
+                <p className="ssm__aside-lead">{ship.repairs.body}</p>
+                <p className="ssm__pointer">
+                  <span className="mono ssm__pointer-tag">In depth</span>
+                  <span className="ssm__pointer-body">
+                    {ship.repairs.pointer}{" "}
+                    <Link className="ssm__pointer-link" href={mainHref("coop", variant)}>
+                      {ship.repairs.linkLabel}
+                    </Link>
+                  </span>
+                </p>
+              </section>
+
+              <DesignPoint body={ship.designPoint} />
+            </>
+          )}
+
+          {deep && <ReasoningRail reasoning={ship.dualControl} />}
+        </article>
+      )}
+
+      {/* ================= 03 · traversal ================= */}
+      {showShip && (
+        <article className="ssm__block" aria-labelledby="ssm-traversal-title">
+          {!deep && <BlockHeader {...traversal.meta} titleId="ssm-traversal-title" />}
+          {deep && (
+            <h3 className="ssm__deep-title" id="ssm-traversal-title">
+              {traversal.meta.title}
+            </h3>
+          )}
+
+          {!deep && (
+            <>
+              <p className="ssm__lead">{traversal.lead}</p>
+
+              {/* Same two colours the narrative map uses for the two hosts. */}
+              <ul className="ssm__bodies" aria-label={traversal.bodiesLabel}>
+                {traversal.bodies.map((b) => (
+                  <li key={b.id} className="ssm__body" data-host={b.id}>
+                    <p className="ssm__body-name">{b.name}</p>
+                    <p className="mono ssm__body-build">{b.build}</p>
+                    <p className="ssm__body-copy">{b.body}</p>
+                  </li>
+                ))}
+              </ul>
+
+              <section className="ssm__aside" aria-labelledby="ssm-jetpack-title">
+                <h4 className="mono ssm__aside-title" id="ssm-jetpack-title">
+                  {traversal.jetpackLabel}
+                </h4>
+                <p className="ssm__aside-lead">{traversal.jetpackBody}</p>
+              </section>
+
+              {/* The highlight of the block: emergent cooperation. The panel is
+                  here; the reasoning behind it is on the deep dive. */}
+              <section className="ssm__highlight" aria-labelledby="ssm-booster-title">
+                <h4 className="ssm__highlight-title" id="ssm-booster-title">
+                  {traversal.booster.label}
+                </h4>
+                <p className="ssm__highlight-body">{traversal.booster.body}</p>
+              </section>
+
+              <DesignPoint body={traversal.designPoint} />
+            </>
+          )}
+
+          {deep && (
+            <>
+              {/* The three environmental uses of the thruster. They belong with
+                  the reasoning rather than the description: each one is a
+                  decision to make movement double as a verb, and the main page
+                  states that in one clause inside `jetpackBody`. */}
+              <section className="ssm__aside" aria-labelledby="ssm-jetpack-uses-title">
+                <h4 className="mono ssm__aside-title" id="ssm-jetpack-uses-title">
+                  The thruster as an environmental verb
+                </h4>
+                <ul className="ssm__uses">
+                  {traversal.jetpackUses.map((u) => (
+                    <li key={u.id} className="ssm__use">
+                      <p className="mono ssm__use-label">{u.label}</p>
+                      <p className="ssm__use-body">{u.body}</p>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+
+              <h4 className="ssm__highlight-title">{traversal.booster.label}</h4>
+              <ReasoningRail reasoning={traversal.booster.reasoning} />
+            </>
+          )}
+        </article>
+      )}
 
       <style>{`
         .ssm {
@@ -693,6 +821,44 @@ export default function ShatteredSkiesMechanics() {
           line-height: 1.7;
           color: var(--color-moonlight);
         }
+        /* THE TRANSMISSION, MID-DECODE.
+
+           Terminal green while the glyphs are still noise, the normal body
+           colour once the sentence has resolved. The --color-emerald var is the
+           route token — the old TransmissionCard hardcoded #5FD98A for this
+           and could drift from the palette; it cannot now.
+
+           tabular-nums and the mono stack are NOT used: the point is that the
+           reader's own sentence is being repaired, so it has to be the same
+           face and the same metrics it will settle into. The glyph set is
+           chosen so the scrambled line occupies the same box, which is what
+           stops the paragraph reflowing as it resolves.
+
+           4.9:1 on this ground, and it is transient decoration over text that
+           is also present, unscrambled, in the accessibility tree. */
+        .ssm__channel-body [data-decoding="true"] {
+          color: var(--color-emerald);
+          /* Stops a half-decoded word being read as a spelling mistake. */
+          opacity: 0.92;
+        }
+
+        /* ---- the deep dive's own headings ----
+           On the main page each block gets the full BlockHeader — order,
+           kicker, title, standfirst. On the deep dive the section already has
+           a numbered SectionHeading above it, so a second full header would
+           be two title systems arguing. One line, at h3. */
+        .ssm__deep-title {
+          margin: 0;
+          font-family: var(--font-hero);
+          font-size: 1.35rem;
+          font-weight: 600;
+          letter-spacing: 0.01em;
+          line-height: 1.25;
+          color: var(--color-moonlight);
+        }
+        /* Reasoning mode: no body copy between the label and the rail, so the
+           channels want tighter spacing than the described version. */
+        .ssm__channels[data-mode="reasoning"] { gap: 2.25rem; }
 
         /* ---- the figure ---- */
         /* min-width: 0 on the figure and its scroll frame: belt and braces
@@ -911,6 +1077,20 @@ export default function ShatteredSkiesMechanics() {
           font-size: 0.89rem;
           line-height: 1.7;
           color: var(--ssm-quiet);
+        }
+        /* S2 — the hand-off is a real link now, because after the split the
+           thing it points at may be on another page. Underlined at rest: a
+           coloured word with no other cue is not an affordance. */
+        .ssm__pointer-link {
+          color: var(--ssm-cyan);
+          text-decoration: underline;
+          text-decoration-color: color-mix(in srgb, var(--ssm-cyan) 45%, transparent);
+          text-underline-offset: 0.22em;
+          white-space: nowrap;
+        }
+        .ssm__pointer-link:hover,
+        .ssm__pointer-link:focus-visible {
+          text-decoration-color: currentColor;
         }
 
         /* Ship systems: a reference, kept deliberately small. */

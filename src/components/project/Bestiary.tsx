@@ -8,6 +8,7 @@ import {
   type WeaknessType,
 } from "@/content/moon-knight-bestiary";
 import { CreatureEmblem, EmblemSprite } from "./BestiaryEmblems";
+import BossPlateArch from "./BossPlateArch";
 
 /**
  * Moon-Knight — the bestiary, as an illuminated codex plate.
@@ -303,6 +304,7 @@ export default function Bestiary({ kicker }: { kicker?: string }) {
           padding-top: 0.85rem;
           margin-top: auto;
         }
+
         .mkb__card--enemy .mkb__lore { font-style: italic; color: var(--mkb-quiet); font-size: 0.82rem; }
 
         /* ---- weakness tag ---- */
@@ -348,8 +350,23 @@ function BossCard({ boss }: { boss: BossEntry }) {
       style={{ "--mkb-accent": boss.accent } as React.CSSProperties}
     >
       <div className="mkb__card-head">
+        {/* ONE VISUAL SLOT PER CARD, whatever fills it.
+
+            The Werewolf is the only creature a capture exists of, and it used
+            to be rendered as an extra figure further down the card — a whole
+            additional band on one card in a grid of eleven, which made the
+            other ten look like they were missing something rather than making
+            this one look better evidenced. The capture now fills the arch
+            instead of the drawn emblem: same slot, same frame, same size, so
+            the grid stays even and the photograph reads as the strongest card
+            rather than the odd one. Its caption moved into the viewer, where
+            the detail it describes is actually legible. */}
         <div className="mkb__arch mkb__arch--boss">
-          <CreatureEmblem id={boss.id} />
+          {boss.plate ? (
+            <BossPlateArch plate={boss.plate} bossName={boss.name} />
+          ) : (
+            <CreatureEmblem id={boss.id} />
+          )}
         </div>
         <p className={"mono mkb__rank" + (boss.isFinal ? " mkb__rank--final" : "")}>
           {boss.isFinal ? "Final Boss" : boss.rankLabel}

@@ -18,6 +18,10 @@ export const moonKnight: Project = {
        unconditionally, so a "#" url ships as a live link to nowhere. */
     { label: "Game engineering", url: "/moon-knight/engineering" },
     { label: "Quantum toolkit", url: "/moon-knight/engineering/quantum" },
+    /* The third subpage. The main page was condensed to the built work; the
+       story, the cast, the symbolism and the score live here in full. Named
+       for what a reader gets rather than for the site's structure. */
+    { label: "The world & the score", url: "/moon-knight/world" },
   ],
 
   eyebrow: "UE5 · C++ & BLUEPRINTS · SOLO PROJECT · 2025",
@@ -30,8 +34,31 @@ export const moonKnight: Project = {
     "Moon-Knight key art. Armoured knight beneath a full moon, moon-phase health bar on the breastplate.",
   showcase: "Shown at Develop:Brighton 2025",
 
+  /* Trimmed to the pitch and the provenance. The closing clause about the C++
+     rebuild was cut: §12 tells that story properly, with a timeline and two
+     links, and this was its fourth telling counting both engineering pages. */
   vision:
-    "Moon-Knight asks a question most action RPGs never do: what if the game's fantasy powers obeyed the rules of quantum physics? I designed five combat abilities from real quantum principles, wove them into the lore of the Old Gods, and built the systems that make them feel dangerous to use. It began as my MA dissertation, where the theoretical research and the playable game were one project, both awarded a Distinction, and it continues now as a personal engineering project rebuilding those mechanics in C++.",
+    "Moon-Knight asks a question most action RPGs never do: what if the game's fantasy powers obeyed the rules of quantum physics? I designed five combat abilities from real quantum principles, wove them into the lore of the Old Gods, and built the systems that make them dangerous to use. It began as my MA dissertation — the theoretical research and the playable game were one project, both awarded a Distinction.",
+
+  /* THE BREADTH BLOCK, AND THE RULE IT NOW KEEPS.
+     Five disciplines named in a recruiter's vocabulary, in about 100 words.
+     Its job is to say WHAT WORK WAS DONE — not to preview the sections that
+     show it. Four of these bullets used to do both, and the overlap was
+     verbatim: the five quantum principles were listed here and again in the
+     sigil readout, the roses appeared here and in `white-rose-xp`, and the
+     moon HUD and the moonlight compass were named here and in the diegetic
+     thesis. Each bullet now names the deliverable and the judgement behind
+     it, and lets the owning section carry the example. */
+  /* WHAT ACTUALLY RUNS, in one sentence, under the vision on §01.
+     The overview's job is "what is the game, and what of it works" — the
+     vision answers the first half and this answers the second. It names no
+     system that a section below then re-describes: the COUNTS beside it are
+     derived from the data at render time, and the qualities here are the ones
+     no count can carry (solo, shippable, shown to the public). */
+  built:
+    "It is not a prototype: the game is playable end to end, and every part of it is mine — the " +
+    "systems, the levels, the creatures, the interface, the C++ and Blueprint that runs it, and " +
+    "the score underneath it.",
 
   contributions: [
     {
@@ -42,23 +69,23 @@ export const moonKnight: Project = {
     {
       label: "Quantum ability design",
       description:
-        "Translated five quantum-computing principles (decoherence, entanglement, NOT gates, Majorana states, and time-state superposition) into abilities a player can feel, each with a distinct risk profile.",
+        "Derived five combat abilities from real quantum-computing principles, each with its own risk profile and its own way of going wrong in the player's hands.",
     },
     {
       label: "Anti-farming economy",
       description:
-        "Built the White Rose XP economy: experience exists only as roses stained in boss blood, so the game cannot be ground out. Difficulty is regulated by the player getting better, not the character getting stronger.",
+        "Built the White Rose XP economy and the progression it feeds: a currency the player cannot manufacture, and a difficulty curve tuned on that assumption.",
       accent: "scarlet",
     },
     {
       label: "Diegetic UI",
       description:
-        "Kept the interface inside the world: a moon-phase health bar on the armour, a cooldown ring around it, and the knight raising his sword to catch moonlight instead of consulting a compass.",
+        "Designed an interface with no HUD overlay — every readout the player needs replaced by something in the world — and decided the one place where a conventional menu was still the better tool.",
     },
     {
       label: "Engineering",
       description:
-        "Built the game in Unreal Engine 5 with C++ and Blueprints, including behaviour-tree AI, data-driven equipment, and a Game Instance persistence layer, and am now rebuilding the quantum mechanics as a standalone C++ library.",
+        "Built the game in Unreal Engine 5, and drew the line the codebase still follows: what earns its place in C++, and what is better left as a Blueprint graph.",
     },
   ],
 
@@ -114,39 +141,20 @@ export const moonKnight: Project = {
   },
 
   /* The controls diagram used to be the third entry here. It is now the
-     coded pad in section 09 (`ControllerMap`), beside the diegetic systems
+     coded pad in section 06 (`ControllerMap`), beside the diegetic systems
      it is evidence for — a picture of a mapping could not be read aloud,
      themed or corrected. `controls.png` stays in /public as the source the
      bindings were transcribed from. */
-  /* Frames from the game. Stills crop to fill their tile and open the viewer;
-     entries with `video` are silent loops that play in place.
 
-     The annotated level-design plates are NOT here — they live under §11,
-     where the callouts are the point and a crop would destroy them. Nothing
-     appears in both places. */
-  gallery: [
-    {
-      src: "/images/moon-knight/boss-werewolf.png",
-      alt: "The Werewolf boss encounter at night, with a named enemy health bar",
-      caption: "Boss encounter. The Werewolf, one of the fights that teaches a quantum ability under pressure, with the named enemy health bar.",
-    },
-    {
-      src: "",
-      video: "/images/moon-knight/combo.mp4",
-      alt: "The four-hit sword combo chaining, each input landing inside the previous swing's continuation window",
-      caption: "The combo chain in motion. Four hits, each one only continuing if the next input lands inside the previous swing's window — the timing no still can show. The graph behind it is on the engineering page.",
-    },
-    {
-      src: "",
-      video: "/images/moon-knight/miniboss.mp4",
-      alt: "The mini-boss encounter in play: the enemy towering over the knight, and the dodge used to get out of its swing",
-      caption: "The mini-boss. Scale is the mechanic here — the thing is far bigger than you, so the dodge stops being optional and starts being the only answer to its reach.",
-    },
-    {
-      src: "",
-      video: "/images/moon-knight/werewolf_dodge_attack.mp4",
-      alt: "The Werewolf boss fight: dodging through an attack and answering it in the recovery window",
-      caption: "The Werewolf, fought rather than framed. Dodge through the swing, answer in its recovery — the loop the whole encounter is tuned around. The still above is the moment you meet it; §11 is the arena it happens in.",
-    },
-  ],
+  /* NO `gallery` FIELD ANY MORE, AND THAT IS THE POINT.
+     The section-ownership map's verdict on the page-foot gallery was
+     `Dissolve`: every caption re-explained a section above it. The still
+     (`boss-werewolf.png`) is now absorbed onto the Werewolf's bestiary card,
+     where it is evidence beside the claim it proves. The three video loops
+     were promoted rather than absorbed — they are the only proof the game
+     RUNS, and absorbing them would have scattered them past where a first-pass
+     reader stops. They now lead the page from
+     `src/content/moon-knight-in-motion.ts`, which owns them.
+     `Project.gallery` stays optional in the schema; other projects still use
+     it. */
 };

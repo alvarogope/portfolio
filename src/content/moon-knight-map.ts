@@ -43,7 +43,7 @@ import {
   type BestiaryEntry,
   type BestiaryId,
 } from "./moon-knight-bestiary";
-import { castAnchor, getCastMember, type CastId, type CastMember } from "./moon-knight-cast";
+import { castHref, getCastMember, type CastId, type CastMember } from "./moon-knight-cast";
 import { getBeatLevel, type BeatLevel, type LevelId } from "./moon-knight-levels";
 import {
   getNarrativeAct,
@@ -290,8 +290,15 @@ export function getMarker(id: MarkerId): MapMarker {
 
 /** One resolved reference: the entry itself, and where its card lives. */
 export interface RegionRef<T> {
+  /**
+   * Link to that entry's card. NOT always a bare fragment: the bestiary is
+   * still on the main page beside this map, so creature links stay
+   * `#bestiary-<id>`, but the cast moved to the deep-dive subpage, so
+   * character links are full paths (`/moon-knight/world#cast-witch`) built by
+   * `castHref`. Mixing the two is correct and deliberate — each link points at
+   * wherever its card actually renders.
+   */
   entry: T;
-  /** Fragment link to that entry's card, e.g. `#cast-witch`. */
   href: string;
 }
 
@@ -314,9 +321,11 @@ export function resolveRegion(id: MarkerId): ResolvedRegion | null {
   const { profile } = getMarker(id);
   if (!profile) return null;
 
+  /* Cross-page on purpose — the cast renders on `/moon-knight/world` while
+     this map renders on `/moon-knight`. See `castHref`. */
   const cast = (profile.cast ?? []).map((castId) => ({
     entry: getCastMember(castId),
-    href: `#${castAnchor(castId)}`,
+    href: castHref(castId),
   }));
   const enemies = (profile.enemies ?? []).map((beastId) => ({
     entry: bestiaryById[beastId],
@@ -342,18 +351,30 @@ export function resolveRegion(id: MarkerId): ResolvedRegion | null {
 export const regionProfileLabels = {
   cast: "Who is here",
   guards: "What guards it",
-  when: "When in the story",
-  objective: "Objective",
+  /**
+   * The hand-off row, and the reason there is no `objective` any more.
+   *
+   * The map and the beat chart are one section now, half a screen apart, and
+   * they were both printing the level's objective — the chart from
+   * `cells.objective`, the map from `act.fragment`. A place's OBJECTIVE is a
+   * plan fact and the chart owns it. What the map owes the reader instead is
+   * the pointer: this place is played as that level, and here is its sheet.
+   */
+  plan: "Played as",
   boss: "Boss",
 } as const;
+
+/** The label on the hand-off link into the beat chart's own rail. */
+export const planLinkSuffix = "open its design sheet";
 
 /**
  * The hand-off, printed once under the profile. The map says what is where;
  * every name in it is a link to the section that says what it IS.
  */
 export const regionProfilePointer =
-  "Every name here is a link. The creatures are designed in §04 · The Creatures, the characters in " +
-  "§07 · The Cast, and the levels are planned dimension by dimension in §11 · The Beat Chart.";
+  "Every name here is a link. Creature names open their bestiary entry above, character names " +
+  "open their card on the deep dive, and the level a place is played as opens its own design " +
+  "sheet on the chart below.";
 
 /** The map's own description, for readers who never see the image. */
 export const mapAlt =

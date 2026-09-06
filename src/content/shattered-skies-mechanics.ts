@@ -16,6 +16,23 @@
  * traversal makes it physical. `spine` is that claim said once, so the section
  * has a thesis rather than three loose subsections.
  *
+ * WHERE THIS FILE RENDERS, AFTER THE SPLIT. The MAIN page gets the claim and
+ * its evidence: the spine, each channel's label, tag and `body`, the telepathy
+ * flow diagram, the ship's stations and the two traversal bodies. The DEEP DIVE
+ * gets the `reasoning` triples — `decision → why → impact` for every channel,
+ * `ship.dualControl`, `traversal.booster.reasoning` — and the `jetpackUses`.
+ *
+ * The two pages never render the same sentence. A channel's `label` appears on
+ * both because it is the KEY that joins the condensed entry to its reasoning;
+ * everything else has exactly one render site.
+ *
+ * THE FOUR CHANNEL BODIES DECODE. `DecodeOnView` scrambles each `body` and
+ * resolves it when it scrolls into view. That is not decoration bolted on: this
+ * copy is the direct descendant of the four `TransmissionCard` bodies the page
+ * used to render, and a sentence that arrives as noise and resolves is the
+ * section's own argument performed on the section's own words. Keep the bodies
+ * SHORT for that reason — a decoding paragraph is a paragraph withheld.
+ *
  * WEIGHTING IS DELIBERATE. The communication system is the signature mechanic
  * and carries the fullest treatment: four channels, each with its own design
  * reasoning, plus the telepathy → endings flow, which is the clearest single
@@ -81,12 +98,10 @@ export const spine: Spine = {
     "cannot understand, the ship neither of you can fly alone, and the jump neither of you can " +
     "make without the other.",
   note:
-    "The design question was never “how do we let two players work together”; co-op " +
-    "does that by default. It was “how do we make trust cost something”. So the " +
-    "systems withhold the cheapest thing in multiplayer — clear speech — and then hand the " +
-    "players problems that cannot be solved without it. What is left is a game where cooperation " +
-    "has to be improvised, negotiated in gestures and half-heard panic, and risked before it is " +
-    "ever earned.",
+    "The design question was never “how do we let two players work together” — co-op does that " +
+    "by default. It was “how do we make trust cost something”. So the systems withhold the " +
+    "cheapest thing in multiplayer, clear speech, and hand the players problems that cannot be " +
+    "solved without it.",
 };
 
 /* ==========================================================================
@@ -129,12 +144,10 @@ export const communication: CommunicationSection = {
   },
 
   lead:
-    "Most co-op games hand players a channel and trust them to use it well. Shattered Skies takes " +
-    "the channel apart. Voice is broken on purpose, body language is broken on purpose, and " +
-    "clarity exists only as a rare collectible that lasts five seconds. The four systems below " +
-    "are one mechanic seen at four zoom levels, and they escalate: noise, then a rule the " +
-    "software cannot enforce, then a vocabulary that betrays you, then the one window where you " +
-    "can finally say something — and have to decide whether it will be true.",
+    "Most co-op games hand players a channel and trust them with it. Shattered Skies takes the " +
+    "channel apart. The four systems below escalate: noise, then a rule the software cannot " +
+    "enforce, then a vocabulary that betrays you, then the one window where you can finally " +
+    "speak — and have to decide whether to lie.",
 
   channels: [
     {
@@ -172,8 +185,8 @@ export const communication: CommunicationSection = {
       emphasis: "meta",
       body:
         "Players agree not to discuss the story outside the distorted voice chat. The restriction " +
-        "lives outside the game to protect the fiction inside it — it mirrors the characters' " +
-        "inability to openly share their motives, and it keeps every intention ambiguous.",
+        "lives outside the game to protect the fiction inside it, and it keeps every intention " +
+        "ambiguous.",
       reasoning: {
         decision:
           "Write a rule the software cannot enforce, and count it as part of the design rather " +
@@ -196,10 +209,9 @@ export const communication: CommunicationSection = {
       label: "Gestures that get lost in translation",
       tag: "Non-verbal signals · some render differently per player",
       body:
-        "Simple non-verbal gestures — but some of them render differently to each player, so even " +
-        "body language is lost in translation. Puzzles are built to require gestures to " +
-        "cooperate: signalling timing, directing attention, marking which of two levers is yours. " +
-        "Players have to invent a shared gesture-language across a divide that keeps moving.",
+        "Simple non-verbal gestures — but some render differently to each player, so even body " +
+        "language is lost in translation. Players have to invent a shared vocabulary across a " +
+        "divide that keeps moving.",
       reasoning: {
         decision:
           "Give players a non-verbal vocabulary — then break part of it too, so the same signal " +
@@ -223,10 +235,9 @@ export const communication: CommunicationSection = {
       tag: "Rare resource · 5 seconds · filter off",
       emphasis: "payoff",
       body:
-        "A rare resource grants a brief telepathic link: five seconds with the voice filter " +
-        "removed and speech perfectly clear. The scarcity is the point — five seconds is never " +
-        "enough to say everything, so you must choose your words carefully. And what you say in " +
-        "these windows, truth or deceit, feeds directly into the game's endings.",
+        "A rare resource grants five seconds with the filter off and speech perfectly clear. Never " +
+        "enough to say everything — and what you say in the window, true or false, feeds straight " +
+        "into the endings.",
       reasoning: {
         decision:
           "Make clarity a scarce collectible rather than a permanent unlock, cap it at five " +
@@ -248,10 +259,9 @@ export const communication: CommunicationSection = {
   ],
 
   close:
-    "Four systems, one escalation: the noise makes incomprehension real, the out-of-game rule " +
-    "keeps it honest, the gestures make players build something across it, and the telepathy " +
-    "window puts a price on the one thing they have been missing all game. Every other mechanic " +
-    "in Shattered Skies is played through this one.",
+    "One escalation: the noise makes incomprehension real, the out-of-game rule keeps it honest, " +
+    "the gestures make players build across it, and the window puts a price on the one thing they " +
+    "have missed all game. Every other mechanic in the game is played through this one.",
 };
 
 /* ---- the telepathy → endings flow ---------------------------------------
@@ -385,6 +395,8 @@ export interface RepairsPointer {
   body: string;
   /** The one line that hands the depth to the co-op design section. */
   pointer: string;
+  /** Link text for that hand-off. The href is built at the render site. */
+  linkLabel: string;
 }
 
 export interface ShipSection {
@@ -471,10 +483,15 @@ export const ship: ShipSection = {
       "Asteroid fields and the hazards between worlds do real damage, and damage is repaired by " +
       "hand, mid-flight, while the other player keeps the ship alive. Nobody can afford to leave " +
       "their station for long, so every repair is a second job taken on under load.",
+    /* S2 — no direction word. This block renders on the main page and its
+       reasoning renders on the deep dive, so "below" is true on one page and
+       false on the other. The render site resolves the address; this file
+       states the fact and stops. */
     pointer:
       "Three minigames handle it — Circuit Realignment, Seal Hull Breach and Calibrate Sensors. " +
-      "Each one splits the knowledge or the control between the two players in a different way, " +
-      "and all three are taken apart in the co-op design section below.",
+      "Each one splits the knowledge or the control between the two players in a different way.",
+    /** The link text. The address is resolved by the component. */
+    linkLabel: "How the three splits work",
   },
 
   designPoint:

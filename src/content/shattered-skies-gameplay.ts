@@ -79,12 +79,10 @@ export const thesis: Thesis = {
     "back together is to talk, and talking is the one thing Shattered Skies has already taken " +
     "away.",
   note:
-    "That is the whole design in one sentence, and it is why the minigames are not skill tests. " +
-    "The difficulty is never in the maze, the weld or the waveform; it is in the sentence you " +
-    "cannot say. So players stop trying to say it. They start hammering a rhythm, barking a " +
-    "syllable at a pitch that means left, thumping twice for stop — and within a few attempts " +
-    "the pair are running a vocabulary nobody on the team designed. The minigames are the " +
-    "pressure that manufactures it.",
+    "Which is why the minigames are not skill tests. The difficulty is never in the maze, the " +
+    "weld or the waveform; it is in the sentence you cannot say. So players stop trying to say " +
+    "it — a rhythm hammered out, a syllable at a pitch that means left, two thumps for stop — " +
+    "and the pair end up running a vocabulary nobody on the team designed.",
   moves: [
     {
       label: "Split",
@@ -251,20 +249,18 @@ export const minigames: MinigameSection = {
       split: {
         label: "The split",
         body:
-          "Knowledge on one side, control on the other, with no overlap at all. The player holding " +
-          "the input has no map; the player holding the map has no input. We tested a version " +
-          "where the blind player could see one cell ahead and it collapsed immediately — a " +
-          "sliver of vision is enough to solve it alone, slowly, and the second player becomes a " +
-          "commentator. The split has to be total for the guide to matter.",
+          "Knowledge on one side, control on the other, with no overlap. We playtested a version " +
+          "where the blind player could see one cell ahead and it collapsed immediately: a sliver " +
+          "of vision is enough to solve it alone, and the guide becomes a commentator. The split " +
+          "has to be total for the guide to matter.",
       },
       barrierTwist: {
         label: "The twist",
         body:
           "The guide knows the answer and cannot say it. “Up” and “left” come through the " +
           "distortion as the same smeared vowel, and they are the two most dangerous words in the " +
-          "game to get wrong. So the guide stops using words. What replaces them is invented on " +
-          "the spot and specific to that pair — a rising hum for up, a short bark for left, " +
-          "silence held for stop — and it has to be built while the strike counter is live.",
+          "game to get wrong. So the guide stops using words — a rising hum for up, a short bark " +
+          "for left, silence held for stop — and builds that while the strike counter is live.",
       },
       failure: {
         label: "The cost",
@@ -324,21 +320,18 @@ export const minigames: MinigameSection = {
       split: {
         label: "The split",
         body:
-          "This one splits the control instead of the knowledge, and it is the sharpest of the " +
-          "three because both players can see exactly what needs to happen. Nothing is hidden; " +
-          "the frustration is purely that half the tool is in someone else's hands. A diagonal — " +
-          "the shape most cracks actually take — is not two inputs one after the other, it is two " +
-          "inputs held at the same rate at the same moment, which is a thing you have to agree on " +
-          "before you start.",
+          "Control split instead of knowledge, and it is the sharpest of the three because both " +
+          "players can see exactly what needs to happen. Nothing is hidden; half the tool is " +
+          "simply in someone else's hands. A diagonal — the shape most cracks take — is not two " +
+          "inputs in turn, it is two inputs held at the same rate at the same moment.",
       },
       barrierTwist: {
         label: "The twist",
         body:
           "What the pair need to exchange is not a direction, it is a tempo — how fast, starting " +
           "when, easing off where. The distortion strips the words but keeps the rhythm, which is " +
-          "the one thing that survives the filter intact. Pairs work this out by accident and " +
-          "then lean on it: a counted-in pulse, a held note that means keep going, a sharp one " +
-          "that means stop. The channel that cannot carry a sentence turns out to carry a beat.",
+          "the one thing that survives the filter intact. The channel that cannot carry a " +
+          "sentence turns out to carry a beat.",
       },
       failure: {
         label: "The cost",
@@ -354,9 +347,9 @@ export const minigames: MinigameSection = {
         summary:
           "One hull plate in the centre with a jagged crack across it and a single welder sitting " +
           "on the crack. From the left, a cyan axis line runs in to the welder and continues " +
-          "through it as a left–right double arrow: that is player A's control, horizontal only. " +
+          "through it as a left–right double arrow: that is the Horizontal seat's control. " +
           "From the right, a warm line drops below the plate, turns, and rises into the welder as " +
-          "an up–down double arrow: that is player B's control, vertical only. Above the plate, " +
+          "an up–down double arrow: that is the Vertical seat's control. Above the plate, " +
           "an arc joining the two players' control blocks breaks in the middle, where the label " +
           "“distorted voice” sits.",
         barrier: "Distorted voice",
@@ -575,11 +568,28 @@ export const puzzlePattern: PuzzleSection = {
    description of the access model ever reappears in this file, it is in the
    wrong one. */
 
+/**
+ * S1 — THIS POINTER IS NOW CROSS-PAGE, AND THAT IS WHY IT CARRIES A LINK.
+ *
+ * It used to say "further up this page", which was true while the co-op
+ * section and the planetary system were both on `/shattered-skies`. After the
+ * split the co-op section's FULL copy renders on `/shattered-skies/world`,
+ * while the orrery and the dossier stay on the main page — the hard constraint
+ * S5, because selecting a world scrolls to its dossier card through a DOM
+ * query and the two cannot be separated.
+ *
+ * So the same sentence is read from two different pages, and "further up this
+ * page" is wrong on one of them. The body no longer claims a direction, and the
+ * href is built by `mainHref('worlds', from)` at the render site, which knows
+ * which page it is on. Never hardcode this fragment.
+ */
 export const gatingPointer = {
   label: "Where access is designed",
   body:
-    "Access to the five worlds is gated by knowledge rather than by keys, and that rule is part " +
-    "of the planetary system further up this page — stated there, and drawn on the orbits it is " +
-    "actually about. The puzzles below are what happens once a pair is standing somewhere; the " +
-    "system decides where they can usefully stand.",
+    "Access to the five worlds is gated by knowledge rather than by keys. That rule belongs to " +
+    "the planetary system — stated there, and drawn on the orbits it is actually about. The " +
+    "puzzles here are what happens once a pair is standing somewhere; the system decides where " +
+    "they can usefully stand.",
+  /** The link text. The address is resolved by the component, not by this file. */
+  linkLabel: "The world & the five worlds",
 } as const;

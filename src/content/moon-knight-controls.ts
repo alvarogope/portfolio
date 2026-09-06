@@ -118,7 +118,7 @@ export const controlBindings: readonly ControlBinding[] = [
     group: "sticks",
     action: "Stealth",
     note:
-      "Clicking the stick you are already moving with. Going quiet is a change to how you walk, so it is bound to the thing that walks.",
+      "Clicking the stick you already move with. Going quiet is a change to how you walk, so it is bound to the thing that walks.",
     source: "alvaro",
   },
   {
@@ -136,7 +136,7 @@ export const controlBindings: readonly ControlBinding[] = [
     group: "sticks",
     action: "Lock on to target",
     note:
-      "The same symmetry: the camera stick takes the camera decision. Clicking it hands the framing to the game and puts the fight in the centre of the screen.",
+      "The same symmetry: the camera stick takes the camera decision. Clicking it hands the framing to the game.",
     source: "alvaro",
   },
 
@@ -148,7 +148,7 @@ export const controlBindings: readonly ControlBinding[] = [
     group: "face",
     action: "Heal",
     note:
-      "The harp. Healing is a thing the knight stops and plays, so it sits on a face button rather than behind a menu — there is no inventory to open and no potion to select.",
+      "The harp. Healing is something the knight stops and plays, so it sits on a face button. There is no inventory to open and no potion to select.",
     source: "gdd",
   },
   {
@@ -166,7 +166,7 @@ export const controlBindings: readonly ControlBinding[] = [
     group: "face",
     action: "Dodge",
     note:
-      "Unlimited, with i-frames. There is no block bound anywhere on the pad, which is the clearest reading of the no-guard decision: defence had to be a movement, so it is bound like one.",
+      "Unlimited, with i-frames. No block is bound anywhere on the pad — defence had to be a movement, so it is bound like one.",
     source: "gdd",
   },
   {
@@ -186,7 +186,7 @@ export const controlBindings: readonly ControlBinding[] = [
     group: "shoulder",
     action: "Raise weapon",
     note:
-      "The navigation gesture: the knight lifts the sword to catch the moonlight and the blade points the way. It is a shoulder button and not a map screen, which is the whole diegetic argument in one binding.",
+      "The navigation gesture: lift the sword, catch the moonlight, and the blade points the way. A shoulder button, not a map screen.",
     source: "gdd",
   },
   {
@@ -198,7 +198,7 @@ export const controlBindings: readonly ControlBinding[] = [
     combat: {
       action: "Parry",
       why:
-        "The bow is an opener — you draw it on something that has not noticed you yet — so the trigger is free the moment a fight starts. Parry takes it over there, which puts the game's highest-risk defensive move under the finger that was doing nothing anyway.",
+        "The bow is an opener, drawn on something that has not noticed you yet. That leaves the trigger free the moment a fight starts, so parry takes it over — the highest-risk defensive move goes under the idle finger.",
     },
     source: "alvaro",
   },
@@ -219,7 +219,7 @@ export const controlBindings: readonly ControlBinding[] = [
     combat: {
       action: "Strong melee",
       why:
-        "The same reasoning as LT, mirrored: picking things up is not a combat verb, so the right trigger is idle in a fight and the heavy attack is the obvious thing to put there — light on the bumper, heavy on the trigger, which is where a player's hand already expects it.",
+        "LT's reasoning, mirrored. Picking things up is not a combat verb, so the right trigger is idle in a fight. Light on the bumper, heavy on the trigger, which is where a hand already expects them.",
     },
     source: "alvaro",
   },
@@ -232,7 +232,7 @@ export const controlBindings: readonly ControlBinding[] = [
     group: "dpad",
     action: "The spell grid — select and cast a quantum ability",
     note:
-      "Four directions for the four abilities the player is ever given: Master of Matters, Instability, Inversion and Elliptical Force. The fifth, Double Superposition, is enemy-exclusive by design and has no key on the grid — which is the clearest possible statement of that decision, made in the control scheme rather than in prose.",
+      "Four directions for the four abilities the player is ever given: Master of Matters, Instability, Inversion and Elliptical Force. The fifth is enemy-exclusive, so it has no key on the grid. The decision is stated in the control scheme rather than in prose.",
     source: "alvaro",
   },
 
@@ -265,10 +265,10 @@ export const controlsIntro = {
   kicker: "The pad",
   title: "Every action, on one controller",
   body:
-    "The scheme the game is built to. Three things are worth reading off it rather than out of a " +
-    "paragraph: there is no block button anywhere on the pad, the two systems a conventional RPG " +
-    "would bury in menus — finding your way, and healing — are both bound to controls you can " +
-    "reach mid-fight, and two of the triggers change meaning the moment a fight starts.",
+    "The scheme the game is built to. Three things are worth reading off it. There is no block " +
+    "button anywhere on the pad. Wayfinding and healing sit on controls you can reach mid-fight, " +
+    "where a conventional RPG would bury both in menus. And two triggers change meaning the " +
+    "moment a fight starts.",
   hint: "Point at a control on the pad, or at a row in the list — the other lights up, and its reasoning reads out here.",
 };
 
@@ -276,11 +276,10 @@ export const controlsIntro = {
 export const contextNote = {
   label: "Triggers that change in combat",
   body:
-    "LT and RT each carry two actions. Out of combat they are the bow and the hands — an opener " +
-    "you draw on something that has not seen you, and picking things up. Neither is any use once " +
-    "a fight has started, so in combat the same two fingers become parry and the heavy attack. " +
-    "Nothing is modal and nothing has to be toggled: the game already knows whether you are in a " +
-    "fight, because the combat state drives the health readout too.",
+    "LT and RT each carry two actions. Out of combat they are the bow and the hands. Neither is " +
+    "any use once a fight starts, so the same two fingers become parry and the heavy attack. " +
+    "Nothing is modal and nothing is toggled — the game already knows whether you are fighting, " +
+    "because the same combat state drives the health readout.",
 };
 
 /** The pad's text equivalent, for the SVG's description. */

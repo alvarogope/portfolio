@@ -9,6 +9,7 @@ import {
   type ControlGroup,
   type ControlId,
 } from "@/content/moon-knight-controls";
+import InteractiveHint from "./InteractiveHint";
 
 /**
  * Moon-Knight — the control scheme, drawn rather than screenshotted.
@@ -247,9 +248,16 @@ export default function ControllerMap() {
         <p className="mono cm__kicker">{controlsIntro.kicker}</p>
         <h3 className="cm__title">{controlsIntro.title}</h3>
         <p className="cm__body-copy">{controlsIntro.body}</p>
-        <p className="mono cm__hint" aria-hidden="true">
-          {controlsIntro.hint}
-        </p>
+        {/* The shared chip replaces this component's own quiet mono line. It
+            is the same control the world map, the beat chart and the quantum
+            sigil wear, so a reader learns the convention once instead of
+            four times. `controlsIntro.hint` still renders inside the readout
+            below as its idle state, which is where it belongs — it describes
+            what the empty panel is waiting for. */}
+        <InteractiveHint
+          what="control"
+          does="the pad and the list light up together, and its reasoning reads out beside them"
+        />
       </header>
 
       <div className="cm__grid">

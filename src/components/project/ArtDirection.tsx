@@ -67,27 +67,61 @@ function TranslationCard({ item, index }: { item: SublimeTranslation; index: num
 
 /* ---- the section -------------------------------------------------------- */
 
-export default function ArtDirection() {
+/**
+ * TWO DEPTHS, ONE OWNER — see the same note on `DiegeticDesign`.
+ *
+ * `short` (main page) keeps the thesis line, the palette, and the ONE
+ * translation marked `key` — darkness-as-mechanic, where the aesthetic stops
+ * being mood and becomes difficulty. That entry is kept on the main page
+ * precisely because it is the systems half of this section: a look that changes
+ * the rules is evidence a recruiter is reading the page for.
+ *
+ * `full` (deep-dive page) is the section unchanged.
+ *
+ * The short variant renders `artThesis.line`, `palette`, `paletteNote` and the
+ * flagged `sublimeTranslations` entry — all owner keys. It types no summary of
+ * its own; only `artThesis.body`, the other translations and `visualDecisions`
+ * are withheld.
+ */
+export default function ArtDirection({
+  variant = "full",
+}: {
+  variant?: "full" | "short";
+}) {
+  const short = variant === "short";
+  /* The crossing entry. Falling back to the first keeps the short variant
+     rendering something real if the flag is ever dropped from the content. */
+  const keyMove = sublimeTranslations.find((t) => t.key) ?? sublimeTranslations[0];
+  const keyMoveIndex = sublimeTranslations.indexOf(keyMove);
+
   return (
     <div className="mka">
       {/* 1 — the thesis */}
       <section className="mka-band mka-band--thesis">
         <h3 className="mono mka-band-title">{artThesis.kicker}</h3>
         <p className="mka-thesis">{artThesis.line}</p>
-        {artThesis.body.map((paragraph) => (
-          <p key={paragraph.slice(0, 32)} className="mka-thesis-body">
-            {paragraph}
-          </p>
-        ))}
+        {!short &&
+          artThesis.body.map((paragraph) => (
+            <p key={paragraph.slice(0, 32)} className="mka-thesis-body">
+              {paragraph}
+            </p>
+          ))}
       </section>
 
-      {/* 2 — what the principle actually decides */}
+      {/* 2 — what the principle actually decides. The short variant shows only
+          the entry where the aesthetic crosses into the rules. */}
       <section className="mka-band">
-        <h3 className="mono mka-band-title">How the Sublime becomes design</h3>
+        <h3 className="mono mka-band-title">
+          {short ? "Where the look becomes difficulty" : "How the Sublime becomes design"}
+        </h3>
         <ol className="mka-moves">
-          {sublimeTranslations.map((item, i) => (
-            <TranslationCard key={item.id} item={item} index={i} />
-          ))}
+          {short ? (
+            <TranslationCard key={keyMove.id} item={keyMove} index={keyMoveIndex} />
+          ) : (
+            sublimeTranslations.map((item, i) => (
+              <TranslationCard key={item.id} item={item} index={i} />
+            ))
+          )}
         </ol>
       </section>
 
@@ -113,31 +147,36 @@ export default function ArtDirection() {
         <p className="mka-lede">{paletteNote}</p>
       </section>
 
-      {/* 4 — framing and composition, decision → why */}
-      <section className="mka-band">
-        <h3 className="mono mka-band-title">Deliberate visual decisions</h3>
-        <dl className="mka-decisions">
-          {visualDecisions.map((d) => (
-            <div key={d.id} className="mka-decision">
-              <dt className="mka-decision-name">{d.decision}</dt>
-              <dd className="mka-decision-why">
-                <span className="mono mka-why-key">Why</span>
-                {d.why}
-                {d.pillars && (
-                  <span className="mka-pillars">
-                    {d.pillars.map((p) => (
-                      <span key={p.subject} className="mka-pillar">
-                        <span className="mka-pillar-subject">{p.subject}</span>
-                        <span className="mono mka-pillar-stands">{p.stands}</span>
-                      </span>
-                    ))}
-                  </span>
-                )}
-              </dd>
-            </div>
-          ))}
-        </dl>
-      </section>
+      {/* 4 — framing and composition, decision → why. Deep-dive only, and
+          NOT RENDERED at all on the main page rather than hidden with CSS:
+          hiding it would still ship ~350 words into the document the main page
+          was condensed to shrink. */}
+      {!short && (
+        <section className="mka-band">
+          <h3 className="mono mka-band-title">Deliberate visual decisions</h3>
+          <dl className="mka-decisions">
+            {visualDecisions.map((d) => (
+              <div key={d.id} className="mka-decision">
+                <dt className="mka-decision-name">{d.decision}</dt>
+                <dd className="mka-decision-why">
+                  <span className="mono mka-why-key">Why</span>
+                  {d.why}
+                  {d.pillars && (
+                    <span className="mka-pillars">
+                      {d.pillars.map((p) => (
+                        <span key={p.subject} className="mka-pillar">
+                          <span className="mka-pillar-subject">{p.subject}</span>
+                          <span className="mono mka-pillar-stands">{p.stands}</span>
+                        </span>
+                      ))}
+                    </span>
+                  )}
+                </dd>
+              </div>
+            ))}
+          </dl>
+        </section>
+      )}
 
       <style>{`
         .mka {

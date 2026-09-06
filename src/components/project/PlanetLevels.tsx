@@ -17,6 +17,7 @@ import {
 } from "@/content/shattered-skies-levels";
 import type { PlanetId } from "@/content/shattered-skies-planets";
 import { PlanetGlyph } from "./PlanetGlyphs";
+import InteractiveHint from "./InteractiveHint";
 
 /**
  * Shattered Skies — the planetary level design beat chart.
@@ -166,6 +167,13 @@ export default function PlanetLevels() {
         <p className="mono pl-rail-caption">
           Play order — each world teaches one new skill, then assumes it
         </p>
+        {/* The rail is a five-tab tablist driving the design sheet below it,
+            and until now it said so nowhere. The site's shared chip, above the
+            control rather than under it. */}
+        <InteractiveHint
+          what="world"
+          does="its full design sheet and score notes open below the rail"
+        />
         <div
           className="pl-rail"
           role="tablist"
@@ -659,10 +667,20 @@ export default function PlanetLevels() {
             color-mix(in srgb, var(--tone, var(--pl-cyan)) 12%, transparent) 45%,
             transparent 70%
           );
-          opacity: 0;
+          /* THE RESTING AFFORDANCE. This was opacity 0 until selected, which
+             meant four of the five stations looked like plain labels and only
+             the one you had already chosen looked like a control — the affordance
+             arrived only after it was no longer needed.
+
+             All five now carry a faint halo at rest, so the rail reads as five
+             things you can pick, and hover and selection escalate it. Same
+             pattern as the orrery's discs and the Moon-Knight world map's pins. */
+          opacity: 0.28;
           transition: opacity 260ms ease;
           pointer-events: none;
         }
+        .pl-station:hover .pl-halo,
+        .pl-station:focus-visible .pl-halo { opacity: 0.62; }
         .pl-station.is-selected .pl-halo { opacity: 1; }
 
         .pl-station-name {
@@ -699,7 +717,11 @@ export default function PlanetLevels() {
           border-collapse: collapse;
           table-layout: fixed;
         }
-        .pl-corner { width: 8rem; border: 0; padding: 0; }
+        /* Sets the row-header column width for the whole fixed-layout table.
+           9.5rem rather than 8rem: enough that every current row label fits on
+           one line WITH the audio row's credit chip stacked under it, so the
+           wrap above is a safety net rather than the normal rendering. */
+        .pl-corner { width: 9.5rem; border: 0; padding: 0; }
 
         .pl-colhead {
           width: auto;
@@ -759,7 +781,22 @@ export default function PlanetLevels() {
           color: var(--pl-warm);
           padding: 0.65rem 1rem 0.65rem 0;
           border-bottom: 1px solid var(--pl-line);
-          white-space: nowrap;
+          /* THE OVERLAP FIX, AND IT REMOVES THE MECHANISM RATHER THAN TUNING
+             A NUMBER.
+
+             This was white-space: nowrap inside a table-layout: fixed column
+             pinned to the corner cell's width. A fixed column cannot grow, and
+             a nowrap cell cannot wrap, so the moment the row header's content
+             exceeded the column the text simply ran out of its cell and under
+             the first data cell. Uppercase type with letter-spacing plus the
+             inline "Mine" chip on the audio row is what pushed it over.
+
+             Letting it wrap means the worst case is now a two-line header,
+             which costs a few pixels of row height and cannot collide with
+             anything. The chip is also no longer inline (see .pl-mine below),
+             so the single widest case is gone as well. Do not put nowrap back
+             on a fixed-width column. */
+          overflow-wrap: anywhere;
         }
         .pl-cell {
           vertical-align: top;
@@ -788,16 +825,30 @@ export default function PlanetLevels() {
         }
 
         .pl-mine {
-          display: inline-block;
-          margin-left: 0.4rem;
+          /* Inline-block put this on the same line as the row label inside a
+             fixed-width column, which made "AUDIO + MINE" the widest header in
+             the table and the one that overflowed. It sits under the label
+             now. In the sheet and the cards, where it is not in a table cell,
+             it stays inline — see the override below. */
+          display: table;
+          margin-top: 0.3rem;
+          margin-left: 0;
           padding: 0.08rem 0.35rem;
           font-size: 0.68rem;
           letter-spacing: 0.14em;
           text-transform: uppercase;
           color: var(--pl-cyan);
           border: 1px solid color-mix(in srgb, var(--pl-cyan) 55%, transparent);
-          vertical-align: 0.1em;
           white-space: nowrap;
+        }
+        /* Everywhere that is NOT a fixed-width table header, the chip belongs
+           on the same line as the thing it credits. */
+        :not(.pl-rowhead) > .pl-mine,
+        :not(.pl-rowhead) > * > .pl-mine {
+          display: inline-block;
+          margin-top: 0;
+          margin-left: 0.4rem;
+          vertical-align: 0.1em;
         }
 
         /* A world with a design note worth stopping on is flagged in the cell;

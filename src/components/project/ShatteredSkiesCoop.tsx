@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from "react";
 import {
   gatingPointer,
   minigames,
@@ -7,7 +10,12 @@ import {
   type BlockMeta,
   type Minigame,
   type MinigameSide,
+  waveformPayoff,
 } from "@/content/shattered-skies-gameplay";
+import type { SsVariant } from "@/content/shattered-skies-deep-dive";
+import { mainHref } from "@/content/shattered-skies-deep-dive";
+import InteractiveHint from "./InteractiveHint";
+import Link from "next/link";
 
 /**
  * Shattered Skies — co-op design. The depth behind the mechanics section.
@@ -31,6 +39,45 @@ import {
  *   · the body of each figure is what the split actually looks like: two
  *     screens holding different knowledge (maze, waveform), or two controls
  *     holding different halves of one tool (welder).
+ *
+ * THE SEATS ARE ROLES, NOT CHARACTERS, AND THE LABELS MUST STAY THAT WAY.
+ *
+ * A reasonable instinct on seeing this toggle is to relabel it "Aevi" and
+ * "Drayk". Do not. Nothing in `shattered-skies-gameplay.ts` assigns a repair
+ * seat to a host, and that is the design rather than an omission: either player
+ * can be the blind hand or the guide, and in play they swap. "The guide" is not
+ * a person, it is a position you end up in. Naming the seats after the two
+ * characters would assert a fixed assignment the game does not make.
+ *
+ * There is a second reason, and it is mechanical. The narrative map teaches
+ * Drayk = emerald and Aevi = nebula-cyan, and the ownership map records that
+ * the rest of the page depends on that key. These figures are toned seat A =
+ * cyan, seat B = warm gold. Seat A therefore already carries Aevi's colour by
+ * coincidence, and seat B carries neither host's. Labelling by character would
+ * print at least one host in the other host's colour.
+ *
+ * If the assignment ever does become real, both things have to move together:
+ * the labels in the content file AND seat B's tone from gold to emerald.
+ *
+ * THE SEAT TOGGLE — WHY THE FIGURES ARE INTERACTIVE AT ALL.
+ *
+ * These three drawings were static, and static was the wrong call. Each one's
+ * entire subject is WHO CAN SEE WHAT AND WHO CAN TOUCH WHAT, and a reader
+ * looking at both halves side by side is in the one position neither player is
+ * ever in: they can see everything. The asymmetry was drawn but never felt.
+ *
+ * Picking a seat drops the diagram to that seat's half — the other half stays
+ * on the canvas at 12% so it reads as "there, and not yours", which is the
+ * actual experience. Dimming rather than hiding matters for the guide in
+ * particular: they CAN see the answer, they simply cannot act on it, and
+ * removing their panel would misstate the design.
+ *
+ * The three figures need no geometry changes to support this, which is the tell
+ * that the drawings were built right the first time: every per-player element
+ * already sits inside a `data-tone` group, because the two players were always
+ * the organising principle. The toggle only sets `data-seat` on the SVG and CSS
+ * does the rest — and the same attribute dims the matching row of the text rail
+ * below, so the picture and the prose move together.
  *
  * DATA, NOT COPY. Every string a figure prints — panel names, the compressed
  * chips inside the panels, the barrier label, the stakes line, the dial names —
@@ -337,7 +384,7 @@ function WelderFigure({ game }: { game: Minigame }) {
       </g>
       <path className="ssc-weld-crack" d={CRACK} />
 
-      {/* ---- player A: the horizontal axis, straight in from the left ---- */}
+      {/* ---- the Horizontal seat: its axis runs straight in from the left ---- */}
       <g data-tone="a">
         <line className="ssc-axis-lead" x1={CTRL_X.a + CTRL.w} y1={trackY} x2={252} y2={trackY} />
         <line className="ssc-axis" x1={258} y1={WELD.y} x2={462} y2={WELD.y} />
@@ -345,7 +392,7 @@ function WelderFigure({ game }: { game: Minigame }) {
         <path className="ssc-axis-head" d={head(468, WELD.y, "r")} />
       </g>
 
-      {/* ---- player B: the vertical axis, in under the plate from the right ---- */}
+      {/* ---- the Vertical seat: in under the plate from the right ---- */}
       <g data-tone="b">
         <path
           className="ssc-axis-lead"
@@ -505,11 +552,14 @@ const FIGURES = {
   waveform: WaveformFigure,
 } as const;
 
-function AsymmetryFigure({ game }: { game: Minigame }) {
+type Seat = "both" | "a" | "b";
+
+function AsymmetryFigure({ game, seat }: { game: Minigame; seat: Seat }) {
   const Figure = FIGURES[game.diagram.variant];
   return (
     <svg
       className="ssc-fig-svg"
+      data-seat={seat}
       viewBox={`0 0 ${W} ${H}`}
       role="img"
       aria-labelledby={`ssc-fig-${game.id}-title ssc-fig-${game.id}-desc`}
@@ -518,6 +568,93 @@ function AsymmetryFigure({ game }: { game: Minigame }) {
       <desc id={`ssc-fig-${game.id}-desc`}>{game.diagram.summary}</desc>
       <Figure game={game} />
     </svg>
+  );
+}
+
+/**
+ * One minigame's schematic, with the seat toggle that drives it.
+ *
+ * State is per-figure rather than per-section on purpose: the three minigames
+ * are three separate arguments, and a reader who sits in the guide's seat for
+ * the maze has said nothing about which seat they want for the welder.
+ *
+ * The toggle is three real buttons with `aria-pressed`, not a custom widget —
+ * a segmented control is a set of toggle buttons and the platform already has
+ * one. The status line names only the side's `label`, which is a key already
+ * on screen, so nothing here re-states what the rail below says.
+ */
+function Schematic({ game }: { game: Minigame }) {
+  const [seat, setSeat] = useState<Seat>("both");
+  const [a, b] = game.sides;
+
+  const options: readonly { id: Seat; label: string }[] = [
+    { id: "both", label: "Both seats" },
+    { id: "a", label: a.label },
+    { id: "b", label: b.label },
+  ];
+
+  return (
+    <figure className="ssc__fig" aria-labelledby={`ssc-figcap-${game.id}`}>
+      <figcaption className="mono ssc__fig-cap" id={`ssc-figcap-${game.id}`}>
+        {game.diagram.title}
+      </figcaption>
+
+      <div
+        className="ssc__seats"
+        role="group"
+        aria-label={`Which seat of ${game.name} to show`}
+      >
+        {options.map((o) => (
+          <button
+            key={o.id}
+            type="button"
+            className="ssc__seat"
+            data-tone={o.id}
+            aria-pressed={seat === o.id}
+            onClick={() => setSeat(o.id)}
+          >
+            {o.label}
+          </button>
+        ))}
+      </div>
+
+      <div className="ssc__fig-frame" tabIndex={0} role="group" aria-label={game.diagram.title}>
+        <AsymmetryFigure game={game} seat={seat} />
+      </div>
+
+      {/* Announced, not drawn. The label is the only word here, and it is
+          already on the button that was just pressed. */}
+      <p className="ssc__sr" role="status">
+        {seat === "both"
+          ? "Both seats shown."
+          : `Showing ${(seat === "a" ? a : b).label} only.`}
+      </p>
+
+      {/* The same split as real text, at every width. `data-seat` dims the row
+          the diagram is currently dimming, so picture and prose agree. */}
+      <dl className="ssc__split" data-seat={seat}>
+        {game.sides.map((sd) => (
+          <div key={sd.id} className="ssc__side" data-tone={sd.id}>
+            <dt className="ssc__side-name">{sd.label}</dt>
+            <dd className="ssc__side-lines">
+              <span className="ssc__side-line">
+                <span className="mono ssc__side-key">Sees</span>
+                <span>{sd.sees}</span>
+              </span>
+              <span className="ssc__side-line">
+                <span className="mono ssc__side-key">Controls</span>
+                <span>{sd.controls}</span>
+              </span>
+            </dd>
+          </div>
+        ))}
+      </dl>
+
+      <p className="mono ssc__fig-barrier">
+        <span className="ssc__fig-barrier-jag" aria-hidden="true" />
+        {game.diagram.barrier} — between the two, carrying neither
+      </p>
+    </figure>
   );
 }
 
@@ -563,156 +700,236 @@ function DesignPoint({ body }: { body: string }) {
 
 /* ---- the section --------------------------------------------------------- */
 
-export default function ShatteredSkiesCoop() {
+export default function ShatteredSkiesCoop({
+  variant = "main",
+  /**
+   * Which material to render. The deep dive splits this file across two of its
+   * sections, so the component takes a filter rather than being split into two
+   * components that would each need a copy of the stylesheet.
+   */
+  block = "all",
+}: {
+  variant?: SsVariant;
+  block?: "all" | "repairs" | "pattern";
+}) {
+  const deep = variant === "deep";
+  const showRepairs = block === "all" || block === "repairs";
+  const showPattern = block === "all" || block === "pattern";
+
   return (
-    <div className="ssc">
+    <div className="ssc" data-variant={variant}>
       {/* No credit block here. The page states its attribution once, in
-          §02's teamNote — team of five, my seat was systems and world
-          design — and §05's levelsCredit is the only other one, because it
+          §03's teamNote — team of five, my seat was systems and world
+          design — and §06's levelsCredit is the only other one, because it
           makes a distinction (audio mine, level design shared) rather than a
           disclaimer. Four near-identical restatements of the same sentence
           made a strong page read as an anxious one. */}
 
-      {/* ---- the thesis the three figures are three versions of ---- */}
-      <section className="ssc__thesis" aria-labelledby="ssc-thesis-title">
-        <p className="mono ssc__thesis-tag" id="ssc-thesis-title">
-          {thesis.tag}
-        </p>
-        <p className="ssc__thesis-body">{thesis.body}</p>
-        <ol className="ssc__moves">
-          {thesis.moves.map((m, i) => (
-            <li key={m.label} className="ssc__move">
-              <p className="mono ssc__move-label">
-                <span className="ssc__move-index" aria-hidden="true">
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-                {m.label}
-              </p>
-              <p className="ssc__move-body">{m.body}</p>
-            </li>
-          ))}
-        </ol>
-        <p className="ssc__thesis-note">{thesis.note}</p>
-      </section>
-
-      {/* ================= 01 · the three minigames ================= */}
-      <article className="ssc__block" aria-labelledby="ssc-minigames-title">
-        <BlockHeader {...minigames.meta} titleId="ssc-minigames-title" />
-        <p className="ssc__lead">{minigames.lead}</p>
-
-        <ol className="ssc__games">
-          {minigames.games.map((g) => (
-            <li key={g.id} className="ssc__game">
-              <header className="ssc__game-head">
-                <p className="mono ssc__game-order" aria-hidden="true">
-                  {g.order}
+      {/* ---- the thesis the three figures are three versions of — MAIN ---- */}
+      {!deep && (
+        <section className="ssc__thesis" aria-labelledby="ssc-thesis-title">
+          <p className="mono ssc__thesis-tag" id="ssc-thesis-title">
+            {thesis.tag}
+          </p>
+          <p className="ssc__thesis-body">{thesis.body}</p>
+          <ol className="ssc__moves">
+            {thesis.moves.map((m, i) => (
+              <li key={m.label} className="ssc__move">
+                <p className="mono ssc__move-label">
+                  <span className="ssc__move-index" aria-hidden="true">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  {m.label}
                 </p>
-                <div className="ssc__game-titles">
-                  <h4 className="ssc__game-name" id={`ssc-game-${g.id}`}>
-                    {g.name}
-                  </h4>
-                  <p className="mono ssc__game-tag">{g.tag}</p>
-                  <p className="ssc__game-standfirst">{g.standfirst}</p>
-                </div>
-              </header>
-
-              <p className="ssc__game-premise">{g.premise}</p>
-
-              {/* ---- the asymmetry, drawn ---- */}
-              <figure className="ssc__fig" aria-labelledby={`ssc-figcap-${g.id}`}>
-                <figcaption className="mono ssc__fig-cap" id={`ssc-figcap-${g.id}`}>
-                  {g.diagram.title}
-                </figcaption>
-
-                {/* Scrolls rather than shrinks: the mono labels stop being
-                    readable well before the drawing stops fitting. */}
-                <div
-                  className="ssc__fig-frame"
-                  tabIndex={0}
-                  role="group"
-                  aria-label={g.diagram.title}
-                >
-                  <AsymmetryFigure game={g} />
-                </div>
-
-                {/* The same split as real text, at every width. */}
-                <dl className="ssc__split">
-                  {g.sides.map((s) => (
-                    <div key={s.id} className="ssc__side" data-tone={s.id}>
-                      <dt className="ssc__side-name">{s.label}</dt>
-                      <dd className="ssc__side-lines">
-                        <span className="ssc__side-line">
-                          <span className="mono ssc__side-key">Sees</span>
-                          <span>{s.sees}</span>
-                        </span>
-                        <span className="ssc__side-line">
-                          <span className="mono ssc__side-key">Controls</span>
-                          <span>{s.controls}</span>
-                        </span>
-                      </dd>
-                    </div>
-                  ))}
-                </dl>
-
-                <p className="mono ssc__fig-barrier">
-                  <span className="ssc__fig-barrier-jag" aria-hidden="true" />
-                  {g.diagram.barrier} — between the two, carrying neither
-                </p>
-              </figure>
-
-              <BeatRail beats={[g.split, g.barrierTwist, g.failure]} />
-              <DesignPoint body={g.designPoint} />
-            </li>
-          ))}
-        </ol>
-
-        <p className="ssc__close">{minigames.close}</p>
-      </article>
-
-      {/* ================= 02 · the puzzle pattern ================= */}
-      <article className="ssc__block ssc__block--compact" aria-labelledby="ssc-pattern-title">
-        <BlockHeader {...puzzlePattern.meta} titleId="ssc-pattern-title" />
-        <p className="ssc__lead">{puzzlePattern.lead}</p>
-
-        <section className="ssc__aside" aria-labelledby="ssc-loop-title">
-          <h4 className="mono ssc__aside-title" id="ssc-loop-title">
-            {puzzlePattern.stepsLabel}
-          </h4>
-          <ol className="ssc__steps">
-            {puzzlePattern.steps.map((s) => (
-              <li key={s.id} className="ssc__step">
-                <p className="mono ssc__step-order" aria-hidden="true">
-                  {s.order}
-                </p>
-                <div className="ssc__step-copy">
-                  <p className="ssc__step-label">{s.label}</p>
-                  <p className="ssc__step-body">{s.body}</p>
-                </div>
+                <p className="ssc__move-body">{m.body}</p>
               </li>
             ))}
           </ol>
+          <p className="ssc__thesis-note">{thesis.note}</p>
         </section>
+      )}
 
-        <section className="ssc__highlight" aria-labelledby="ssc-symbiochord-title">
-          <h4 className="ssc__highlight-title" id="ssc-symbiochord-title">
-            {puzzlePattern.symbiochord.label}
+      {/* ================= THE PATTERN, AS A PRE-INTRO — MAIN =================
+
+          FOLDED IN, NOT DELETED. This used to be its own block AFTER the three
+          minigames: a full header, a lead, five steps written out, the
+          Symbiochord panel and a design point. Which meant the reader met three
+          detailed puzzle breakdowns first and was told the shape they all share
+          afterwards — the rule explained after the examples it governs.
+
+          It is now the short answer to "how do these puzzles work" placed
+          BEFORE the descriptions, and it is built entirely from KEYS: the
+          section's own standfirst, the five step LABELS, and its design point.
+          Not one word of new copy, and not one word repeated — the five step
+          BODIES, the lead and the Symbiochord panel are on the deep dive, under
+          the same five labels. */}
+      {!deep && showPattern && (
+        <section className="ssc__pattern" aria-labelledby="ssc-pattern-title">
+          <h4 className="ssc__pattern-title" id="ssc-pattern-title">
+            {puzzlePattern.meta.title}
           </h4>
-          <p className="ssc__highlight-body">{puzzlePattern.symbiochord.body}</p>
+          <p className="ssc__pattern-standfirst">{puzzlePattern.meta.standfirst}</p>
+          <ol className="ssc__pattern-steps">
+            {puzzlePattern.steps.map((st) => (
+              <li key={st.id} className="ssc__pattern-step">
+                <span className="mono ssc__pattern-ord" aria-hidden="true">
+                  {st.order}
+                </span>
+                <span className="ssc__pattern-label">{st.label}</span>
+              </li>
+            ))}
+          </ol>
+          <p className="ssc__pattern-point">{puzzlePattern.designPoint}</p>
         </section>
+      )}
 
-        <DesignPoint body={puzzlePattern.designPoint} />
-      </article>
+      {/* ================= 01 · the three minigames ================= */}
+      {showRepairs && (
+        <article className="ssc__block" aria-labelledby="ssc-minigames-title">
+          {!deep && <BlockHeader {...minigames.meta} titleId="ssc-minigames-title" />}
+          {deep && (
+            <h3 className="ssc__deep-title" id="ssc-minigames-title">
+              {minigames.meta.title}
+            </h3>
+          )}
+
+          {deep && <p className="ssc__lead">{minigames.lead}</p>}
+
+          {/* The three schematics are wide drawings in focusable, horizontally
+              scrollable frames. One chip for the set: three identical chips
+              down one column would be noise, and the grammar is shared. */}
+          {!deep && (
+            <InteractiveHint
+              what="seat"
+              does="the diagram drops to just that seat's half, and the other goes dark"
+            />
+          )}
+
+          <ol className="ssc__games" data-mode={deep ? "prose" : "figures"}>
+            {minigames.games.map((g) => (
+              <li key={g.id} className="ssc__game">
+                <header className="ssc__game-head">
+                  <p className="mono ssc__game-order" aria-hidden="true">
+                    {g.order}
+                  </p>
+                  <div className="ssc__game-titles">
+                    <h4 className="ssc__game-name" id={`ssc-game-${g.id}`}>
+                      {g.name}
+                    </h4>
+                    <p className="mono ssc__game-tag">{g.tag}</p>
+                    {/* The one-line asymmetry. On the main page this IS the
+                        description — it already says who is deprived of what,
+                        which is the only thing the condensed entry owes. */}
+                    {!deep && <p className="ssc__game-standfirst">{g.standfirst}</p>}
+                  </div>
+                </header>
+
+                {deep && <p className="ssc__game-premise">{g.premise}</p>}
+
+                {/* ---- the asymmetry, drawn AND operable — MAIN ONLY ----
+                    Drawn from `sides`, which is data, so the picture costs the
+                    condensed page almost nothing in words while carrying the
+                    whole split — and now the reader can sit in either seat and
+                    watch the other half go dark. The deep dive gets the prose
+                    the picture is a picture OF. */}
+                {!deep && <Schematic game={g} />}
+
+                {deep && (
+                  <>
+                    <BeatRail beats={[g.split, g.barrierTwist, g.failure]} />
+                    <DesignPoint body={g.designPoint} />
+                  </>
+                )}
+              </li>
+            ))}
+          </ol>
+
+          {/* THE PAYOFF, ON THE PAGE A RECRUITER READS.
+
+              The ownership map calls the paragraph this sits in "the best
+              paragraph on the page", and the reading-load audit measured it
+              landing at 70–98% depth. It is exported as its own key and
+              composed back into `sensors.barrierTwist.body` on the deep dive,
+              so there is exactly ONE literal with two render sites and they
+              cannot drift. That is the same sanctioned pattern the old
+              highlight band used — the band is gone, this is where the line
+              surfaces now, and the two sites are on different pages so no
+              reader meets it twice in one scroll. */}
+          {!deep && (
+            <blockquote className="ssc__payoff">
+              <p className="ssc__payoff-body">{waveformPayoff}</p>
+              <p className="mono ssc__payoff-src">Calibrate Sensors — what replaces the numbers</p>
+            </blockquote>
+          )}
+
+          {!deep && <p className="ssc__close">{minigames.close}</p>}
+        </article>
+      )}
+
+      {/* ================= 02 · the puzzle pattern, in full — DEEP ================= */}
+      {deep && showPattern && (
+        <article className="ssc__block ssc__block--compact" aria-labelledby="ssc-pattern-full">
+          <h3 className="ssc__deep-title" id="ssc-pattern-full">
+            {puzzlePattern.meta.title}
+          </h3>
+          <p className="ssc__lead">{puzzlePattern.lead}</p>
+
+          <section className="ssc__aside" aria-labelledby="ssc-loop-title">
+            <h4 className="mono ssc__aside-title" id="ssc-loop-title">
+              {puzzlePattern.stepsLabel}
+            </h4>
+            <ol className="ssc__steps">
+              {puzzlePattern.steps.map((st) => (
+                <li key={st.id} className="ssc__step">
+                  <p className="mono ssc__step-order" aria-hidden="true">
+                    {st.order}
+                  </p>
+                  <div className="ssc__step-copy">
+                    <p className="ssc__step-label">{st.label}</p>
+                    <p className="ssc__step-body">{st.body}</p>
+                  </div>
+                </li>
+              ))}
+            </ol>
+          </section>
+
+          <section className="ssc__highlight" aria-labelledby="ssc-symbiochord-title">
+            <h4 className="ssc__highlight-title" id="ssc-symbiochord-title">
+              {puzzlePattern.symbiochord.label}
+            </h4>
+            <p className="ssc__highlight-body">{puzzlePattern.symbiochord.body}</p>
+          </section>
+        </article>
+      )}
 
       {/* ================= knowledge-gated exploration · POINTER =================
-          The access rule is designed on the planetary system further up the
-          page, where the orbits it is about are actually drawn. This is a
-          signpost, not a section: no rule, no worked example, no design point.
-          Growing it back into a block would put the same argument on the page
-          twice, in the half of it with no diagram. */}
-      <aside className="ssc__pointer" aria-label={gatingPointer.label}>
-        <p className="ssc__pointer-tag">{gatingPointer.label}</p>
-        <p className="ssc__pointer-body">{gatingPointer.body}</p>
-      </aside>
+          The access rule is designed on the planetary system, where the orbits
+          it is about are actually drawn. This is a signpost, not a section: no
+          rule, no worked example, no design point. Growing it back into a block
+          would put the same argument on the site twice, in the half of it with
+          no diagram.
+
+          S1: MAIN PAGE ONLY. The orrery it points at is on the main page (hard
+          constraint S5 — selecting a world scrolls to its dossier card through
+          a DOM query, so the two cannot be separated). Rendering this on the
+          deep dive as well put the same three sentences on both pages, which
+          is the one thing the split exists to prevent; the deep dive already
+          carries four links back to the main page and needs no fifth.
+
+          The href still comes from `mainHref(anchor, variant)` rather than
+          being typed, because that is the guarantee, not a convenience — if
+          this ever does render from the subpage it will be correct. */}
+      {showRepairs && !deep && (
+        <aside className="ssc__pointer" aria-label={gatingPointer.label}>
+          <p className="ssc__pointer-tag">{gatingPointer.label}</p>
+          <p className="ssc__pointer-body">
+            {gatingPointer.body}{" "}
+            <Link className="ssc__pointer-link" href={mainHref("worlds", variant)}>
+              {gatingPointer.linkLabel}
+            </Link>
+          </p>
+        </aside>
+      )}
 
       <style>{`
         .ssc__pointer {
@@ -737,6 +954,124 @@ export default function ShatteredSkiesCoop() {
           line-height: 1.65;
           color: var(--ssc-quiet);
         }
+        /* S1 - a real link, because after the split the section it points at
+           may be on the other page. Underlined at rest: a coloured word with
+           no second cue is not an affordance. */
+        .ssc__pointer-link {
+          color: var(--ssc-cyan);
+          text-decoration: underline;
+          text-decoration-color: color-mix(in srgb, var(--ssc-cyan) 45%, transparent);
+          text-underline-offset: 0.22em;
+        }
+        .ssc__pointer-link:hover,
+        .ssc__pointer-link:focus-visible { text-decoration-color: currentColor; }
+
+        /* ---- the deep dive's own headings ----
+           The subpage puts a numbered SectionHeading above each block, so the
+           full BlockHeader would be two title systems arguing. One line, h3. */
+        .ssc__deep-title {
+          margin: 0;
+          font-family: var(--font-hero);
+          font-size: 1.35rem;
+          font-weight: 600;
+          letter-spacing: 0.01em;
+          line-height: 1.25;
+          color: var(--color-moonlight);
+        }
+
+        /* ---- THE PATTERN, AS A PRE-INTRO ------------------------------------
+           Five labels on one strip, before the three descriptions rather than
+           after them. It has to read as a RULE the examples below obey, so it
+           is a bordered band rather than a list: compact enough that nobody
+           mistakes it for a section, emphatic enough that nobody skims past
+           the thing that explains the next three blocks. */
+        .ssc__pattern {
+          display: grid;
+          gap: 0.9rem;
+          padding: 1.35rem 1.5rem 1.45rem;
+          border: 1px solid var(--ssc-edge);
+          border-left: 2px solid var(--ssc-warm);
+          background: var(--ssc-panel);
+        }
+        .ssc__pattern-title {
+          margin: 0;
+          font-family: var(--font-hero);
+          font-size: 1.12rem;
+          font-weight: 600;
+          color: var(--color-moonlight);
+        }
+        .ssc__pattern-standfirst {
+          margin: 0;
+          max-width: 46rem;
+          font-size: 0.95rem;
+          line-height: 1.7;
+          color: var(--color-moonlight);
+        }
+        .ssc__pattern-steps {
+          list-style: none;
+          margin: 0;
+          padding: 0;
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(12.5rem, 1fr));
+          gap: 0.55rem 1.25rem;
+        }
+        .ssc__pattern-step {
+          display: flex;
+          align-items: baseline;
+          gap: 0.55rem;
+          min-width: 0;
+          padding-top: 0.5rem;
+          border-top: 1px solid var(--ssc-line);
+        }
+        .ssc__pattern-ord {
+          flex: 0 0 auto;
+          font-family: var(--font-mono);
+          font-size: 0.68rem;
+          letter-spacing: 0.12em;
+          color: var(--ssc-warm);
+        }
+        .ssc__pattern-label {
+          font-size: 0.86rem;
+          line-height: 1.45;
+          color: var(--color-moonlight);
+        }
+        .ssc__pattern-point {
+          margin: 0;
+          max-width: 46rem;
+          font-size: 0.9rem;
+          line-height: 1.65;
+          color: var(--ssc-quiet);
+        }
+
+        /* ---- the waveform payoff -------------------------------------------
+           The best sentence in the section, pulled where a first-pass reader
+           reaches it. Warm rather than cyan: it is the one moment the section
+           stops describing a barrier and describes what got across it. */
+        .ssc__payoff {
+          margin: 0;
+          padding: 1.15rem 1.4rem 1.2rem;
+          border-left: 2px solid var(--ssc-warm);
+          background: color-mix(in srgb, var(--color-gold) 6%, transparent);
+        }
+        .ssc__payoff-body {
+          margin: 0;
+          max-width: 44rem;
+          font-family: var(--font-hero);
+          font-size: 1.15rem;
+          line-height: 1.55;
+          color: var(--color-moonlight);
+        }
+        .ssc__payoff-src {
+          margin: 0.6rem 0 0;
+          font-size: 0.7rem;
+          letter-spacing: 0.14em;
+          text-transform: uppercase;
+          color: var(--ssc-warm);
+        }
+
+        /* Prose mode on the deep dive: no schematic between the head and the
+           reasoning rail, so the games want less air than the figure version. */
+        .ssc__games[data-mode="prose"] { gap: 2.75rem; }
 
         .ssc {
           /* Same palette as the mechanics section directly above, so the two
@@ -999,6 +1334,93 @@ export default function ShatteredSkiesCoop() {
           width: 100%;
           min-width: 40rem;
           height: auto;
+        }
+
+        /* ---- THE SEAT TOGGLE ------------------------------------------------
+           Three toggle buttons that decide whose half of the drawing is live.
+
+           DIMMED, NOT HIDDEN, and the distinction carries the design point.
+           The guide in Circuit Realignment CAN see the answer — the whole
+           minigame is that they can see it and cannot act on it. Removing
+           their panel when the reader sits in the blind hand's seat would
+           state the opposite. 12% leaves the shape legible as something
+           present and out of reach.
+
+           Everything per-player is already inside a data-tone group in all
+           three figures, so this needs no geometry: the two players were the
+           organising principle of the drawings from the start. */
+        .ssc-fig-svg [data-tone] { transition: opacity 260ms ease; }
+        .ssc-fig-svg[data-seat="a"] [data-tone="b"],
+        .ssc-fig-svg[data-seat="b"] [data-tone="a"] { opacity: 0.12; }
+
+        .ssc__seats {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 0.4rem;
+          margin: 0.2rem 0 0.1rem;
+        }
+        .ssc__seat {
+          -webkit-appearance: none;
+          appearance: none;
+          margin: 0;
+          padding: 0.34rem 0.75rem 0.38rem;
+          font: inherit;
+          font-family: var(--font-mono);
+          font-size: 0.72rem;
+          letter-spacing: 0.06em;
+          cursor: pointer;
+          /* THE RESTING AFFORDANCE. A full hairline at rest, so all three read
+             as controls before anything is pressed — the same rule the orrery
+             discs and the level rail follow. */
+          border: 1px solid var(--ssc-edge);
+          border-radius: 999px;
+          background: color-mix(in srgb, var(--color-nightfall) 55%, transparent);
+          color: var(--ssc-quiet);
+          transition: color 180ms ease, border-color 180ms ease, background-color 180ms ease;
+        }
+        /* Each seat button wears the tone of the half it selects, so the
+           control is colour-keyed to the drawing before it is read. */
+        .ssc__seat[data-tone="a"] { --seat-tone: var(--ssc-cyan); }
+        .ssc__seat[data-tone="b"] { --seat-tone: var(--ssc-warm); }
+        .ssc__seat[data-tone="both"] { --seat-tone: var(--color-moonlight); }
+
+        .ssc__seat:hover {
+          color: var(--color-moonlight);
+          border-color: color-mix(in srgb, var(--seat-tone) 55%, transparent);
+        }
+        .ssc__seat[aria-pressed="true"] {
+          color: var(--color-void);
+          background: var(--seat-tone);
+          border-color: var(--seat-tone);
+        }
+        .ssc__seat:focus-visible {
+          outline: 2px solid var(--ssc-cyan);
+          outline-offset: 2px;
+        }
+
+        /* The rail below the drawing dims with it, so the picture and the
+           prose never disagree about whose half is being looked at. */
+        .ssc__split[data-seat="a"] .ssc__side[data-tone="b"],
+        .ssc__split[data-seat="b"] .ssc__side[data-tone="a"] { opacity: 0.4; }
+        .ssc__side { transition: opacity 260ms ease; }
+
+        /* Visually hidden, but announced. */
+        .ssc__sr {
+          position: absolute;
+          width: 1px;
+          height: 1px;
+          padding: 0;
+          margin: -1px;
+          overflow: hidden;
+          clip-path: inset(50%);
+          white-space: nowrap;
+          border: 0;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          .ssc-fig-svg [data-tone],
+          .ssc__side,
+          .ssc__seat { transition: none; }
         }
 
         /* Who is who: left is always A and cyan, right always B and warm. */

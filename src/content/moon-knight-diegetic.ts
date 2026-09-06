@@ -28,12 +28,33 @@ export const diegeticThesis = {
   kicker: "The throughline",
   /** One line. If a reader takes nothing else from this section, this. */
   line:
-    "Mechanics that disappear into the world — UI, progression and navigation " +
-    "expressed through fiction, not menus.",
+    "The four systems a player touches every minute — health, progression, " +
+    "wayfinding and healing — are objects and gestures, not menus.",
   body:
-    "Every system below could have been a bar, a number or an overlay. Each one is " +
+    "Each of the four could have been a bar, a number or an overlay. Each one is " +
     "instead an object the knight carries, a mark they leave, or a thing they do with " +
     "their body. The player reads the game by looking at the game.",
+  /**
+   * THE LIMIT OF THE CLAIM, and it is stated on purpose.
+   *
+   * An earlier version of this thesis said "nothing here is a menu — every
+   * system is an object, a gesture or a place". That was not true, and the
+   * repo proves it: `View` opens a conventional equipment screen
+   * (`moon-knight-controls.ts`, and the UMG capture `WB_Equipment.png` on the
+   * engineering page), with a grid of Bow / Sword / Armor slots.
+   *
+   * Overclaiming there cost more than the menu did. A reader who finds the
+   * equipment screen after reading "nothing is a menu" has to decide whether
+   * the rest of the section is trustworthy. So the claim is scoped to the four
+   * systems it is actually true of, the exception is named, and the reason it
+   * is the right call is given. A designer who knows where to stop applying a
+   * principle is making a stronger argument than one who claims it everywhere.
+   */
+  scope:
+    "The equipment screen is a conventional menu, and deliberately so. Swapping a sword " +
+    "for a bow is a rare, deliberate act performed in safety — it wants a clear grid and " +
+    "a comparison, not a gesture. Diegesis was spent where the player looks constantly " +
+    "and kept out of the one place a menu is simply the better tool.",
 } as const;
 
 /* ---- the moon HUD ------------------------------------------------------- */

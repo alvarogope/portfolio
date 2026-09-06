@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { gameEngineering as g } from "@/content/moon-knight-game-engineering";
 import Section from "@/components/layout/Section";
 import SectionHeading from "@/components/layout/SectionHeading";
+import Breadcrumb from "@/components/layout/Breadcrumb";
 import CodeBlock from "@/components/project/CodeBlock";
+import CtaPanel from "@/components/project/CtaPanel";
 import ScreenshotSlots from "@/components/project/ScreenshotSlots";
 import Reveal from "@/components/layout/Reveal";
 
@@ -25,33 +26,15 @@ const HAIRLINE = "1px solid color-mix(in srgb, var(--color-mist) 20%, transparen
 export default function GameEngineeringPage() {
   return (
     <Section>
-      {/* Breadcrumb ------------------------------------------------- */}
-      <nav
-        aria-label="Breadcrumb"
-        className="mono"
-        style={{ fontSize: "0.72rem", color: "var(--color-mist)", marginTop: "1rem" }}
-      >
-        <ol
-          style={{
-            display: "flex",
-            flexWrap: "wrap",
-            gap: "0.5rem",
-            listStyle: "none",
-            margin: 0,
-            padding: 0,
-          }}
-        >
-          <li>
-            <Link href="/moon-knight" style={{ color: "var(--color-mist)" }}>
-              Moon-Knight
-            </Link>
-          </li>
-          <li aria-hidden>/</li>
-          <li aria-current="page" style={{ color: "var(--color-silver)" }}>
-            Game engineering
-          </li>
-        </ol>
-      </nav>
+      {/* Breadcrumb. Extracted into `Breadcrumb` when the deep-dive subpage
+          needed the identical control — two hand-maintained copies of one
+          navigation element is how they drift apart. */}
+      <Breadcrumb
+        items={[
+          { label: "Moon-Knight", href: "/moon-knight" },
+          { label: "Game engineering" },
+        ]}
+      />
 
       {/* 01 · Hero and thesis --------------------------------------- */}
       <Reveal>
@@ -497,56 +480,41 @@ export default function GameEngineeringPage() {
         </div>
       </Reveal>
 
-      {/* 06 · The quantum branch ------------------------------------ */}
+      {/* 06 · Where to go next ---------------------------------------
+             Two panels, not one. This page used to end on the quantum CTA
+             alone, so the only route back to the project after five sections
+             of C++ was the breadcrumb at the very top. Every page under
+             `/moon-knight` now ends with the same offer: the branch forward,
+             and the way back.
+
+             `CtaPanel` is the shared control, and this page is where it was
+             extracted from: the main page uses it to hand readers to the deep
+             dive, and the deep dive uses it to hand them back. */}
       <Reveal>
         <div
-          className="panel"
           style={{
             marginTop: "5rem",
-            padding: "clamp(1.75rem, 5vw, 3rem)",
-            border: HAIRLINE,
-            borderLeft: "3px solid var(--color-silver)",
-            maxWidth: "38rem",
+            display: "grid",
+            gap: "1.5rem",
+            gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 20rem), 1fr))",
+            alignItems: "start",
           }}
         >
-          <span
-            className="mono"
-            style={{
-              fontSize: "0.71rem",
-              letterSpacing: "0.14em",
-              textTransform: "uppercase",
-              color: "var(--color-silver)",
-            }}
-          >
-            {g.quantumCta.kicker}
-          </span>
-          <h2
-            style={{
-              margin: "0.75rem 0 1rem",
-              fontSize: "var(--text-xl)",
-              fontFamily: "var(--font-display)",
-              lineHeight: 1.2,
-            }}
-          >
-            {g.quantumCta.title}
-          </h2>
-          <p style={{ margin: 0, lineHeight: 1.75, color: "var(--color-silver)" }}>
-            {g.quantumCta.body}
-          </p>
-          <Link
+          <CtaPanel
+            kicker={g.quantumCta.kicker}
+            title={g.quantumCta.title}
+            body={g.quantumCta.body}
             href={g.quantumCta.href}
-            className="mono"
-            style={{
-              display: "inline-block",
-              marginTop: "1.5rem",
-              fontSize: "0.8rem",
-              color: "var(--color-gold)",
-              borderBottom: "1px solid color-mix(in srgb, var(--color-gold) 50%, transparent)",
-              paddingBottom: "3px",
-            }}
-          >
-            {g.quantumCta.linkLabel} →
-          </Link>
+            linkLabel={g.quantumCta.linkLabel}
+          />
+          <CtaPanel
+            kicker="Back to the project"
+            title="Moon-Knight"
+            body="The design side: the game running, the five quantum abilities on the design document's own sigil, the creatures they are taught through, the control scheme, the world of Kaelum and the beat chart the game was planned from."
+            href="/moon-knight"
+            linkLabel="Back to Moon-Knight"
+            accent="silver"
+          />
         </div>
       </Reveal>
     </Section>

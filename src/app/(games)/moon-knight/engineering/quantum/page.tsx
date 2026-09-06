@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { quantumToolkit as q } from "@/content/moon-knight-engineering-quantum";
 import Section from "@/components/layout/Section";
+import Breadcrumb from "@/components/layout/Breadcrumb";
+import CtaPanel from "@/components/project/CtaPanel";
 import SectionHeading from "@/components/layout/SectionHeading";
 import CodeBlock from "@/components/project/CodeBlock";
 import Reveal from "@/components/layout/Reveal";
@@ -15,39 +16,16 @@ export default function QuantumToolkitPage() {
   return (
     <Section>
       {/* Breadcrumb. This page is the research branch of the engineering
-          page, so the trail runs project → game engineering → here. */}
-      <nav
-        aria-label="Breadcrumb"
-        className="mono"
-        style={{ fontSize: "0.72rem", color: "var(--color-mist)", marginTop: "1rem" }}
-      >
-        <ol
-          style={{
-            display: "flex",
-            flexWrap: "wrap",
-            gap: "0.5rem",
-            listStyle: "none",
-            margin: 0,
-            padding: 0,
-          }}
-        >
-          <li>
-            <Link href="/moon-knight" style={{ color: "var(--color-mist)" }}>
-              Moon-Knight
-            </Link>
-          </li>
-          <li aria-hidden>/</li>
-          <li>
-            <Link href="/moon-knight/engineering" style={{ color: "var(--color-mist)" }}>
-              Game engineering
-            </Link>
-          </li>
-          <li aria-hidden>/</li>
-          <li aria-current="page" style={{ color: "var(--color-silver)" }}>
-            Quantum toolkit
-          </li>
-        </ol>
-      </nav>
+          page, so the trail runs project → game engineering → here. It was an
+          inline `<nav>` — the fourth hand-maintained copy of one control — and
+          now renders the shared `Breadcrumb` the other three pages use. */}
+      <Breadcrumb
+        items={[
+          { label: "Moon-Knight", href: "/moon-knight" },
+          { label: "Game engineering", href: "/moon-knight/engineering" },
+          { label: "Quantum toolkit" },
+        ]}
+      />
 
       {/* Header */}
       <Reveal>
@@ -151,6 +129,39 @@ export default function QuantumToolkitPage() {
           bring it back: add repoUrl to moonKnightQuantum and restore this
           block. Same treatment as the unmounted screenshot band on the game
           engineering page. */}
+
+      {/* THE WAY BACK. This is the deepest page on the site, and until now it
+          ended on a status table with no exit but the browser's back button
+          and a breadcrumb five sections above. Both parents are offered here,
+          in the control every other page under `/moon-knight` ends with. */}
+      <Reveal>
+        <div
+          style={{
+            marginTop: "5rem",
+            display: "grid",
+            gap: "1.5rem",
+            gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 20rem), 1fr))",
+            alignItems: "start",
+          }}
+        >
+          <CtaPanel
+            kicker="Back one level"
+            title="Programming Moon-Knight"
+            body="The game this research was built inside: the boundary between C++ and Blueprint and the five choices that drew it, the combat state machine, the data-driven tuning layer, and the captures from the editor."
+            href="/moon-knight/engineering"
+            linkLabel="Back to the engineering write-up"
+            accent="silver"
+          />
+          <CtaPanel
+            kicker="Back to the project"
+            title="Moon-Knight"
+            body="The design side: the game running, the five quantum abilities on the design document's own sigil, the creatures they are taught through, the control scheme, the world of Kaelum and the beat chart the game was planned from."
+            href="/moon-knight"
+            linkLabel="Back to Moon-Knight"
+            accent="silver"
+          />
+        </div>
+      </Reveal>
     </Section>
   );
 }

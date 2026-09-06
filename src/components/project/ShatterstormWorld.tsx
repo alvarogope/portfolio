@@ -1,5 +1,4 @@
 import {
-  bridge,
   lead,
   metaphor,
   relics,
@@ -7,6 +6,7 @@ import {
   textures,
   whoRemains,
 } from "@/content/shattered-skies-world";
+import type { SsVariant } from "@/content/shattered-skies-deep-dive";
 
 /**
  * Shattered Skies — the world of Shatterstorm: the setting's soul, placed
@@ -28,7 +28,16 @@ import {
  *   3. THE LIVING RUINS — four sensory notes, one line each.
  *   4. RELICS OF THE VEYNAR — prose, then five terms as a light glossary.
  *   5. WHO REMAINS — short.
- *   6. THE HANDOVER — one sentence into the dossier below.
+ *
+ * SPLIT ACROSS TWO PAGES. Band 2 — the argument — renders on the MAIN page, as
+ * the standfirst of the merged world section, because the orrery directly under
+ * it is that argument's evidence. Bands 1, 3, 4 and 5 render on the DEEP DIVE.
+ * `variant` selects; no band renders twice, and no sentence exists twice.
+ *
+ * THERE IS NO LONGER A HANDOVER BAND. Band 6 used to be one line pointing at
+ * the dossier below. The two sections have merged, so it pointed at the block
+ * it was already inside; `bridge` was deleted from the content file rather than
+ * hidden here.
  *
  * NO PLANETS. Not a name, not a stat, not a hazard: `PlanetDossier` owns all
  * of that a few hundred pixels further down, and repeating it here would make
@@ -106,78 +115,90 @@ function FractureRule({ id }: { id: string }) {
   );
 }
 
-export default function ShatterstormWorld() {
+export default function ShatterstormWorld({ variant = "main" }: { variant?: SsVariant }) {
+  const deep = variant === "deep";
+
   return (
-    <div className="sw">
+    <div className="sw" data-variant={variant}>
       {/* No credit block here. The page states its attribution once, in
-          §02's teamNote — team of five, my seat was systems and world
-          design — and §05's levelsCredit is the only other one, because it
-          makes a distinction (audio mine, level design shared) rather than a
+          §03's teamNote — team of five, my seat was systems and world design —
+          and §06's levelsCredit is the only other one, because it makes a
+          distinction (audio mine, level design shared) rather than a
           disclaimer. Four near-identical restatements of the same sentence
           made a strong page read as an anxious one. */}
 
-      {/* ---- 1 · the premise ---- */}
-      <div className="sw__lead">
-        <p className="mono sw__lead-tag">{lead.tag}</p>
-        <p className="sw__lead-body">{lead.body}</p>
-        <p className="sw__lead-reconcile">{lead.reconcile}</p>
-        <p className="sw__lead-note">{lead.note}</p>
-      </div>
+      {/* ---- 1 · the premise — DEEP DIVE ---- */}
+      {deep && (
+        <div className="sw__lead">
+          <p className="mono sw__lead-tag">{lead.tag}</p>
+          <p className="sw__lead-body">{lead.body}</p>
+          <p className="sw__lead-reconcile">{lead.reconcile}</p>
+          <p className="sw__lead-note">{lead.note}</p>
+        </div>
+      )}
 
-      <FractureRule id="a" />
+      {deep && <FractureRule id="a" />}
 
-      {/* ---- 2 · the argument ---- */}
-      <section className="sw__thesis" aria-labelledby="sw-thesis-title">
-        <h3 className="sw__thesis-title" id="sw-thesis-title">
-          {metaphor.title}
-        </h3>
-        <p className="sw__thesis-body">{metaphor.body}</p>
-        <p className="sw__thesis-note">{metaphor.note}</p>
-      </section>
+      {/* ---- 2 · the argument — MAIN PAGE ----
+          The world-design claim, and the call I would defend hardest. It stays
+          on the main page because the orrery immediately below it is the
+          evidence for it: claim, then the diagram that proves it. */}
+      {!deep && (
+        <section className="sw__thesis" aria-labelledby="sw-thesis-title">
+          <h3 className="sw__thesis-title" id="sw-thesis-title">
+            {metaphor.title}
+          </h3>
+          <p className="sw__thesis-body">{metaphor.body}</p>
+          <p className="sw__thesis-note">{metaphor.note}</p>
+        </section>
+      )}
 
-      {/* ---- 3 · the living ruins ---- */}
-      <section className="sw__band" aria-labelledby="sw-ruins-title">
-        <h3 className="sw__band-title" id="sw-ruins-title">
-          The living ruins
-        </h3>
-        <ul className="sw__textures">
-          {textures.map((t) => (
-            <li key={t.id} className="sw__texture">
-              <p className="mono sw__texture-label">{t.label}</p>
-              <p className="sw__texture-body">{t.body}</p>
-            </li>
-          ))}
-        </ul>
-      </section>
+      {/* ---- 3 · the living ruins — DEEP DIVE ---- */}
+      {deep && (
+        <section className="sw__band" aria-labelledby="sw-ruins-title">
+          <h3 className="sw__band-title" id="sw-ruins-title">
+            The living ruins
+          </h3>
+          <ul className="sw__textures">
+            {textures.map((t) => (
+              <li key={t.id} className="sw__texture">
+                <p className="mono sw__texture-label">{t.label}</p>
+                <p className="sw__texture-body">{t.body}</p>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
 
-      {/* ---- 4 · relics ---- */}
-      <section className="sw__band" aria-labelledby="sw-relics-title">
-        <h3 className="sw__band-title" id="sw-relics-title">
-          Relics of the Veynar
-        </h3>
-        <p className="sw__band-lead">{relicsLead}</p>
-        <dl className="sw__relics">
-          {relics.map((r) => (
-            <div key={r.id} className="sw__relic">
-              <dt className="mono sw__relic-term">{r.term}</dt>
-              <dd className="sw__relic-gloss">{r.gloss}</dd>
-            </div>
-          ))}
-        </dl>
-      </section>
+      {/* ---- 4 · relics — DEEP DIVE ---- */}
+      {deep && (
+        <section className="sw__band" aria-labelledby="sw-relics-title">
+          <h3 className="sw__band-title" id="sw-relics-title">
+            Relics of the Veynar
+          </h3>
+          <p className="sw__band-lead">{relicsLead}</p>
+          <dl className="sw__relics">
+            {relics.map((r) => (
+              <div key={r.id} className="sw__relic">
+                <dt className="mono sw__relic-term">{r.term}</dt>
+                <dd className="sw__relic-gloss">{r.gloss}</dd>
+              </div>
+            ))}
+          </dl>
+        </section>
+      )}
 
-      {/* ---- 5 · who remains ---- */}
-      <section className="sw__band" aria-labelledby="sw-remains-title">
-        <h3 className="sw__band-title" id="sw-remains-title">
-          {whoRemains.title}
-        </h3>
-        <p className="sw__band-lead">{whoRemains.body}</p>
-      </section>
+      {/* ---- 5 · who remains — DEEP DIVE ---- */}
+      {deep && (
+        <section className="sw__band" aria-labelledby="sw-remains-title">
+          <h3 className="sw__band-title" id="sw-remains-title">
+            {whoRemains.title}
+          </h3>
+          <p className="sw__band-lead">{whoRemains.body}</p>
+        </section>
+      )}
 
       <FractureRule id="b" />
-
-      {/* ---- 6 · into the dossier ---- */}
-      <p className="sw__bridge">{bridge}</p>
 
       <style>{`
         .sw {
@@ -386,14 +407,10 @@ export default function ShatterstormWorld() {
           color: var(--sw-quiet);
         }
 
-        /* ---- the handover ---- */
-        .sw__bridge {
-          margin: 0;
-          max-width: 44rem;
-          font-size: 1.02rem;
-          line-height: 1.65;
-          color: var(--color-moonlight);
-        }
+        /* On the main page this component is one panel, not six bands, so the
+           2.5rem band gap would only add space the section heading already
+           provides. */
+        .sw[data-variant="main"] { gap: 1.75rem; }
 
         /* ---- the fracture rule ----
            Stretched rather than scaled: preserveAspectRatio is none, so the

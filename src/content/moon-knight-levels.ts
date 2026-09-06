@@ -49,17 +49,22 @@
 
    `group` is what the DETAIL SHEET clusters by, and it is an argument about
    how a level gets designed: you place it and give the player a reason to be
-   there (space & goal), you decide who is in it and what it costs (cast &
-   threat), then you decide what it feels like (mood). Three passes, that
-   order. */
+   there (space & goal), you decide what it costs (threat), then you decide
+   what it feels like (mood). Three passes, that order.
+
+   WHY THERE IS NO `cast` OR `enemies` ROW. There was, and they were a second
+   copy. The world map renders exactly those facts — who you meet in a place,
+   what fights you there — as LINKS into the cast and the bestiary, which is a
+   strictly better rendering of them, and since the map and this chart merged
+   into one section the repeat sits half a screen apart. The map owns WHO IS
+   WHERE; this chart owns WHAT A LEVEL IS LIKE TO PLAY. `boss` stays here
+   because which fight caps a level is a plan decision, not a fact about a
+   place. */
 
 export type DimensionId =
   | "space"
   | "objective"
   | "quest"
-  | "mode"
-  | "cast"
-  | "enemies"
   | "boss"
   | "visuals"
   | "audio";
@@ -77,9 +82,6 @@ export const beatDimensions: readonly BeatDimension[] = [
   { id: "space", label: "Space", group: "space-goal" },
   { id: "objective", label: "Objective", group: "space-goal" },
   { id: "quest", label: "Story / Quest", group: "space-goal" },
-  { id: "mode", label: "Game mode", group: "space-goal" },
-  { id: "cast", label: "Cast", group: "cast-threat" },
-  { id: "enemies", label: "Enemies", group: "cast-threat" },
   { id: "boss", label: "Boss", group: "cast-threat" },
   { id: "visuals", label: "Visuals", group: "mood" },
   { id: "audio", label: "Audio", group: "mood" },
@@ -87,7 +89,7 @@ export const beatDimensions: readonly BeatDimension[] = [
 
 export const dimensionGroups: readonly { id: DimensionGroup; label: string }[] = [
   { id: "space-goal", label: "Space & goal" },
-  { id: "cast-threat", label: "Cast & threat" },
+  { id: "cast-threat", label: "Threat" },
   { id: "mood", label: "Mood" },
 ] as const;
 
@@ -126,9 +128,17 @@ export interface BeatLevel {
   /** Marks the Sun-Knight. Drives the FINAL flag on the boss row. */
   finalBoss?: boolean;
   /**
-   * How the level's layers cohere — one thought about why these nine cells
-   * belong to each other. The payoff of the detail sheet: the chart shows the
-   * parts, this says what they add up to.
+   * How the level's layers cohere — ONE non-obvious thought about why these
+   * nine cells belong to each other. The payoff of the detail sheet: the chart
+   * shows the parts, this says what they add up to.
+   *
+   * HALVED, DELIBERATELY, AND IT MUST STAY HALVED. These ran ~70 words each
+   * and drifted into re-listing the cells directly above them — "Banshees hide
+   * inside it, ghosts drift through, the voices singing in it are the enemy
+   * audio" restates three cells the reader has just read, and two facts the
+   * bestiary and the audio section own outright. A cohesion line that names
+   * its own cells is telling the reader nothing; it should make the one claim
+   * the chart cannot make on its own, and stop. Target: one sentence.
    */
   cohesion: string;
   /** The level in three beats: what you see, what you hear, what fights you. */
@@ -148,17 +158,13 @@ export const beatLevels: readonly BeatLevel[] = [
       space: "Lake Island",
       objective: "Get to the boat and escape",
       quest: "Prompt start",
-      mode: "Jousting (introduced)",
-      cast: "Death",
-      enemies: "Soldiers",
       boss: "The Werewolf",
       visuals: "Lots of shadows, green scenarios",
       audio: "Footsteps (silence)",
     },
     cohesion:
-      "An island with one way off it, taught in the dark. There is no score to hide behind: the " +
-      "shadows take the soldiers' silhouettes and footsteps are the only thing the player can " +
-      "hear coming, so the game trains the ear before it trains the sword.",
+      "One island, one way off it, and no score to hide behind — so the game trains the ear " +
+      "before it trains the sword.",
     arc: "shadow · footsteps · soldiers",
   },
   {
@@ -173,17 +179,13 @@ export const beatLevels: readonly BeatLevel[] = [
       space: "Talking woods & the cemetery",
       objective: "Get the 1st Moon Fragment",
       quest: null,
-      mode: null,
-      cast: "The Witch",
-      enemies: "Wooden & amphibian humanoids",
       boss: "The Wizard-Knight",
       visuals: "Green scenarios in the rain, colourful flowers",
       audio: "Whispers in the wind",
     },
     cohesion:
-      "The forest is a character before it is a place. The wooden and amphibian humanoids are the " +
-      "woods standing up, the whispers in the wind are it talking, and in the rain the flowers " +
-      "are the only colour that carries — so the player reads the level by what blooms in it.",
+      "The forest is a character before it is a place: everything that fights you here is the " +
+      "woods standing up.",
     arc: "rain · whispers · the forest itself",
   },
   {
@@ -198,16 +200,13 @@ export const beatLevels: readonly BeatLevel[] = [
       space: "City of Mists & the Haunted Castle in ruins",
       objective: "Get the 2nd Moon Fragment",
       quest: "End the banshees' menace",
-      mode: null,
-      cast: "The Druid",
-      enemies: "Banshees hidden in fog, ghosts of past times",
       boss: "The Centaur-Knight",
       visuals: "Foggy scenarios",
       audio: "Voices singing in the fog",
     },
     cohesion:
-      "Fog is the level. Banshees hide inside it, ghosts drift through, the voices singing in it " +
-      "are the enemy audio; the ruined castle only shows in pieces.",
+      "Fog is not weather here, it is the level geometry — it decides what you are allowed to " +
+      "see and therefore what can reach you.",
     arc: "fog · singing · what hides in it",
   },
   {
@@ -222,19 +221,14 @@ export const beatLevels: readonly BeatLevel[] = [
       space: "The catacombs & the astronomers' castle",
       objective: "Get the 3rd Moon Fragment",
       quest: "Follow the Witch, the Druid, or Death",
-      mode: null,
-      cast: "The Witch, The Druid, Death",
-      enemies: "Ice knights & wizards",
       boss: "The Sun-Knight",
       visuals: "Rocky & snowy",
       audio: "High-pitch music & harmonics",
     },
     finalBoss: true,
     cohesion:
-      "The moon is full and every mask is off: the Witch, the Druid and Death all want the same " +
-      "loyalty and only one of them gets it. Rock and snow leave nowhere to read cover from, the " +
-      "harmonics ring high and thin above it, and the Sun-Knight is waiting at the end of " +
-      "whichever allegiance was chosen.",
+      "The moon is full and every mask is off: three allies want the same loyalty, only one gets " +
+      "it, and the last fight is waiting at the end of whichever was chosen.",
     arc: "snow · harmonics · ice knights",
   },
 ] as const;

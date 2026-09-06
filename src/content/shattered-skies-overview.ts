@@ -2,6 +2,14 @@
  * Shattered Skies — "The Game": the premise, the world, and the narrative
  * structure the TEAM built.
  *
+ * WHERE THIS FILE RENDERS, AFTER THE SPLIT. `teamNote`, `premise`, `hosts` and
+ * the diagram (which draws from `storyBeats[].mapLabel` and
+ * `storyEndings[].mapTag`) render on the MAIN page — the team context and the
+ * shape of the story, which is what the systems below need in order to land.
+ * `worldNotes`, the beat BODIES, `hiddenChoice` and the endings' conditions and
+ * outcomes render on the DEEP DIVE. `storyBeats[].title` appears on both, as
+ * the key that joins a named beat to its written form.
+ *
  * ATTRIBUTION. Everything in this file describes a team project (team of 5).
  * It is context, not credit: it exists so that the contribution sections
  * further down the page — the planetary system, the interdependent puzzles,
@@ -271,6 +279,26 @@ export const storyEndings: readonly StoryEnding[] = [
       "again.",
   },
 ];
+
+/* ---- the diagram's own captions -----------------------------------------
+   These have to differ between the two pages, so they live here as keys rather
+   than as literals in the component.
+
+   On the MAIN page the diagram carries the shape and the five beat NAMES; the
+   beats are written out in full on the deep dive. On the DEEP DIVE there is no
+   diagram — it stays with the condensed section, one render site — and the
+   beats are the content. A caption claiming "the same content, in full" would
+   be false on the main page, which is exactly the kind of quiet inaccuracy the
+   split is most likely to introduce. */
+
+export const mapNotes = {
+  main:
+    "The map carries the shape and the names. Each beat, each ending and how the two sealed " +
+    "choices pick between them are written out in full on the deep dive.",
+  narrow:
+    "The map is drawn on wider screens. The same structure reads top to bottom here: the two " +
+    "hosts above, then the five beats in order.",
+} as const;
 
 /** The `<desc>` the diagram is announced with. One sentence per band. */
 export const mapSummary =

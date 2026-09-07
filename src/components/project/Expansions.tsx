@@ -21,9 +21,10 @@ import {
  *
  * THE MECHANIC IS THE POINT, so it is the loudest thing on each card after the
  * title, and it is drawn in the grammar section 03 already taught the reader:
- * a gold left rule with the quantum basis beside it, exactly as `AbilityCard`
- * annotates its abilities. A reader who saw those cards should recognise this
- * one as the same kind of statement and know to read it back up the page.
+ * a gold left rule with the quantum basis beside it, exactly as the sigil
+ * readout in `QuantumSigil` annotates its abilities. A reader who saw those
+ * should recognise this one as the same kind of statement and know to read it
+ * back up the page.
  *
  * EACH CARD IS AN ARGUMENT IN TWO LINES. The hook is the story; the `Why` line
  * under the rule is why the story counts as evidence. Someone skimming only
@@ -146,8 +147,8 @@ export default function Expansions() {
           color: var(--color-moonlight);
         }
 
-        /* AbilityCard's annotation grammar — a gold left rule against the
-           quantum basis — so the cross-reference is recognisable as one. */
+        /* The sigil readout's annotation grammar — a gold left rule against
+           the quantum basis — so the cross-reference is recognisable as one. */
         .ex-mechanic {
           margin: 0.3rem 0 0.2rem;
           padding: 0.1rem 0 0.15rem 0.7rem;

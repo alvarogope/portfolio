@@ -40,7 +40,7 @@ import InteractiveHint from "./InteractiveHint";
  * fixed image cannot be computed from an array's length.
  *
  * IT IS ALSO THE ONLY HOME FOR THIS MATERIAL. §02 used to render this figure
- * and then five `AbilityCard`s of the same array directly beneath it, so every
+ * and then five ability cards of the same array directly beneath it, so every
  * principle and every effect was stated twice on one screen. The cards are
  * gone; the readout is where an ability is described.
  *

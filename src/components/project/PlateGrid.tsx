@@ -20,12 +20,12 @@ export interface Plate {
 /**
  * Labelled plates that show the WHOLE image and open it full-size.
  *
- * The distinction from `Gallery` is deliberate and is about what the pictures
- * are for. A gallery is a set of pretty frames from the game, so it crops to a
- * tidy grid — `object-fit: cover` is right there. These are documents: floor
- * plans, annotated level shots, node graphs. Cropping one to fill a tile
- * destroys the thing it was placed to show, so every plate is `contain`, and
- * the frame takes a letterbox rather than the drawing taking a crop.
+ * `contain`, NOT `cover`, and that is the whole distinction this component
+ * exists to hold. A gallery of pretty frames from the game can crop to a tidy
+ * grid. These are documents: floor plans, annotated level shots, node graphs.
+ * Cropping one to fill a tile destroys the thing it was placed to show, so
+ * every plate is `contain`, and the frame takes a letterbox rather than the
+ * drawing taking a crop.
  *
  * Clicking opens the shared `Lightbox` at full resolution, because a 1920px
  * plan or a node graph has to be readable, not merely visible. Video plates

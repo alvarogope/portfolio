@@ -16,6 +16,10 @@ import ShatteredSkiesCoop from "@/components/project/ShatteredSkiesCoop";
 import ProjectNav from "@/components/layout/ProjectNav";
 import { projectNavItems } from "@/content/games";
 import Galaxy from "@/components/effects/Galaxy";
+import {
+  BACKDROP_OPACITY,
+  SHATTERED_SKIES_GALAXY,
+} from "@/components/effects/SubpageBackdrop";
 import RampLink from "@/components/project/RampLink";
 import CtaPanel from "@/components/project/CtaPanel";
 import { inMotionIntro, inMotionItems } from "@/content/shattered-skies-in-motion";
@@ -80,20 +84,13 @@ export default function ShatteredSkiesPage() {
     <>
       {/* Hero */}
       <div className="ss-hero">
+        {/* Tuning lives in `SubpageBackdrop`, which is also where the deep
+            dive reads it from, so the hero and the subpage band cannot drift
+            apart. Every knob keeps its comment there. Only strength differs. */}
         <Galaxy
           className="ss-hero-galaxy"
-          hueShift={97}                 // Shifts the hue of all stars by the specified degrees (0-360)
-          saturation={1.1}              // Controls color saturation of stars (0 = grayscale, 1 = full color)
-          density={1.2}                   // Controls the density of stars in the galaxy
-          glowIntensity={0.03}          // Controls the intensity of the star glow effect
-          opacity={0.66}
-          speed={0.1}                   // Global speed multiplier for all animations
-          starSpeed={0.1}
-          rotationSpeed={0.03}          // Speed of automatic galaxy rotation
-          twinkleIntensity={0.5}        // Controls how much stars twinkle (0 = no twinkle, 1 = maximum twinkle)
-          mouseInteraction
-          mouseRepulsion={true}         // Black Hole Effect when true
-          transparent={true}            // Refers to the background
+          {...SHATTERED_SKIES_GALAXY}
+          opacity={BACKDROP_OPACITY.shatteredSkies.hero}
         />
         <div className="ss-hero-content">
           {/* The facts block renders `p.links`, which is where the deep dive is

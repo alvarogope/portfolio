@@ -845,6 +845,16 @@ export default function ShatteredSkiesMechanics({
           opacity: 0.92;
         }
 
+        /* THE CURSOR IS THE OTHER HALF OF THIS, and it lives in globals.css as
+           .decode-cursor::after -- it needs @keyframes, and this component
+           renders four of these. The two rules are keyed off the SAME
+           data-decoding attribute and hand the green over between them: it is
+           in the TEXT while the line is still noise, and in the CURSOR once the
+           line has settled. Nothing else of the old card came back -- no
+           terminal frame, no second copy of these four bodies.
+
+           (No backticks in this block: it is inside a template literal.) */
+
         /* ---- the deep dive's own headings ----
            On the main page each block gets the full BlockHeader — order,
            kicker, title, standfirst. On the deep dive the section already has

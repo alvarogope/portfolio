@@ -408,3 +408,47 @@ img { max-width: 100%; display: block; }
     --moon-scale: 0.42;
   }
 }
+
+/* ============================================
+   DECODE CURSOR  (DecodeOnView)
+   ============================================ */
+
+/* The terminal cursor that `TransmissionCard` carried, restored onto the decode
+   that replaced it. The card chrome is deliberately NOT back — this is the
+   blink and nothing else, on copy that already has a home.
+
+   It is a `::after` on the text span rather than a second element, because that
+   component's whole design rule is that the sentence exists in the DOM exactly
+   once. Empty generated content adds no text node, is not selected by
+   Ctrl+F or select-all, and is not announced, so the cursor stays purely
+   visual. `--color-emerald` is `#5FD98A` on the Shattered Skies layout — the
+   hex the old card hardcoded, now read from the route token. */
+
+@keyframes tcblink { 0%, 49% { opacity: 1 } 50%, 100% { opacity: 0 } }
+
+.decode-cursor::after {
+  content: "";
+  display: inline-block;
+  width: 0.5ch;
+  height: 1em;
+  margin-left: 0.18em;
+  vertical-align: -0.12em;
+  background: var(--color-emerald);
+  animation: tcblink 1s steps(1) infinite;
+}
+
+/* While the sentence is still resolving there is nothing to sit after, so the
+   cursor waits. `data-decoding` is set on the span by `DecodeOnView` for the
+   length of the animation and removed when the real text lands. */
+.decode-cursor[data-decoding]::after {
+  opacity: 0;
+  animation: none;
+}
+
+/* The cursor is a glyph; the blink is the motion. Reduced motion keeps the
+   first and drops the second — the same call the original made. The global
+   killswitch above would already neuter it, but the intent is stated here so
+   it survives any change to that rule. */
+@media (prefers-reduced-motion: reduce) {
+  .decode-cursor::after { animation: none; }
+}

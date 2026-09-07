@@ -11,6 +11,10 @@ import Reveal from "@/components/layout/Reveal";
 import ProjectNav from "@/components/layout/ProjectNav";
 import { projectNavItems } from "@/content/games";
 import Aurora from "@/components/effects/Aurora";
+import {
+  BACKDROP_OPACITY,
+  MOON_KNIGHT_AURORA,
+} from "@/components/effects/SubpageBackdrop";
 import MoonKnightAudio from "@/components/project/MoonKnightAudio";
 import Bestiary from "@/components/project/Bestiary";
 import WorldMap from "@/components/project/WorldMap";
@@ -81,18 +85,13 @@ export default function MoonKnightPage() {
     <>
       {/* Hero */}
       <div className="mk-hero">
+        {/* Tuning lives in `SubpageBackdrop`, which is also where the deep
+            dives read it from, so the hero and the subpage bands cannot
+            drift apart. Only the strength differs. */}
         <Aurora
           className="mk-hero-aurora"
-
-          colorStops={["#2d5e48", "#614844", "#95313f"]}
-
-          origin="top"
-          amplitude={0.9}
-          speed={2}
-
-          blend={1}
-
-          opacity={0.6}
+          {...MOON_KNIGHT_AURORA}
+          opacity={BACKDROP_OPACITY.moonKnight.hero}
         />
         <div className="mk-hero-content">
           <ProjectHero project={p} posterSrc="/images/moon-knight/poster.png" />
@@ -194,7 +193,7 @@ export default function MoonKnightPage() {
         {/* 04 — THE SIGNATURE SYSTEM.
 
             ONE FIGURE, NOT A FIGURE PLUS FIVE CARDS. This section used to
-            render the sigil and then five `AbilityCard`s of the same array
+            render the sigil and then five ability cards of the same array
             directly beneath it, so every principle and every effect appeared
             twice within one screen. The cards are gone. The sigil is the
             game's own design-document artwork, and its readout — name,

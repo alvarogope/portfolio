@@ -56,6 +56,17 @@ import { useEffect, useRef } from "react";
  * which is `TransmissionCard`'s cadence rather than `DecryptText`'s `total / 24`.
  * Twenty-four steps across a forty-word paragraph is a flicker; eighty steps
  * reads as a signal being cleaned up.
+ *
+ * THE CURSOR. The old card ended on a blinking block, and that one detail is
+ * back: `.decode-cursor::after` in `globals.css`, blinking on `tcblink`. It is
+ * generated content rather than an element, so the sentence is still in the DOM
+ * exactly once and there is still nothing extra to select, find or announce.
+ * `data-decoding` — set below for the length of the animation — hides it while
+ * the line is still resolving, so it appears only once the transmission has
+ * landed. Under reduced motion the block shows and does not blink: the cursor
+ * is a glyph, the blink is the motion. The CARD CHROME stays deleted; bringing
+ * back a second way of drawing these four channels is the duplication the
+ * ownership map exists to prevent.
  */
 
 /* Glyphs the noise is drawn from. Uppercase, digits and terminal punctuation:
@@ -156,8 +167,14 @@ export default function DecodeOnView({
     };
   }, [text, delay]);
 
+  /* `decode-cursor` draws the blinking block after the sentence; see
+     `globals.css`. It is a `::after`, so it adds no node to the one text node
+     this component is built to guarantee. */
   return (
-    <span ref={ref} className={className}>
+    <span
+      ref={ref}
+      className={className ? `decode-cursor ${className}` : "decode-cursor"}
+    >
       {text}
     </span>
   );

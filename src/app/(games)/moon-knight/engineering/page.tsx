@@ -7,6 +7,8 @@ import CodeBlock from "@/components/project/CodeBlock";
 import CtaPanel from "@/components/project/CtaPanel";
 import ScreenshotSlots from "@/components/project/ScreenshotSlots";
 import Reveal from "@/components/layout/Reveal";
+import ProjectNav from "@/components/layout/ProjectNav";
+import { moonKnightNavItems } from "@/content/games";
 
 export const metadata: Metadata = {
   title: "Programming Moon-Knight | Álvaro Gómez",
@@ -516,6 +518,20 @@ export default function GameEngineeringPage() {
             accent="silver"
           />
         </div>
+      </Reveal>
+
+      {/* THE RAIL. Until now a subpage navigated by breadcrumb at the top and
+          the panels above at the foot, and by nothing at all in between — on a
+          page this long that meant reaching one end of it before any sideways
+          move was possible. It renders the same control the four project pages
+          carry: pinned to the right gutter above 1560px, and folded into the
+          page here below that, under the panels rather than instead of them. */}
+      <Reveal>
+        <ProjectNav
+          items={moonKnightNavItems}
+          currentSlug="moon-knight-engineering"
+          kicker="Where to next"
+        />
       </Reveal>
     </Section>
   );

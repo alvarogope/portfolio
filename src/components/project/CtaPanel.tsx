@@ -1,7 +1,5 @@
 import Link from "next/link";
 
-const HAIRLINE = "1px solid color-mix(in srgb, var(--color-mist) 20%, transparent)";
-
 /**
  * The hand-off panel at the foot of a page: what is on the next page, and why
  * you would go there.
@@ -12,9 +10,18 @@ const HAIRLINE = "1px solid color-mix(in srgb, var(--color-mist) 20%, transparen
  * page needs it to hand them back — three inline copies of one panel is how
  * three panels stop looking alike.
  *
- * `accent` is the left rule. Gold for a forward hand-off into new material,
- * silver for a lateral or return move — the same ranking `RampLink` uses, so a
- * reader reads direction off the colour without being told.
+ * THE WHOLE CARD IS THE LINK. It was a <div> with one anchor on its last line,
+ * which left most of a 38rem card inert while looking every bit as clickable as
+ * the line that worked. The panel is now the <a> itself and the line at the
+ * foot is a <span> — one control, one accessible name, no nested anchors. The
+ * hover, focus and reduced-motion states live in `globals.css` under CTA PANEL,
+ * because this renders up to twice a page across six pages and a per-instance
+ * <style> tag would ship the same sheet a dozen times.
+ *
+ * `accent` is the left rule, and now also what the card's hairline warms to on
+ * hover. Gold for a forward hand-off into new material, silver for a lateral or
+ * return move — the same ranking `RampLink` uses, so a reader reads direction
+ * off the colour without being told.
  */
 export default function CtaPanel({
   kicker,
@@ -33,14 +40,10 @@ export default function CtaPanel({
 }) {
   const rule = accent === "gold" ? "var(--color-gold)" : "var(--color-silver)";
   return (
-    <div
-      className="panel"
-      style={{
-        padding: "clamp(1.75rem, 5vw, 3rem)",
-        border: HAIRLINE,
-        borderLeft: `3px solid ${rule}`,
-        maxWidth: "38rem",
-      }}
+    <Link
+      href={href}
+      className="panel cta-panel"
+      style={{ "--cta-rule": rule } as React.CSSProperties}
     >
       <span
         className="mono"
@@ -64,20 +67,13 @@ export default function CtaPanel({
         {title}
       </h2>
       <p style={{ margin: 0, lineHeight: 1.75, color: "var(--color-silver)" }}>{body}</p>
-      <Link
-        href={href}
-        className="mono"
-        style={{
-          display: "inline-block",
-          marginTop: "1.5rem",
-          fontSize: "0.8rem",
-          color: "var(--color-gold)",
-          borderBottom: "1px solid color-mix(in srgb, var(--color-gold) 50%, transparent)",
-          paddingBottom: "3px",
-        }}
-      >
-        {linkLabel} <span aria-hidden="true">→</span>
-      </Link>
-    </div>
+      {/* Not an anchor. The card around it is the one. */}
+      <span className="mono cta-panel__link">
+        {linkLabel}{" "}
+        <span aria-hidden="true" className="cta-panel__arrow">
+          →
+        </span>
+      </span>
+    </Link>
   );
 }

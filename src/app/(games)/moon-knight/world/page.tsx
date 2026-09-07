@@ -3,6 +3,8 @@ import Section from "@/components/layout/Section";
 import SectionHeading from "@/components/layout/SectionHeading";
 import Breadcrumb from "@/components/layout/Breadcrumb";
 import Reveal from "@/components/layout/Reveal";
+import ProjectNav from "@/components/layout/ProjectNav";
+import { moonKnightNavItems } from "@/content/games";
 import CtaPanel from "@/components/project/CtaPanel";
 import NarrativeDesign from "@/components/project/NarrativeDesign";
 import Cast from "@/components/project/Cast";
@@ -327,6 +329,20 @@ export default function MoonKnightWorldPage() {
             accent="silver"
           />
         </div>
+      </Reveal>
+
+      {/* THE RAIL. Until now a subpage navigated by breadcrumb at the top and
+          the panels above at the foot, and by nothing at all in between — on a
+          page this long that meant reaching one end of it before any sideways
+          move was possible. It renders the same control the four project pages
+          carry: pinned to the right gutter above 1560px, and folded into the
+          page here below that, under the panels rather than instead of them. */}
+      <Reveal>
+        <ProjectNav
+          items={moonKnightNavItems}
+          currentSlug="moon-knight-world"
+          kicker="Where to next"
+        />
       </Reveal>
     </Section>
   );

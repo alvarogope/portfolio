@@ -236,6 +236,86 @@ img { max-width: 100%; display: block; }
   }
 
 /* ============================================
+   CTA PANEL
+
+   THE WHOLE CARD IS THE LINK.
+
+   It used to be a <div> whose only interactive element was the one line of
+   text at the bottom. The card is a hand-off to another page and has no other
+   purpose, so every part of it that reads as clickable now is: the panel
+   itself is the <a>, and the line at the foot is a <span> that styles as a
+   link rather than a second, nested one. That keeps the accessible name
+   ("kicker, title, body, link label") on one control instead of scattering
+   the target across a 38rem card with a 20rem dead zone.
+
+   These live here rather than in a per-panel <style> tag because the control
+   renders up to twice a page across six pages — one sheet, not twelve.
+   ============================================ */
+
+.cta-panel {
+  display: block;
+  padding: clamp(1.75rem, 5vw, 3rem);
+  border: 1px solid color-mix(in srgb, var(--color-mist) 20%, transparent);
+  /* --cta-rule is set per instance: gold forward, silver back or sideways. */
+  border-left: 3px solid var(--cta-rule);
+  max-width: 38rem;
+  color: inherit;
+  text-decoration: none;
+  transition: border-color 220ms ease, transform 220ms ease;
+}
+
+/* The card lifting toward the reader, and its hairline warming to the rule's
+   own colour so the accent reads as the thing being offered. */
+@media (hover: hover) {
+  .cta-panel:hover {
+    border-color: color-mix(in srgb, var(--cta-rule) 45%, transparent);
+    border-left-color: var(--cta-rule);
+    transform: translateY(-2px);
+  }
+}
+
+/* The link line. A <span>, so it needs the anchor's states rather than its
+   own — both the arrow and the underline answer to the card. */
+.cta-panel__link {
+  display: inline-block;
+  margin-top: 1.5rem;
+  font-size: 0.8rem;
+  color: var(--color-gold);
+  border-bottom: 1px solid color-mix(in srgb, var(--color-gold) 50%, transparent);
+  padding-bottom: 3px;
+}
+
+.cta-panel__arrow {
+  display: inline-block;
+  transition: transform 220ms ease;
+}
+
+.cta-panel:hover .cta-panel__link,
+.cta-panel:focus-visible .cta-panel__link {
+  border-bottom-color: var(--color-gold);
+}
+
+.cta-panel:hover .cta-panel__arrow,
+.cta-panel:focus-visible .cta-panel__arrow {
+  transform: translateX(4px);
+}
+
+/* The card is up to 38rem tall-ish and full-bleed inside its grid cell, so
+   the global 3px outward ring is drawn tight rather than floating. */
+.cta-panel:focus-visible {
+  outline: 2px solid var(--color-lunar-gold);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cta-panel,
+  .cta-panel__arrow { transition: none; }
+  .cta-panel:hover { transform: none; }
+  .cta-panel:hover .cta-panel__arrow,
+  .cta-panel:focus-visible .cta-panel__arrow { transform: none; }
+}
+
+/* ============================================
    ABOUT — CHARACTER INSPECT
    ============================================ */
 

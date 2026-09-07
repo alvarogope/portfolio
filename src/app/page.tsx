@@ -29,7 +29,8 @@ const DISPLAY_WEIGHT = 700;
 const LABEL = {
   eyebrow: { fontSize: 12, letterSpacing: "0.26em" },
   act: { fontSize: 11, letterSpacing: "0.3em" },
-  spec: { fontSize: 13, letterSpacing: "0.08em" },
+  /* `spec` used to set the non-flagship bands' single mono disciplines line.
+     All four bands now render chips, so nothing sets that line any more. */
   chip: { fontSize: 12, letterSpacing: "0.07em" },
 } as const;
 
@@ -135,32 +136,21 @@ export default function Home() {
 
       {/* AV Media side note — a quiet footnote under the four projects,
           not a fifth card. Deliberately the smallest voice on the page:
-          body copy one step down from the bands, a single mono label, and
-          the same 48px axis everything else on the homepage sits on. */}
+          body copy one step down from the bands, and the same 48px axis
+          everything else on the homepage sits on.
+
+          NO "SELECTED AV WORK" AFFORDANCE. A <span> styled as a link used to
+          sit under this sentence, waiting for a URL that does not exist yet.
+          It is gone, with its .hp-avnote-link / .hp-avnote-arrow styles: an
+          affordance that promises work there is nothing behind is worse than
+          no affordance. The sentence stands on its own, and when the AV work
+          is ready an anchor under this paragraph is all it takes. */}
       <Reveal>
         <section className="hp-avnote" aria-label="Audiovisual media background">
           <p className="hp-avnote-line">
             Before games, I worked in audiovisual media — an eye for framing,
             pacing, and world that still shapes how I design levels and stories.
           </p>
-
-          {/* TODO: no destination yet. When the AV portfolio has a URL, wrap
-              this <span> in an anchor and delete the span:
-
-                <a className="hp-avnote-link" href="THE_URL_GOES_HERE"
-                   target="_blank" rel="noopener noreferrer">
-                  Selected AV work <span aria-hidden className="hp-avnote-arrow">→</span>
-                </a>
-
-              The .hp-avnote-link styles below already cover both cases, and
-              a :hover/:focus rule is waiting there for when it is a real
-              link. Nothing else needs to change. */}
-          <span className="hp-avnote-link">
-            Selected AV work
-            <span aria-hidden className="hp-avnote-arrow">
-              →
-            </span>
-          </span>
         </section>
       </Reveal>
 
@@ -487,36 +477,6 @@ export default function Home() {
           color: var(--color-mist);
           text-wrap: pretty;
         }
-        /* Styled as a link, but currently a <span>: silver, and a hairline
-           underline drawn as a border rather than text-decoration so it can
-           sit away from the baseline at a lower weight than the type. No
-           cursor: pointer and no hover lift while it is inert — it should
-           not promise a click it cannot honour yet. */
-        .hp-avnote-link {
-          display: inline-flex;
-          align-items: center;
-          gap: 8px;
-          margin-top: 18px;
-          font-family: var(--font-mono);
-          font-size: 13px;
-          letter-spacing: 0.14em;
-          color: var(--color-silver);
-          text-decoration: none;
-          padding-bottom: 4px;
-          /* 48% of silver over void lands at #5E6570 — 3.3:1, clear of the
-             3:1 non-text floor, while still reading as a hairline. */
-          border-bottom: 1px solid color-mix(in srgb, var(--color-silver) 48%, transparent);
-        }
-        /* Live only once this is a real anchor; harmless on the span. */
-        a.hp-avnote-link {
-          transition: color 220ms ease, border-color 220ms ease;
-        }
-        a.hp-avnote-link:hover {
-          color: var(--color-moonlight);
-          border-bottom-color: var(--color-moonlight);
-        }
-        a.hp-avnote-link:hover .hp-avnote-arrow { transform: translateX(4px); }
-        .hp-avnote-arrow { transition: transform 260ms ease; }
 
         /* ---- responsive ---- */
         @media (max-width: 900px) {
@@ -558,12 +518,9 @@ export default function Home() {
           .hp-band::after,
           .hp-band-seam,
           .hp-arrow,
-          .hp-avnote-arrow,
-          a.hp-avnote-link,
           .hp-cta { transition: none; }
           .hp-band:hover .hp-band-media img { transform: none; }
           .hp-band:hover .hp-arrow { transform: none; }
-          a.hp-avnote-link:hover .hp-avnote-arrow { transform: none; }
         }
       `}</style>
     </div>
@@ -661,56 +618,38 @@ function ActBand({ act }: { act: Act }) {
           {project.systemsHook}
         </p>
 
-        {flagship ? (
-          <div
-            style={{
-              display: "flex",
-              flexWrap: "wrap",
-              gap: 8,
-              marginTop: 28,
-            }}
-          >
-            <EngineTag engine={engine} accent={accent} />
-            {toChips(project.disciplines).map((chip) => (
-              <span
-                key={chip}
-                style={{
-                  ...mono,
-                  ...LABEL.chip,
-                  border: "1px solid color-mix(in srgb, var(--color-mist) 32%, transparent)",
-                  padding: "8px 12px",
-                  color: "var(--color-mist)",
-                  whiteSpace: "nowrap",
-                }}
-              >
-                {chip}
-              </span>
-            ))}
-          </div>
-        ) : (
-          <div
-            style={{
-              marginTop: 22,
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "flex-start",
-              gap: 12,
-            }}
-          >
-            <EngineTag engine={engine} accent={accent} />
-            <p
+        {/* ONE TREATMENT FOR ALL FOUR BANDS. The flagship used to be the only
+            card whose disciplines broke into chips; the other three ran theirs
+            as a single mono line, so four cards describing the same KIND of
+            thing described it in two different visual languages and read as
+            two different classes of work. Every project's `disciplines` is
+            already a "A · B · C" string, so they all split the same way — the
+            flagship's larger interval above is what still ranks it. */}
+        <div
+          style={{
+            display: "flex",
+            flexWrap: "wrap",
+            gap: 8,
+            marginTop: flagship ? 28 : 22,
+          }}
+        >
+          <EngineTag engine={engine} accent={accent} />
+          {toChips(project.disciplines).map((chip) => (
+            <span
+              key={chip}
               style={{
                 ...mono,
-                ...LABEL.spec,
-                margin: 0,
+                ...LABEL.chip,
+                border: "1px solid color-mix(in srgb, var(--color-mist) 32%, transparent)",
+                padding: "8px 12px",
                 color: "var(--color-mist)",
-                lineHeight: 1.75,
+                whiteSpace: "nowrap",
               }}
             >
-              {project.disciplines}
-            </p>
-          </div>
-        )}
+              {chip}
+            </span>
+          ))}
+        </div>
 
         <span
           className="hp-link"

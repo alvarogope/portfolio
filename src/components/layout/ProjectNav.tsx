@@ -11,7 +11,7 @@ import {
   type PointerEvent,
 } from "react";
 import { createPortal } from "react-dom";
-import type { ProjectNavItem } from "@/content/games";
+import { HOME_NAV_ITEM, type ProjectNavItem } from "@/content/games";
 
 const REDUCED_QUERY = "(prefers-reduced-motion: reduce)";
 
@@ -46,7 +46,32 @@ const THEMED_VARS = [
   "--font-body",
 ];
 
+/* The deep-dive glyph, shared by both projects that have one: an open book,
+   one leaf solid and one drawn, so it reads at 1.25em without detail. */
+const BOOK = (
+  <>
+    <path d="M3.6 5.2h5.6c1.5 0 2.8 1 2.8 2.2v11.4c0-.9-1.1-1.6-2.6-1.6H3.6V5.2Z" fill="currentColor" />
+    <path
+      d="M20.4 5.2h-5.6c-1.5 0-2.8 1-2.8 2.2v11.4c0-.9 1.1-1.6 2.6-1.6h5.8V5.2Z"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.4"
+      strokeLinejoin="round"
+    />
+  </>
+);
+
 const ICONS: Record<string, React.ReactNode> = {
+
+  /* Four tiles for four worlds — the index, drawn as what it contains. */
+  home: (
+    <>
+      <rect x="3.4" y="3.4" width="7.2" height="7.2" fill="currentColor" />
+      <rect x="13.4" y="3.4" width="7.2" height="7.2" fill="currentColor" />
+      <rect x="3.4" y="13.4" width="7.2" height="7.2" fill="currentColor" />
+      <rect x="13.4" y="13.4" width="7.2" height="7.2" fill="currentColor" />
+    </>
+  ),
 
   "moon-knight": (
     <path
@@ -92,11 +117,59 @@ const ICONS: Record<string, React.ReactNode> = {
     </>
   ),
 
+  /* ---- the subpage rows. `slug` is an icon key here, not a route. ---- */
+
+  "moon-knight-world": BOOK,
+  "shattered-skies-world": BOOK,
+
+  /* Angle brackets: the write-up about code. */
+  "moon-knight-engineering": (
+    <g
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M9.1 6.3 3.7 12l5.4 5.7" />
+      <path d="M14.9 6.3 20.3 12l-5.4 5.7" />
+    </g>
+  ),
+
+  /* Two crossed orbits round a nucleus — the toolkit's own subject. */
+  "moon-knight-quantum": (
+    <>
+      <circle cx="12" cy="12" r="2.1" fill="currentColor" />
+      <ellipse
+        cx="12"
+        cy="12"
+        rx="9.6"
+        ry="4"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.4"
+        transform="rotate(32 12 12)"
+      />
+      <ellipse
+        cx="12"
+        cy="12"
+        rx="9.6"
+        ry="4"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.4"
+        transform="rotate(-32 12 12)"
+      />
+    </>
+  ),
+
 };
 
 type ProjectNavProps = {
   items: ProjectNavItem[];
   currentSlug: string;
+  /** What the rail is a list OF. Subpage rails list one project's family. */
+  kicker?: string;
   proximityRadius?: number;
   maxShift?: number;
   smoothing?: number;
@@ -156,6 +229,7 @@ function NavContent({
   items,
   currentSlug,
   rail,
+  kicker = "Explore the worlds",
   proximityRadius = 180,
   maxShift = 16,
   smoothing = 9,
@@ -247,7 +321,7 @@ function NavContent({
       aria-labelledby={`project-nav-${currentSlug}`}
     >
       <p id={`project-nav-${currentSlug}`} className="mono project-nav__kicker">
-        Explore the worlds
+        {kicker}
       </p>
       <nav aria-label="Explore the project worlds">
         <ul
@@ -257,15 +331,22 @@ function NavContent({
         >
           {items.map((item) => {
             const active = item.slug === currentSlug;
+            /* The index row is not one of the worlds, so it is ruled off
+               from them rather than listed among them. */
+            const isIndex = item.slug === HOME_NAV_ITEM.slug;
 
             return (
-              <li key={item.slug} className="project-nav__item" style={itemStyle(item.accent)}>
+              <li
+                key={item.slug}
+                className={`project-nav__item${isIndex ? " project-nav__item--index" : ""}`}
+                style={itemStyle(item.accent)}
+              >
                 <Link
                   ref={(element) => {
                     if (element) itemRefs.current.set(item.slug, element);
                     else itemRefs.current.delete(item.slug);
                   }}
-                  href={`/${item.slug}`}
+                  href={item.href ?? `/${item.slug}`}
                   aria-current={active ? "page" : undefined}
                   className={`project-nav__link${active ? " is-active" : ""}`}
                   onFocus={() => setFocusTarget(item.slug, true)}
@@ -308,6 +389,13 @@ function NavContent({
           margin: 0;
           padding: 0;
           list-style: none;
+        }
+        /* The rule under the index row, in both forms. It is drawn on the
+           <li> rather than the <a> so the gap between rows stays even —
+           the border sits in the grid gap, not inside the link's hit area. */
+        .project-nav__item--index {
+          padding-bottom: 1.25rem;
+          border-bottom: 1px solid color-mix(in srgb, var(--color-mist) 22%, transparent);
         }
         .project-nav__link {
           --line-proximity: 0;
@@ -424,6 +512,7 @@ function NavContent({
           line-height: 1.5;
         }
         .project-nav--rail .project-nav__list { width: 100%; gap: 0.7rem; }
+        .project-nav--rail .project-nav__item--index { padding-bottom: 0.7rem; }
         .project-nav--rail .project-nav__link {
           grid-template-columns: 1.4rem minmax(0, 1fr);
           gap: 0.55rem;

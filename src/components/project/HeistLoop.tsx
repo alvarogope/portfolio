@@ -554,6 +554,15 @@ export default function HeistLoop() {
           >
             <ClockTrack />
           </div>
+          {/* RESTORED, and deliberately narrow-only. This frame has no drag
+              handler and no key handler — it is a plain `overflow-x: auto` box —
+              so it does NOT qualify for the site's InteractiveHint, in either
+              mode: `select` would be a lie (nothing in it is pickable) and
+              `pan` was also a lie (it promises dragging and arrow keys that do
+              not exist). A chip that over-promises teaches a reader to distrust
+              the chips on the figures where the targets are real. This note
+              appears only at the widths where the drawing genuinely overflows,
+              which is the one true thing there is to say. */}
           <p className="mono mono-note hl-scroll-note">Scroll the clock sideways to follow the run →</p>
           <p className="hl-band-note">{phaseLevelNote}</p>
         </section>
@@ -698,6 +707,8 @@ export default function HeistLoop() {
           outline-offset: 2px;
         }
         .hl-track { display: block; width: 100%; min-width: 1040px; height: auto; }
+        .hl-scroll-note { display: none; margin: 0; font-size: 0.71rem; color: var(--hl-quiet); }
+        @media (max-width: 1120px) { .hl-scroll-note { display: block; } }
 
         .hl-ruler { stroke: url(#hl-clock); stroke-width: 3; }
         .hl-clock-a { stop-color: var(--color-emerald); }
@@ -801,8 +812,6 @@ export default function HeistLoop() {
           fill: color-mix(in srgb, var(--hl-amber) 7%, var(--hl-screen));
         }
 
-        .hl-scroll-note { display: none; margin: 0; font-size: 0.71rem; color: var(--hl-quiet); }
-        @media (max-width: 1120px) { .hl-scroll-note { display: block; } }
 
         /* ---- 2 · phase panels ----
            One-pixel gaps over the edge colour: the dividers are the grid, not a

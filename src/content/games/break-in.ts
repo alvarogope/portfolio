@@ -57,7 +57,7 @@ export const breakIn: Project = {
 
   designChallenge: {
     quote:
-      "The obvious way to build a co-op heist is to give players a voice channel and let them sort it out. I removed it on purpose. Without speech, coordination had to become a mechanic, so I built the tools to carry it: the Hacker's vision as a shared danger sense, camera signs to mark where the Hacker is looking, and on-screen prompts as a shared language. The result is that communication is something players achieve through the systems, not something the systems assume.",
+      "The obvious way to build a co-op heist is to give players a voice channel and let them sort it out. I removed it on purpose. Without speech, coordination had to become a mechanic, so I built the tools to carry it. The Hacker's vision became a shared danger sense, camera signs marked where the Hacker was looking, and on-screen prompts became a shared language. The result is that communication is something players achieve through the systems, not something the systems assume.",
     engine: "Unity",
     system: "Co-op / detection / feedback",
     resolution: "Replaced voice chat with three diegetic coordination channels.",
@@ -69,31 +69,44 @@ export const breakIn: Project = {
      a GDD-completeness requirement rather than a designed deliverable — and the
      extra modes were an idea that was never built. Neither is a contribution to
      claim, so both were removed rather than given a section. Do not re-add them. */
+  /* MOVED, AND CUT IN THE SAME CHANGE. This block used to close the page.
+     After ~5,000 words it read as a recap of five sections the reader had
+     already been through; at the §04 position, directly after the team note in
+     §03, it reads as a promise of the six that follow. The ownership map's
+     Merge #6.
+
+     Moving an untrimmed recap only relocates it, so every enumeration went
+     with the move. "Detection & feedback" used to name all three channels,
+     which §07 draws; "Pressure loop" recapped §09's three balancing rules;
+     "Role & interdependency" recapped §05's nine wires; "Audio direction"
+     listed the three cues §08 now owns. Each bullet is one line and names the
+     section that shows the work, so nothing here is the sole claim for
+     anything. */
   contributions: [
     {
       label: "Lead design & direction",
       description:
-        "Led the design across a team of four, setting the direction and authoring most of the design document: the four roles, the mechanics, the puzzle styles, and the balancing.",
+        "Led the design across a team of four and authored most of the design document — the roles, the mechanics, the puzzle styles and the balancing.",
     },
     {
       label: "Role & interdependency design",
       description:
-        "Designed the four asymmetric roles so that each one holds a piece no other can complete, tuning their abilities and cooldowns so no single player can carry a run and none is dead weight.",
+        "Designed the four asymmetric roles and tuned them so no seat can carry a run and none is dead weight. §05 draws the web.",
     },
     {
       label: "Detection & feedback systems",
       description:
-        "Designed the detection state machine (idle, investigating, chasing) and a three-channel danger signal that fires at once: an eye icon on the HUD, an investigation bar filling above the guard, and a white-noise crescendo rising into the chase theme.",
+        "Designed the detection state machine and the redundant danger signal that runs alongside it. §07 is the machine itself.",
     },
     {
       label: "Pressure loop & difficulty",
       description:
-        "Built the eight-minute pressure loop with adaptive difficulty that tightens patrols and puzzles when the team plays well, and a reward-on-failure model so even a caught run returns something.",
+        "Built the eight-minute pressure loop, the adaptive difficulty under it, and a reward model that pays out on a failed run. §03 and §09.",
     },
     {
       label: "Audio direction & level design support",
       description:
-        "Directed the audio design (the tense synth underscore, the five-minute tempo shift, the chase transition) and sketched the level layout with the level designer, placing hideouts, patrol routes, and the layered basement approach.",
+        "Directed the audio — score, clock and action cues — and co-authored the bank layout with the team's level designer. §06 and §08.",
     },
   ],
 };

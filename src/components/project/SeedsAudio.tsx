@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { createPortal } from "react-dom";
+import InteractiveHint from "./InteractiveHint";
 
 type Seed = { id: string; name: string; mood: string; src: string; tint: string };
 
@@ -246,6 +247,22 @@ export default function SeedsAudio() {
     <div ref={hostRef}>
       <audio ref={ambientRef} src={AMBIENT_SRC} loop preload="none" />
       <audio ref={seedRef} preload="none" />
+
+      {/* THE CHIP GOES HERE, AND THIS FIGURE ACTUALLY EARNS IT. Every seed
+          below is a real `<button>` with a real `onClick` that starts audio —
+          which is the test the site now applies: a chip requires a HANDLER, not
+          a scrollbar. The three scroll-only figures on this page (the pacing
+          loop, the weather flip) correctly get a narrow-only scroll note
+          instead.
+
+          `select` mode, because there are targets to pick. The resting
+          affordance is already drawn and is not the chip's job: every card
+          wears a ▶ glyph in a tinted ring and a tinted border at 25%, which
+          goes to 60% and flips to ❚❚ on the one that is playing. */}
+      <InteractiveHint
+        what="seed"
+        does="that track starts playing, and its bars move while it does"
+      />
 
       <div className="grid-4">
         {SEEDS.map((seed) => {

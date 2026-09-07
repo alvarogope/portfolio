@@ -166,6 +166,17 @@ export interface LevelStage {
    * order. See the note at the top of this file.
    */
   tension: number;
+  /**
+   * Why THAT number, in one sentence. The ownership map's absorb for this
+   * section: five bare tension values read as a spreadsheet export, and the
+   * argument for the shape was living only in this file's doc comment, where
+   * no reader meets it.
+   *
+   * The rule these five keep: say what the STAGE is, not what the curve
+   * means. The claim about the curve as a whole — that the dip is what makes
+   * the last third read as pressure — belongs to `pacingSummary`, once.
+   */
+  why: string;
 }
 
 export const levelStages: readonly LevelStage[] = [
@@ -179,6 +190,9 @@ export const levelStages: readonly LevelStage[] = [
     hazards: ["NPC employees", "Guards"],
     experience: "Entry tension",
     tension: 0.5,
+    why:
+      "Moderate rather than low. Four players are exposed in a public room full of staff from the " +
+      "first second, but nothing here is on a clock yet.",
   },
   {
     id: "offices",
@@ -190,6 +204,9 @@ export const levelStages: readonly LevelStage[] = [
     hazards: ["Security"],
     experience: "Comfort · breather",
     tension: 0.25,
+    why:
+      "The floor of the run, and the only stage with no objective to fail. The job here is to hide " +
+      "up and agree what happens next.",
   },
   {
     id: "server-room",
@@ -206,6 +223,9 @@ export const levelStages: readonly LevelStage[] = [
     hazards: ["Surveillance", "Guards"],
     experience: "Strategic setup",
     tension: 0.55,
+    why:
+      "Barely above the Lobby, deliberately. The plant is one timed action in a watched room — " +
+      "high stakes, but only one thing to get wrong.",
   },
   {
     id: "vault-corridor",
@@ -222,6 +242,9 @@ export const levelStages: readonly LevelStage[] = [
     hazards: ["Lasers", "Motion detectors"],
     experience: "Precision stealth",
     tension: 0.75,
+    why:
+      "The jump. Lasers are the one hazard that skips the warning entirely, so what changes here " +
+      "is the cost of a mistake, not the difficulty of avoiding one.",
   },
   {
     id: "vault",
@@ -233,6 +256,9 @@ export const levelStages: readonly LevelStage[] = [
     hazards: ["Timed defence reactivation"],
     experience: "Climax · tension spike",
     tension: 1,
+    why:
+      "The peak, and the only one. Two clocks run at once: the eight-minute escape, and the " +
+      "one-second window on every ingot lifted off the rack.",
   },
 ];
 
@@ -270,10 +296,10 @@ export const tensionPeak: TensionPoint = byTension[byTension.length - 1];
 
 /** The shape of the curve in words — the chart's text equivalent, shown as its caption. */
 export const pacingSummary =
-  "Tension opens moderate in the Lobby, falls to its lowest in the Offices — the one deliberate " +
-  "breather, where the team hides up and plans — then climbs without a break: the Server Room's " +
-  "USB plant, the Vault Corridor's precision stealth, and the spike at the Vault. The dip is what " +
-  "makes the last third read as pressure rather than noise.";
+  "Tension opens moderate in the Lobby and falls to its lowest in the Offices — the one " +
+  "deliberate breather, where the team hides up and plans. From there it climbs without a break: " +
+  "the Server Room's USB plant, the Vault Corridor's precision stealth, and the spike at the " +
+  "Vault. The dip is what makes the last third read as pressure rather than noise.";
 
 /** Tension as a word, for the readouts that carry the numbers in text. */
 export function tensionBand(tension: number): string {

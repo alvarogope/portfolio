@@ -57,11 +57,15 @@ export interface Weather {
   /** One line, in the card. */
   body: string;
   /**
-   * What solving the place does to this weather. Every sky answers the same
-   * trigger, which is the rule the roster exists to show: the acid rain stops
-   * being acid, and the hard weathers stop.
+   * What solving the place does to THIS weather, where it is worth saying
+   * separately. Optional, and deliberately so: the rule that every sky answers
+   * the same trigger is stated once in `rosterThesis`, above the roster. The
+   * three hazards used to repeat one identical sentence — "the hard weather
+   * stops once the place is solved" — three cards apart, which taught a reader
+   * nothing on the second or third reading. Only the acid/clean pair carries
+   * one now, because for those two the answer is the whole point of the card.
    */
-  afterSolve: string;
+  afterSolve?: string;
   /**
    * The track I scored for this weather's level, quoted from the score section
    * further up this page. Only the two levels that got their own track carry
@@ -81,7 +85,7 @@ export const weathers: readonly Weather[] = [
     body:
       "The default sky. It falls on everything the player has not restored yet, which makes it " +
       "the game's way of saying there is still work here without saying anything.",
-    afterSolve: "It stops being acid — the same rain, running clean.",
+    afterSolve: "The same rain, running clean.",
   },
   {
     id: "clean-rain",
@@ -106,7 +110,6 @@ export const weathers: readonly Weather[] = [
     body:
       "Hard weather with its own mood: a condition to survive as much as an atmosphere to feel, " +
       "and the level is built around what its sky is doing to the player.",
-    afterSolve: "The hard weather stops once the place is solved.",
     scored: { track: "Snow Level", line: "Still, crystalline cold" },
   },
   {
@@ -118,9 +121,8 @@ export const weathers: readonly Weather[] = [
     where: "",
     body:
       "Not only a particle effect. I built the wind as an actual force and drove the grass off " +
-      "it, so the blades bend and move the same way the weather is blowing — the wind is in the " +
+      "it, so the blades bend and move the same way the weather is blowing. The wind is in the " +
       "world rather than in front of it.",
-    afterSolve: "The hard weather stops once the place is solved.",
   },
   {
     id: "sandstorm",
@@ -132,7 +134,6 @@ export const weathers: readonly Weather[] = [
     body:
       "The harshest of them. Hard weather in the same system as the rain, pointed at the " +
       "moment-to-moment rather than at the state of the place.",
-    afterSolve: "The hard weather stops once the place is solved.",
   },
 ];
 
@@ -190,11 +191,12 @@ export const zones: readonly Zone[] = [
     skyLine: "The same rain, turned clean",
     groundLine: "Life returning to the ground the player restored",
     readout: "This place is won",
+    /* Trimmed. The first and last sentences were the flip rule restated for a
+       fourth time on one screen. What is kept is the only thing this card can
+       say that the diagram cannot draw: WHY the rain turns rather than stops. */
     detail:
-      "Solve the puzzle that heals a place and its sky lets go. Where it was raining acid, the " +
-      "rain stops being acid: the same weather, no longer poison, which is the reading I wanted — " +
-      "the world was never the enemy, only what had been done to it. Where the weather was hard, " +
-      "it stops. The world visibly mends as the player restores it, one healed place at a time.",
+      "The same weather, no longer poison. That is the reading I wanted — the world was never " +
+      "the enemy, only what had been done to it.",
   },
 ];
 
@@ -207,11 +209,15 @@ export const zones: readonly Zone[] = [
 export const flip = {
   trigger: "The player solves the place's puzzle",
   direction: "One-way · per place",
+  /* The middle clause used to read "solve the place and its sky lets go; the
+     acid rain stops being acid, the hard weather stops" — which is
+     `rosterThesis`, one band below, word for word. Cut per the ownership map.
+     What is left is the half the roster does NOT say: that the change is
+     per-place and that nothing fills toward it. */
   body:
-    "One trigger, one direction, and it reaches every sky. Solving the puzzle that heals a place " +
-    "is the only thing that changes the weather over it. The change belongs to that place rather " +
-    "than to a global counter, and there is no meter filling toward it — a place is poisoned " +
-    "until it is solved.",
+    "One trigger, one direction, and it reaches every sky. The change belongs to that place " +
+    "rather than to a global counter, and there is no meter filling toward it — a place is " +
+    "poisoned until it is solved.",
   /** The same rule in one line, printed on the diagram's lane. */
   rule: "Acid rain stops being acid · hard weather stops",
 };
@@ -223,7 +229,6 @@ export const flip = {
  */
 export const rejectedReadout = {
   label: "Progress bar",
-  strapline: "The readout I did not build",
 };
 
 /* ---- the loop this sky closes ------------------------------------------
@@ -254,12 +259,17 @@ export const flipSummary =
 
 /* ---- attribution --------------------------------------------------------- */
 
+/* NO TEAM STATEMENT HERE, and that is deliberate. This used to open on "Seeds
+   of Tomorrow was made by five of us" and carry its own role/team tag — which
+   is `levelCredit` in `seeds-levels.ts`, one section above and visible on the
+   same scroll, plus a third copy in §03 · My Role. Same ruling the ownership
+   map applied to Break-In's `BalanceNote`: the EARLIER section keeps the
+   attribution, the later one keeps only the argument that is its own. §05 is
+   now the canonical credit on this page; this is a design note. */
 export const weatherCredit = {
-  role: "Composer & Level Designer",
-  team: "Team of 5",
   body:
-    "Seeds of Tomorrow was made by five of us. The weather system is mine — I designed it, and I " +
-    "scored the levels it falls on, which is why the two halves say the same thing. I wanted the " +
-    "player's progress to live in the one place they cannot close: the sky over their head. " +
-    "Everything else in the system follows from refusing the progress bar.",
+    "The weather system is mine — I designed it, and I scored the levels it falls on, which is " +
+    "why the two halves say the same thing. I wanted the player's progress to live in the one " +
+    "place they cannot close: the sky over their head. Everything else in the system follows " +
+    "from refusing the progress bar.",
 };

@@ -57,13 +57,17 @@ export const audioCredit = {
 export const thesis = {
   tag: "The throughline",
   line: "With no voice channel, sound is the coordination layer.",
+  /* This used to open on "Break-In takes speech away on purpose, which leaves
+     a four-player stealth game with no way to pass information" — which is the
+     section standfirst in `page.tsx`, restated almost word for word two inches
+     above this paragraph and visible on the same screen. The standfirst now
+     poses the problem and this owns the answer. */
   body:
-    "Break-In takes speech away on purpose, which leaves a four-player stealth game with no way " +
-    "to pass information. Audio is where I put it back. The score reports the state of the run, " +
-    "the clock reports the time in a channel nobody can look away from, and every meaningful " +
-    "action announces itself loudly enough to be read from another room. None of it is " +
-    "atmosphere that happens to be useful; all of it is the communication system the design " +
-    "refuses to hand the players any other way.",
+    "Audio is where I put it back. The score reports the state of the run, the clock reports the " +
+    "time in a channel nobody can look away from, and every meaningful action announces itself " +
+    "loudly enough to be read from another room. None of it is atmosphere that happens to be " +
+    "useful; all of it is the communication system the design refuses to hand the players any " +
+    "other way.",
 } as const;
 
 /* ---- 01 · the state-driven score ----------------------------------------
@@ -124,9 +128,9 @@ export const scoreStates: readonly ScoreState[] = [
 ];
 
 export const scoreNote =
-  "The score is wired to game state, not to level geography. That is the decision: a track that " +
-  "changes when the situation changes is a status readout, and in a game with no voice channel a " +
-  "status readout everyone can hear is worth more than a track that fits the room.";
+  "The score is wired to game state, not to level geography. A track that changes when the " +
+  "situation changes is a status readout. With no voice channel, a status readout everyone can " +
+  "hear is worth more than a track that fits the room.";
 
 /* ---- 02 · audio as the timer --------------------------------------------
    The clock is diegetic and audible. Ticks before the mark are quiet and
@@ -143,9 +147,9 @@ export const clockAudio = {
     "you have to choose to look at, and three of the four roles spend most of the run looking at " +
     "something else.",
   why:
-    "Time pressure only works if it is felt continuously rather than checked periodically. Putting " +
-    "the clock in the ear means a player picking a lock or typing a transfer knows how much run is " +
-    "left without breaking off to find out — and it means the whole team is on the same clock " +
+    "Time pressure only works if it is felt continuously rather than checked periodically. Put " +
+    "the clock in the ear and a player picking a lock or typing a transfer knows how much run is " +
+    "left without breaking off to find out. It also puts the whole team on the same clock " +
     "without anyone announcing it.",
   /** Drawn on the rail. Read from the run's own constants. */
   runMinutes: RUN_MINUTES,
@@ -244,10 +248,10 @@ export const cues: readonly AudioCue[] = [
 
 export const cuesNote =
   "Every cue is specified by what it lets somebody else work out. That is the difference between " +
-  "sound design and audio direction on this project: the question was never whether an action " +
-  "sounded good, it was whether a player in another room could tell what had just happened and " +
-  "act on it. Four players end up tracking each other by ear, which is the coordination the voice " +
-  "channel would have handled if there had been one.";
+  "sound design and audio direction on this project. The question was never whether an action " +
+  "sounded good; it was whether a player in another room could tell what had just happened and " +
+  "act on it. Four players end up tracking each other by ear, which is the coordination the " +
+  "voice channel would have handled if there had been one.";
 
 /* ---- the crossing -------------------------------------------------------
    Names the detection model's audio channel and stops. The crescendo, the eye

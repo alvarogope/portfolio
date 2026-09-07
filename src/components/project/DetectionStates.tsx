@@ -37,7 +37,7 @@ import { getRole } from "@/content/break-in-roles";
  *      it skips is visible underneath it.
  *   2. THE TRAP CARDS — the three triggers in full: the mistake, the state it
  *      forces, and what tripping it costs. NOT who answers it — that is the
- *      role web's, in §03, and one pointer under the cards says so. Kept
+ *      role web's, in §05, and one pointer under the cards says so. Kept
  *      beside the machine rather than in a section of their own, because a
  *      trap is an edge into this graph and nothing else.
  *   3. THE TRANSITION TABLE — every ordinary edge in full: what fires it, and
@@ -469,6 +469,15 @@ export default function DetectionStates() {
           >
             <Machine />
           </div>
+          {/* RESTORED, and deliberately narrow-only. This frame has no drag
+              handler and no key handler — it is a plain `overflow-x: auto` box —
+              so it does NOT qualify for the site's InteractiveHint, in either
+              mode: `select` would be a lie (nothing in it is pickable) and
+              `pan` was also a lie (it promises dragging and arrow keys that do
+              not exist). A chip that over-promises teaches a reader to distrust
+              the chips on the figures where the targets are real. This note
+              appears only at the widths where the drawing genuinely overflows,
+              which is the one true thing there is to say. */}
           <p className="mono mono-note ds-scroll-note">Scroll the machine sideways to follow it →</p>
         </section>
 
@@ -692,6 +701,8 @@ export default function DetectionStates() {
           outline-offset: 2px;
         }
         .ds-machine { display: block; width: 100%; min-width: 1120px; height: auto; }
+        .ds-scroll-note { display: none; margin: 0; font-size: 0.71rem; color: var(--ds-quiet); }
+        @media (max-width: 1200px) { .ds-scroll-note { display: block; } }
 
         .ds-node-body { fill: color-mix(in srgb, var(--color-moonlight) 4%, var(--ds-screen)); }
         .ds-node-head { fill: color-mix(in srgb, var(--color-moonlight) 6%, transparent); }
@@ -928,8 +939,6 @@ export default function DetectionStates() {
           color: var(--ds-quiet);
         }
 
-        .ds-scroll-note { display: none; margin: 0; font-size: 0.71rem; color: var(--ds-quiet); }
-        @media (max-width: 1200px) { .ds-scroll-note { display: block; } }
 
         /* ---- 2 · transitions ---- */
         .ds-transitions {

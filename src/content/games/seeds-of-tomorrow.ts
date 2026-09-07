@@ -19,7 +19,7 @@ export const seedsOfTomorrow: Project = {
   posterAlt: "Seeds of Tomorrow key art placeholder",
 
   vision:
-    "In a future where the Earth has been poisoned beyond saving, a traveller journeys back to our time to change its fate. He finds a child to protect from the pollution and the nature-twisted monsters it has spawned, and he searches for the Seeds of Tomorrow: the means to bring life back to a dying world. The player fights the monsters, recovers the seeds, and plants them to restore the Earth, one healed place at a time. It is a hopeful story told through a world that visibly mends as you play. I composed and recorded its score, designed its levels and puzzles, and built the weather that makes the planet's healing something you can see and hear.",
+    "In a future where the Earth has been poisoned beyond saving, a traveller journeys back to our time to change its fate. He finds a child to protect from the pollution and the nature-twisted monsters it has spawned, and he searches for the Seeds of Tomorrow: the means to bring life back to a dying world. The player fights the monsters, recovers the seeds, and plants them to restore the Earth, one healed place at a time. It is a hopeful story told through a world that visibly mends as you play.",
 
   designChallenge: {
     quote:
@@ -38,7 +38,7 @@ export const seedsOfTomorrow: Project = {
     {
       label: "Weather & environmental feedback",
       description:
-        "Designed the weather as a storytelling system: acid rain over poisoned zones that turns clean when a puzzle is solved, plus snow, wind, and sandstorms, each a hazard and a mood, so the world visibly heals as the player restores it.",
+        "Designed the weather as a storytelling system, so the world visibly heals as the player restores it. Acid rain over poisoned zones turns clean when a puzzle is solved; snow, wind and sandstorms are each a hazard and a mood.",
     },
     {
       label: "Level & puzzle design",

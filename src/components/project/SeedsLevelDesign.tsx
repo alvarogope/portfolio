@@ -329,7 +329,20 @@ export default function SeedsLevelDesign() {
         /* Below its floor the loop scrolls rather than shrinking: the beat list
            under it carries all four in full anyway. */
         .sl-loop { display: block; width: 100%; min-width: 900px; height: auto; }
-        .sl-scroll-note { margin: 0; font-size: 0.70rem; color: var(--sl-quiet); }
+        /* Narrow-only, matching every other scroll-only figure on the site.
+           This frame has no drag or key handler — it is a plain overflow-x
+           auto box — so it gets a note that claims scrolling and nothing else,
+           and only at the widths where the drawing genuinely overflows. It
+           does NOT qualify for the shared InteractiveHint chip. */
+        .sl-scroll-note {
+          display: none;
+          margin: 0.7rem 0 0;
+          font-size: 0.70rem;
+          color: var(--sl-quiet);
+        }
+        @media (max-width: 900px) {
+          .sl-scroll-note { display: block; }
+        }
 
         /* ---- 1 · the loop ---- */
         .sl-head { fill: var(--sl-leaf-text); }

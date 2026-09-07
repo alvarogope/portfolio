@@ -67,8 +67,7 @@ export const detectionStates: readonly DetectionState[] = [
     detail:
       "The default. An enemy either holds a fixed spot or follows a programmed patrol route. " +
       "Nothing a player does to the level moves them off it — the Hacker's Distraction, hacking a " +
-      "highlighted light or computer, is the only thing in the game that reroutes a patrol. That " +
-      "single exception is what makes the Hacker's support role load-bearing rather than advisory.",
+      "highlighted light or computer, is the only thing in the game that reroutes a patrol.",
   },
   {
     id: "investigating",
@@ -94,9 +93,7 @@ export const detectionStates: readonly DetectionState[] = [
     footer: "Chase theme at full",
     detail:
       "The bar filled. The white-noise crescendo resolves into the chase song it has been building " +
-      "toward for the whole of the previous state, and the enemy pursues the player directly. The " +
-      "audio is the point: it is loud, unmistakable, and it is also how the other three players — " +
-      "who have no voice channel — find out that something has gone wrong.",
+      "toward for the whole of the previous state, and the enemy pursues the player directly.",
   },
   {
     id: "caught",
@@ -108,9 +105,7 @@ export const detectionStates: readonly DetectionState[] = [
     footer: "Run over for all four",
     detail:
       "The enemy reaches the player and arrests them. Because the escape is collective, this is not " +
-      "one player's failure state — it is the team's. One caught, everyone fails, which is the same " +
-      "rule the role web and the win/lose model are built on, arriving here as a consequence rather " +
-      "than a separate mechanic.",
+      "one player's failure state — it is the team's.",
   },
 ];
 
@@ -241,9 +236,9 @@ export const feedbackThesis =
   "Three channels fire at once, and none of them is optional.";
 
 export const feedbackNote =
-  "Redundant on purpose. Any one of the three would technically tell a player they had been seen; " +
-  "all three together mean a player is never surprised by their own detection state, whatever they " +
-  "happen to be looking at or listening to when it changes.";
+  "Redundant on purpose. Any one of the three would technically tell a player they had been " +
+  "seen. All three together mean nobody is ever surprised by their own detection state, whatever " +
+  "they happen to be looking at or listening to when it changes.";
 
 /* ---- the constraint underneath everything ------------------------------- */
 
@@ -364,19 +359,19 @@ export const trapsThesis = "Skips S2 — no bar, no way back";
  */
 export const trapsCounterPointer =
   "Every one of the three has a designed counter, and none of them is drawn here: which role " +
-  "takes which trap off the board is the role web's to show, in §03 · Nobody wins alone.";
+  "takes which trap off the board is the role web's to show, in §05 · Nobody wins alone.";
 
 export const trapsNote =
   "Every trap lands on Chasing, which means every trap skips Investigating. There is no filling " +
-  "bar to outrun, no line of sight to break, and none of the three feedback channels gets a chance " +
-  "to warn anyone: the first signal is the chase song. That asymmetry is deliberate. Ordinary " +
-  "detection is generous on purpose so that players will move; the traps are where the game stops " +
-  "being generous, and they are placed on exactly the three actions worth planning around — " +
-  "crossing the basement, stripping the rack, and opening a door in a hurry.";
+  "bar to outrun, no line of sight to break, and no channel gets a chance to warn anyone: the " +
+  "first signal is the chase song. That asymmetry is deliberate. Ordinary detection is generous " +
+  "so that players will move; the traps are where it stops being generous. They sit on exactly " +
+  "the three actions worth planning around — crossing the basement, stripping the rack, and " +
+  "opening a door in a hurry.";
 
 export const trapsCredit =
-  "Lead Designer, team of 4. I wanted punishment to be legible rather than fair-feeling: each of " +
-  "the three has one cause, one consequence and one counter, and no role holds the counter to its " +
+  "Lead Designer, team of 4. I wanted punishment to be legible rather than fair-feeling, so each " +
+  "of the three has one cause, one consequence and one counter. No role holds the counter to its " +
   "own trap — except the Vaultsnatcher, who both trips the gold alarm and defuses it. The laser " +
   "that kills your run is answered by somebody else's smoke bomb, which is the dependency web " +
   "arriving as a threat rather than as a favour.";
@@ -392,13 +387,17 @@ export const voiceConstraint = {
     "this game; it is a system somebody has to run.",
 };
 
+/* `body` used to open on "a stealth game with no voice channel cannot also be
+   coy about detection", which is `voiceConstraint` restated two screens up
+   inside this same section. Cut per the ownership map: the constraint is
+   argued once, above, and this note starts from the consequence instead. */
 export const designNote = {
   role: "Lead Designer",
   team: "Team of 4",
   body:
-    "I designed this machine to be loud. A stealth game with no voice channel cannot also be coy " +
-    "about detection: if the player who is about to be spotted is the only one who can act on it, " +
-    "then telling them has to be over-engineered rather than subtle. The three channels, the " +
-    "de-escalation edge and the fact that nothing escalates instantly are all the same decision — " +
-    "every player owns their own state, and the game makes sure they know what it is.",
+    "I designed this machine to be loud. If the player about to be spotted is the only one who " +
+    "can act on it, then telling them has to be over-engineered rather than subtle. The three " +
+    "channels, the de-escalation edge and the fact that nothing escalates instantly are all the " +
+    "same decision: every player owns their own state, and the game makes sure they know what " +
+    "it is.",
 };

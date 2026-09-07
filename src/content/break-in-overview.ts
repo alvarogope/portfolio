@@ -267,8 +267,10 @@ export const heistPhases: readonly HeistPhase[] = [
       },
     ],
     tasks: ["No shared exit", "Four viable routes", "Undetected", "Before 08:00"],
-    risk:
-      "The heist is finished and the run is not. One player still inside at 08:00 costs the team everything already banked.",
+    /* Trimmed to its first line per the ownership map. The second sentence
+       said "one player still inside costs the team everything" — which is
+       `loseConditions[1]`, two cards down, and `outcomeThesis` under that. */
+    risk: "The heist is finished and the run is not.",
     pressure: 1,
   },
 ];
@@ -333,7 +335,7 @@ export const outcomeThesis = "One caught, everyone fails.";
 export const outcomeNote =
   "Winning is a single AND: every condition, or no win. Losing is an OR — either one is enough on " +
   "its own. That asymmetry is deliberate, and it is what makes the dependency web above matter at " +
-  "the table. There is no version of this run where three players succeed and one does not.";
+  "the table.";
 
 /* ---- the grade ----------------------------------------------------------
    Winning is binary; the SCORE is not. Once the team is out, the run is graded
@@ -413,21 +415,25 @@ export interface BalancePillar {
 
 export const balancingIntro =
   "The hard part of a four-player heist is not making it difficult; it is making all four seats " +
-  "worth sitting in. As Lead Designer I tuned Break-In against one rule — the game must be " +
-  "unwinnable alone, and it must never be one player's job to carry the other three — and the " +
-  "three principles below are what that rule turned into.";
+  "worth sitting in. As Lead Designer I tuned Break-In against one rule: the game must be " +
+  "unwinnable alone, and it must never be one player's job to carry the other three. The three " +
+  "principles below are what that rule turned into.";
 
 export const balancingPillars: readonly BalancePillar[] = [
   {
     id: "solo-ceiling",
     index: "01",
     title: "Interdependent, and equally so",
+    /* The four walls used to be listed here in full — a live laser grid, a
+       missing password, a blind Hacker — immediately beside the `soloReach`
+       chart that draws all four of them with the wall printed on each bar.
+       Cut per the ownership map: the chart carries the examples, the pillar
+       carries the principle. */
     body:
-      "Every role's abilities are unique, and every role's abilities are equally critical. Each one " +
-      "owns roughly a quarter of the critical path and cannot reach past it: the Vaultsnatcher " +
-      "cannot cross a live laser grid, the Lockpicker cannot open the transfer without the " +
-      "manager's password, the Hacker is blind below ground until the USB lands. There is no carry " +
-      "seat and no passenger seat, which is the core balancing principle everything else serves.",
+      "Every role's abilities are unique, and every role's abilities are equally critical. Each " +
+      "one owns roughly a quarter of the critical path and cannot reach past it. There is no " +
+      "carry seat and no passenger seat, which is the core balancing principle everything else " +
+      "serves.",
     caption:
       "How far each role gets unaided, against the run it has to finish. The gap is the design, not a shortfall.",
   },
@@ -437,10 +443,10 @@ export const balancingPillars: readonly BalancePillar[] = [
     title: "Difficulty that answers back",
     body:
       "The game reads how the team is performing and pushes back. Play well and patrols thicken, " +
-      "cameras multiply and puzzles lengthen; struggle and it eases, slightly. The target is not a " +
-      "fixed difficulty but a fixed feeling: pressure rises to meet competence so a strong team and " +
-      "a shaky one both spend the last two minutes on the edge — and no role goes quiet because the " +
-      "run got easy.",
+      "cameras multiply and puzzles lengthen; struggle and it eases, slightly. The target is not " +
+      "a fixed difficulty but a fixed feeling. Pressure rises to meet competence, so a strong " +
+      "team and a shaky one both spend the last two minutes on the edge, and no role goes quiet " +
+      "because the run got easy.",
     caption:
       "Pressure applied rises with team performance so that felt tension stays inside the target band.",
   },

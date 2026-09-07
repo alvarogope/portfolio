@@ -319,7 +319,7 @@ export default function BalanceNote() {
       <div className="panel bn-console">
         <div className="bn-console-head">
           <p className="mono bn-console-tag">Design note · balancing</p>
-          {/* No credit line. The attribution is §02s, on the phase clock,
+          {/* No credit line. The attribution is §03s, on the phase clock,
               and printing it again here was the second render of the same
               block rather than a second fact. */}
           <p className="mono bn-console-meta">{balancingPillars.length} tuning rules</p>

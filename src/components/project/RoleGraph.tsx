@@ -22,6 +22,7 @@ import {
   type RoleId,
   type RolePuzzle,
 } from "@/content/break-in-roles";
+import InteractiveHint from "./InteractiveHint";
 
 /**
  * The traps, by id. The ONLY thing this component takes from the detection
@@ -53,7 +54,7 @@ const trapById = new Map<string, AlarmTrigger>(alarmTriggers.map((t) => [t.id, t
  * THE TRAPS ARE CITED, NOT EXPLAINED. A counter wire prints the trap's
  * T-number and the counter, and that is the whole of it: what each trap does,
  * what it costs and why it skips Investigating belong to the detection state
- * machine in §05, which is what the pointer under the line key says. This
+ * machine in §07, which is what the pointer under the line key says. This
  * diagram owns who saves you; that one owns what from.
  *
  * THE KIT LIVES IN THIS READOUT, not in a section of its own. The diagram
@@ -355,7 +356,7 @@ function WireTag({ x, y, text }: { x: number; y: number; text: string }) {
  *
  * A counter-link also prints WHICH trap, as the detection section's own
  * T-number and name. It is a citation and it is deliberately the shortest one
- * that works: "T1 · Lasers" is enough to find the trap in §05, and anything
+ * that works: "T1 · Lasers" is enough to find the trap in §07, and anything
  * longer would be this component restating a mechanic it does not own.
  */
 function LinkRow({
@@ -545,7 +546,19 @@ export default function RoleGraph({
   };
 
   return (
-    <div className="rg">
+    <>
+      {/* The site's shared chip, in SELECT mode — this figure genuinely has
+          targets, at every width. Above 900px they are the four camera feeds
+          in the diamond; below it the diamond is gone and the four roster
+          cards take the taps, so "role" is the word that is true in both
+          layouts. It sits outside `.rg` because `.rg` breaks out of the text
+          column on wide screens, and an instruction belongs in the column the
+          reader is reading, above the thing it explains. */}
+      <InteractiveHint
+        what="role"
+        does="its ability kit, mini-game and every wire it sits on light up"
+      />
+      <div className="rg">
       {/* The diagram is decorative: everything in it is spelled out in the
           roster below, which is the text equivalent screen readers get. */}
       <div className="rg-stage">
@@ -709,7 +722,7 @@ export default function RoleGraph({
             one. */}
         <p className="rg-key-pointer">
           What each trap does — and what tripping it costs the run — belongs to the detection
-          state machine in §05 · Being Seen. The counter wires only say who holds the answer.
+          state machine in §07 · Being Seen. The counter wires only say who holds the answer.
         </p>
       </div>
 
@@ -928,9 +941,19 @@ export default function RoleGraph({
         .rg-node-head { fill: color-mix(in srgb, var(--color-moonlight) 7%, transparent); }
         .rg-node-rule { stroke: var(--rg-edge); stroke-width: 1; }
         .rg-node-frame { fill: none; stroke: var(--rg-edge); stroke-width: 1; }
+        /* RESTING AFFORDANCE. These four brackets are the only thing on an
+           unselected feed that says "you can pick this", and in mist they read
+           as part of the CCTV dressing rather than as a target. Tinted with the
+           same gold the interactive chip above the figure uses, they become one
+           signal in two places: the chip says the feeds are pickable, and every
+           feed is wearing the chip's colour before anyone has touched it. The
+           selected node still switches to silver, so the resting mark and the
+           picked mark stay distinguishable. Decorative SVG inside an
+           aria-hidden diagram, so no contrast bar applies — the roster below
+           carries all of it as text. */
         .rg-node-corner {
           fill: none;
-          stroke: color-mix(in srgb, var(--color-mist) 55%, transparent);
+          stroke: color-mix(in srgb, var(--color-gold) 62%, transparent);
           stroke-width: 1.2;
         }
 
@@ -1251,7 +1274,7 @@ export default function RoleGraph({
         }
 
         /* The trap citation. Gold ties it to the wire, 7.6:1 on .panel, and it
-           is a T-number rather than a sentence so it stays a pointer into §05
+           is a T-number rather than a sentence so it stays a pointer into §07
            instead of becoming a second account of the trap. */
         .rg-row-trap {
           display: inline-block;
@@ -1388,13 +1411,19 @@ export default function RoleGraph({
           width: 0.38em;
           height: 0.38em;
           margin-left: 0.6rem;
-          border-right: 2px solid var(--color-silver);
-          border-bottom: 2px solid var(--color-silver);
+          /* Same resting/picked pair as the diamond's corner reticles: gold
+             while it is an offer, silver once it has been taken. This is the
+             mobile layout's only target marker, so it carries the chip's
+             colour for the same reason the brackets do. */
+          border-right: 2px solid var(--color-gold);
+          border-bottom: 2px solid var(--color-gold);
           transform: translateY(-0.16em) rotate(45deg);
-          opacity: 0.7;
+          opacity: 0.85;
           transition: transform 200ms cubic-bezier(0.22, 1, 0.36, 1);
         }
         .rg-card.is-selected .rg-card-caret {
+          border-right-color: var(--color-silver);
+          border-bottom-color: var(--color-silver);
           transform: translateY(0.06em) rotate(-135deg);
           opacity: 1;
         }
@@ -1501,6 +1530,7 @@ export default function RoleGraph({
           .rg-card-caret { transition: none; }
         }
       `}</style>
-    </div>
+      </div>
+    </>
   );
 }

@@ -477,6 +477,11 @@ function StagePanels() {
               <p className="mono lf-meter-read">
                 Tension · {tensionBand(stage.tension)} · {Math.round(stage.tension * 100)}%
               </p>
+              {/* Why that number. Five bare percentages read as a spreadsheet
+                  export; this is the line that turns each one into a decision.
+                  It sits under the meter it explains rather than above it,
+                  because the number is the claim and this is the reason. */}
+              <p className="lf-why">{stage.why}</p>
             </div>
           </li>
         );
@@ -515,6 +520,15 @@ export default function LevelFlow() {
           >
             <RouteRibbon />
           </div>
+          {/* RESTORED, and deliberately narrow-only. This frame has no drag
+              handler and no key handler — it is a plain `overflow-x: auto` box —
+              so it does NOT qualify for the site's InteractiveHint, in either
+              mode: `select` would be a lie (nothing in it is pickable) and
+              `pan` was also a lie (it promises dragging and arrow keys that do
+              not exist). A chip that over-promises teaches a reader to distrust
+              the chips on the figures where the targets are real. This note
+              appears only at the widths where the drawing genuinely overflows,
+              which is the one true thing there is to say. */}
           <p className="mono mono-note lf-scroll-note">Scroll the plan sideways to follow the route →</p>
         </section>
 
@@ -636,6 +650,15 @@ export default function LevelFlow() {
           min-width: 1120px;
           height: auto;
         }
+        .lf-scroll-note {
+          display: none;
+          margin: 0;
+          font-size: 0.71rem;
+          color: var(--lf-quiet);
+        }
+        @media (max-width: 1180px) {
+          .lf-scroll-note { display: block; }
+        }
 
         .lf-field { fill: var(--lf-screen); }
         .lf-field-grid { fill: url(#lf-grid); opacity: 0.5; }
@@ -680,16 +703,6 @@ export default function LevelFlow() {
         }
         .lf-space.is-goal .lf-space-label { fill: var(--lf-amber); }
         .lf-space.is-goal .lf-space-tag { fill: var(--lf-amber); }
-
-        .lf-scroll-note {
-          display: none;
-          margin: 0;
-          font-size: 0.71rem;
-          color: var(--lf-quiet);
-        }
-        @media (max-width: 1180px) {
-          .lf-scroll-note { display: block; }
-        }
 
         /* ---- 2 · pacing curve ---- */
         .lf-chart { margin: 0; display: grid; }
@@ -903,6 +916,15 @@ export default function LevelFlow() {
         .lf-meter-read {
           margin: 0;
           font-size: 0.68rem;
+          color: var(--lf-quiet);
+        }
+        /* --lf-quiet is 7.9:1 on a screen, so it clears AA comfortably at this
+           size. Body face rather than mono: it is a sentence, not a readout. */
+        .lf-why {
+          margin: 0.15rem 0 0;
+          font-family: var(--font-body);
+          font-size: 0.8rem;
+          line-height: 1.45;
           color: var(--lf-quiet);
         }
 

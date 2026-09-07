@@ -9,7 +9,6 @@ import {
 import type { SsVariant } from "@/content/shattered-skies-deep-dive";
 import { mainHref } from "@/content/shattered-skies-deep-dive";
 import DecodeOnView from "./DecodeOnView";
-import InteractiveHint from "./InteractiveHint";
 import Link from "next/link";
 
 /**
@@ -376,15 +375,16 @@ export default function ShatteredSkiesMechanics({
               </figcaption>
 
               {/* Scrolls rather than shrinks below about 1080px: the mono labels
-                  are 10px in viewBox units and stop being readable well before the
-                  picture stops fitting. Focusable so a keyboard can scroll it —
-                  which is an affordance, so it gets the shared chip in pan mode
-                  rather than the ad-hoc line that used to sit under the frame. */}
-              <InteractiveHint
-                mode="pan"
-                what="flow"
-                does="it runs wider than the column on smaller screens"
-              />
+                  are 10px in viewBox units and stop being readable well before
+                  the picture stops fitting.
+
+                  CHIP REMOVED. This carried a `pan` chip on the reasoning that
+                  "focusable so a keyboard can scroll it" is an affordance. It is
+                  not one the chip can honestly describe: there is no drag
+                  handler and no key handler here, and the arrow keys do nothing
+                  at the widths where the drawing already fits. The chip is for
+                  figures with real targets; this gets the narrow-only note that
+                  claims scrolling and nothing else. */}
               <div
                 className="ssm__flow-frame"
                 tabIndex={0}
@@ -393,6 +393,9 @@ export default function ShatteredSkiesMechanics({
               >
                 <TelepathyFigure />
               </div>
+              <p className="mono mono-note ssm__scroll-note">
+                Scroll the flow sideways to follow it →
+              </p>
               <p className="ssm__flow-hint">
                 The same flow is written out below it, at every width.
               </p>
@@ -892,6 +895,15 @@ export default function ShatteredSkiesMechanics({
           background: var(--ssm-void);
           overflow-x: auto;
           overscroll-behavior-x: contain;
+        }
+        .ssm__scroll-note {
+          display: none;
+          margin: 0.7rem 0 0;
+          font-size: 0.71rem;
+          color: var(--ssm-quiet);
+        }
+        @media (max-width: 1040px) {
+          .ssm__scroll-note { display: block; }
         }
         .ssm__flow-frame:focus-visible {
           outline: 2px solid var(--color-lunar-gold);

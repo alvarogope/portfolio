@@ -422,7 +422,7 @@ function Flip() {
           y2={REJECT_Y - 6}
         />
         <text className="sw-reject-label" x={PAD_X + BAR_W + 22} y={REJECT_Y + 9}>
-          {rejectedReadout.label.toUpperCase()} · {rejectedReadout.strapline.toUpperCase()}
+          {rejectedReadout.label.toUpperCase()}
         </text>
       </g>
       <text className="sw-lane-label" x={VB_W - PAD_X} y={REJECT_Y + 9} textAnchor="end">
@@ -617,10 +617,12 @@ export default function WeatherSystem() {
                 <h4 className="sw-weather-name">{w.name}</h4>
                 {w.where && <p className="mono sw-weather-where">Falls on · {w.where}</p>}
                 <p className="sw-weather-body">{w.body}</p>
-                <p className="sw-weather-after">
-                  <span className="mono sw-weather-after-label">When the place is solved</span>
-                  {w.afterSolve}
-                </p>
+                {w.afterSolve && (
+                  <p className="sw-weather-after">
+                    <span className="mono sw-weather-after-label">When the place is solved</span>
+                    {w.afterSolve}
+                  </p>
+                )}
                 {w.scored && (
                   <p className="sw-weather-scored">
                     <span className="mono sw-weather-scored-label">Scored · {w.scored.track}</span>
@@ -635,9 +637,11 @@ export default function WeatherSystem() {
         {/* 3 — whose design this is, and where the loop went */}
         <section className="sw-band">
           <aside className="sw-credit">
-            <p className="mono sw-credit-tag">
-              Design note · {weatherCredit.role} · {weatherCredit.team}
-            </p>
+            {/* No role/team tag. §05's `levelCredit` is this page's canonical
+                attribution and it is one section above; a second copy here was
+                the third statement of "Composer & Level Designer · Team of 5"
+                on one page. This band is the design argument only. */}
+            <p className="mono sw-credit-tag">Design note · The weather</p>
             <p className="sw-credit-body">{weatherCredit.body}</p>
             <p className="sw-credit-pointer">
               <a href={loopPointer.href}>{loopPointer.label} &uarr;</a>
@@ -728,7 +732,18 @@ export default function WeatherSystem() {
            cards under it carry both states in full anyway, so a squinting
            diagram would buy nothing. */
         .sw-flip { display: block; width: 100%; min-width: 1120px; height: auto; }
-        .sw-scroll-note { margin: 0; font-size: 0.70rem; color: var(--sw-quiet); }
+        /* Narrow-only, for the same reason as every other scroll-only figure:
+           no drag handler, no key handler, so no chip — just the one true
+           thing, at the widths where it is true. */
+        .sw-scroll-note {
+          display: none;
+          margin: 0.7rem 0 0;
+          font-size: 0.70rem;
+          color: var(--sw-quiet);
+        }
+        @media (max-width: 1120px) {
+          .sw-scroll-note { display: block; }
+        }
 
         /* ---- 1 · the flip ---- */
         .sw-sky { fill: var(--sw-sky-acid); }

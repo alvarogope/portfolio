@@ -182,24 +182,29 @@ export interface ContributionHome {
   shown: string;
 }
 
+/* SECTION NUMBERS ARE LIVE and must be renumbered with the page. They were
+   02/03/04 until the evidence-first restructure inserted `02 · In Motion` and
+   moved `My Role` up to `03`, which pushed all three owners down two. The
+   anchors (`#score`, `#level-design`, `#weather`) are stable and did not
+   change; only the labels a reader sees did. */
 export const contributionHomes: Readonly<Record<string, ContributionHome>> = {
   "Original score (11 tracks)": {
-    section: "02 · Original Score",
+    section: "04 · Original Score",
     href: "#score",
     shown: "Three of the eleven tracks, planted and playable.",
   },
   "Level & puzzle design": {
-    section: "03 · Level Design",
+    section: "05 · Level Design",
     href: "#level-design",
     shown: "The loop every space is built around, and the puzzle at its hinge.",
   },
   "Progression & pacing": {
-    section: "03 · Level Design",
+    section: "05 · Level Design",
     href: "#level-design",
     shown: "The rhythm drawn: two beats of tension resolving into two of restoration.",
   },
   "Weather & environmental feedback": {
-    section: "04 · The Hard Part",
+    section: "06 · The Hard Part",
     href: "#weather",
     shown: "The flip, the five skies, and the one trigger that reaches all of them.",
   },

@@ -10,7 +10,6 @@ import {
   worldNotes,
 } from "@/content/shattered-skies-overview";
 import type { SsVariant } from "@/content/shattered-skies-deep-dive";
-import InteractiveHint from "./InteractiveHint";
 
 /**
  * Shattered Skies — "The Game": the context section, with the narrative
@@ -525,17 +524,6 @@ export default function NarrativeMap({ variant = "main" }: { variant?: SsVariant
             </p>
           </figcaption>
 
-          {/* The site's shared chip, in pan mode. This figure has no targets —
-              nothing in it responds to a pointer — so it must NOT claim the
-              select-mode affordance. What it does have is a wide drawing in a
-              focusable, horizontally scrollable frame, and it used to say so
-              only inside an aria-label, where a sighted reader never met it. */}
-          <InteractiveHint
-            mode="pan"
-            what="map"
-            does="it is wider than the column on smaller screens"
-          />
-
           <div
             className="nm__map"
             role="group"
@@ -544,6 +532,15 @@ export default function NarrativeMap({ variant = "main" }: { variant?: SsVariant
           >
             <NarrativeDiagram />
           </div>
+
+          {/* CHIP REMOVED. This figure has no interaction handler of any kind:
+              it is a plain `overflow-x: auto` frame with a `tabIndex`, and
+              nothing inside it responds to a pointer or a key. It carried a
+              `pan` chip, which promised dragging and arrow keys that do not
+              exist. A chip that over-promises teaches a reader to distrust the
+              chips on the figures where the targets ARE real, so this says the
+              one true thing instead, and only at the widths where it is true. */}
+          <p className="mono mono-note nm__scroll-note">Scroll the map sideways to follow it →</p>
 
           <p className="nm__map-note nm__map-note--wide">{mapNotes.main}</p>
           <p className="nm__map-note nm__map-note--narrow">{mapNotes.narrow}</p>
@@ -787,6 +784,15 @@ export default function NarrativeMap({ variant = "main" }: { variant?: SsVariant
           background: var(--nm-void);
           overflow-x: auto;
           overscroll-behavior-x: contain;
+        }
+        .nm__scroll-note {
+          display: none;
+          margin: 0.7rem 0 0;
+          font-size: 0.71rem;
+          color: var(--nm-quiet);
+        }
+        @media (max-width: 1080px) {
+          .nm__scroll-note { display: block; }
         }
         .nm__map:focus-visible {
           outline: 2px solid var(--color-lunar-gold);

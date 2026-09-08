@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useLayoutEffect, useRef } from "react";
 
 /**
  * Text that arrives scrambled and decodes into itself when it scrolls into view.
@@ -46,11 +46,34 @@ import { useEffect, useRef } from "react";
  *     IntersectionObserver? The sentence is simply there, plain.
  *   - It stays in the accessibility tree throughout, unhidden, and is never
  *     announced as it changes because the span is not a live region.
- *   - `prefers-reduced-motion: reduce` returns before anything is touched.
+ *   - `prefers-reduced-motion: reduce` returns before any glyph is written, and
+ *     clears `data-decode-pending` on the way out so the plain sentence shows.
  *   - The scramble only starts once the element is actually on screen, so text
  *     the reader never scrolls to is never disturbed.
  *   - The real text is restored on cleanup, so an unmount mid-animation cannot
  *     strand a paragraph as glyph soup.
+ *
+ * WHEN THE NODE IS CLAIMED — AND THE BUG THAT MADE THAT A QUESTION.
+ *
+ * The four Shattered Skies channels shared one defect: the last of them showed
+ * its finished sentence, readable, for as long as it took the reader to scroll
+ * a little further, and only then dissolved into noise and decoded. The cause
+ * was not the last card. It was that the component took ownership of its node
+ * inside the IntersectionObserver callback, so from server render until the
+ * span crossed the observer's trigger line the real sentence was simply on the
+ * page. The trigger line is 15% of the viewport height above the bottom edge,
+ * which gives every channel a band at the foot of the screen where it is
+ * visible and unclaimed; the fourth is the one that comes to rest in that band
+ * — the reader is reading the third while the fourth sits below it, done —
+ * so it is the one where a designed-in window became a visible bug.
+ *
+ * The claim now happens at HYDRATION, in a layout effect, so the noise is in
+ * place before the first frame the reader could see it in, whichever channel it
+ * is and wherever it is parked. The observer is demoted to what it should
+ * always have been: the thing that decides WHEN to resolve, not when to hide.
+ * The sliver before hydration — server HTML, painted with the real string
+ * because that is the no-JS contract — is covered in CSS by
+ * `data-decode-pending`; see `globals.css`.
  *
  * WHY IT DECODES SLOWLY. `total / 80` characters resolved every sixth frame,
  * which is `TransmissionCard`'s cadence rather than `DecryptText`'s `total / 24`.
@@ -80,6 +103,19 @@ const randomGlyph = () => GLYPHS[Math.floor(Math.random() * GLYPHS.length)];
 /** Whitespace is never scrambled: word shapes are what stop it reflowing. */
 const isGap = (ch: string) => ch === " " || ch === "\n" || ch === "\t";
 
+/**
+ * WHY A LAYOUT EFFECT, AND NOT A PASSIVE ONE — this is the whole fix.
+ *
+ * The node has to be CLAIMED before the browser paints the commit that hydrates
+ * it. `useEffect` runs after that paint, which re-opens the window this
+ * component exists to close; `useLayoutEffect` runs inside the commit, so the
+ * first frame a reader could see already holds glyphs. There is no layout phase
+ * on the server and React warns if you ask for one there, so the passive hook
+ * stands in — neither runs server-side, and the branch is decided once at
+ * module scope so the component always calls the same hook.
+ */
+const useClaimEffect = typeof window === "undefined" ? useEffect : useLayoutEffect;
+
 export default function DecodeOnView({
   text,
   /**
@@ -96,10 +132,22 @@ export default function DecodeOnView({
 }) {
   const ref = useRef<HTMLSpanElement>(null);
 
-  useEffect(() => {
+  useClaimEffect(() => {
     const el = ref.current;
     if (!el) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    /* REDUCED MOTION IS NOT "DO NOTHING" ANY MORE.
+
+       The span ships with `data-decode-pending`, and the stylesheet smears the
+       glyphs while it is there — so returning early without clearing it would
+       strand a reduced-motion reader in permanent noise. The rule is already
+       scoped to `no-preference`, which makes this belt and braces rather than
+       the only guard, and that is deliberate: the attribute is the component's
+       to remove, and it removes it on every path. */
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      delete el.dataset.decodePending;
+      return;
+    }
 
     let frame = 0;
     let timer: ReturnType<typeof setTimeout> | null = null;
@@ -120,6 +168,7 @@ export default function DecodeOnView({
       timer = null;
       el.textContent = text;
       delete el.dataset.decoding;
+      delete el.dataset.decodePending;
     };
 
     const decode = () => {
@@ -146,14 +195,34 @@ export default function DecodeOnView({
       frame = requestAnimationFrame(run);
     };
 
+    /* ---- CLAIM THE NODE NOW, NOT WHEN THE OBSERVER FIRES ----
+
+       This is the line the bug was hiding behind. `paint(0)` and
+       `data-decoding` used to live inside the observer callback, which meant
+       the span held the REAL, READABLE sentence from server render right up
+       until it crossed the trigger line — and the trigger line sits 15% of the
+       viewport height above the bottom edge, so every channel has a band at the
+       foot of the screen where it is on-screen, legible and unclaimed. The
+       fourth channel is the one that comes to rest in that band while the
+       reader is still on the third, so it was the one seen resolved before it
+       scrambled. Claiming at hydration removes the window for all four at once,
+       and the order below matters: scramble the text FIRST, then drop
+       `data-decode-pending`, so the node is never both visible and readable
+       within one paint. */
+    el.dataset.decoding = "true";
+    paint(0);
+    delete el.dataset.decodePending;
+
     const observer = new IntersectionObserver(
       (entries) => {
         if (!entries.some((e) => e.isIntersecting)) return;
         /* One shot. Re-decoding on every scroll-past would turn a flourish into
            a tic, and would re-hide text the reader is trying to re-read. */
         observer.disconnect();
-        el.dataset.decoding = "true";
-        paint(0);
+        /* The element is already scrambled and already flagged; scrolling to it
+           only starts the clock. The stagger still reads as four transmissions
+           arriving in a queue, because it is applied to the RESOLVE and the
+           noise was there the whole time. */
         timer = setTimeout(decode, delay);
       },
       { rootMargin: "0px 0px -15% 0px" }
@@ -169,10 +238,19 @@ export default function DecodeOnView({
 
   /* `decode-cursor` draws the blinking block after the sentence; see
      `globals.css`. It is a `::after`, so it adds no node to the one text node
-     this component is built to guarantee. */
+     this component is built to guarantee.
+
+     `data-decode-pending` covers the only window the layout effect above cannot
+     reach: server HTML paints long before any JS runs, and it paints the real
+     sentence — which is exactly what keeps this component honest when JS never
+     arrives. The stylesheet smears the glyphs while the attribute is present,
+     under `scripting: enabled` so a no-JS reader gets the plain line, and with
+     a fail-open so a bundle that never loads does too. The effect deletes it in
+     the same commit it scrambles in. */
   return (
     <span
       ref={ref}
+      data-decode-pending=""
       className={className ? `decode-cursor ${className}` : "decode-cursor"}
     >
       {text}

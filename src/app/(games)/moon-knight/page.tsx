@@ -222,6 +222,52 @@ export default function MoonKnightPage() {
         <Reveal>
           <div style={{ marginTop: "5rem" }}>
             <Bestiary kicker="05 · The Creatures" />
+
+            {/* THE ONE DESIGN CLAIM THE CARDS ABOVE CANNOT MAKE THEMSELVES.
+
+                The bestiary describes what each creature is and what it does to
+                you. What it cannot show is that a fight is a STATE the world
+                enters and leaves — that being seen is the switch, and that
+                losing you turns it off again. These two graphs are the halves
+                of that switch, and they are placed here rather than on the
+                engineering page because that page argues about the C++ /
+                Blueprint split and carries the behaviour TREES (BT_AI,
+                BT_Werewolf) — the decisions an enemy makes once it is already
+                fighting. Neither of these is on it. Perception and the fight's
+                own UI lifetime are design decisions, and this is them wired. */}
+            <div style={{ marginTop: "3rem" }}>
+              <h3
+                className="mono"
+                style={{
+                  fontSize: "0.72rem",
+                  letterSpacing: "0.16em",
+                  textTransform: "uppercase",
+                  color: "var(--color-silver)",
+                  margin: "0 0 1.25rem",
+                }}
+              >
+                Being seen, and being forgotten
+              </h3>
+              <PlateGrid
+                minWidth="26rem"
+                items={[
+                  {
+                    src: "/images/moon-knight/AI Detection - Moon-Knight.png",
+                    label: "Blueprint · sight is the switch",
+                    alt: "The AI sight-detection graph: a Sight Detection event breaks the AI stimulus, branches on Successfully Sensed, and on the true path writes the player into the Target Actor Blackboard key and calls Activate Mini Boss Combat — while the false path clears the key and calls Deactivate Miniboss Combat.",
+                    caption:
+                      "A fight starts because something saw you, and it is allowed to end the same way. The sensed stimulus writes you into the Target Actor key the behaviour tree reads; lose line of sight and the same graph clears the key and calls Deactivate. Disengagement is a real option in Kaelum — the darkness that makes the game harder is also what lets you leave a fight you are losing.",
+                  },
+                  {
+                    src: "/images/moon-knight/MiniBoss_Combat.png",
+                    label: "Blueprint · the boss bar exists only during the boss",
+                    alt: "The mini-boss combat graph: Activate MiniBoss Combat creates the WB Boss Health bar widget and adds it to the viewport, a tick divides current health by max health into Set Percent, and Deactivate Miniboss Combat removes the widget from its parent.",
+                    caption:
+                      "The other half of the same switch, and the reason the health bar overhead is not a hypocrisy. In a game whose health readout is the moon on the knight's back, the one conventional bar is created when a mini-boss engages and destroyed when it disengages. It is not HUD you live with; it is a thing the boss brings with it and takes away.",
+                  },
+                ]}
+              />
+            </div>
           </div>
         </Reveal>
 
@@ -260,17 +306,25 @@ export default function MoonKnightPage() {
               </figcaption>
             </figure>
 
-            {/* THE WIRING BEHIND THE WINDOW, and the first of three Blueprint
-                captures placed on the DESIGN side of this project.
+            {/* THE WIRING BEHIND THE WINDOW — the Blueprint captures placed on
+                the DESIGN side of this project.
 
                 They are here for a different reason than the ones on the
                 engineering page. There, a graph is evidence about
                 ARCHITECTURE — what lives in Blueprint, what moved to C++, and
                 why. Here a graph is evidence that a DESIGN DECISION was
                 actually wired: the combo window above is not a claim about
-                intent, it is a gate with a name, and this is it. Neither
-                capture on this page is one of the seven on the engineering
-                page, and each is captioned to its own argument. */}
+                intent, it is a gate with a name, and this is it. No capture on
+                this page is one of the seven on the engineering page, and each
+                is captioned to its own argument.
+
+                The second plate is the pair to the first and to the clip above
+                it. The clip claims that the animation and the combat system are
+                the same object; the notify is where that claim is literally
+                true, and it is not on the engineering page — that page carries
+                the trace graph itself (`Sword_Trace.png`, argued as a
+                Blueprint-to-C++ migration), not the thing that opens and closes
+                it. */}
             <div style={{ marginTop: "2.5rem", maxWidth: "58rem" }}>
               <PlateGrid
                 minWidth="100%"
@@ -281,6 +335,13 @@ export default function MoonKnightPage() {
                     alt: "The BPC_AttackSystem Blueprint graph: a Sword Attack event branching on Is Attacking?, a Combo continue event branching on Save Attack?, a Switch on Int firing Attack 1 through Attack 4, and a Stop Combo node on the failing branch.",
                     caption:
                       "The recovery window in the clip above, as the thing that implements it. Each swing opens Save Attack? while its window is live; the next input either arrives inside it and the switch fires the next attack in the chain, or it does not and the graph falls through to Stop Combo. Prototyped in Blueprint because a timing window is tuned in seconds there, and moved into C++ once the numbers stopped moving.",
+                  },
+                  {
+                    src: "/images/moon-knight/BP_Notify_SwordTraceLoop.png",
+                    label: "Blueprint · the blade is only dangerous on the notify",
+                    alt: "The BP_Notify_SwordTraceLoop anim notify state: Received Notify Begin gets the owner, casts to the player character or to BP_AI, and calls Start Sword Trace on whichever attack component it found.",
+                    caption:
+                      "Why the active frames in the clip are the active frames. The sword does no damage of its own — an animation notify opens the trace when the swing reaches the part of the montage that should hurt, and its Notify End half closes it again. The window is authored on the timeline, next to the pose, rather than as a number in code. And the graph casts to the player or to BP_AI, so an enemy swing is governed by the same rule: nothing on either side can hit you outside its own animation.",
                   },
                 ]}
               />
@@ -435,11 +496,18 @@ export default function MoonKnightPage() {
 
             <DiegeticDesign variant="short" />
 
-            {/* Two more Blueprint captures, on the design argument rather than
-                the architecture one. A diegetic interface is easy to claim and
-                cheap to fake in a portfolio; these are what it looks like when
-                the claim is true — one stats component serving both readouts,
-                and a death sequence with no screen in it. */}
+            {/* Three more Blueprint captures, on the design argument rather
+                than the architecture one. A diegetic interface is easy to claim
+                and cheap to fake in a portfolio; these are what it looks like
+                when the claim is true — one stats component serving both
+                readouts, a death sequence with no screen in it, and an
+                interaction that is a look rather than a prompt.
+
+                The pickup graph is not the equipment screen. `WB_Equipment.png`
+                is on the engineering page and argues the opposite case — the
+                one place a menu was the better tool — while this is the moment
+                before that screen exists, and it is where the scope note above
+                earns its exception rather than contradicting it. */}
             <div style={{ marginTop: "2.5rem" }}>
               <h3
                 className="mono"
@@ -469,6 +537,13 @@ export default function MoonKnightPage() {
                     alt: "The Die Blueprint sequence: disable input, set the mesh to simulate physics, start a camera fade through the player camera manager, delay, then open the current level again by name.",
                     caption:
                       "Death as a sequence rather than a menu: input off, the body goes to ragdoll, the camera fades to black and the world comes back. No card, no retry button. This Blueprint version reloaded the whole level; in C++ it became a respawn at the last willow, which is why the tree above is the checkpoint.",
+                  },
+                  {
+                    src: "/images/moon-knight/Pickup Trace - Moon-Knight.png",
+                    label: "Blueprint · picking up is looking",
+                    alt: "The pickup trace graph: the Interact input runs a sphere trace forward from the follow camera, and if the hit actor casts to BP_Weapon it is added to the equipment component and the world actor is destroyed.",
+                    caption:
+                      "Taking something is a look and a press. The trace runs forward from the camera the player is already aiming with, so what you pick up is whatever you were looking at — there is no proximity radius, no floating prompt and no widget hovering over the item. The weapon goes into the equipment component and the actor in the world is destroyed, which is why the sword you are carrying is the sword you can see.",
                   },
                 ]}
               />

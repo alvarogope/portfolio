@@ -532,3 +532,64 @@ img { max-width: 100%; display: block; }
 @media (prefers-reduced-motion: reduce) {
   .decode-cursor::after { animation: none; }
 }
+
+/* ---- THE PRE-HYDRATION WINDOW ----
+
+   `DecodeOnView` renders the REAL sentence through React, on the server, once.
+   That is not an oversight — it is what keeps the line findable with Ctrl+F,
+   selectable as one copy, and simply readable when JS never runs. It does mean
+   the true text is painted before any script can scramble it, and the component
+   used to leave it that way until an IntersectionObserver fired, which is how
+   the fourth Shattered Skies channel came to sit on screen fully readable
+   before it dissolved. The effect now claims the node during hydration; this
+   rule covers the sliver in front of that.
+
+   `color: transparent` plus a wide `text-shadow` is the smear: the glyphs stay
+   in the flow at exactly the width they will decode into, so nothing reflows,
+   and there is nothing to read. It is not `visibility` or `display`, because
+   both would take the sentence out of find-in-page for as long as they lasted.
+
+   TWO GUARDS, AND EACH ANSWERS A DIFFERENT WAY OF NEVER GETTING DECODED:
+
+     · `scripting: enabled` — with scripting off, nothing will ever claim the
+       node, so the plain sentence is the correct and only render. Browsers that
+       do not support the query simply do not match, which fails to the same
+       place.
+     · `prefers-reduced-motion: no-preference` — a reduced-motion reader is
+       never shown the scramble at all, so they must never be shown the smear
+       either. The component also clears the attribute on that path; this is the
+       half that works before the component runs.
+
+   And a fail-open, on the pattern `Reveal` already uses: if the bundle never
+   arrives, a zero-length animation at 1.5s drops the smear and hands the reader
+   the sentence. A paragraph that is briefly a blur is a flourish; one that is
+   permanently a blur is a broken page. */
+@media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
+  .decode-cursor[data-decode-pending] {
+    color: transparent;
+    text-shadow: 0 0 0.62em var(--color-emerald, #5fd98a);
+    animation: decode-fail-open 0s linear 1.5s forwards;
+  }
+  /* Nothing has landed yet, so there is nothing for the cursor to sit after.
+     It fails open on the same 1.5s clock as the text, without the blink: an
+     animation cannot be restored from a keyframe, and a still block is the
+     shape reduced motion is already served, so it is the right thing to land
+     on rather than a compromise. */
+  .decode-cursor[data-decode-pending]::after {
+    opacity: 0;
+    animation: decode-cursor-fail-open 0s linear 1.5s forwards;
+  }
+}
+
+@keyframes decode-fail-open {
+  to {
+    color: inherit;
+    text-shadow: none;
+  }
+}
+
+@keyframes decode-cursor-fail-open {
+  to {
+    opacity: 1;
+  }
+}

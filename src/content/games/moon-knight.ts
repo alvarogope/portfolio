@@ -30,10 +30,13 @@ export const moonKnight: Project = {
   showcase: "Shown at Develop:Brighton 2025",
 
   vision:
-    "Moon-Knight asks a question most action RPGs never do: what if the game's fantasy powers obeyed the rules of quantum physics? I designed five combat abilities from real quantum principles, wove them into the lore of the Old Gods, and built the systems that make them dangerous to use. It began as my MA dissertation — the theoretical research and the playable game were one project, both awarded a Distinction.",
+    "Moon-Knight is a action RPG where I tried to think on how could Quantum Computing principles change RPGs mechanics " + 
+    "I designed five combat abilities from these principles and built the systems. " + 
+    "It began as my MA dissertation to research what this cutting edge technology could change the designing side of video games, while " + 
+    "also design every single aspect of it.",
 
   built:
-    "It is a playable prototype. The Tutorial is fully playable where the main mechanics and systems are introduced." +
+    "I developed the a prototype. The Tutorial is fully playable where the main mechanics and systems are introduced." +
     " I built all the systems, the level design, the enemies, the interface, the C++ and the Blurptints that makes the game " +
     " and the music and audio design of the game.",
 
@@ -41,59 +44,75 @@ export const moonKnight: Project = {
     {
       label: "Systems & combat design",
       description:
-        "Designed the full combat loop: combos, the five quantum abilities, a dual skill tree, and the boss encounters that teach each mechanic under pressure.",
+        "Designed the full combat loop: combos, the five quantum abilities, a dual skill tree and the boss encounters showing each mechanic.",
     },
     {
-      label: "Quantum ability design",
+      label: "Quantum abilities design",
       description:
-        "Derived five combat abilities from real quantum-computing principles, each with its own risk profile and its own way of going wrong in the player's hands.",
+        "Extrapolated quantum computing principles and translated them into video games. " + 
+        "Each of them have their own risks and rewards, making the player to learn how to use them",
     },
     {
-      label: "Anti-farming economy",
+      label: "Anti-farming Skill Points",
       description:
-        "Built the White Rose XP economy and the progression it feeds: a currency the player cannot manufacture, and a difficulty curve tuned on that assumption.",
+        "Built the White Rose XP and its progression. The player's have to earn the XP by playing and defeating enemies.",
       accent: "scarlet",
     },
     {
       label: "Diegetic UI",
       description:
-        "Designed an interface with no HUD overlay — every readout the player needs replaced by something in the world — and decided the one place where a conventional menu was still the better tool.",
+        "I designed the interfac with a diegetic approach. By making the UI like this, " + 
+        "I put what the player can see on screen first without adding HUD and just blend these in the game world.",
     },
     {
       label: "Engineering",
       description:
-        "Built the game in Unreal Engine 5, and drew the line the codebase still follows: what earns its place in C++, and what is better left as a Blueprint graph.",
+        "Built the game in Unreal Engine 5. For the prototype, I firstly used Blueprints for a faster prototype. " +
+        "Then I rebuilt the codebase in C++ for a better performance.",
     },
   ],
 
   abilities: [
     {
       name: "Master of Matters",
-      body: "Commit to an element before the fight, and the fight can't take it from you. Fire, lightning, or water bonds to your blade and holds even against enemies whose defences strip ordinary elemental attacks. The ability rewards players who learn the bestiary: fire for the wooden humanoids, lightning for the banshees, and the wrong choice wastes your only equipped slot.",
+      body: "Embed the sword with different elements: Fire, Lightning and Water. This applies more damage and is very effective against enemies " +
+            "made out of a certain material or whose defences are very useful against normal melee attacks. " +
+            "The ability rewards players wholearn the enemies defences and penalised players by wasting an equipped slot.",
       annotation: "Quantum basis · Majorana states · topologically protected qubits",
       availableTo: ["Player", "Enemy"],
     },
     {
       name: "Instability",
-      body: "Instability punishes anyone who fights near walls. The orb changes size, speed, and path every time it touches the environment, so positioning becomes part of dodging: against a boss who throws it, observant players bait the attack into open ground where it stays readable. Cast it yourself in a cramped corridor and you're gambling, because the same chaos that shreds enemies can become unreadable for you.",
+      body: "This ability is based in the instability of a qubit when it is exposed to the environment. " +
+            "This ability casts an orb that changes size, speed and path every time is in contact with the environment. " +
+            "Positioning becomes part of the gameplay as well as knowing the environment where your casting these abilities. " +
+            "The closer to the wall, the more difficult to dodge these attacks. " + 
+            "Creating a good balance for enemies that take advantage of narrow environments, where melee attacks are not effective.",
       annotation: "Quantum basis · qubit instability (decoherence) · superposition",
       availableTo: ["Player", "Enemy"],
     },
     {
       name: "Inversion",
-      body: "Some boss attacks are too wide to dodge, by design. Inversion is the answer key: read the incoming attack, time the counter, and flip it into healing instead of damage. It is the parry philosophy pushed further, where the most dangerous attacks in the game become the biggest heals for players brave enough to stand in them, and bosses can invert your unstable attacks right back, so the tool you master is also the one you learn to fear.",
+      body: "Some boss attacks are very difficult to dodge, by design. Inversion is very helpful for this. This ability reads the damage that the " +
+            "attacks makes and flips it to negative, becoming a healing mechanic. It is a basic parry, but pushed further where the most dangeorus " +
+            "attacks in the game can safe the player, in a game where healing is limited. It is a high risk, high reward situation where skilled players " +
+            "can take advantage of aggresive bosses. This ability can also be used by bosses and invert the damage you try to apply to them.",
       annotation: "Quantum basis · NOT gates · qubit state inversion",
       availableTo: ["Player", "Enemy"],
     },
     {
       name: "Elliptical Force",
-      body: "Two orbs orbit the target from opposite sides and slowly converge. The safe zone shrinks with every revolution, forcing a decision now rather than a perfect dodge later: spatial pressure as an attack. Defensively it doubles as a catch, because an incoming sphere can be bound into the orbit instead of dodged, turning an enemy's projectile into part of your own attack.",
+      body: "This ability is based on the entanglement of two qubits. It casts two orbs moving in circles, but leaves the enemy in the middle " +
+            "and eventually converging. As a blocking method, if a sphere attack is thrown to the player, they can protect themselves" + 
+            "using this ability, making the entanglement happen.",
       annotation: "Quantum basis · entanglement · correlated qubit convergence",
       availableTo: ["Player", "Enemy"],
     },
     {
       name: "Double Superposition",
-      body: "The one power the player never gets, deliberately. Enemies rewind themselves one second: the killing blow you just landed un-happens, the attack you dodged re-times itself, the boss heals through your critical. Players learn the principle by fighting it rather than casting it, and beating an enemy who can undo your best moment forces you to build an advantage they cannot rewind, not one lucky hit.",
+      body: "This ability is exclusive to enemies. The ability rewinds on the state of the enemy one second. " +
+            "This means that enemies can heal, dodge your attack by reposition themselves and attack in a unexpected way, " +
+            "exposing the player if they are not paying attention to the fight.",
       annotation: "Quantum basis · double superposition · one-second state restoration · enemy-exclusive by design",
       availableTo: ["Enemy"],
     },
@@ -101,7 +120,10 @@ export const moonKnight: Project = {
 
   designChallenge: {
     quote:
-      "The mechanics were designed to be quantum, but Unreal's Blueprints have no native way to reverse time or hold a true superposition. Rather than fake it and pretend, I documented exactly where each mechanic exceeded the engine, from Instability's orbs becoming undodgeable when they mutated on collision to time-reversal degrading into a random delay, and used those honest negative results as the design brief for the C++ rebuild.",
+      "The mechanics were designed to be quantum, but Unreal's Blueprints have no native way to reverse time or hold a true superposition. "  + 
+      "Rather than fake it and pretend, I documented exactly where each mechanic exceeded the engine, from Instability's orbs becoming " + 
+      "undodgeable when they mutated on collision to time-reversal degrading into a random delay, and used those honest negative results " + 
+      "as the design brief for the C++ rebuild.",
     engine: "Unreal Engine 5",
     system: "Blueprints / C++",
     resolution: "Documented the feasibility gap and carried it into a standalone C++ toolkit.",

@@ -3,30 +3,25 @@ import type { Project } from "../schema";
 export const moonKnight: Project = {
   slug: "moon-knight",
   title: "Moon-Knight",
-  tagline: "Dark fantasy action RPG. Solo project, full authorship.",
+  tagline: "Dark Fantasy Action RPG. Solo project, Full Authorship.",
   pillar: true,
 
   facts: {
     engine: "Unreal Engine 5",
-    role: "Solo developer",
+    role: "Solo Developer",
     team: "Solo",
-    year: "2025",
+    year: "2025 - Present",
   },
 
   links: [
-    /* No "Design summary (PDF)" entry until the PDF exists — the links list renders
-       unconditionally, so a "#" url ships as a live link to nowhere. */
-    { label: "Game engineering", url: "/moon-knight/engineering" },
-    { label: "Quantum toolkit", url: "/moon-knight/engineering/quantum" },
-    /* The third subpage. The main page was condensed to the built work; the
-       story, the cast, the symbolism and the score live here in full. Named
-       for what a reader gets rather than for the site's structure. */
-    { label: "The world & the score", url: "/moon-knight/world" },
+    { label: "Game Engineering", url: "/moon-knight/engineering" },
+    { label: "Quantum Toolkit", url: "/moon-knight/engineering/quantum" },
+    { label: "The World & The Music", url: "/moon-knight/world" },
   ],
 
-  eyebrow: "UE5 · C++ & BLUEPRINTS · SOLO PROJECT · 2025",
+  eyebrow: "UE5 · C++ & BLUEPRINTS · SOLO PROJECT · 2025 - Present",
   systemsHook: "Five combat abilities built on real quantum computing principles.",
-  disciplines: "Systems · Quantum design · C++ · UI/UX · Level design",
+  disciplines: "Systems Design · Quantum Design · Combat Design · C++ · Level Design · UI/UX ",
   scope: "Solo · full authorship",
   routingVerb: "See the systems",
 
@@ -34,31 +29,13 @@ export const moonKnight: Project = {
     "Moon-Knight key art. Armoured knight beneath a full moon, moon-phase health bar on the breastplate.",
   showcase: "Shown at Develop:Brighton 2025",
 
-  /* Trimmed to the pitch and the provenance. The closing clause about the C++
-     rebuild was cut: §12 tells that story properly, with a timeline and two
-     links, and this was its fourth telling counting both engineering pages. */
   vision:
     "Moon-Knight asks a question most action RPGs never do: what if the game's fantasy powers obeyed the rules of quantum physics? I designed five combat abilities from real quantum principles, wove them into the lore of the Old Gods, and built the systems that make them dangerous to use. It began as my MA dissertation — the theoretical research and the playable game were one project, both awarded a Distinction.",
 
-  /* THE BREADTH BLOCK, AND THE RULE IT NOW KEEPS.
-     Five disciplines named in a recruiter's vocabulary, in about 100 words.
-     Its job is to say WHAT WORK WAS DONE — not to preview the sections that
-     show it. Four of these bullets used to do both, and the overlap was
-     verbatim: the five quantum principles were listed here and again in the
-     sigil readout, the roses appeared here and in `white-rose-xp`, and the
-     moon HUD and the moonlight compass were named here and in the diegetic
-     thesis. Each bullet now names the deliverable and the judgement behind
-     it, and lets the owning section carry the example. */
-  /* WHAT ACTUALLY RUNS, in one sentence, under the vision on §01.
-     The overview's job is "what is the game, and what of it works" — the
-     vision answers the first half and this answers the second. It names no
-     system that a section below then re-describes: the COUNTS beside it are
-     derived from the data at render time, and the qualities here are the ones
-     no count can carry (solo, shippable, shown to the public). */
   built:
-    "It is not a prototype: the game is playable end to end, and every part of it is mine — the " +
-    "systems, the levels, the creatures, the interface, the C++ and Blueprint that runs it, and " +
-    "the score underneath it.",
+    "It is a playable prototype. The Tutorial is fully playable where the main mechanics and systems are introduced." +
+    " I built all the systems, the level design, the enemies, the interface, the C++ and the Blurptints that makes the game " +
+    " and the music and audio design of the game.",
 
   contributions: [
     {
@@ -140,21 +117,4 @@ export const moonKnight: Project = {
       "Core library and two of five mechanics complete and statistically verified. The remaining mechanics are recombinations of the same verified primitives.",
   },
 
-  /* The controls diagram used to be the third entry here. It is now the
-     coded pad in section 06 (`ControllerMap`), beside the diegetic systems
-     it is evidence for — a picture of a mapping could not be read aloud,
-     themed or corrected. `controls.png` stays in /public as the source the
-     bindings were transcribed from. */
-
-  /* NO `gallery` FIELD ANY MORE, AND THAT IS THE POINT.
-     The section-ownership map's verdict on the page-foot gallery was
-     `Dissolve`: every caption re-explained a section above it. The still
-     (`boss-werewolf.png`) is now absorbed onto the Werewolf's bestiary card,
-     where it is evidence beside the claim it proves. The three video loops
-     were promoted rather than absorbed — they are the only proof the game
-     RUNS, and absorbing them would have scattered them past where a first-pass
-     reader stops. They now lead the page from
-     `src/content/moon-knight-in-motion.ts`, which owns them.
-     `Project.gallery` stays optional in the schema; other projects still use
-     it. */
 };

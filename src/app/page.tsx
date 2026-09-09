@@ -29,8 +29,6 @@ const DISPLAY_WEIGHT = 700;
 const LABEL = {
   eyebrow: { fontSize: 12, letterSpacing: "0.26em" },
   act: { fontSize: 11, letterSpacing: "0.3em" },
-  /* `spec` used to set the non-flagship bands' single mono disciplines line.
-     All four bands now render chips, so nothing sets that line any more. */
   chip: { fontSize: 12, letterSpacing: "0.07em" },
 } as const;
 
@@ -94,7 +92,7 @@ export default function Home() {
               color: "var(--color-silver)",
             }}
           >
-            TECHNICAL GAME DESIGNER
+            ÁLVARO GÓMEZ PÉREZ
           </p>
 
           <h1
@@ -109,7 +107,7 @@ export default function Home() {
               textWrap: "balance",
             }}
           >
-            I design game systems and build them myself.
+            I Design Game Systems. I Build Them Too.
           </h1>
 
           <p
@@ -121,8 +119,7 @@ export default function Home() {
               color: "var(--color-mist)",
             }}
           >
-            Four worlds, four systems, one hand on both the design doc and the
-            compiler. Scroll to enter them.
+            Four Games, four worlds, four systems Scroll to enter them.
           </p>
         </div>
       </section>
@@ -133,26 +130,6 @@ export default function Home() {
           <ActBand act={act} />
         </Reveal>
       ))}
-
-      {/* AV Media side note — a quiet footnote under the four projects,
-          not a fifth card. Deliberately the smallest voice on the page:
-          body copy one step down from the bands, and the same 48px axis
-          everything else on the homepage sits on.
-
-          NO "SELECTED AV WORK" AFFORDANCE. A <span> styled as a link used to
-          sit under this sentence, waiting for a URL that does not exist yet.
-          It is gone, with its .hp-avnote-link / .hp-avnote-arrow styles: an
-          affordance that promises work there is nothing behind is worse than
-          no affordance. The sentence stands on its own, and when the AV work
-          is ready an anchor under this paragraph is all it takes. */}
-      <Reveal>
-        <section className="hp-avnote" aria-label="Audiovisual media background">
-          <p className="hp-avnote-line">
-            Before games, I worked in audiovisual media — an eye for framing,
-            pacing, and world that still shapes how I design levels and stories.
-          </p>
-        </section>
-      </Reveal>
 
       {/* Page Closer */}
       <Reveal>
@@ -195,7 +172,7 @@ export default function Home() {
               textWrap: "balance",
             }}
           >
-            The player is the main piece of the story.
+             For me, the player is the main piece of the story.
           </p>
 
           <p
@@ -208,8 +185,8 @@ export default function Home() {
               textWrap: "pretty",
             }}
           >
-            I make people feel things through mechanics, not cutscenes — and I
-            build the mechanics myself.
+            The main focus of my work is to make people feel through the game systems and mechanics 
+            and I build them myself.
           </p>
 
           <a
@@ -618,13 +595,7 @@ function ActBand({ act }: { act: Act }) {
           {project.systemsHook}
         </p>
 
-        {/* ONE TREATMENT FOR ALL FOUR BANDS. The flagship used to be the only
-            card whose disciplines broke into chips; the other three ran theirs
-            as a single mono line, so four cards describing the same KIND of
-            thing described it in two different visual languages and read as
-            two different classes of work. Every project's `disciplines` is
-            already a "A · B · C" string, so they all split the same way — the
-            flagship's larger interval above is what still ranks it. */}
+        {/* GRID */}
         <div
           style={{
             display: "flex",

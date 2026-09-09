@@ -43,20 +43,20 @@ export interface Contribution {
   
   {/* Fact Block */}
   export interface ProjectFacts {
-    engine: string;       // "Unreal Engine 5" | "Unity"
-    role: string;         // "Solo developer" | "Lead Designer"
-    team: string;         // "Solo" | "Team of 4" | "Team of 5"
-    year: string;         // "2025"
+    engine: string;    
+    role: string;      
+    team: string;       
+    year: string;     
   }
 
   
   {/* Role */}
   export interface Role {
     name: string;
-    brief: string;          // one-line "what they do"
-    tools: string;          // their abilities, with cooldowns
-    dependsOn: string;      // who they need
-    neededBy: string;       // who needs them
+    brief: string;          
+    tools: string;          
+    dependsOn: string;      
+    neededBy: string;       
     accent?: "silver" | "gold" | "scarlet" | "emerald";
   }
 
@@ -77,7 +77,6 @@ export interface Contribution {
     title: string;
     tagline: string;
     pillar: boolean;
-    /** `video` makes a tile a silent gameplay loop; `src` is then unused. */
     gallery?: { src: string; alt: string; caption: string; video?: string }[];
   
     facts: ProjectFacts;
@@ -86,7 +85,6 @@ export interface Contribution {
   
     eyebrow: string;
     systemsHook: string;
-    /** Optional. What of the project actually runs — see `moon-knight.ts`. */
     built?: string;
     disciplines: string;
     scope: string;

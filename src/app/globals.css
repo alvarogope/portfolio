@@ -27,51 +27,19 @@
 --text-lg:   clamp(1.125rem, 1rem + 0.6vw, 1.375rem);
 }
 
-/* ============================================
-   BASE DEFAULTS
-   ============================================ */
-
-/* ============================================
-   THE ROOT SCALE
-   ============================================
-   One number sets the size of the whole site.
-
-   Every type size, every gap, every padding and every prose column in this
-   project is expressed in `rem`, including the four `--text-*` steps above and
-   both terms of each `clamp()` that is not a `vw`. So the root font-size is
-   not "the body text size" — it is the scale factor for the entire system,
-   and moving it moves headings, labels, spacing and measure together. That is
-   why the sizing pass is one declaration rather than several hundred edits:
-   anything else would have grown the body and left the headings behind.
-
-   16px (the browser default this inherited before) put running prose at 16px
-   and pushed most component copy — set at 0.88-0.95rem — down to 14-15px, i.e.
-   below the readable floor. 112.5% puts the root at 18px: bare prose is 18px,
-   0.9rem copy is 16.2px, and nothing that carries a sentence sits under 16px.
-
-   Because the measure is ALSO in rem, line length in characters is unchanged
-   by this — a 35rem column is the same number of characters at any root. The
-   prose columns were narrowed separately, at their call sites.
-
-   Phones step back to 17px. Not because the type is too large there, but
-   because the horizontal budget is fixed: at 18px a 35rem column no longer
-   fits a 390px screen without the padding eating into it, and one step down
-   restores the margin while staying above the 16px floor. */
 html {
-  font-size: 112.5%; /* 18px */
+  font-size: 112.5%; 
   scroll-behavior: smooth;
 }
 
 @media (max-width: 640px) {
-  html { font-size: 106.25%; } /* 17px */
+  html { font-size: 106.25%; } 
 }
 
 body {
   background: var(--color-void);
   color: var(--color-moonlight);
   font-family: var(--font-body);
-  /* Stated rather than inherited, so the floor is a fact of the stylesheet
-     and not of the browser's default. */
   font-size: 1rem;
   line-height: 1.7;
   -webkit-font-smoothing: antialiased;
@@ -88,31 +56,7 @@ h1, h2, h3 {
 /* ============================================
    MONO LABELS
    ============================================
-   ~350 elements site-wide carry `.mono`: section eyebrows, band titles, band
-   meta lines, chips, legend terms, matrix keys. It is the site's label voice,
-   so its defaults are load-bearing - and until now they were body typography
-   with `uppercase` bolted on top.
-
-   Uppercase at 8-12px is a different typographic problem from uppercase at
-   heading size. Caps have no ascenders or descenders to hold them apart, so at
-   label size they need markedly more tracking, one step more weight, and much
-   tighter leading than running text. None of that was set here, so:
-
-     - 88 of the 238 label classes set no tracking of their own and rendered at
-       0.08em, which is running-text tracking, not caps tracking;
-     - the other 150 each corrected it locally, at nineteen different values
-       from 0.03em to 0.30em. 0.14em and 0.16em are by far the most common -
-       i.e. the components that read well were the ones overriding this rule;
-     - leading fell through to body's 1.7, so any label that wrapped read as
-       two unrelated lines rather than one label;
-     - weight fell through to the element, so `<p class="mono">` was 400 while
-       `<h3 class="mono">` picked up the h1-h3 rule's 600. JetBrains Mono only
-       ships 400 and 500 here, so those band titles were being faux-bolded by
-       the browser - the same label rendering differently by tag.
-
-   The defaults below are the ones most components had already corrected to.
-   Component classes that set their own tracking still win; this only fixes the
-   ones that were falling through. */
+*/
 
 .mono {
   font-family: var(--font-mono);
@@ -120,18 +64,10 @@ h1, h2, h3 {
   letter-spacing: 0.14em;
   line-height: 1.35;
   text-transform: uppercase;
-  /* Mono ligatures are a code feature: without this, JetBrains rewrites "->",
-     "!=" and "--" inside a label into single glyphs. Tabular figures keep the
-     "01 ·" section numbers on one width down the section rail. */
   font-variant-ligatures: none;
   font-variant-numeric: tabular-nums;
 }
 
-/* Mono text that is a sentence rather than a label - scroll hints, tier notes,
-   captions. Same voice, same font, but uppercasing a phrase that carries
-   commas, a colon or a "→" reads as shouting rather than as a label, and the
-   caps tracking above pulls it apart. Use this instead of re-declaring
-   `text-transform` per component. */
 .mono-note {
   text-transform: none;
   letter-spacing: 0.06em;
@@ -235,23 +171,6 @@ img { max-width: 100%; display: block; }
     position: relative;
   }
 
-/* ============================================
-   CTA PANEL
-
-   THE WHOLE CARD IS THE LINK.
-
-   It used to be a <div> whose only interactive element was the one line of
-   text at the bottom. The card is a hand-off to another page and has no other
-   purpose, so every part of it that reads as clickable now is: the panel
-   itself is the <a>, and the line at the foot is a <span> that styles as a
-   link rather than a second, nested one. That keeps the accessible name
-   ("kicker, title, body, link label") on one control instead of scattering
-   the target across a 38rem card with a 20rem dead zone.
-
-   These live here rather than in a per-panel <style> tag because the control
-   renders up to twice a page across six pages — one sheet, not twelve.
-   ============================================ */
-
 .cta-panel {
   display: block;
   padding: clamp(1.75rem, 5vw, 3rem);
@@ -264,8 +183,6 @@ img { max-width: 100%; display: block; }
   transition: border-color 220ms ease, transform 220ms ease;
 }
 
-/* The card lifting toward the reader, and its hairline warming to the rule's
-   own colour so the accent reads as the thing being offered. */
 @media (hover: hover) {
   .cta-panel:hover {
     border-color: color-mix(in srgb, var(--cta-rule) 45%, transparent);
@@ -274,8 +191,6 @@ img { max-width: 100%; display: block; }
   }
 }
 
-/* The link line. A <span>, so it needs the anchor's states rather than its
-   own — both the arrow and the underline answer to the card. */
 .cta-panel__link {
   display: inline-block;
   margin-top: 1.5rem;
@@ -300,8 +215,6 @@ img { max-width: 100%; display: block; }
   transform: translateX(4px);
 }
 
-/* The card is up to 38rem tall-ish and full-bleed inside its grid cell, so
-   the global 3px outward ring is drawn tight rather than floating. */
 .cta-panel:focus-visible {
   outline: 2px solid var(--color-lunar-gold);
   outline-offset: 2px;
@@ -493,17 +406,6 @@ img { max-width: 100%; display: block; }
    DECODE CURSOR  (DecodeOnView)
    ============================================ */
 
-/* The terminal cursor that `TransmissionCard` carried, restored onto the decode
-   that replaced it. The card chrome is deliberately NOT back — this is the
-   blink and nothing else, on copy that already has a home.
-
-   It is a `::after` on the text span rather than a second element, because that
-   component's whole design rule is that the sentence exists in the DOM exactly
-   once. Empty generated content adds no text node, is not selected by
-   Ctrl+F or select-all, and is not announced, so the cursor stays purely
-   visual. `--color-emerald` is `#5FD98A` on the Shattered Skies layout — the
-   hex the old card hardcoded, now read from the route token. */
-
 @keyframes tcblink { 0%, 49% { opacity: 1 } 50%, 100% { opacity: 0 } }
 
 .decode-cursor::after {
@@ -517,64 +419,21 @@ img { max-width: 100%; display: block; }
   animation: tcblink 1s steps(1) infinite;
 }
 
-/* While the sentence is still resolving there is nothing to sit after, so the
-   cursor waits. `data-decoding` is set on the span by `DecodeOnView` for the
-   length of the animation and removed when the real text lands. */
 .decode-cursor[data-decoding]::after {
   opacity: 0;
   animation: none;
 }
 
-/* The cursor is a glyph; the blink is the motion. Reduced motion keeps the
-   first and drops the second — the same call the original made. The global
-   killswitch above would already neuter it, but the intent is stated here so
-   it survives any change to that rule. */
 @media (prefers-reduced-motion: reduce) {
   .decode-cursor::after { animation: none; }
 }
 
-/* ---- THE PRE-HYDRATION WINDOW ----
-
-   `DecodeOnView` renders the REAL sentence through React, on the server, once.
-   That is not an oversight — it is what keeps the line findable with Ctrl+F,
-   selectable as one copy, and simply readable when JS never runs. It does mean
-   the true text is painted before any script can scramble it, and the component
-   used to leave it that way until an IntersectionObserver fired, which is how
-   the fourth Shattered Skies channel came to sit on screen fully readable
-   before it dissolved. The effect now claims the node during hydration; this
-   rule covers the sliver in front of that.
-
-   `color: transparent` plus a wide `text-shadow` is the smear: the glyphs stay
-   in the flow at exactly the width they will decode into, so nothing reflows,
-   and there is nothing to read. It is not `visibility` or `display`, because
-   both would take the sentence out of find-in-page for as long as they lasted.
-
-   TWO GUARDS, AND EACH ANSWERS A DIFFERENT WAY OF NEVER GETTING DECODED:
-
-     · `scripting: enabled` — with scripting off, nothing will ever claim the
-       node, so the plain sentence is the correct and only render. Browsers that
-       do not support the query simply do not match, which fails to the same
-       place.
-     · `prefers-reduced-motion: no-preference` — a reduced-motion reader is
-       never shown the scramble at all, so they must never be shown the smear
-       either. The component also clears the attribute on that path; this is the
-       half that works before the component runs.
-
-   And a fail-open, on the pattern `Reveal` already uses: if the bundle never
-   arrives, a zero-length animation at 1.5s drops the smear and hands the reader
-   the sentence. A paragraph that is briefly a blur is a flourish; one that is
-   permanently a blur is a broken page. */
 @media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
   .decode-cursor[data-decode-pending] {
     color: transparent;
     text-shadow: 0 0 0.62em var(--color-emerald, #5fd98a);
     animation: decode-fail-open 0s linear 1.5s forwards;
   }
-  /* Nothing has landed yet, so there is nothing for the cursor to sit after.
-     It fails open on the same 1.5s clock as the text, without the blink: an
-     animation cannot be restored from a keyframe, and a still block is the
-     shape reduced motion is already served, so it is the right thing to land
-     on rather than a compromise. */
   .decode-cursor[data-decode-pending]::after {
     opacity: 0;
     animation: decode-cursor-fail-open 0s linear 1.5s forwards;

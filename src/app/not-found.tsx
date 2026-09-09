@@ -26,7 +26,7 @@ export default function NotFound() {
           letterSpacing: "0.18em",
         }}
       >
-        404 — No Route Found
+        404 - No Route Found
       </p>
 
       <h1
@@ -50,7 +50,7 @@ export default function NotFound() {
         }}
       >
         The road ends here. Whatever you were looking for has drifted out of the
-        map — or was never charted at all. Nothing left to stand on but the way
+        map or was never charted at all. Nothing left to stand on but the way
         back.
       </p>
 
@@ -66,7 +66,7 @@ export default function NotFound() {
           borderRadius: "3px",
         }}
       >
-        Return to Solid Ground →
+        Return Home →
       </Link>
     </main>
   );

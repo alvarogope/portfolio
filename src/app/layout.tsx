@@ -134,7 +134,7 @@ export default function RootLayout({
             justifyContent: "space-between",
           }}
         >
-          <span>© {new Date().getFullYear()} Álvaro Gómez</span>
+          <span>© {new Date().getFullYear()} Álvaro Gómez Pérez</span>
           <span>Next.js + Tailwind · {" "}
             <a href="https://github.com/alvarogope/portfolio" style={{ borderBottom: "1px solid color-mix(in srgb, var(--color-silver) 50%, transparent)" }}>
               source on GitHub

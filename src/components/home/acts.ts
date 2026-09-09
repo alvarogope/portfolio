@@ -24,7 +24,7 @@ interface ActConfig {
 const CONFIG: ActConfig[] = [
   {
     slug: "moon-knight",
-    label: "ACT I — FLAGSHIP · DARK MEDIEVAL FANTASY",
+    label: "DARK MEDIEVAL FANTASY RPG",
     accent: "#c8cde0",
     poster: "/images/moon-knight/poster.png",
     side: "right",
@@ -32,21 +32,21 @@ const CONFIG: ActConfig[] = [
   },
   {
     slug: "shattered-skies",
-    label: "ACT II — SCI-FI CO-OP",
+    label: "SCI-FI CO-OP",
     accent: "#7ec8d8",
     poster: "/images/shattered-skies/poster.png",
     side: "left",
   },
   {
     slug: "break-in",
-    label: "ACT III — HEIST",
+    label: "HEIST",
     accent: "#d6a65a",
     poster: "/images/break-in/poster.png",
     side: "right",
   },
   {
     slug: "seeds-of-tomorrow",
-    label: "ACT IV — SOLARPUNK",
+    label: "ASOLARPUNK",
     accent: "#8fc98a",
     poster: "/images/seeds-of-tomorrow/poster.png",
     side: "left",

@@ -27,8 +27,6 @@ import QuantumSigil from "@/components/project/QuantumSigil";
 import RampLink from "@/components/project/RampLink";
 import CtaPanel from "@/components/project/CtaPanel";
 import { inMotionClips, inMotionIntro } from "@/content/moon-knight-in-motion";
-// Counted, never typed: the overview scoreboard derives every figure it
-// prints, so a new level or ability updates the summary by existing.
 import { beatLevels } from "@/content/moon-knight-levels";
 import { bestiaryBosses, bestiaryEnemies } from "@/content/moon-knight-bestiary";
 import { narrativeActs } from "@/content/moon-knight-narrative";
@@ -39,55 +37,13 @@ export const metadata: Metadata = {
   description: p.systemsHook,
 };
 
-/* ════════════════════════════════════════════════════════════════════════════
-   THIS PAGE WAS CONDENSED, THEN RE-ORDERED, AND HERE ARE THE TWO RULES IT
-   NOW FOLLOWS.
-
-   1 · SPLIT BY KIND, NOT TRIMMED BY TASTE. The page ran to ~7,650 rendered
-   words across seventeen blocks. The material was not filler; the SHAPE was
-   wrong for the first reader it has to survive. So:
-
-     · BUILT WORK STAYS. The game running, the quantum systems, the creatures,
-       the controls, the world, the beat chart and the honest negative result.
-     · CRAFT DEPTH AND DIVERSIONS MOVED, whole, to `/moon-knight/world`: the
-       story, the cast, the symbolism, the jousting minigame, and the full
-       arguments behind the diegetic, art and audio sections. Nothing was
-       deleted. Nothing was summarised.
-
-   THREE SECTIONS ARE "SPLIT" RATHER THAN MOVED — diegetic design, art
-   direction, the score. Each renders here in a `short` variant that shows
-   FEWER FIELDS OF THE OWNER'S OWN DATA and then ramps to the full section.
-   None of them types a summary: a hand-written short version is a second copy,
-   and second copies drift.
-
-   2 · THE GAME COMES FIRST, LITERALLY. The page used to open on a standfirst
-   quoting the diegetic thesis — so a recruiter's first impression of a game
-   project was an abstract argument about interface — and then spend two
-   sections on vision and role before showing anything running. The order is
-   now: one line of standfirst, the game in motion, the signature system, and
-   only then what it is for and who built it. Evidence before claim.
-
-   NOTHING IS DESCRIBED TWICE. §02 renders the abilities as ONE figure — the
-   design document's own sigil, made interactive — and no longer follows it
-   with five cards of the same array. Blueprint captures appear on this page
-   and on the engineering page, but never the same capture: here a graph is
-   evidence that a DESIGN DECISION was wired, there it is evidence about
-   ARCHITECTURE.
-
-   CROSS-PAGE LINKS ARE BUILT, NEVER TYPED. A wrong cross-page fragment fails
-   SILENTLY — the browser navigates and simply does not scroll — so every one
-   of them is constructed from `moon-knight-deep-dive.ts` and `castHref`, and a
-   rename breaks the build instead of the page.
-   ════════════════════════════════════════════════════════════════════════════ */
 
 export default function MoonKnightPage() {
   return (
     <>
       {/* Hero */}
       <div className="mk-hero">
-        {/* Tuning lives in `SubpageBackdrop`, which is also where the deep
-            dives read it from, so the hero and the subpage bands cannot
-            drift apart. Only the strength differs. */}
+        {/* Tuning lives in `SubpageBackdrop`. */}
         <Aurora
           className="mk-hero-aurora"
           {...MOON_KNIGHT_AURORA}
@@ -99,23 +55,10 @@ export default function MoonKnightPage() {
       </div>
 
       <Section>
-        {/* 01 — OVERVIEW, and the page opens on it.
-
-            NO STANDFIRST BAND ANY MORE. The page carried an `OpeningStatement`
-            above this: one line quoted by key, with a jump link to the section
-            that owns it. It made no sense where it stood — a pull quote
-            advertising §02 while sitting above §01 is a table of contents
-            pretending to be an argument, and a reader met a claim before they
-            had been told what the project was.
-
-            So the overview leads, and it does the job a standfirst was being
-            asked to do: what the game is, and what of it actually runs. The
-            counts beside it are DERIVED — `abilities.length`, `beatLevels`,
-            the bestiary arrays — so the summary cannot drift from the sections
-            that prove it, and nothing here is a sentence any of them owns. */}
+        {/* 1 — OVERVIEW */}
         <Reveal>
           <div>
-            <SectionHeading kicker="01 · Overview" title="The Vision" />
+            <SectionHeading kicker="The Overview" title="The Vision" />
             <div className="mk-overview">
               <div className="mk-overview-prose">
                 <p style={{ marginTop: "1rem" }}>{p.vision}</p>
@@ -139,13 +82,10 @@ export default function MoonKnightPage() {
           </div>
         </Reveal>
 
-        {/* 02 — Contributions. The breadth block: five disciplines named in a
-            recruiter's own vocabulary, in about 100 words. It follows the
-            overview because the overview says what the thing IS and this says
-            which parts of it were mine. */}
+        {/* 2 — Contributions */}
         <Reveal>
           <div style={{ marginTop: "5rem" }}>
-            <SectionHeading kicker="02 · My Role" title="My Contribution" />
+            <SectionHeading kicker="My Role" title="My Contribution" />
             <div style={{ display: "grid", gap: "1.5rem" }}>
               {p.contributions.map((c) => (
                 <div key={c.label}>
@@ -159,11 +99,7 @@ export default function MoonKnightPage() {
           </div>
         </Reveal>
 
-        {/* 03 — IN MOTION. The old page-foot gallery, dissolved and promoted:
-            the only proof on the page that the game RUNS, placed third so it
-            lands before any design argument is made. `PlateGrid` fits the
-            clips with `contain` and `LoopingVideo` refuses to autoplay under
-            reduced motion, offering controls instead. */}
+        {/* 3 — Videos Section */}
         <Reveal>
           <div style={{ marginTop: "5rem" }}>
             <SectionHeading kicker={inMotionIntro.kicker} title={inMotionIntro.title} />
@@ -190,22 +126,14 @@ export default function MoonKnightPage() {
           </div>
         </Reveal>
 
-        {/* 04 — THE SIGNATURE SYSTEM.
-
-            ONE FIGURE, NOT A FIGURE PLUS FIVE CARDS. This section used to
-            render the sigil and then five ability cards of the same array
-            directly beneath it, so every principle and every effect appeared
-            twice within one screen. The cards are gone. The sigil is the
-            game's own design-document artwork, and its readout — name,
-            quantum basis, what it does in play — is now the only place an
-            ability is described on this site's design side. */}
+        {/* 4 — THE QUANTUM SYSTEM. */}
         {p.abilities && (
           <Reveal>
             <div style={{ marginTop: "5rem" }} id="signature-systems">
-              <SectionHeading kicker="04 · Signature Systems" title="The Power of the Gods" />
+              <SectionHeading kicker="The Quantum Abilities" title="The Power of the Gods" />
               <p style={{ color: "var(--color-mist)", maxWidth: "35rem", marginTop: "1.5rem", marginBottom: "2rem" }}>
-                Five optional abilities, each built on a real quantum computing principle. One
-                equipped at a time, high risk, high reward.
+                Five abilities built on a real quantum computing principle. One
+                equipped at a time with high risk and high reward.
               </p>
 
               <QuantumSigil abilities={p.abilities} />
@@ -213,28 +141,10 @@ export default function MoonKnightPage() {
           </Reveal>
         )}
 
-        {/* 05 — Bestiary. STAYS WHOLE, and that is a structural decision, not a
-            taste one: the world map above links into `#bestiary-<id>` for every
-            creature, and splitting this section would send half those anchors
-            cross-page for no reading-load gain. It is 330 words and almost
-            entirely visual. The Werewolf card now carries the boss capture
-            absorbed from the dissolved gallery. */}
+        {/* 5 — Bestiary */}
         <Reveal>
           <div style={{ marginTop: "5rem" }}>
-            <Bestiary kicker="05 · The Creatures" />
-
-            {/* THE ONE DESIGN CLAIM THE CARDS ABOVE CANNOT MAKE THEMSELVES.
-
-                The bestiary describes what each creature is and what it does to
-                you. What it cannot show is that a fight is a STATE the world
-                enters and leaves — that being seen is the switch, and that
-                losing you turns it off again. These two graphs are the halves
-                of that switch, and they are placed here rather than on the
-                engineering page because that page argues about the C++ /
-                Blueprint split and carries the behaviour TREES (BT_AI,
-                BT_Werewolf) — the decisions an enemy makes once it is already
-                fighting. Neither of these is on it. Perception and the fight's
-                own UI lifetime are design decisions, and this is them wired. */}
+            <Bestiary kicker="The Enemies" />
             <div style={{ marginTop: "3rem" }}>
               <h3
                 className="mono"
@@ -246,24 +156,25 @@ export default function MoonKnightPage() {
                   margin: "0 0 1.25rem",
                 }}
               >
-                Being seen, and being forgotten
+                AI Blueprints Systems
               </h3>
               <PlateGrid
                 minWidth="26rem"
                 items={[
                   {
                     src: "/images/moon-knight/AI Detection - Moon-Knight.png",
-                    label: "Blueprint · sight is the switch",
+                    label: "Blueprint · Triggering enemies through sight detection",
                     alt: "The AI sight-detection graph: a Sight Detection event breaks the AI stimulus, branches on Successfully Sensed, and on the true path writes the player into the Target Actor Blackboard key and calls Activate Mini Boss Combat — while the false path clears the key and calls Deactivate Miniboss Combat.",
                     caption:
-                      "A fight starts because something saw you, and it is allowed to end the same way. The sensed stimulus writes you into the Target Actor key the behaviour tree reads; lose line of sight and the same graph clears the key and calls Deactivate. Disengagement is a real option in Kaelum — the darkness that makes the game harder is also what lets you leave a fight you are losing.",
+                      "The detection system that the majority of the enemies share. The sensed stimulus writes you into the Target Actor key that the Behaviour Tree reads. " +
+                      "This system lets the player to Deactivate the stimulus, leaving the fight whenever is needed."
                   },
                   {
                     src: "/images/moon-knight/MiniBoss_Combat.png",
-                    label: "Blueprint · the boss bar exists only during the boss",
+                    label: "Blueprint · Boss bar only appearing during the bossfight",
                     alt: "The mini-boss combat graph: Activate MiniBoss Combat creates the WB Boss Health bar widget and adds it to the viewport, a tick divides current health by max health into Set Percent, and Deactivate Miniboss Combat removes the widget from its parent.",
                     caption:
-                      "The other half of the same switch, and the reason the health bar overhead is not a hypocrisy. In a game whose health readout is the moon on the knight's back, the one conventional bar is created when a mini-boss engages and destroyed when it disengages. It is not HUD you live with; it is a thing the boss brings with it and takes away.",
+                      "With this Blueprint, the boss' health bar only appears when they are triggered. This HUD dissapears when the boss is defeated or when they lose sight of the player." 
                   },
                 ]}
               />
@@ -271,21 +182,14 @@ export default function MoonKnightPage() {
           </div>
         </Reveal>
 
-        {/* 06 — Controls. Tightened, not cut: every binding survives, the long
-            sentences did not. The reading-load audit found three of the page's
-            fourteen 40-word-plus sentences in this one section, including the
-            longest on the site at 58 words — a control scheme should be the
-            most scannable thing on a design page. */}
+        {/* 6 — Controls */}
         <Reveal>
           <div style={{ marginTop: "5rem" }}>
-            <SectionHeading kicker="06 · Controls" title="The Input Map" />
+            <SectionHeading kicker="The Controls" title="The Input Map in a Controller" />
             <div style={{ marginTop: "1.75rem" }}>
               <ControllerMap />
             </div>
 
-            {/* The map above says which button. This says what the button
-                does — one press, one montage, the recovery window the next
-                input has to land inside. */}
             <figure style={{ margin: "2.5rem 0 0", maxWidth: "52rem" }}>
               <LoopingVideo
                 src="/images/moon-knight/attack1.mp4"
@@ -299,49 +203,32 @@ export default function MoonKnightPage() {
                   lineHeight: 1.6,
                 }}
               >
-                One press, in full. The wind-up, the active frames where the blade traces, and the
-                recovery the next input has to land inside — the animation and the combat system
-                are the same object, and this is where a controller diagram stops being able to
-                show it.
+                This is the Animation Montage of the first attack. The space between the two notifies of the animation is 
+                the time that the player has to concatenate attacks. If the player presses the input outside of this time 
+                the attack combo will fail. This is the connection between the animation and the Blueprints.
               </figcaption>
             </figure>
 
-            {/* THE WIRING BEHIND THE WINDOW — the Blueprint captures placed on
-                the DESIGN side of this project.
-
-                They are here for a different reason than the ones on the
-                engineering page. There, a graph is evidence about
-                ARCHITECTURE — what lives in Blueprint, what moved to C++, and
-                why. Here a graph is evidence that a DESIGN DECISION was
-                actually wired: the combo window above is not a claim about
-                intent, it is a gate with a name, and this is it. No capture on
-                this page is one of the seven on the engineering page, and each
-                is captioned to its own argument.
-
-                The second plate is the pair to the first and to the clip above
-                it. The clip claims that the animation and the combat system are
-                the same object; the notify is where that claim is literally
-                true, and it is not on the engineering page — that page carries
-                the trace graph itself (`Sword_Trace.png`, argued as a
-                Blueprint-to-C++ migration), not the thing that opens and closes
-                it. */}
             <div style={{ marginTop: "2.5rem", maxWidth: "58rem" }}>
               <PlateGrid
                 minWidth="100%"
                 items={[
                   {
                     src: "/images/moon-knight/BPC_ComboContinuiationGate.png",
-                    label: "Blueprint · the continuation gate",
+                    label: "Blueprint · the combo continuation",
                     alt: "The BPC_AttackSystem Blueprint graph: a Sword Attack event branching on Is Attacking?, a Combo continue event branching on Save Attack?, a Switch on Int firing Attack 1 through Attack 4, and a Stop Combo node on the failing branch.",
                     caption:
-                      "The recovery window in the clip above, as the thing that implements it. Each swing opens Save Attack? while its window is live; the next input either arrives inside it and the switch fires the next attack in the chain, or it does not and the graph falls through to Stop Combo. Prototyped in Blueprint because a timing window is tuned in seconds there, and moved into C++ once the numbers stopped moving.",
+                      "This is the logic of the combo continuation and how the game detects the player's attacks. " +
+                      "Each swing opens the bool Save Attack? while its window is true. The next input either arrives inside it and the switch fires the next attack in the chain, or it does not and the graph falls through to Stop Combo." + 
+                      "Prototyped in Blueprint because a timing window is tuned in seconds there, and moved into C++ once the numbers stopped moving.",
                   },
                   {
                     src: "/images/moon-knight/BP_Notify_SwordTraceLoop.png",
-                    label: "Blueprint · the blade is only dangerous on the notify",
+                    label: "Blueprint · how the sword applies damage",
                     alt: "The BP_Notify_SwordTraceLoop anim notify state: Received Notify Begin gets the owner, casts to the player character or to BP_AI, and calls Start Sword Trace on whichever attack component it found.",
                     caption:
-                      "Why the active frames in the clip are the active frames. The sword does no damage of its own — an animation notify opens the trace when the swing reaches the part of the montage that should hurt, and its Notify End half closes it again. The window is authored on the timeline, next to the pose, rather than as a number in code. And the graph casts to the player or to BP_AI, so an enemy swing is governed by the same rule: nothing on either side can hit you outside its own animation.",
+                      "This is the Blueprint logic that was attach to all the swords in the prototype. A Notify opens the trace when the swing should cause damage and the another Notify closes it. " +
+                      "The graph also casts to the BP_AI, making the enemies' attacks follow the same rules and applying damage only during certain parts of the animations.",
                   },
                 ]}
               />
@@ -349,65 +236,37 @@ export default function MoonKnightPage() {
           </div>
         </Reveal>
 
-        {/* 07 — THE WORLD AND ITS LEVELS. Two sections merged into one, and
-            the merge is an argument rather than a tidy-up.
-
-            They were §07 "The World of Kaelum" and §08 "The Beat Chart", and
-            between them they answered one question twice. The map said where a
-            place is, who is there and what guards it; the chart said what that
-            same place is like to play. Read a screen apart, a reader had to
-            carry the map in their head to make sense of the chart.
-
-            They are now one section in three bands — THE PLACE, THE PLAN, THE
-            PHOTOGRAPH — and the overlap is resolved rather than tolerated:
-
-              · the map's readout no longer prints the level's objective. It
-                prints the level the place is played as, AS A LINK into the
-                chart's own rail below, which selects that level's sheet.
-              · the chart no longer carries `cast` or `enemies` rows. The map
-                renders those as LINKS into the bestiary and the cast, which is
-                a strictly better rendering of the same facts. `boss` stays on
-                the chart: which fight caps a level is a plan decision.
-
-            The map itself also stopped rendering everything three times — see
-            `WorldMap`. That is where most of this section's old length went. */}
+        {/* 7 — THE WORLD AND THE LEVELS. */}
         <Reveal>
           <div style={{ marginTop: "5rem" }}>
             <SectionHeading
-              kicker="07 · The World & Level Design"
-              title="Kaelum, and How It Was Planned"
+              kicker="The World & Level Design"
+              title="Kaelum and How It Was Planned"
             />
             <p style={{ color: "var(--color-mist)", maxWidth: "38rem", marginTop: "1.5rem", marginBottom: "2.5rem" }}>
-              Three great lands around one drowned island, drawn by hand — and the sheet the four
-              levels inside them were actually planned from. The map answers where a place is and
-              who is in it; the chart answers what it is like to play. Every place on the map opens
+              There are three main areas and an island in the world of Kaelum.
+              This is the drawn map. It shows where each place is and which NPCs will the player encounter.
+              The chart answers what it is like to play and every place on the map opens
               its level on the chart.
             </p>
 
             {/* Band A — the place. */}
-            <h3 className="mono mk-band-title">A · The map</h3>
+            <h3 className="mono mk-band-title">The map</h3>
             <WorldMap />
 
-            {/* Band B — the plan. `#the-plan` is the map's hand-off target, and
-                `BeatChart`'s rail tabs now select on focus, so a link to
-                `#bc-tab-<level>` lands on the right sheet rather than merely
-                somewhere near it. */}
+            {/* Band B */}
             <div id="the-plan" style={{ marginTop: "4.5rem", scrollMarginTop: "2rem" }}>
-              <h3 className="mono mk-band-title">B · The plan</h3>
+              <h3 className="mono mk-band-title">The plan</h3>
               <p style={{ color: "var(--color-mist)", maxWidth: "38rem", marginTop: 0, marginBottom: "1.75rem" }}>
-                Four levels — the prologue on Centralis and then one per act — against six design
-                dimensions, with the moon waxing across the top. Pick a level to open its design
-                sheet.
+                The Beatchart of shows the tutorial and the three main areas which represent one act per area. 
+                Pick a level to open its design.
               </p>
               <BeatChart />
             </div>
 
-            {/* Band C — the levels, photographed. Deliberately NOT folded into
-                the In Motion band: these are documents, and `PlateGrid` fits
-                them with `contain` and opens them full size. A crop would
-                destroy the callouts, which are the entire point. */}
+            {/* Band C */}
             <div style={{ marginTop: "4.5rem" }}>
-              <h3 className="mono mk-band-title">C · The level, annotated</h3>
+              <h3 className="mono mk-band-title">The Level Design</h3>
               <p
                 style={{
                   color: "var(--color-mist)",
@@ -416,38 +275,38 @@ export default function MoonKnightPage() {
                   marginBottom: "1.75rem",
                 }}
               >
-                The same levels seen from inside them. Each plate carries the reasoning on the shot
-                itself, which is how these were reviewed while the level was being built.
+                In-game screenshots of the game. Each picture shows the level design choices that were
+                reviewed while the level was being built.
               </p>
-              {/* Capped rather than run to the full 68rem column. The plates are
-                  3840px wide, but a full-width box asked the optimiser for a
-                  variant it then had to upscale, and upscaled type is soft type.
-                  At 58rem the served variant is larger than the box it lands in,
-                  so the callouts stay crisp. */}
               <div style={{ maxWidth: "58rem" }}>
               <PlateGrid
                 minWidth="100%"
                 items={[
                   {
                     src: "/images/moon-knight/centralis.png",
-                    label: "Centralis · the whole level",
+                    label: "Centralis · overview of the level",
                     alt: "Annotated overhead of the Centralis level: callouts marking the PCG forest used as natural blocking, the spawn view holding the moon, the NPC and the sword in one frame, the sword lit beside the willow tree, and the layout withheld until the sword is picked up.",
                     caption:
-                      "Four decisions on one frame: the forest as natural blocking rather than randomised scatter, a spawn view that holds all three guides at once, the sword lit as the brightest point after the moon, and the layout deliberately withheld until the player picks it up.",
+                      "The main four decisions: The forest functions as a natural reducing the light of the main area of level and hiding enemies. " + 
+                      "From here, the player has the three guides in front of them. The Moon, The Willow Tree and The Sword. " +
+                      "Being the last one under the brightest point of the map. " + 
+                      "The layout of the level is hidden from the player until they get to the sword pickup spot and then the layout is fully revealed. " +
+                      "With these decisions I try to communicate with the player through the level",
                   },
                   {
                     src: "/images/moon-knight/forest.png",
-                    label: "Centralis · at eye level",
+                    label: "Centralis · the forest",
                     alt: "Annotated night shot from inside the forest: callouts on the moon as both light source and compass, and on enemy placement in the dark between the trees.",
                     caption:
-                      "The same level from the floor. The moon does two jobs — the only real light, and the direction of the objective — and the enemies are placed in the dark between the trees, which is what makes the forest read as short-range and fast.",
+                      "The same level from the floor. The moon serves a double function by giving natural light to the level and the direction towards" +
+                      "where the player should go. The enemies are placed in the dark between the trees, which is what makes the combat short-range and fast.",
                   },
                   {
                     src: "/images/moon-knight/boss_arena.png",
-                    label: "The werewolf arena",
+                    label: "The werewolf boss arena",
                     alt: "Annotated boss arena: the werewolf placed on a raised mound so it stays readable from anywhere in the arena, with the arena sized for dodging room.",
                     caption:
-                      "The boss stands on a rise so it stays readable from anywhere in the arena, and the arena is sized for the dodge rather than for the fight — the last beat on the chart above.",
+                      "The boss stands on a hill so it seen from anywhere in the arena, and the arena gives space so the player has space to dodge.",
                   },
                 ]}
               />
@@ -456,39 +315,26 @@ export default function MoonKnightPage() {
           </div>
         </Reveal>
 
-        {/* 08 — Diegetic design, SHORT. The thesis, the moon-HUD strip, the
-            four swaps, and where the claim stops. The four `why` arguments,
-            the skill tree, the invisible-design decisions and the core-combat
-            verbs are on the deep dive.
-
-            The claim is now SCOPED. It used to read "nothing here is a menu —
-            every system is an object, a gesture or a place", which the repo
-            contradicts: `View` opens a conventional equipment screen. The
-            thesis now names the four systems it is actually true of and says
-            why the equipment menu is the right call. A scoped claim a reader
-            can check beats a sweeping one they can disprove. */}
+        {/* 8 — UI DESIGN */}
         <Reveal>
           <div style={{ marginTop: "5rem" }} id="diegetic-design">
-            <SectionHeading kicker="08 · Diegetic Design" title="Mechanics That Hide in the World" />
+            <SectionHeading kicker="UI Design" title="The Design Lives in the World" />
             <p style={{ color: "var(--color-mist)", maxWidth: "35rem", marginTop: "1.5rem", marginBottom: "1.75rem" }}>
-              The health bar is the moon on the knight&apos;s back, experience is a rose stained in
-              a boss&apos;s blood, and the map is a blade held up to the moonlight.
+              The Health Bar is the moon on the knight&apos;s back. The Experience is a white rose stained in
+              the boss&apos;s blood. The map player knows where to go by raising the sword and reflecting the moonlight.
             </p>
 
-            {/* The willow: the save point, and the one diegetic system that is
-                a PLACE rather than an object or a gesture. Sits at the head of
-                the section because it is the only one a screenshot can state
-                on its own. */}
+            {/* The willow tree */}
             <figure style={{ margin: "0 0 2.5rem", maxWidth: "52rem" }}>
               <PlateGrid
                 minWidth="100%"
                 items={[
                   {
                     src: "/images/moon-knight/willow_tree.png",
-                    label: "The willow",
+                    label: "willow trees",
                     alt: "A white willow tree on a rise under a full night sky, a fallen winged statue below it, the knight small in the distance.",
                     caption:
-                      "The willow. There is no save menu and no bonfire prompt — the tree is the checkpoint, and the only place the harp heals you all the way back.",
+                      "These trees are the player's checkpoint and safe space. Is the only place the player can heal fully.",
                   },
                 ]}
               />
@@ -496,18 +342,7 @@ export default function MoonKnightPage() {
 
             <DiegeticDesign variant="short" />
 
-            {/* Three more Blueprint captures, on the design argument rather
-                than the architecture one. A diegetic interface is easy to claim
-                and cheap to fake in a portfolio; these are what it looks like
-                when the claim is true — one stats component serving both
-                readouts, a death sequence with no screen in it, and an
-                interaction that is a look rather than a prompt.
-
-                The pickup graph is not the equipment screen. `WB_Equipment.png`
-                is on the engineering page and argues the opposite case — the
-                one place a menu was the better tool — while this is the moment
-                before that screen exists, and it is where the scope note above
-                earns its exception rather than contradicting it. */}
+            {/* Blueprint Screenshots */}
             <div style={{ marginTop: "2.5rem" }}>
               <h3
                 className="mono"
@@ -519,31 +354,34 @@ export default function MoonKnightPage() {
                   margin: "0 0 1.25rem",
                 }}
               >
-                The wiring behind it
+                The Blueprints
               </h3>
               <PlateGrid
                 minWidth="26rem"
                 items={[
                   {
                     src: "/images/moon-knight/BP_PlayerStats.png",
-                    label: "Blueprint · one component, both readouts",
+                    label: "The Health in the HUD",
                     alt: "The player-stats Blueprint graph: the component casts to the player, dummy or AI character, sets a Character Type enum, and feeds Set Percent into whichever health and stamina bar belongs to that owner.",
                     caption:
-                      "The moon on the knight's back and the bar above an enemy's head are the same component. It casts to whoever owns it, records a character type, and drives the matching widget — so putting the health bar inside the world cost a skin, not a system.",
+                      "I tied the health and its representation to the HUD and wired them properly so the enemies could also inheret from this system. " +
+                      "Due to lack of time, I could not made the diegectic health bar as a moon, but the systems was build for making it work with any kind of UI.",
                   },
                   {
                     src: "/images/moon-knight/BP_DieMechanic.png",
-                    label: "Blueprint · dying, without a screen",
+                    label: "Diying sequence",
                     alt: "The Die Blueprint sequence: disable input, set the mesh to simulate physics, start a camera fade through the player camera manager, delay, then open the current level again by name.",
                     caption:
-                      "Death as a sequence rather than a menu: input off, the body goes to ragdoll, the camera fades to black and the world comes back. No card, no retry button. This Blueprint version reloaded the whole level; in C++ it became a respawn at the last willow, which is why the tree above is the checkpoint.",
+                      "For the death sequence I decided to make all the characters go to ragdoll and if the player dies, have a fade to black screen. " +
+                      "When I reworked in the C++ codebase, I wired the respawn at the last willow tree the player rested, making them checkpoints rather than force the main spawn. ",
                   },
                   {
                     src: "/images/moon-knight/Pickup Trace - Moon-Knight.png",
-                    label: "Blueprint · picking up is looking",
+                    label: "Pickup mechanic",
                     alt: "The pickup trace graph: the Interact input runs a sphere trace forward from the follow camera, and if the hit actor casts to BP_Weapon it is added to the equipment component and the world actor is destroyed.",
                     caption:
-                      "Taking something is a look and a press. The trace runs forward from the camera the player is already aiming with, so what you pick up is whatever you were looking at — there is no proximity radius, no floating prompt and no widget hovering over the item. The weapon goes into the equipment component and the actor in the world is destroyed, which is why the sword you are carrying is the sword you can see.",
+                      "The trace runs forward from the camera towards a pickable object in front. I chose this instead of a HUD. Player's are hinted to pickup an item through context. " + 
+                      "The weapon goes into the equipment system and the mesh in the world is destroyed.",
                   },
                 ]}
               />
@@ -551,68 +389,61 @@ export default function MoonKnightPage() {
 
             <div style={{ marginTop: "2rem" }}>
               <RampLink href={deepDiveHref("diegetic")}>
-                The full diegetic argument: every system&apos;s reasoning, the skill tree and the
-                invisible decisions
+                The Full Diegetic UI Design. Every system&apos;s decision
               </RampLink>
             </div>
           </div>
         </Reveal>
 
-        {/* 09 — Art direction, SHORT. The thesis line, the real palette, and
-            the one translation where the aesthetic crosses into the rules —
-            darkness is not mood here, it is difficulty, which makes it systems
-            evidence rather than craft depth. The other translations and the
-            framing decisions are on the deep dive. */}
+        {/* 9 — Art Direction */}
         <Reveal>
           <div style={{ marginTop: "5rem" }}>
-            <SectionHeading kicker="09 · Art Direction" title="The Sublime, Made Playable" />
+            <SectionHeading kicker="Art Direction" title="The Sublime" />
             <p style={{ color: "var(--color-mist)", maxWidth: "35rem", marginTop: "1.5rem", marginBottom: "1.75rem" }}>
-              One aesthetic idea decides the whole look of the game — and then keeps going, into
-              how hard it is to see what is about to kill you.
+              The Sublime and their way of romanticise the medieval ages is what inspired the artstyle direction.
+              This art philosophy adapted to games, exposes the player to solitude, open spaces and big challenges whether internal or external.
             </p>
 
-            {/* Two real frames before the argument. The first is the thesis in
-                one image: a small figure, an enormous indifferent landscape,
-                one light source. The second is what "the Sublime is the beauty
-                of decay" actually looks like in the build. */}
+            {/* Two Screenshots */}
             <div style={{ marginBottom: "2.5rem", maxWidth: "58rem" }}>
               <PlateGrid
                 minWidth="100%"
                 items={[
                   {
                     src: "/images/moon-knight/sublime_meadow.png",
-                    label: "The Sublime, in one frame",
+                    label: "Landscapes",
                     alt: "The knight seen from behind, alone in a moonlit meadow of foxgloves, ruined statues either side, a full moon low on the horizon under a dense starfield.",
                     caption:
-                      "Everything the art direction argues, in one shot: one small figure, one light source, ruins nobody is coming back for, and a landscape entirely indifferent to you.",
+                      "This screenshot shows a miniboss next to ruins and under the moonlight. Big landscapes, big landscapes and big challenges turned epic.",
                   },
                   {
                     src: "/images/moon-knight/environment.png",
-                    label: "Ruin as ground cover",
+                    label: "Ruins",
                     alt: "Night interior of the forest: a statue half-swallowed by heavy foliage, stars visible through the canopy.",
                     caption:
-                      "Decay is the set dressing, not a set piece. The statues are already losing to the forest, which is what stops the world reading as a level and starts it reading as a place.",
+                      "Ruins are a big part of the game's setting. They show how the society that built them functioned, their religion, their aspirations or their fears. " +
+                      "By making them ruins, it creates the sensation in the player that everything has an end and eventually forgotten and buried by nature.",
                   },
                 ]}
               />
             </div>
 
-            {/* The title screen: the look committed to before a mechanic runs. */}
+            {/* The title screen. */}
             <figure style={{ margin: "0 0 2.5rem", maxWidth: "52rem" }}>
               <LoopingVideo
                 src="/images/moon-knight/menu.mp4"
                 label="The Moon-Knight title screen: the moon held over a dark landscape, with the menu set into the scene rather than over it"
+                
               />
               <figcaption
                 style={{
                   marginTop: "0.7rem",
-                  fontSize: "0.9rem",
+                  fontSize: "1.2rem",
                   color: "var(--color-mist)",
                   lineHeight: 1.6,
                 }}
               >
-                The title screen. The menu sits inside the scene rather than on top of it — the same
-                rule §08 applies to the HUD, applied before the game has started.
+                The title screen
               </figcaption>
             </figure>
 
@@ -620,26 +451,20 @@ export default function MoonKnightPage() {
 
             <div style={{ marginTop: "2rem" }}>
               <RampLink href={deepDiveHref("art")}>
-                The Sublime in full: all four translations and the framing decisions
+                The Full Sublime Artstyle Direction and art decisions
               </RampLink>
             </div>
           </div>
         </Reveal>
 
-        {/* 10 — The hard part. MOVED UP from the foot of the page. It is the
-            strongest credibility move in the portfolio — a documented negative
-            result rather than a faked success — and the only door to the two
-            engineering pages. At 84% depth almost nobody opened it. */}
+        {/* 10 — Development Issuess. */}
         {p.designChallenge && (
           <Reveal>
             <div style={{ marginTop: "5rem" }}>
-              <SectionHeading kicker="10 · The Hard Part" title="What Broke, and What I Built" />
+              <SectionHeading kicker="The Development" title="The Quantum and Engineering Design" />
               <div style={{ marginTop: "1.5rem" }}>
                 <ChallengeQuote challenge={p.designChallenge} />
               </div>
-              {/* One section, not two: the quote ends on "documented the
-                  feasibility gap and carried it into a standalone C++ toolkit"
-                  and the note below is that sentence as a timeline. */}
               {p.engineeringNote && (
                 <div style={{ marginTop: "2.5rem" }}>
                   <EngineeringNote note={p.engineeringNote} />
@@ -655,26 +480,22 @@ export default function MoonKnightPage() {
                 }}
               >
                 <RampLink href="/moon-knight/engineering">
-                  How I programmed the game: the C++ / Blueprint architecture
+                  How I programmed the game: the C++ and Blueprint architecture
                 </RampLink>
                 <RampLink href="/moon-knight/engineering/quantum" tone="silver">
-                  The research within it: the C++ quantum toolkit
+                  The Quantum Research and the C++ Quantum Toolkit
                 </RampLink>
               </div>
             </div>
           </Reveal>
         )}
 
-        {/* 11 — The score, SHORT. The two real recordings and one sentence.
-            This is the deliberate exception to "move the music wholesale": a
-            reader pressing play and hearing a real score in ten seconds is
-            evidence, and evidence belongs on the main page. The 900 words of
-            composer reasoning around it are the depth, and those moved. */}
+        {/* 11 — The Audio and Music Design. */}
         <Reveal>
           <div style={{ marginTop: "5rem" }}>
-            <SectionHeading kicker="11 · Score" title="I Wrote the Music Too" />
+            <SectionHeading kicker="Audio Design" title="The Soundtrack" />
             <p style={{ color: "var(--color-mist)", maxWidth: "35rem", marginTop: "1.5rem", marginBottom: "1.75rem" }}>
-              Two finished pieces from the score I composed for the game. Press either to play.
+              The two main compositions of the game. Press either to play.
             </p>
             <AudioDesign variant="short">
               <MoonKnightAudio />
@@ -682,23 +503,12 @@ export default function MoonKnightPage() {
 
             <div style={{ marginTop: "2rem" }}>
               <RampLink href={deepDiveHref("score")}>
-                How the score was designed: the silence rule, the village themes and what each
-                instrument is allowed to mean
+                How the soundtrack and the audio design was done and its reasoning.
               </RampLink>
             </div>
           </div>
         </Reveal>
 
-        {/* THE HAND-OFF, AND BOTH DOORS ARE ON IT.
-
-            This used to be a single panel to the deep dive, which left the two
-            engineering pages reachable from exactly one place on the site: the
-            pair of ramp links inside §11, two thirds of the way down. A reader
-            who scrolled past that section arrived at the foot of the page with
-            no idea the code write-ups existed. Both routes are now offered
-            here, side by side, in the same control the subpages use to hand
-            readers back — so every page under `/moon-knight` ends with the
-            complete set of places to go next. */}
         <Reveal>
           <div
             style={{
@@ -732,7 +542,7 @@ export default function MoonKnightPage() {
         </Reveal>
       </Section>
 
-      {/* The two layers, plus the two things §01 and §07 need. */}
+      {/* The two layers */}
       <style>{`
         /* ---- §01 the overview scoreboard ----
            Prose left, counts right. Every number is derived; the labels say

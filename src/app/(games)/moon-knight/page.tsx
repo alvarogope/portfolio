@@ -506,17 +506,18 @@ export default function MoonKnightPage() {
           >
             <CtaPanel
               kicker="The deep dive"
-              title="The World, the Story and the Score"
-              body="The other half of this project, at full length: the three-act arc and its reversal, the cast and what each of them is for, the symbolism the world is built on, the complete diegetic and art-direction arguments, how the score was written, the jousting minigame and its risk table, and where the world would go next."
+              title="The World, the Story and the Music"
+              body= 
+                "The full length of the project. The Narrative Design, the NPCs and their story, the worldbuilding and its symbolism, the full diegetic UI and art-direction arguments. How the music and the audio design was planned, the jousting minigame and the potential DLCs."
               href={deepDivePath}
               linkLabel="Read the deep dive"
             />
             <CtaPanel
-              kicker="The code"
+              kicker="The codebase"
               title="Programming Moon-Knight"
-              body="How the game is actually built: the boundary between C++ and Blueprint and the five choices that drew it, the combat state machine, the data-driven tuning layer, captures from the editor — and, branching off it, the standalone C++ quantum toolkit the engine limit turned into."
+              body= "The engineering side of the projet. The limitations of Blueprints translated in C++ and the main code choices. The combat state machine, the data-driven layer and the quantum C++ engine limits."
               href="/moon-knight/engineering"
-              linkLabel="Read the engineering write-up"
+              linkLabel="Read the engineering side"
               accent="silver"
             />
           </div>

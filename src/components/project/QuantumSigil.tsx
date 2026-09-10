@@ -5,95 +5,12 @@ import Image from "next/image";
 import type { Ability } from "@/content/schema";
 import InteractiveHint from "./InteractiveHint";
 
-/**
- * Moon-Knight — the five quantum abilities, read off the design document's own
- * sigil.
- *
- * WHAT THIS IS. `quantum_abilities.jpg` is a real artefact from the GDD: the
- * Rubedo sigil, three interlocking rings of thorned branch with the five
- * powers set in glowing discs around them. It is the figure the abilities were
- * designed against, and it is the canvas here — the same treatment `WorldMap`
- * gives the hand-drawn map of Kaelum. Point at a disc and that ability's
- * reasoning opens beside it.
- *
- * WHY THE PAINTING AND NOT A DRAWING. This component briefly rendered a
- * redrawn SVG triskelion instead, on the argument that names baked into pixels
- * cannot be searched, translated or corrected. That argument bought a
- * spell-checkable diagram and paid for it with the actual artefact — and the
- * artefact is the evidence: it is what a designer made, and a portfolio that
- * redraws its own design documents is showing a component library rather than
- * a project. The two real costs are paid instead:
- *
- *   · THE TYPO. The painted sigil's first version read "Double Superpoistion".
- *     The file in the repo is the corrected one, and the names on it now match
- *     `moonKnight.abilities` exactly. That match is not enforceable by the
- *     build — it is an image — so it is stated here and in the ownership map.
- *   · THE READABILITY. Every word on the painting is also rendered as REAL
- *     TEXT: the readout prints the selected ability's name, its quantum basis
- *     and what it does in play, and each hotspot's accessible name is
- *     `name — principle`. Nothing is available only as pixels.
- *
- * KEYS, NOT COPY. This file types NO ability name, NO principle and NO effect.
- * It receives `moonKnight.abilities` and renders `name`, `annotation`, `body`
- * and `availableTo`. The one thing it does hold is GEOMETRY — where each disc
- * sits on the painting — and that is keyed BY NAME, because a position on a
- * fixed image cannot be computed from an array's length.
- *
- * IT IS ALSO THE ONLY HOME FOR THIS MATERIAL. §02 used to render this figure
- * and then five ability cards of the same array directly beneath it, so every
- * principle and every effect was stated twice on one screen. The cards are
- * gone; the readout is where an ability is described.
- *
- * INTERACTION FOLLOWS `RoleGraph` AND `WorldMap`, deliberately, so the three
- * diagrams on this project behave identically:
- *
- *   · ONE piece of state. Click, tap, focus and hover all set the same
- *     `selected` index, so the lit disc and the readout can never disagree.
- *   · THE PAINTING IS DECORATIVE-ISH — it carries a real `alt` describing the
- *     artefact, but it is not the control surface. The controls are real HTML
- *     `<button>`s laid over it, which is what buys the tab stop, Enter/Space,
- *     a real focus ring and a finger-sized target on every browser.
- *   · HOVER IS STICKY and ignores touch. It does not revert on leave, so the
- *     figure holds still when the pointer wanders off; on touch the click that
- *     follows does the work.
- *   · A `role="status"` line reports the change, because a mouse user sees the
- *     readout swap and a screen-reader user otherwise would not.
- *
- * REDUCED MOTION. The only animation is the transition on a hotspot's ring,
- * and the media query at the foot removes it. Nothing moves on its own.
- *
- * CONTRAST. Every colour is checked as TEXT against the panel it sits on.
- * `--color-mist` is 4.41:1 there, under the 4.5 bar for small type, so the
- * quiet ink is the same lifted steel the bestiary, cast and diegetic bands use.
- * Nothing is stated by colour alone: the enemy-exclusive ability is marked with
- * a chip that says so in words, not merely by being scarlet.
- */
-
-/** The painting, and the box the hotspot percentages are measured against. */
 const SIGIL_SRC = "/images/moon-knight/quantum_abilities.jpg";
 const SIGIL_ALT =
   "The Rubedo sigil from the game's design document: three interlocking rings of thorned black " +
   "branch on a misty green ground, the Rubedo state at their centre, and the five quantum " +
   "abilities set in glowing violet discs around them.";
 
-/**
- * Where each disc sits on the painting, as a fraction of its width and height.
- * `r` is the radius of the round control, again as a fraction — sized to the
- * painted glow ring rather than to the text inside it, so the target covers
- * the whole disc a reader is aiming at.
- *
- * KEYED BY ABILITY NAME, and that is the one coupling this component has to
- * the content file: rename an ability and its disc goes unplaced. That is a
- * visible, recoverable failure rather than a silent misplacement — see
- * `unplaced` below, which keeps any such ability reachable as a chip.
- *
- * MEASURED, NOT EYEBALLED. Each centre is the bounding box of the disc's own
- * dark interior in the 1024px source, found by segmenting the artwork rather
- * than by dragging numbers until they looked close. Two of them are more than
- * 20px away from where they looked right by eye — "Double Superposition" most
- * of all, because its label is wider than the disc it sits in and the eye
- * centres the ring on the TEXT. Re-measure, do not nudge.
- */
 const HOTSPOTS: Record<string, { x: number; y: number; r: number }> = {
   "Master of Matters": { x: 0.5132, y: 0.1611, r: 0.058 },
   Instability: { x: 0.1855, y: 0.4004, r: 0.057 },
@@ -102,32 +19,17 @@ const HOTSPOTS: Record<string, { x: number; y: number; r: number }> = {
   "Elliptical Force": { x: 0.8579, y: 0.7637, r: 0.058 },
 };
 
-/**
- * The quantum principle, taken off the ability's own `annotation`.
- *
- * `annotation` is written as "Quantum basis · Majorana states · topologically
- * protected qubits". The readout already labels the row "Quantum basis", so
- * repeating the prefix inside the value would print it twice. This strips it
- * and NOTHING ELSE — the rest of the string is passed through exactly as the
- * content file wrote it, separators included.
- *
- * Defensive on purpose: an annotation that does not carry the prefix is
- * returned whole rather than sliced at a guessed offset. The worst case is a
- * duplicated label, never a truncated principle.
- */
 const PRINCIPLE_PREFIX = /^\s*quantum basis\s*·\s*/i;
 function principleOf(ability: Ability) {
   return ability.annotation.replace(PRINCIPLE_PREFIX, "");
 }
 
-/** True for an ability the player is never given. Read, not hard-coded. */
 function isEnemyOnly(ability: Ability) {
   return ability.availableTo.length === 1 && ability.availableTo[0] === "Enemy";
 }
 
 export default function QuantumSigil({
   abilities,
-  /** The disc the readout opens on. First in the data unless told otherwise. */
   initialIndex = 0,
 }: {
   abilities: readonly Ability[];
@@ -135,17 +37,9 @@ export default function QuantumSigil({
 }) {
   const [selected, setSelected] = useState(initialIndex);
 
-  /* A guard, not a formality: `initialIndex` is a prop and the array is data.
-     Clamping here means a bad pair renders the first ability instead of
-     throwing inside a client component, where the failure would blank the
-     whole section rather than one disc. */
   const total = abilities.length;
   const current = abilities[Math.min(Math.max(selected, 0), total - 1)] ?? abilities[0];
 
-  /* Any ability the painting does not depict. Empty today, and it stays empty
-     as long as the artefact and the content file agree — but an ability that
-     is only reachable through an image is an ability a rename can hide, so the
-     ones without a disc get a chip under the figure instead of vanishing. */
   const unplaced = abilities.filter((a) => !HOTSPOTS[a.name]);
 
   if (!current) return null;
@@ -156,10 +50,6 @@ export default function QuantumSigil({
 
   return (
     <div className="qs">
-      {/* Above the figure, not below it: an instruction that arrives after the
-          thing it explains has already been skipped. `InteractiveHint` is the
-          same chip the world map, the beat chart and the controller map wear,
-          so a reader learns the convention once. */}
       <div className="qs-hint-slot">
         <InteractiveHint what="disc" does="that ability's quantum basis and what it does in play read out beside it" />
       </div>
@@ -174,8 +64,6 @@ export default function QuantumSigil({
             style={{ objectFit: "contain" }}
           />
 
-          {/* The controls. Transparent, round, exactly over each painted disc,
-              sized in percentages so they track the stage at any width. */}
           <div className="qs-hits" role="group" aria-label="Quantum abilities">
             {abilities.map((a, i) => {
               const spot = HOTSPOTS[a.name];
@@ -204,8 +92,6 @@ export default function QuantumSigil({
           </div>
         </div>
 
-        {/* Provenance, not instruction — the chip above carries the
-            instruction now. This says what the picture IS. */}
         <p className="mono qs-hint">The sigil, from the game&apos;s design document.</p>
 
         {unplaced.length > 0 && (
@@ -230,8 +116,6 @@ export default function QuantumSigil({
         )}
       </div>
 
-      {/* The readout. Everything in it is a field of the selected ability, and
-          this is the ONLY place on the page any of it is stated. */}
       <div className="qs-readout panel">
         <p className="mono qs-readout-kicker">
           <span className="qs-readout-index">
@@ -258,7 +142,6 @@ export default function QuantumSigil({
         </div>
       </div>
 
-      {/* Reports the swap to anyone who cannot see the readout change. */}
       <p className="qs-sr-live" role="status">
         {current.name} selected · {principleOf(current)}
       </p>

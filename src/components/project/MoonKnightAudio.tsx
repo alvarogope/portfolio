@@ -9,7 +9,6 @@ type Track = {
   mood: string;
   src: string;
   tint: string;
-  /** Optional scene drawn above the waveform. */
   art?: "willow";
 };
 
@@ -17,8 +16,8 @@ const TRACKS: Track[] = [
   {
     id: "main-theme",
     name: "Main Theme",
-    role: "Main score",
-    mood: "The knight's march under a borrowed moon — silver strings over a low, gothic dread.",
+    role: "Moon-knight",
+    mood: "This piece plays in the title screen and represents the Moon-Knight's adventure.",
     src: "/audio/moon-knight/main-theme.mp3",
     tint: "var(--color-silver)",
   },
@@ -26,26 +25,20 @@ const TRACKS: Track[] = [
     id: "rest",
     name: "Rest",
     role: "Willow-tree rest theme",
-    mood: "Plays when the knight rests beneath a willow. The blade goes down and the score exhales.",
+    mood: "An arpeggio that the Moon-Knight plays to heal. It's isnpired by medieval synth.",
     src: "/audio/moon-knight/rest.mp3",
     tint: "var(--color-gold)",
     art: "willow",
   },
 ];
 
-/**
- * A weeping willow, hung with 21 strands: the curtain is what makes it read as
- * a willow rather than a tree, so the fronds are generated from the canopy
- * curve — longest at the crown, shortest at the edges — instead of hand-drawn.
- * Deterministic, so the server and client markup match.
- */
 const FRONDS = Array.from({ length: 23 }, (_, i) => {
   const x = 31 + i * 3.2;
-  const t = (x - 66) / 35; // -1 … 1 across the crown
-  const y0 = 26 + 16 * t * t; // the strand leaves the crown along its curve
-  const jitter = (((i * 37) % 11) / 11) * 9; // ragged hem, not a clean arc
+  const t = (x - 66) / 35; 
+  const y0 = 26 + 16 * t * t; 
+  const jitter = (((i * 37) % 11) / 11) * 9; 
   const len = 50 - 14 * t * t - jitter;
-  const bow = t * 4; // strands drift out a little as they fall
+  const bow = t * 4; 
   const x1 = x + bow * 0.6;
   const x2 = x + bow * 1.1;
   const x3 = x + bow;
@@ -58,14 +51,6 @@ const FRONDS = Array.from({ length: 23 }, (_, i) => {
 
 const FROND_GROUPS = [0, 1, 2].map((g) => FRONDS.filter((_, i) => i % 3 === g));
 
-/**
- * The willow the rest theme is named for, drawn in the track's own tint via
- * `currentColor`: the hanging canopy, the knight sat against the roots, his
- * blade laid down beside him, and the borrowed moon behind.
- *
- * The three interleaved frond groups sway on their own — slowly at rest,
- * quicker while the theme plays — and hold still under `prefers-reduced-motion`.
- */
 function Willow({ playing }: { playing: boolean }) {
   return (
     <svg
@@ -134,9 +119,7 @@ export default function MoonKnightAudio() {
   const [activeTrack, setActiveTrack] = useState<string | null>(null);
   const [unavailable, setUnavailable] = useState<string[]>([]);
 
-  // Guards against a slow play() promise resolving after the user moved on.
   const playToken = useRef(0);
-  // The track the <audio> element is currently loaded with, for error attribution.
   const loadedTrack = useRef<string | null>(null);
 
   const markUnavailable = (id: string) => {
@@ -176,13 +159,11 @@ export default function MoonKnightAudio() {
       .catch((err: unknown) => {
         if (token !== playToken.current) return;
         setActiveTrack(null);
-        // A blocked gesture or an interrupted load says nothing about the file, so leave the card playable.
         const name = err instanceof DOMException ? err.name : "";
         if (name !== "NotAllowedError" && name !== "AbortError") markUnavailable(track.id);
       });
   };
 
-  // A file that 404s errors on the element rather than rejecting play() in some browsers.
   useEffect(() => {
     const a = audioRef.current;
     if (!a) return;

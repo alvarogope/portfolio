@@ -1,110 +1,54 @@
-/**
- * Moon-Knight — diegetic design: the mechanics that hide in the world.
- *
- * This is the design thesis of the whole project, so the file is shaped around
- * it rather than around a list of features. Every entry below is a system that
- * a conventional game would have put in a menu, a bar or an overlay, and that
- * this game instead expresses as an object, a gesture or a place.
- *
- * EVERY ENTRY CARRIES ITS REASONING. `mechanic` is what the player does; `why`
- * is why it was built that way. The `why` is the portfolio value — a reader who
- * skims only the `why` lines should still come away with the argument — so it
- * is a first-class field, never folded into the description.
- *
- * `replaces` names the conventional UI element the mechanic dissolves. It is
- * the fastest way to read the thesis: health bar → moon, XP counter → roses,
- * minimap → sword. Two or three words, in the language a player would use,
- * because the contrast is the whole point.
- *
- * `glyph` selects the emblem in `DiegeticDesign.tsx`. Three of the four are
- * drawn from geometry shared with the other Moon-Knight sections — the moon
- * phases with the narrative arc, the rose and the harp with the cast — because
- * these motifs recur across the game and must not drift between sections.
- */
-
-/* ---- the thesis --------------------------------------------------------- */
-
 export const diegeticThesis = {
-  kicker: "The throughline",
-  /** One line. If a reader takes nothing else from this section, this. */
+  kicker: "The philosophy",
   line:
-    "The four systems a player touches every minute — health, progression, " +
-    "wayfinding and healing — are objects and gestures, not menus.",
+    "The health, the progression and healing are all diegetic systems in the game.",
   body:
-    "Each of the four could have been a bar, a number or an overlay. Each one is " +
-    "instead an object the knight carries, a mark they leave, or a thing they do with " +
-    "their body. The player reads the game by looking at the game.",
-  /**
-   * THE LIMIT OF THE CLAIM, and it is stated on purpose.
-   *
-   * An earlier version of this thesis said "nothing here is a menu — every
-   * system is an object, a gesture or a place". That was not true, and the
-   * repo proves it: `View` opens a conventional equipment screen
-   * (`moon-knight-controls.ts`, and the UMG capture `WB_Equipment.png` on the
-   * engineering page), with a grid of Bow / Sword / Armor slots.
-   *
-   * Overclaiming there cost more than the menu did. A reader who finds the
-   * equipment screen after reading "nothing is a menu" has to decide whether
-   * the rest of the section is trustworthy. So the claim is scoped to the four
-   * systems it is actually true of, the exception is named, and the reason it
-   * is the right call is given. A designer who knows where to stop applying a
-   * principle is making a stronger argument than one who claims it everywhere.
-   */
+    "These could have been a bar or an overlay, but instead they are an action in the wolrd. " +
+    "By making the systems like this, I prioritise the player's on screen view and makes the game have more amplitude." +
+    "Health is always in the centre and can be seen easily. The progression doesn't tell where to go exactly, just to which direction." +
+    "Making the healing process play an instrument creates a bond with the melody and the player, specially if it's done in the ssafe space.",
   scope:
-    "The equipment screen is a conventional menu, and deliberately so. Swapping a sword " +
-    "for a bow is a rare, deliberate act performed in safety — it wants a clear grid and " +
-    "a comparison, not a gesture. Diegesis was spent where the player looks constantly " +
-    "and kept out of the one place a menu is simply the better tool.",
+    "The equipment system is still a convencional menu. I thought it was the better way to represent the items and the system" +
+    "since this is a system that players can take more time to feel comfortable since is interactable and not information that is just read " +
+    "like health and direction.",
 } as const;
 
-/* ---- the moon HUD ------------------------------------------------------- */
 
-/** The three states of the health readout, worn on the armour. */
 export type HudPhase = "full" | "half" | "new";
 
 export interface HudState {
   phase: HudPhase;
-  /** Mono label under the glyph — the player's condition, in one word. */
   label: string;
-  /** The reading, in the fiction. One short line. */
   note: string;
 }
 
-/**
- * Full → half → new, in that order: this is a gradient, not a set, and the
- * order carries the information. Rendered as the section's headline visual.
- */
 export const moonHudStates: readonly HudState[] = [
   {
     phase: "full",
-    label: "Whole",
-    note: "The disc on the backplate is full and lit. Nothing has touched you yet.",
+    label: "Full Moon",
+    note: "The health bar is full.",
   },
   {
     phase: "half",
-    label: "Wounded",
-    note: "Half the moon has gone dark — half the light you started the fight with.",
+    label: "half-Moon",
+    note: "The health bar is at 50%",
   },
   {
     phase: "new",
-    label: "Failing",
-    note: "No light left on the plate. The next hit is the one that ends it.",
+    label: "waxing crescent",
+    note: "A small light in the circle, health is very low.",
   },
 ];
 
-/* ---- the diegetic mechanics --------------------------------------------- */
 
 export type DiegeticGlyph = "moon-hud" | "rose" | "sword" | "harp";
 
 export interface DiegeticMechanic {
   id: string;
   glyph: DiegeticGlyph;
-  /** The conventional UI element this dissolves. Two or three words. */
   replaces: string;
   title: string;
-  /** What the player actually does. Concise — this gets skimmed. */
   mechanic: string;
-  /** The design reasoning. The reason the entry is here at all. */
   why: string;
 }
 
@@ -171,52 +115,23 @@ export const diegeticMechanics: readonly DiegeticMechanic[] = [
   },
 ];
 
-/* ---- what the roses buy --------------------------------------------------
-   The dual skill tree. `contributions[0]` on this project claims "a dual skill
-   tree" and until now nothing on any page showed one — see
-   docs/section-ownership-map.md, Gap G3.
-
-   NOTHING HERE IS INVENTED, AND THE LIMIT IS THE POINT. The repo names exactly
-   two progression lines and no more:
-
-     · the SWORD line — `white-rose-xp` above: "each stained rose is one point
-       toward the next sword tier. The last tier costs two."
-     · the BOW line — `moon-knight-game-engineering.ts` ships a tuning header
-       whose `//--- Skill tree caps ---` section holds one constant,
-       `MaxBowDamageBonus = 100.0f`.
-
-   Two lines, one currency: that is the "dual" in dual skill tree, and it is
-   all the repo records. No node graph, no tier count and no per-tier effect is
-   claimed here, because none is written down anywhere. If those get recorded
-   later this block is where they go.
-
-   THE CURRENCY IS NOT RE-EXPLAINED. `white-rose-xp` owns the rose economy —
-   bosses only, nothing to farm. This block spends what that one earns and
-   points back at it rather than restating it. */
-
 export interface SkillBranch {
   id: string;
-  /** Rendered as the branch number. */
   index: string;
   name: string;
-  /** The weapon line, in the language a player would use. */
   kind: string;
-  /** What the roses buy on this branch, as the repo records it. */
   body: string;
-  /** The one hard fact the codebase pins this branch to, and where it lives. */
   pin: { value: string; source: string };
 }
 
 export const skillTree = {
   kicker: "What the roses buy",
-  /** One line: the tree in a sentence. */
   line: "Two weapon lines, one currency, and the currency is a boss you beat.",
   body:
     "The roses are the only experience in the game, and they spend in two places. " +
     "Both lines are capped rather than open-ended, which is the same decision as the " +
     "no-farming rule one card up: the ceiling is fixed so the difficulty curve stays " +
     "the story's to set, not the player's to grind past.",
-  /** Where the currency itself is explained — not restated here. */
   currency: { label: "The White-Rose XP System", id: "white-rose-xp" },
   branches: [
     {
@@ -242,13 +157,6 @@ export const skillTree = {
   ] as readonly SkillBranch[],
 } as const;
 
-/* ---- invisible design --------------------------------------------------- */
-
-/**
- * The cluster: decisions where the design is felt and never seen. Shorter than
- * the four above and reasoning-led — the decision is one line and the `why` is
- * the substance, so they render as decision → why pairs.
- */
 export interface DesignDecision {
   id: string;
   decision: string;
@@ -291,23 +199,6 @@ export const invisibleDesign: readonly DesignDecision[] = [
   },
 ];
 
-/* ---- why this UI --------------------------------------------------------
-
-   There is deliberately no separate "designer's note" export here. The case
-   for the integrated UI is made by the four `why` fields on
-   `diegeticMechanics` above — that is what those fields are for, and a fifth
-   block restating them would be the argument talking about itself. If the
-   cost side is ever written (legibility at a glance, keeping the moon readable
-   in a dark scene), it belongs inside the moon-HUD entry's `why`, not in a
-   note of its own. */
-
-/* ---- core combat -------------------------------------------------------- */
-
-/**
- * Secondary by design. The interesting systems are above; this exists so the
- * section is complete without the generic verbs taking the reader's attention
- * first. Keep every note to a single short clause.
- */
 export interface CombatVerb {
   id: string;
   name: string;

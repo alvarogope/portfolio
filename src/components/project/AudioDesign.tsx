@@ -7,62 +7,6 @@ import {
   villageThemes,
 } from "@/content/moon-knight-audio";
 
-/**
- * Moon-Knight — audio design, wrapped around the two real recordings.
- *
- * The players are NOT re-implemented here. `MoonKnightAudio` stays exactly as
- * it is and is passed in as `children`, so this component owns the argument and
- * that one owns the audio element, the playback state and the willow. The only
- * thing this file decides about the tracks is where in the argument they sit.
- *
- * THERE ARE NO PLACEHOLDER PLAYERS, AND THERE MUST NEVER BE. Two recordings
- * exist; the village themes, the dungeon piano, the harp figure and the boss
- * themes do not, and they are written as design prose for that reason. Anything
- * added to `moon-knight-audio.ts` is text — if a future entry needs a play
- * button, it needs a recording first.
- *
- * SIX BANDS, and the order is the argument:
- *
- *   1. THE CREDIT. Said once, plainly: I wrote this music. It is the section's
- *      whole reason for existing at this length — a technical designer who also
- *      scored the game is the differentiator, and burying it would waste it.
- *   2. SILENCE. The strongest audio decision in the project is the decision not
- *      to score most of it, so it leads. It also re-frames what follows: the
- *      two tracks below are rare events, not a short soundtrack.
- *   3. THE RECORDINGS — the playable core, sitting immediately after the reason
- *      music is rare, which is the best possible frame for them.
- *   4. THE VILLAGE THEMES. Three safe places, three pieces, decision → why.
- *   5. INSTRUMENTS THAT MEAN SOMETHING. The diegetic half: piano, synths, harp,
- *      boss themes — each headed `context → instrument`, because that pairing
- *      IS the idea and should be readable without the prose under it.
- *   6. SOUND FEEDBACK, kept deliberately short.
- *
- * MOTIFS ARE SHARED. The dungeon piano and the healing harp are marked with an
- * `Echoes` chip naming the section that makes the same point, and the copy is
- * kept phrased to match it — "an instrument this world should not have", "the
- * harp Death gave them" — so the page reads as one argument told twice rather
- * than two descriptions that drifted.
- *
- * A SERVER COMPONENT. No state and no effects; the only transitions are hover
- * hairlines, which reduced-motion turns off.
- */
-
-/**
- * TWO DEPTHS, ONE OWNER — see the same note on `DiegeticDesign`.
- *
- * `short` (main page) is the credit, `silenceThesis.line`, and the two real
- * recordings. That is the deliberate deviation from "move the music wholesale":
- * a recruiter pressing play and hearing a real score in ten seconds is
- * EVIDENCE, not enthusiast depth. The 900 words of composer reasoning around it
- * are the depth, and those move.
- *
- * `full` (deep-dive page) is the section unchanged, recordings included — the
- * two pages both render `children`, and the caller decides which players to
- * pass. Nothing is duplicated in text: the short variant renders
- * `composerCredit` and `silenceThesis.line` by key and withholds
- * `silenceThesis.body`, `villageThemes`, `instrumentMeanings` and
- * `soundFeedback` entirely.
- */
 export default function AudioDesign({
   children,
   variant = "full",
@@ -101,15 +45,13 @@ export default function AudioDesign({
       <section className="mkm-band">
         <h3 className="mono mkm-band-title">The recordings</h3>
         <p className="mkm-lede">
-          Two finished pieces from the score. Both loop; press either card to play.
+          These pieces were made to make the player feel small, by focusing on the use of reverbs.
+          Both pieces are melancholic on purpose.
         </p>
         <div className="mkm-players">{children}</div>
       </section>
 
-      {/* Bands 4-6 are the composer's reasoning: the village themes, the
-          instrument meanings and the sound feedback. Deep-dive only, and not
-          rendered at all on the main page rather than hidden — hiding still
-          ships ~800 words into a document that was condensed to shrink. */}
+      {/* composer's reasoning */}
       {!short && (
         <>
         {/* 4 — the safe places, and the only calm music in the game */}

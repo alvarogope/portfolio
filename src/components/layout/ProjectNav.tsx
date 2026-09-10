@@ -229,7 +229,7 @@ function NavContent({
   items,
   currentSlug,
   rail,
-  kicker = "Explore the worlds",
+  kicker = "Go to other projects",
   proximityRadius = 180,
   maxShift = 16,
   smoothing = 9,

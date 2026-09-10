@@ -355,7 +355,6 @@ export default function WorldMap() {
             </div>
           ))}
         </dl>
-        <p className="wm-pointer">{regionProfilePointer}</p>
       </div>
 
       <style>{`

@@ -1,42 +1,3 @@
-/**
- * Moon-Knight — the world of Kaelum, as marked on the hand-drawn map.
- *
- * Every marker is placed in PERCENTAGES of the map image, not pixels, so the
- * whole set stays registered to the art at any size the map is rendered at.
- * `xPct` runs 0 (left edge) to 100 (right edge), `yPct` 0 (top) to 100
- * (bottom), and both address the CENTRE of the marker.
- *
- * TUNING THE COORDINATES: the numbers below were read off the art at
- * 2048 x 1536. To convert a pixel position from the source image, divide by
- * those and multiply by 100 — x_pct = px / 2048 * 100, y_pct = py / 1536 * 100.
- * Nothing else in the component needs to change when a marker moves; the
- * popover even re-picks which way it opens from the new coordinates.
- *
- * Order matters: the list is the progression order of the game, and it is also
- * the tab order through the markers and the order of the location list under
- * the map.
- *
- * THE MAP IS THE SPATIAL INDEX OF THE WHOLE GAME, and this file is where that
- * index lives. A marker carries its lore and then a PROFILE that is nothing
- * but ids: who is here (`cast`), what guards it (`enemies`, `boss`), and when
- * in the story it comes (`level`, `act`). `resolveRegion` turns those ids into
- * the real entries from the bestiary, the cast, the beat chart and the
- * narrative arc, with the anchors to link to them.
- *
- * NOTHING IS COPIED. A profile holds no names, no descriptions and no numbers
- * — only keys — so the bestiary stays the only place a creature is designed,
- * the cast the only place a character is written, and the beat chart the only
- * place a level is planned. The map answers WHAT IS WHERE and hands the reader
- * to the section that answers everything else. Rename the Witch and the map
- * follows; describe her twice and it cannot.
- *
- * THE BESTIARY ASKED FOR THIS. `moon-knight-bestiary.ts` reserves a
- * `mapRegion` tie and says explicitly that it should be kept out of the codex
- * "so region data can be added without touching it". This is that tie, built
- * from the map's side: the marker names the creatures, not the other way
- * round, and the codex never learns about geography.
- */
-
 import {
   bestiaryAnchor,
   bestiaryById,
@@ -61,72 +22,44 @@ export type MarkerId =
   | "third-fragment"
   | "old-gods-quests";
 
-/**
- * What kind of place this is, which picks the sigil and its colour:
- * - `area`     — one of the four locations: Centralis, the prologue island,
- *                and the three great lands that are the three acts. Silver diamond.
- * - `fortress` — a torch on the map: a Moon Fragment and the boss holding it. Gold flame.
- * - `dungeon`  — a rose on the map: an Old Gods quest, underground. Scarlet rosette.
- */
 export type MarkerType = "area" | "fortress" | "dungeon";
 
-/**
- * What is at a place, written as KEYS ONLY. Every field is an id into another
- * content file, and `resolveRegion` is what turns them into entries. If you
- * find yourself wanting to write a sentence in here, it belongs in the section
- * that owns the thing you are describing.
- *
- * All four fields are optional because the markers are not all the same kind
- * of place: a fortress has a boss and no residents, the dungeons have a patron
- * and no act, and the prologue island has a level but no fragment to fetch.
- */
 export interface RegionProfile {
-  /** Who you meet here. Ids into `moon-knight-cast`. */
   cast?: readonly CastId[];
-  /** What fights you here. Ids into `moon-knight-bestiary`. */
   enemies?: readonly BestiaryId[];
-  /** What holds the ground at the end of it. One id into the same bestiary. */
   boss?: BestiaryId;
-  /** The beat-chart level this place is played as. Gives the moon phase. */
   level?: LevelId;
-  /** The act of the arc this place belongs to. Gives the fragment. */
   act?: NarrativeActId;
 }
 
 export interface MapMarker {
   id: MarkerId;
-  /** Name as it reads on the map and in the location list. */
   label: string;
   type: MarkerType;
-  /** Centre of the marker, as a percentage of the map's width. */
   xPct: number;
-  /** Centre of the marker, as a percentage of the map's height. */
   yPct: number;
-  /** The lore the marker reveals. */
   lore: string;
-  /** Who is here, what guards it, and when it comes. Keys, never copy. */
   profile?: RegionProfile;
 }
 
-/** What each kind of place is, in general — the line above the specific lore. */
 export const markerTypeMeta: Record<MarkerType, { term: string; gloss: string }> = {
   area: {
     term: "Land",
     gloss:
-      "Centralis, the lake island the journey begins on — the prologue — and the three great lands " +
-      "it leads to, one per act, listed in the order they are played.",
+      "Centralis, the lake island the journey begins, and the three great levels. " +
+      "Each area covers one act in the narrative, they are listed in the order they are played.",
   },
   fortress: {
-    term: "Fortress · Moon Fragment",
+    term: "Fortress · Moon Fragments",
     gloss:
-      "Fortresses stand on high ground, visible from anywhere in the level. Human and monster " +
-      "soldiers wait inside as if they were expecting you. Each holds a Moon Fragment and ends in a boss.",
+      "The Fortresses stand on high ground, visible at all points in the level. Lots of enemies awaits inside. " + 
+      "There is a moon fragment in every single one of them, guarded by a boss that defends it.",
   },
   dungeon: {
     term: "Dungeon · Old Gods Quest",
     gloss:
-      "Dungeons are underground, barely lit, and guarded by things that were never human. Hidden " +
-      "and hard to reach — and where the powers of the Ancient Gods are collected.",
+      "The Dungeons are underground and they are guarded by enemies that were never human. " +
+      "They are well-hidden and difficult to access. Here is where the Power of the Gods abilities are gained. ",
   },
 };
 
@@ -139,15 +72,9 @@ export const mapMarkers: readonly MapMarker[] = [
     xPct: 49.3,
     yPct: 43.3,
     lore:
-      "Where the Moon-Knight wakes from a coma of unknown length. A dark forest on a lake island, " +
-      "its statues deliberately toppled. Death waits here. The prologue: the journey begins on the " +
-      "island, but the first act begins in The Woods.",
-    /* No act, and that is the point: the waking happens here, but Act I's
-       land is the Woods and its fragment is there. The island is the PROLOGUE
-       — a level before the arc starts — which is why the beat chart counts
-       four locations where the narrative counts three acts. Its level carries
-       `stageLabel: "Prologue"`, so the popover says so rather than going
-       blank where the other markers name an act. */
+      "Where the game starts. The moon-knight wakes up from a coma here. The land is covered in dark trees " +
+      "and surrounded by water. The NPC Death is waiting here. " + 
+      "This section is the tutorial and leads to The Woods when completed.",
     profile: {
       cast: ["death"],
       enemies: ["soldiers"],
@@ -162,12 +89,8 @@ export const mapMarkers: readonly MapMarker[] = [
     xPct: 32,
     yPct: 83.3,
     lore:
-      "Dark and swampy, nature reclaiming ruined buildings. Wooden and amphibian humanoids. The " +
-      "Witch's first haunt, where the player learns the powers of the old gods.",
-    /* Orpheus is here too, which is the sort of thing only a spatial index
-       catches: the beat chart lists the Witch as this level's cast, and the
-       cast file places Orpheus in the Woods village. Both are true, and the
-       map is the first place they are read together. */
+      "Area filled with swamps and ruines covered by nature. There are wooden and amphibian humanoids as potential threats. " +
+      "The player will encounter The Witch and she will tell about the Power of the Old Gods.",
     profile: {
       cast: ["witch", "orpheus"],
       enemies: ["wooden-humanoids", "amphibian-humanoids"],
@@ -183,8 +106,9 @@ export const mapMarkers: readonly MapMarker[] = [
     xPct: 78,
     yPct: 73.3,
     lore:
-      "Where Kaelum's great cities once stood. Now fog, banshees, and the ghosts of the people who " +
-      "lived here. A tiny village survives under the Druid, who asks for help. The most melancholic land.",
+      "If there was life in this place, it was a long time ago. " +
+      "Once the capital of Kaelum, now its citizens are transformed into ghosts and banshees that hide in the fog. " +
+      "A tiny village survives, where The Druid asks for help. The most melancholic and dark land.",
     profile: {
       cast: ["druid"],
       enemies: ["banshees", "ghosts"],
@@ -200,10 +124,8 @@ export const mapMarkers: readonly MapMarker[] = [
     xPct: 32,
     yPct: 18,
     lore:
-      "Snow and rock, no life. Ruins of an ancient star-seeker society, now held by wizards and " +
-      "soldiers. The final ascent.",
-    /* All three of them, and that is the level's whole argument: the Witch,
-       the Druid and Death want the same loyalty and only one gets it. */
+      "This area is filled with snow and rock. Ruins of an ancient star-seeker society, now occupied by wizards and " +
+      "soldiers. The final ascent towards the end of the world.",
     profile: {
       cast: ["witch", "druid", "death"],
       enemies: ["ice-knights", "soldiers"],
@@ -220,8 +142,7 @@ export const mapMarkers: readonly MapMarker[] = [
     type: "fortress",
     xPct: 7.6,
     yPct: 83.2,
-    lore: "A fortress on high ground in The Woods. Inside: soldiers waiting, a Moon Fragment, and a boss. One of three.",
-    /* No cast: the NPCs live in the lands, not inside the fortresses. */
+    lore: "A fortress on top of a mountain in The Woods. Inside: soldiers, the First Quarter Moon Fragment, and The Wizard waiting for you.",
     profile: { enemies: ["soldiers"], boss: "wizard-knight", level: "woods", act: "waking" },
   },
   {
@@ -230,9 +151,7 @@ export const mapMarkers: readonly MapMarker[] = [
     type: "fortress",
     xPct: 92.8,
     yPct: 7,
-    lore: "The second fortress, at the far north-east reach of the map. A Moon Fragment guarded by a boss.",
-    /* The Misty Lands fortress — the one the Druid reveals, and the one where
-       the siege takes the Moon-Knight alive. */
+    lore: "The second fortress, at the far north-east reach of the map. The Waxing Gibbous Moon Fragment guarded by The Centaur.",
     profile: {
       enemies: ["soldiers"],
       boss: "centaur-knight",
@@ -246,7 +165,7 @@ export const mapMarkers: readonly MapMarker[] = [
     type: "fortress",
     xPct: 25.8,
     yPct: 25,
-    lore: "The final fortress, high in the Frozen Mountains. The last Moon Fragment and its boss.",
+    lore: "The final fortress, high in the Frozen Mountains, at the end of the world. The Full Moon Fragment and The Sun-Knight.",
     profile: {
       enemies: ["soldiers", "ice-knights"],
       boss: "sun-knight",
@@ -263,12 +182,8 @@ export const mapMarkers: readonly MapMarker[] = [
     xPct: 69.9,
     yPct: 38.5,
     lore:
-      "Dungeons: underground, barely lit, guarded by non-human creatures. Hidden and hard to reach. " +
-      "Here the player collects the Ancient Gods' Powers.",
-    /* No enemies listed, and that is honest rather than lazy: the things down
-       here "were never human" and the codex does not have entries for them.
-       An invented tag would be worse than the gap. No act either — the
-       dungeons sit beside the arc rather than in it. */
+      "These are Dungeons, underground, barely lit, guarded by non-human creatures. Hidden and hard to access. " +
+      "Here the player collects the Ancient Gods' Powers by defeating enemies.",
     profile: { cast: ["witch"] },
   },
 ];
@@ -281,23 +196,7 @@ export function getMarker(id: MarkerId): MapMarker {
   return marker;
 }
 
-/* ---- resolving a region -------------------------------------------------
-   Ids in, entries out. This is the only place the map reaches into the other
-   four content files, and it reaches for whole entries rather than for fields:
-   the component prints a name and an href and nothing else, so a creature's
-   design, a character's purpose and a level's plan are never in a position to
-   be half-copied here. */
-
-/** One resolved reference: the entry itself, and where its card lives. */
 export interface RegionRef<T> {
-  /**
-   * Link to that entry's card. NOT always a bare fragment: the bestiary is
-   * still on the main page beside this map, so creature links stay
-   * `#bestiary-<id>`, but the cast moved to the deep-dive subpage, so
-   * character links are full paths (`/moon-knight/world#cast-witch`) built by
-   * `castHref`. Mixing the two is correct and deliberate — each link points at
-   * wherever its card actually renders.
-   */
   entry: T;
   href: string;
 }
@@ -308,21 +207,13 @@ export interface ResolvedRegion {
   boss: RegionRef<BestiaryEntry> | null;
   level: BeatLevel | null;
   act: NarrativeAct | null;
-  /** True when there is nothing to show — the component skips the block. */
   isEmpty: boolean;
 }
 
-/**
- * A marker's profile, with every id turned into the entry it points at.
- * Returns `null` for a marker that carries no profile at all, so the caller
- * can render the lore alone rather than an empty frame.
- */
 export function resolveRegion(id: MarkerId): ResolvedRegion | null {
   const { profile } = getMarker(id);
   if (!profile) return null;
 
-  /* Cross-page on purpose — the cast renders on `/moon-knight/world` while
-     this map renders on `/moon-knight`. See `castHref`. */
   const cast = (profile.cast ?? []).map((castId) => ({
     entry: getCastMember(castId),
     href: castHref(castId),
@@ -347,36 +238,20 @@ export function resolveRegion(id: MarkerId): ResolvedRegion | null {
   };
 }
 
-/** Row labels for the profile. Here rather than in the component, with the copy. */
 export const regionProfileLabels = {
-  cast: "Who is here",
-  guards: "What guards it",
-  /**
-   * The hand-off row, and the reason there is no `objective` any more.
-   *
-   * The map and the beat chart are one section now, half a screen apart, and
-   * they were both printing the level's objective — the chart from
-   * `cells.objective`, the map from `act.fragment`. A place's OBJECTIVE is a
-   * plan fact and the chart owns it. What the map owes the reader instead is
-   * the pointer: this place is played as that level, and here is its sheet.
-   */
-  plan: "Played as",
+  cast: "NPC",
+  guards: "Enemies",
+  plan: "Level",
   boss: "Boss",
 } as const;
 
-/** The label on the hand-off link into the beat chart's own rail. */
-export const planLinkSuffix = "open its design sheet";
+export const planLinkSuffix = "open the design sheet";
 
-/**
- * The hand-off, printed once under the profile. The map says what is where;
- * every name in it is a link to the section that says what it IS.
- */
 export const regionProfilePointer =
   "Every name here is a link. Creature names open their bestiary entry above, character names " +
   "open their card on the deep dive, and the level a place is played as opens its own design " +
   "sheet on the chart below.";
 
-/** The map's own description, for readers who never see the image. */
 export const mapAlt =
   "Hand-drawn map of Kaelum: the Frozen Mountains in grey across the north, The Woods in green to " +
   "the south-west, the small green island of Centralis at the centre with a boat beside it, and the " +

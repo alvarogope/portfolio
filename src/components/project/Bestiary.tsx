@@ -10,24 +10,6 @@ import {
 import { CreatureEmblem, EmblemSprite } from "./BestiaryEmblems";
 import BossPlateArch from "./BossPlateArch";
 
-/**
- * Moon-Knight — the bestiary, as an illuminated codex plate.
- *
- * Reads `src/content/moon-knight-bestiary.ts` and renders two tiers: four
- * bosses, each carrying the quantum mechanic its fight teaches (plus a
- * schematic plate of that mechanic), then six common ranks read through
- * gameplay and weakness.
- *
- * Server component — no state, no motion that carries meaning. The only
- * animation is a hover lift, and it is disabled under reduced motion.
- *
- * Stage 2 (world map): each card is anchored at `#bestiary-<id>` via
- * `bestiaryAnchor`, so a map pin can link straight to its entry without this
- * component learning anything about the map.
- */
-
-/* Diagram ink. Kept here rather than in the theme: these are schematic line
-   colours, lifted off the token palette so they clear AA on the card. */
 const INK = {
   gold: "#C9A961",
   silver: "#B8C4D4",
@@ -68,9 +50,8 @@ export default function Bestiary({ kicker }: { kicker?: string }) {
 
       {/* ---- enemies ---- */}
       <div className="mkb__tier">
-        <h3 className="mono mkb__tier-name">The Common Ranks</h3>
+        <h3 className="mono mkb__tier-name">Basic Enemies</h3>
         <span className="mkb__tier-rule" aria-hidden />
-        <p className="mono mono-note mkb__tier-note">Learn the weakness, then commit</p>
       </div>
 
       <div className="mkb__enemies">
@@ -350,17 +331,6 @@ function BossCard({ boss }: { boss: BossEntry }) {
       style={{ "--mkb-accent": boss.accent } as React.CSSProperties}
     >
       <div className="mkb__card-head">
-        {/* ONE VISUAL SLOT PER CARD, whatever fills it.
-
-            The Werewolf is the only creature a capture exists of, and it used
-            to be rendered as an extra figure further down the card — a whole
-            additional band on one card in a grid of eleven, which made the
-            other ten look like they were missing something rather than making
-            this one look better evidenced. The capture now fills the arch
-            instead of the drawn emblem: same slot, same frame, same size, so
-            the grid stays even and the photograph reads as the strongest card
-            rather than the odd one. Its caption moved into the viewer, where
-            the detail it describes is actually legible. */}
         <div className="mkb__arch mkb__arch--boss">
           {boss.plate ? (
             <BossPlateArch plate={boss.plate} bossName={boss.name} />
@@ -420,7 +390,6 @@ function EnemyCard({ enemy }: { enemy: EnemyEntry }) {
   );
 }
 
-/* --------------------------------------------------------------- weakness -- */
 
 const WEAKNESS_INK: Record<WeaknessType, string> = {
   fire: "#E07A45",
@@ -503,11 +472,6 @@ function WeaknessTag({ type, label }: { type: WeaknessType; label: string }) {
 
 /* -------------------------------------------------------------- diagrams -- */
 
-/**
- * Schematic plates for the four boss mechanics — gold/emerald/scarlet line work
- * on the dark card. Decorative: every diagram restates the mechanic description
- * printed directly above it, so they are hidden from assistive tech.
- */
 function MechanicDiagram({ id }: { id: MechanicDiagramId }) {
   const common = {
     className: "mkb__diagram",
@@ -710,14 +674,14 @@ function MatterGlyph({ index, x, y }: { index: number; x: number; y: number }) {
           )}
         </g>
       );
-    case 1: // liquid — a level and a wave
+    case 1: 
       return (
         <g stroke={INK.silver} strokeWidth="1.4" fill="none">
           <path d={`M${x - 8} ${y + 1} q4 -4 8 0 t8 0`} />
           <path d={`M${x - 8} ${y + 6} q4 -4 8 0 t8 0`} />
         </g>
       );
-    case 2: // gas — scattered
+    case 2: 
       return (
         <g fill={INK.silver}>
           <circle cx={x - 6} cy={y - 5} r="1.6" />
@@ -727,7 +691,7 @@ function MatterGlyph({ index, x, y }: { index: number; x: number; y: number }) {
           <circle cx={x - 8} cy={y + 6} r="1.6" />
         </g>
       );
-    default: // plasma — a discharge
+    default: 
       return (
         <g stroke={INK.silver} strokeWidth="1.4" fill="none" strokeLinecap="round">
           <path d={`M${x} ${y - 8} v16M${x - 7} ${y - 4} l14 8M${x + 7} ${y - 4} l-14 8`} />

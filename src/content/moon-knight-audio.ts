@@ -1,48 +1,14 @@
-/**
- * Moon-Knight — audio design: the composer's thinking around the score.
- *
- * I wrote, performed and recorded the music for this game, so this file is the
- * COMPOSER'S half of the page: not a track list, but the decisions behind what
- * plays, what does not, and what each instrument is doing there. Two of these
- * pieces exist as finished recordings and are playable on the page; everything
- * else here is design, and is written as design. NOTHING IN THIS FILE IS A
- * TRACK STUB — no entry below is ever to be rendered as a player, empty or
- * otherwise, because the recordings for them do not exist and will not.
- *
- * EVERY ENTRY CARRIES ITS REASONING. `sound` is what the player hears; `why` is
- * the reason it was scored that way. The `why` is the portfolio value — a
- * reader who skims only those lines should still come away with the argument.
- *
- * MOTIFS ARE SHARED WITH THE REST OF THE PAGE, NOT RE-INVENTED. The dungeon
- * piano is the same note the narrative motifs make ("an instrument this world
- * should not have"), and the harp is the one Death gives the knight in the cast
- * and diegetic sections. `echo` marks those crossings so the phrasing here can
- * be kept deliberately consistent with them — by section NAME, never by number,
- * since the page renumbers whenever a section is inserted.
- */
-
-/* ---- the composer's framing --------------------------------------------- */
-
 export const composerCredit = {
-  kicker: "Score & audio design",
-  /** Said plainly, once: this is my music, not licensed or commissioned. */
+  kicker: "The Music & audio design",
   line: "I composed, performed and recorded the score myself.",
   body:
-    "The two pieces below are real recordings from the game. Everything around them is the " +
-    "audio design that governs them — where music is allowed to play, what each instrument " +
-    "is permitted to mean, and why most of this game is scored with nothing at all.",
+    "These two pieces were composed by me for the game and were implemented. " +
+    "The main instrument is a piano, since it is odd to hear in a medieval wolrd, showing the quantum abilities.",
 } as const;
 
-/* ---- the thesis --------------------------------------------------------- */
-
-/**
- * Lead with this. The strongest audio decision in the project is the decision
- * not to score most of it, and stating that first re-frames the two tracks
- * underneath as rare events rather than as a short soundtrack.
- */
 export const silenceThesis = {
-  kicker: "The first decision",
-  line: "Most of the game is just the player's footsteps.",
+  kicker: "Main audio design decision",
+  line: "Most of the game, the player is alone with their own footsteps.",
   body: [
     "The scarcity of music is deliberate. Silence is what builds the solitude the whole art " +
       "direction is after, and it sharpens attention — a player with nothing to listen to starts " +
@@ -53,21 +19,11 @@ export const silenceThesis = {
   ],
 } as const;
 
-/* ---- the village themes ------------------------------------------------- */
-
-/**
- * The safe places, and the only calm music in the game. Three villages, three
- * pieces, each one scored to tell its own location's story — so the score is
- * carrying setting and history, not just marking "you are safe now".
- */
 export interface VillageTheme {
   id: string;
   place: string;
-  /** The instrumentation, in two or three words. The fastest read. */
   instrumentation: string;
-  /** What it sounds like. One or two sentences. */
   sound: string;
-  /** Why it was scored that way. */
   why: string;
 }
 
@@ -112,22 +68,12 @@ export const villageThemes: readonly VillageTheme[] = [
   },
 ];
 
-/* ---- instruments that mean something ------------------------------------ */
-
-/**
- * The diegetic half of the audio design: cases where the CHOICE OF INSTRUMENT
- * is the information. Every entry here breaks or bends the medieval-folk
- * palette on purpose, and the break is the message.
- */
 export interface InstrumentMeaning {
   id: string;
-  /** Where in the game this happens. */
   context: string;
-  /** The instrument, named. Two words at most. */
   instrument: string;
   sound: string;
   why: string;
-  /** The section elsewhere on this page that makes the same point. */
   echo?: string;
 }
 
@@ -189,18 +135,11 @@ export const instrumentMeanings: readonly InstrumentMeaning[] = [
   },
 ];
 
-/* ---- sound feedback ----------------------------------------------------- */
-
-/**
- * Short by design. Sound effects are not the interesting part of this section,
- * but leaving them out would imply the audio work stopped at the music.
- */
 export const soundFeedback = {
   kicker: "Sound feedback",
   line:
     "Every combat action has organic, realistic sound feedback, recorded rather than " +
     "synthesised, so the game feels physical in the hand.",
-  /** Named so the claim is concrete. Short, in the player's language. */
   actions: ["Hits & impacts", "Sword swoosh", "Dodge", "Pickups"],
   why:
     "In a game where the music is usually absent, effects are carrying the entire audio " +

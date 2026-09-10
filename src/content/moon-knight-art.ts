@@ -1,30 +1,7 @@
-/**
- * Moon-Knight — art direction: the visual thesis and what it decides.
- *
- * This file is shaped around ONE IDEA and its consequences, not around a mood
- * board. The thesis is the Romantic Sublime — awe and dread before vast, ruined
- * nature, and the beauty of solitude and decay — and everything below exists to
- * show the thesis DOING something: choosing how the player travels, what the
- * world is made of, which colours are allowed, and how hard the game is.
- *
- * EVERY ENTRY CARRIES ITS REASONING. `decision` is the visible choice; `why` is
- * the argument for it. The `why` is the portfolio value — a reader who skims
- * only the `why` lines should still come away with the case — so it is a
- * first-class field and never folded into the description.
- *
- * The throughline, and the reason this section sits with the systems sections
- * rather than in a gallery: the aesthetic is not decoration. It sets the mood,
- * and it also sets the difficulty. Darkness is the proof.
- */
-
-/* ---- the thesis --------------------------------------------------------- */
-
 export const artThesis = {
-  kicker: "The guiding principle",
-  /** One line. If a reader takes nothing else from this section, this. */
+  kicker: "The Artistic Approach",
   line:
-    "The Sublime: awe and dread before a vast, ruined world — and the beauty of " +
-    "being alone in it.",
+    "The Sublime: The beauty of experiencing vast and ruined world in solitude.",
   body: [
     "Moon-Knight is art-directed from a single Romantic idea. The Sublime is the feeling of " +
       "standing before something immense and indifferent — a drowned coast, a fallen city, a " +
@@ -37,28 +14,13 @@ export const artThesis = {
   ],
 } as const;
 
-/* ---- the translation ---------------------------------------------------- */
-
-/**
- * The four moves that turn the principle into a game. Each is a decision the
- * player can feel, followed by the reason it was made.
- *
- * `key` marks darkness-as-mechanic. It is the one entry where the aesthetic
- * crosses into the rules — the absence of light is not mood, it is difficulty —
- * so the component gives it its own treatment instead of a fourth identical
- * card. `crossover` is the short statement of that crossing.
- */
 export interface SublimeTranslation {
   id: string;
-  /** Two or three words. The fastest possible read of the move. */
   tag: string;
   title: string;
-  /** What the player actually meets. Concise — this gets skimmed. */
   decision: string;
-  /** The design reasoning. The reason the entry is here at all. */
   why: string;
   key?: boolean;
-  /** Only on the key entry: what the aesthetic turns into. */
   crossover?: string;
 }
 
@@ -105,63 +67,37 @@ export const sublimeTranslations: readonly SublimeTranslation[] = [
   {
     id: "darkness",
     tag: "Darkness",
-    title: "Darkness is a mechanic, not a mood",
+    title: "Darkness as a mechanic",
     key: true,
     crossover: "Aesthetic → difficulty",
     decision:
-      "Light is scarce by design. Large parts of the world are lit only by the moon, and the " +
-      "enemies use that: they wait in the shadows, and what you cannot see is what reaches you " +
+      "Light is low by design. Large parts of the world are lit only by the moon, and the " +
+      "enemies use that by hiding in the shadows and what you cannot see is what reaches you " +
       "first.",
     why:
-      "This is the hinge of the whole art direction. The dark was chosen for the Sublime, and it " +
-      "is also the difficulty curve — reading a room, choosing where to step and deciding whether " +
-      "to advance are all harder because of an aesthetic decision. The look of the game and the " +
-      "challenge of the game are the same choice, which is the standard every other decision here " +
-      "is held to.",
+      "Darkness aligns with the narrative, the gameplay, but most importantly, the philosophy of the Sublime. " +
+      "Mechanically, it helps to the difficulty design. The player has to stop some times and read the environment so they don't die. " +
+      "Happening in the fog and darker levels.",
   },
 ];
 
-/* ---- the palette -------------------------------------------------------- */
-
-/**
- * The real palette, in the order it is used: ground first, light last. That
- * order is the argument — four cold, dark inks and then one pale one, so the
- * strip itself shows how little light the game spends.
- *
- * The swatches are the true hex values, so their contrast is whatever the game
- * needs it to be. NO TEXT IS SET ON THEM — every label renders beneath its
- * block, on the section's own background, where it is legible.
- */
 export interface Swatch {
   hex: string;
   name: string;
-  /** What the colour is FOR. One clause. */
   role: string;
 }
 
 export const palette: readonly Swatch[] = [
-  { hex: "#001021", name: "Void", role: "The night ground everything else sits on." },
-  { hex: "#1A2153", name: "Moonlit blue", role: "Deep sky and open distance." },
-  { hex: "#2A2B34", name: "Stone", role: "The neutral of ruins and armour." },
-  { hex: "#034748", name: "Arcane emerald", role: "The old gods' power, and life." },
-  { hex: "#B8BECC", name: "Moonlight silver", role: "The light that remains." },
+  { hex: "#001021", name: "Void", role: "" },
+  { hex: "#1A2153", name: "Moonlit blue", role: "" },
+  { hex: "#2A2B34", name: "Stone", role: "" },
+  { hex: "#034748", name: "Arcane emerald", role: "" },
+  { hex: "#B8BECC", name: "Moonlight silver", role: "" },
 ];
 
 export const paletteNote =
-  "Four of the five are cold and dark; only the last one carries light. The palette is " +
-  "weighted the way the world is — the player spends most of the game inside the first four " +
-  "colours, and silver is rare enough to be worth walking toward.";
+  "";
 
-/* ---- deliberate visual decisions ---------------------------------------- */
-
-/**
- * Composition and framing choices, where the reasoning is again the substance.
- * Rendered as decision → why.
- *
- * `pillars` exists only for the main menu: the whole point of that decision is
- * that ONE image states three things at once, so the three have to be nameable
- * on the page or the claim cannot be checked.
- */
 export interface VisualDecision {
   id: string;
   decision: string;

@@ -7,43 +7,6 @@ import {
   type SublimeTranslation,
 } from "@/content/moon-knight-art";
 
-/**
- * Moon-Knight — art direction: one aesthetic idea and everything it decides.
- *
- * PROSE-LED, WITH EXACTLY ONE VISUAL. The section is an argument about the
- * Sublime, and an argument is read, not browsed — so there are no illustrations
- * competing with the text and only the palette strip is allowed to be big. Four
- * bands, in the order the case is made:
- *
- *   1. THE THESIS. The Sublime, stated once at display size, then the turn
- *      that makes the rest of the section worth reading: naming the principle
- *      is the easy half, applying it is the work.
- *   2. THE TRANSLATION. Four numbered moves — solitude, ruin, cold, darkness —
- *      each a decision followed by its reasoning. The fourth is framed
- *      differently on purpose (see below).
- *   3. THE PALETTE. The one visual: five true swatches, ground first and light
- *      last, so the strip itself shows how little light the game spends.
- *   4. THE FRAMING DECISIONS. Menu-as-place, character scale, visibility —
- *      decision → why, same as the systems sections elsewhere on the page.
- *
- * DARKNESS IS FRAMED, NOT LISTED. It is the only entry where the aesthetic
- * crosses into the rules — the dark was chosen for the mood and it also sets
- * the difficulty — so it gets a gold frame and a `crossover` chip rather than a
- * fourth identical card. That crossing is the section's whole claim: the
- * aesthetic is not decoration, it is difficulty, emotion and coherence at once.
- *
- * NO TEXT SITS ON A SWATCH. The blocks are the game's real hex values, which
- * means their contrast is whatever the game needs and not whatever the page
- * needs; every label is rendered BENEATH its block on the section background,
- * where it is comfortably legible. The blocks carry a silver hairline for the
- * same reason — #001021 is all but invisible against the page's own void.
- *
- * NOTHING HERE MOVES. No state, no effects — a server component, and the only
- * transition in the file is a hover hairline that reduced-motion turns off.
- */
-
-/* ---- a translation ------------------------------------------------------ */
-
 function TranslationCard({ item, index }: { item: SublimeTranslation; index: number }) {
   return (
     <li className={`mka-move${item.key ? " is-key" : ""}`}>
@@ -65,32 +28,12 @@ function TranslationCard({ item, index }: { item: SublimeTranslation; index: num
   );
 }
 
-/* ---- the section -------------------------------------------------------- */
-
-/**
- * TWO DEPTHS, ONE OWNER — see the same note on `DiegeticDesign`.
- *
- * `short` (main page) keeps the thesis line, the palette, and the ONE
- * translation marked `key` — darkness-as-mechanic, where the aesthetic stops
- * being mood and becomes difficulty. That entry is kept on the main page
- * precisely because it is the systems half of this section: a look that changes
- * the rules is evidence a recruiter is reading the page for.
- *
- * `full` (deep-dive page) is the section unchanged.
- *
- * The short variant renders `artThesis.line`, `palette`, `paletteNote` and the
- * flagged `sublimeTranslations` entry — all owner keys. It types no summary of
- * its own; only `artThesis.body`, the other translations and `visualDecisions`
- * are withheld.
- */
 export default function ArtDirection({
   variant = "full",
 }: {
   variant?: "full" | "short";
 }) {
   const short = variant === "short";
-  /* The crossing entry. Falling back to the first keeps the short variant
-     rendering something real if the flag is ever dropped from the content. */
   const keyMove = sublimeTranslations.find((t) => t.key) ?? sublimeTranslations[0];
   const keyMoveIndex = sublimeTranslations.indexOf(keyMove);
 
@@ -108,8 +51,7 @@ export default function ArtDirection({
           ))}
       </section>
 
-      {/* 2 — what the principle actually decides. The short variant shows only
-          the entry where the aesthetic crosses into the rules. */}
+      {/* 2 — what the principle decides. */}
       <section className="mka-band">
         <h3 className="mono mka-band-title">
           {short ? "Where the look becomes difficulty" : "How the Sublime becomes design"}
@@ -125,7 +67,7 @@ export default function ArtDirection({
         </ol>
       </section>
 
-      {/* 3 — the one visual: the real palette, ground first, light last */}
+      {/* 3 — the one visual */}
       <section className="mka-band">
         <h3 className="mono mka-band-title">The palette</h3>
         <div className="mka-frame">
@@ -147,10 +89,7 @@ export default function ArtDirection({
         <p className="mka-lede">{paletteNote}</p>
       </section>
 
-      {/* 4 — framing and composition, decision → why. Deep-dive only, and
-          NOT RENDERED at all on the main page rather than hidden with CSS:
-          hiding it would still ship ~350 words into the document the main page
-          was condensed to shrink. */}
+      {/* 4 — framing and composition, decision */}
       {!short && (
         <section className="mka-band">
           <h3 className="mono mka-band-title">Deliberate visual decisions</h3>

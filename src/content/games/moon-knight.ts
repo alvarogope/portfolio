@@ -120,23 +120,24 @@ export const moonKnight: Project = {
 
   designChallenge: {
     quote:
-      "The mechanics were designed to be quantum, but Unreal's Blueprints have no native way to reverse time or hold a true superposition. "  + 
-      "Rather than fake it and pretend, I documented exactly where each mechanic exceeded the engine, from Instability's orbs becoming " + 
-      "undodgeable when they mutated on collision to time-reversal degrading into a random delay, and used those honest negative results " + 
-      "as the design brief for the C++ rebuild.",
+      "The game was designed to have video game mechanics inspired by quantum computing, trying to imagine how this technology could change the media " +
+      "without the breaking the main rules of video games and interactive media. Unreal Engine's Blueprints don't have a way to represent them properly. " +
+      "I documented where this technology could excell in the video game media and where it felt like quantum computing was unnecessary. " +
+      "The quantum skill tree was the best way to translate these principles. I am rebuilding the codebae using a C++17 library called QPP that" + 
+      "uses a quantum library as well as researching how to use this technology to improve the media.",
     engine: "Unreal Engine 5",
     system: "Blueprints / C++",
-    resolution: "Documented the feasibility gap and carried it into a standalone C++ toolkit.",
+    resolution: "Documented the technology limitations and carried it into a C++17 quantum toolkit.",
   },
 
   engineeringNote: {
     designedYear:
-      "2025: designed all five mechanics and documented why Blueprints could not fully simulate them.",
+      "2025: Designed all five quantum mechanics and documented why Blueprints could not fully represent them.",
     engineeringYear:
-      "2026: rebuilding them in C++ as an engine-agnostic quantum toolkit, statistically verified.",
+      "2026: Rebuilding them in C++ as an engine-agnostic quantum toolkit, statistically verified.",
     repoUrl: undefined,
     currentStatus:
-      "Core library and two of five mechanics complete and statistically verified. The remaining mechanics are recombinations of the same verified primitives.",
+      "Developing a quantum toolkit and verifying the mechanics statistically.",
   },
 
 };

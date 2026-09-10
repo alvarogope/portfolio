@@ -15,8 +15,6 @@ export const metadata: Metadata = {
   description: g.tagline,
 };
 
-/* The three accent roles the state cards use. Kept here rather than in the
-   content file so the content stays free of presentation. */
 const ACCENT: Record<string, string> = {
   gold: "var(--color-gold)",
   scarlet: "var(--color-scarlet)",
@@ -28,9 +26,6 @@ const HAIRLINE = "1px solid color-mix(in srgb, var(--color-mist) 20%, transparen
 export default function GameEngineeringPage() {
   return (
     <Section>
-      {/* Breadcrumb. Extracted into `Breadcrumb` when the deep-dive subpage
-          needed the identical control — two hand-maintained copies of one
-          navigation element is how they drift apart. */}
       <Breadcrumb
         items={[
           { label: "Moon-Knight", href: "/moon-knight" },
@@ -38,7 +33,7 @@ export default function GameEngineeringPage() {
         ]}
       />
 
-      {/* 01 · Hero and thesis --------------------------------------- */}
+      {/* 1 · Hero and thesis --------------------------------------- */}
       <Reveal>
         <header style={{ marginTop: "1.5rem", maxWidth: "38rem" }}>
           <p
@@ -63,8 +58,6 @@ export default function GameEngineeringPage() {
         </header>
       </Reveal>
 
-      {/* The thesis, given the weight of a pull quote because the whole
-          page is an argument for it. */}
       <Reveal>
         <p
           className="panel"
@@ -137,16 +130,14 @@ export default function GameEngineeringPage() {
         </div>
       </Reveal>
 
-      {/* 02 · The split --------------------------------------------- */}
+      {/* 2 · The split --------------------------------------------- */}
       <Reveal>
         <div style={{ marginTop: "4.5rem" }}>
-          <SectionHeading kicker={`01 · ${g.split.kicker}`} title={g.split.title} />
+          <SectionHeading kicker={`${g.split.kicker}`} title={g.split.title} />
           <p style={{ marginTop: "1rem", maxWidth: "38rem", lineHeight: 1.75 }}>
             {g.split.intro}
           </p>
 
-          {/* Horizontally scrollable on narrow viewports, and focusable so the
-              scroll is reachable from the keyboard. */}
           <div
             role="region"
             aria-label="Blueprint and C++ system split"
@@ -168,7 +159,7 @@ export default function GameEngineeringPage() {
               </caption>
               <thead>
                 <tr>
-                  {["System", "Lives in", "Owner"].map((label) => (
+                  {["System", "Managed in", "Owner"].map((label) => (
                     <th
                       key={label}
                       scope="col"
@@ -262,16 +253,15 @@ export default function GameEngineeringPage() {
       {/* 03 · The coding choices ------------------------------------ */}
       <Reveal>
         <div style={{ marginTop: "5rem" }}>
-          <SectionHeading kicker={`02 · ${g.choicesKicker}`} title={g.choicesTitle} />
+          <SectionHeading kicker={`${g.choicesKicker}`} title={g.choicesTitle} />
           <p style={{ marginTop: "1rem", maxWidth: "38rem", lineHeight: 1.75 }}>
-            {g.choicesIntro}
           </p>
         </div>
       </Reveal>
 
       {g.choices.map((c, i) => (
         <Reveal key={c.id}>
-          <article id={c.id} style={{ marginTop: "3.5rem", scrollMarginTop: "2rem" }}>
+          <article id={c.id} style={{ marginTop: "2rem", scrollMarginTop: "2rem" }}>
             <p
               className="mono"
               style={{
@@ -295,7 +285,6 @@ export default function GameEngineeringPage() {
               {c.title}
             </h3>
 
-            {/* The decision, stated flatly and set apart from the reasoning. */}
             <div
               style={{
                 marginTop: "1.25rem",
@@ -326,7 +315,6 @@ export default function GameEngineeringPage() {
               </p>
             </div>
 
-            {/* The reasoning — the part worth reading. */}
             <div style={{ marginTop: "1.5rem", maxWidth: "38rem" }}>
               <span
                 className="mono"
@@ -375,10 +363,10 @@ export default function GameEngineeringPage() {
         </Reveal>
       ))}
 
-      {/* 04 · Combat state machine ---------------------------------- */}
+      {/* 4 · Combat state machine ---------------------------------- */}
       <Reveal>
         <div style={{ marginTop: "5rem" }}>
-          <SectionHeading kicker={`03 · ${g.combat.kicker}`} title={g.combat.title} />
+          <SectionHeading kicker={`${g.combat.kicker}`} title={g.combat.title} />
           <p style={{ marginTop: "1rem", maxWidth: "38rem", lineHeight: 1.75 }}>
             {g.combat.intro}
           </p>
@@ -408,9 +396,6 @@ export default function GameEngineeringPage() {
                     gap: "0.5rem",
                   }}
                 >
-                  {/* The accent stays on the border rule only. Scarlet and
-                      emerald sit around 2:1 and 3.4:1 against the panel, so
-                      neither is safe to set text in. */}
                   <span
                     className="mono"
                     style={{
@@ -456,18 +441,10 @@ export default function GameEngineeringPage() {
         </div>
       </Reveal>
 
-      {/* 04 · Editor captures ---------------------------------------
-             Live again. This block was unmounted while the captures did not
-             exist and the section rendered as five empty dashed frames; all
-             six slots now carry a real `src` in the content file.
-
-             `ScreenshotSlots` fits every capture with `contain` rather than
-             `cover` — a 1920px node graph centre-cropped into a 20rem tile is
-             unreadable — and each filled slot opens the shared Lightbox at
-             full resolution, because a graph has to be read, not glanced at. */}
+      {/* 04 · Editor captures */}
       <Reveal>
         <div style={{ marginTop: "5rem" }}>
-          <SectionHeading kicker={`04 · ${g.screenshots.kicker}`} title={g.screenshots.title} />
+          <SectionHeading kicker={`${g.screenshots.kicker}`} title={g.screenshots.title} />
           <p
             style={{
               marginTop: "1rem",
@@ -482,16 +459,7 @@ export default function GameEngineeringPage() {
         </div>
       </Reveal>
 
-      {/* 06 · Where to go next ---------------------------------------
-             Two panels, not one. This page used to end on the quantum CTA
-             alone, so the only route back to the project after five sections
-             of C++ was the breadcrumb at the very top. Every page under
-             `/moon-knight` now ends with the same offer: the branch forward,
-             and the way back.
-
-             `CtaPanel` is the shared control, and this page is where it was
-             extracted from: the main page uses it to hand readers to the deep
-             dive, and the deep dive uses it to hand them back. */}
+      {/* 06 · Where to go next */}
       <Reveal>
         <div
           style={{
@@ -520,12 +488,6 @@ export default function GameEngineeringPage() {
         </div>
       </Reveal>
 
-      {/* THE RAIL. Until now a subpage navigated by breadcrumb at the top and
-          the panels above at the foot, and by nothing at all in between — on a
-          page this long that meant reaching one end of it before any sideways
-          move was possible. It renders the same control the four project pages
-          carry: pinned to the right gutter above 1560px, and folded into the
-          page here below that, under the panels rather than instead of them. */}
       <Reveal>
         <ProjectNav
           items={moonKnightNavItems}

@@ -1,13 +1,3 @@
-/**
- * Content for /moon-knight/engineering — the game-programming page.
- *
- * The `code` strings below are SLOTS. Each one currently holds a marked
- * placeholder comment; replace the whole template literal with the real
- * source from the UE5 project and Shiki will highlight it as C++ with no
- * other change needed. Keep `filename` and `language` accurate — the
- * CodeBlock header renders both.
- */
-
 export interface CodeSlot {
   filename: string;
   language: string;
@@ -17,9 +7,7 @@ export interface CodeSlot {
 export interface SplitRow {
   system: string;
   detail: string;
-  /** Where the logic actually lives. */
   home: "Blueprint" | "C++";
-  /** The concrete asset or class that owns it. */
   owner: string;
 }
 
@@ -27,9 +15,7 @@ export interface CodingChoice {
   id: string;
   kicker: string;
   title: string;
-  /** The call that was made. One sentence, stated flatly. */
   decision: string;
-  /** Why it was made that way — the portfolio value. */
   why: string[];
   code: CodeSlot;
 }
@@ -37,7 +23,6 @@ export interface CodingChoice {
 export interface CombatState {
   name: string;
   detail: string;
-  /** What moves the player out of this state. */
   exits: string;
   accent?: "gold" | "scarlet" | "emerald";
 }
@@ -46,21 +31,23 @@ export interface ScreenshotSlot {
   id: string;
   label: string;
   caption: string;
-  /** Set this to a path under /public once the capture exists. */
   src?: string;
   alt?: string;
 }
 
 export const gameEngineering = {
-  eyebrow: "GAME PROGRAMMING · UNREAL ENGINE 5 · C++ & BLUEPRINT · SOLO",
+  eyebrow: "GAME PROGRAMMING · UNREAL ENGINE 5 · C++ & BLUEPRINTS · SOLO",
   title: "Programming Moon-Knight",
-  thesis: "C++ decides WHEN. Blueprint decides WHAT IT LOOKS LIKE.",
+  thesis: "C++ for handling the logic. Blueprints for handling the presentation.",
 
   tagline:
     "A solo UE5 dark-fantasy RPG with every core system designed and built from scratch: combat, AI, persistence, and equipment.",
 
   intro:
-    "Moon-Knight is a solo project. There is no engineer to hand the design to, which means every system on this page was specified, written, debugged and tuned by the same person. That constraint produced the discipline the page is about: a hard, deliberate boundary between the two languages Unreal gives you. Systems logic — state, ownership, lifetime, damage — is C++, because it is testable, diffable and fast. Visual and timing work — combo montages, trace windows, behaviour trees — is Blueprint, because it iterates in seconds instead of a recompile. Everything below is one of those decisions and the reasoning behind it.",
+    "Moon-Knight is a solo project, meaning I functioned as a designer and as a engineer and I had to code, debug and tune every aspect of the game. " +
+    "My approach for combining C++ and Unreal's Blueprints was a matter of timing and visuals. I used C++ for the states, lifetime, damage, " +
+    "and every logic system, while I used Blueprints for combos animations, trace windows or behaviour trees. " +
+    "The reasoning was the speed in development and what needed to to be delivered. Below this are the decisions.",
 
   stack: [
     "Unreal Engine 5",
@@ -79,44 +66,45 @@ export const gameEngineering = {
   /* ---------------------------------------------------------------- */
 
   split: {
-    kicker: "The boundary",
-    title: "What lives in Blueprint, what lives in C++",
-    intro:
-      "The split is principled, not incidental. If a system owns state other systems read, or has to survive a level load, it is C++. If it exists to make something look or feel right on a specific frame, it is Blueprint. The table is the whole architecture in one view.",
+    kicker: "The division",
+    title: "What is in a Blueprint. What is in C++",
+    intro:"The main reason for deciding which things should go to C++ were what the level loaded, then it needed to be managed in the code. " +
+          "If something needed to exist, tuned or feel right on a specific frame, I managed it in the Blueprints." +
+          "This is how the code architecture was distributed:",
     rows: [
       {
-        system: "Combat combo chain",
-        detail: "Montage sequencing, sword trace, ApplyDamage call",
+        system: "Combat Combo Chain",
+        detail: "Montage sequencing, sword trace and calling ApplyDamage",
         home: "Blueprint",
         owner: "BPC_Attack System",
       },
       {
-        system: "Enemy behaviour",
-        detail: "Behaviour Trees, Blackboard, patrol tasks",
+        system: "Enemy Behaviour",
+        detail: "Behaviour Trees, Blackboard and Patrol Tasks",
         home: "Blueprint",
         owner: "BD_AI, BD_Werewolf",
       },
       {
-        system: "AI perception",
-        detail: "Detection, sight and hearing stimulus, Blackboard writes",
+        system: "AI Perception",
+        detail: "Detection, Sight and Hearing Stimulus, Blackboard Writes",
         home: "C++",
         owner: "AMKEnemyAIController",
       },
       {
-        system: "Inventory & equipment",
-        detail: "Data Table lookup, equip socket swap",
+        system: "Inventory & Equipment",
+        detail: "Data Table Lookup, Equip Socket Swap",
         home: "Blueprint",
         owner: "BPC_Equipment System",
       },
       {
-        system: "Player systems",
-        detail: "Health, combo state, death and respawn",
+        system: "Player Systems",
+        detail: "Health, Combo State, Death and Respawn",
         home: "C++",
         owner: "AMKPlayerCharacter",
       },
       {
-        system: "Session persistence",
-        detail: "Willow Tree checkpoints, equipped weapon",
+        system: "Session Persistence",
+        detail: "Willow Tree Checkpoints, Equipped Weapon",
         home: "C++",
         owner: "UMKGameInstance",
       },
@@ -126,23 +114,20 @@ export const gameEngineering = {
   /* ---------------------------------------------------------------- */
 
   choicesKicker: "The decisions",
-  choicesTitle: "Five coding choices that shaped the build",
-  choicesIntro:
-    "Each of these is a call made once and then lived with across the whole project. The reasoning matters more than the syntax, so it leads.",
+  choicesTitle: "The Five Coding Choices That Shaped The Game",
 
   choices: [
     {
       id: "hybrid-architecture",
       kicker: "Architecture",
-      title: "The hybrid architecture",
+      title: "The Hybrid Architecture",
       decision:
-        "Every gameplay Blueprint is reparented to a C++ class. Blueprint calls DOWN into C++ through BlueprintCallable; C++ calls UP into Blueprint through BlueprintImplementableEvent.",
+        "When I prototyped the game for the first time, I useed Blueprints. Then I decided to transition part of the code to C++, so " +
+        "I had to make the Blueprints call down into C++, through BlueprintCallable; and C++ call up to a Blueprint using BlueprintImplementableEvent.",
       why: [
-        /* The boundary itself is stated by the thesis, the intro and
-           split.intro before this point. What follows are its consequences,
-           which is what this list is for. */
-        "That gives one direction of authority and no ambiguity about where a bug lives. If the wrong thing happened, it is C++. If the right thing happened and looked wrong, it is Blueprint.",
-        "It also keeps iteration cheap exactly where iteration is needed. Retiming a combo is a Blueprint tweak and a Play-In-Editor press; it never costs a compile.",
+        "One of the reasons for this was to reduce ambiguity when a bug appeared. If the wrong thing happened it was a C++ issue, " +
+        "however, if the right thing happened but looked weird, it was a Bluprint issue. ",
+        "I could also tune animations quicker without having to compile the whole code every single time.",
       ],
       code: {
         filename: "MKPlayerCharacter.h",
@@ -230,13 +215,13 @@ protected:
     {
       id: "single-source-of-truth",
       kicker: "Tuning",
-      title: "A single source of truth for tuning",
+      title: "Single Source for Tuning",
       decision:
-        "No magic numbers anywhere. Every design constant lives in a MoonKnightConstants namespace, and every shared enum — ECombatState, EWeaponType — is defined exactly once.",
+        "The design constants were given a const in the MoonKnightConstants namespace. Also, the shared enum, ECombatState and EWeaponType, wre defined once. ",
       why: [
-        "Each constant is traceable back to a line in the GDD. When the design document says the combo window is 0.8 seconds, there is exactly one place in the codebase where that number exists, and it has a name.",
-        "Balance passes become a diff of one file instead of a search across a dozen. On a solo project that is the difference between tuning the game and doing archaeology on it.",
-        "Shared enums defined once means Blueprint dropdowns and C++ switches cannot drift apart. Adding a weapon type is one edit, and every consumer picks it up.",
+        "Every constat variable is the exact number that was given in the GDD, so there wouldn't be any conflicts between the design and the code.",
+        "For a better tuning of values, I moved them to one file so I only had to look in one place.",
+        "The enums for the weapon types were defined once and shared, preventing conflicts between the Blueprints and the C++, making edits automatic and quick.",
       ],
       code: {
         filename: "MoonKnightRPG.h",
@@ -291,13 +276,13 @@ namespace MoonKnightConstants
     {
       id: "damage-through-engine",
       kicker: "Damage",
-      title: "Damage flows through the engine, not around it",
+      title: "The Damage Functions Inside the Engine",
       decision:
-        "Nothing subtracts health directly. Every damage source in the game — sword traces, enemy attacks, environmental hazards — goes through the engine's TakeDamage override.",
+        "The health is substracted inside the engine. All the damage is handled in the game, swords or enemies' attacks, just overrides TakeDamage.",
       why: [
-        "One funnel means one place to put the rules. Parry negation and death handling live inside TakeDamage, so a new damage source inherits both for free and cannot forget to check them.",
-        "Writing against Unreal's own damage pipeline rather than a bespoke one keeps the code legible to anyone who knows the engine, and keeps DamageCauser, EventInstigator and damage types available instead of reinvented.",
-        "It made the parry testable. Because negation is a single branch in a single function, it can be reasoned about in isolation rather than chased through every attacker in the game.",
+        "This puts all the system in one place. The parry negation and death are inside the TakeDamage, so any new damage source will jus inherit both",
+        "It keeps DamageCauser, EventInstigator and any other damage types available, keeping the code easy to read.",
+        "The parry was easy to test as the addition after the migration to C++. I could isolate the mechanic and tune it.",
       ],
       code: {
         filename: "MKPlayerCharacter.cpp",
@@ -334,13 +319,13 @@ namespace MoonKnightConstants
     {
       id: "perception-in-cpp",
       kicker: "AI",
-      title: "Perception in C++, decisions in the tree",
+      title: "Enemy Perception in C++",
       decision:
-        "The AI controller configures sight and hearing in C++ and writes Blackboard keys — TargetActor, InvestigateLocation. The Behaviour Tree owns every decision made from them.",
+        "The AI controller sets the sight and hearing stimulus in C++, wrting Blackboard keys like TargetActor, InvestigateLocation. I just needed to change from the Behaviour Tree.",
       why: [
-        "Perception config is exactly the kind of thing that should be code: radii, peripheral angle, affiliation, stimulus age. It is numeric, shared across every enemy, and needs to be identical between the werewolf and the standard patroller.",
-        "Behaviour is exactly the kind of thing that should not be. Reordering a selector, adding an investigate branch, or giving the werewolf a different chase decorator is design work, and it happens in the tree without a recompile.",
-        "The Blackboard is the seam. C++ only ever states facts — I can see this actor, I heard something there. The tree decides what those facts mean, so enemy behaviour stays designer-editable while detection stays exact.",
+        "The perception had so many things that needed to be tuned and C++ was the right decision. Things like radii, peripheral angle, affiliation or stimulus age are numerical and shared and sometimes needed to be the same for different enemies",
+        "The design side was already decided, so I didn't need to reorder selectors or add investigate branches. That could ust happen in the Behaviour Trees.",
+        "The Blackboard is the perfect connection between these two. The C++ code only stated facts and the Blueprint decided what to do in those moments, so it just meant a matter of handle what to do and the order in those cases.",
       ],
       code: {
         filename: "MKEnemyAIController.cpp",
@@ -427,13 +412,13 @@ void AMKEnemyAIController::OnTargetPerceptionUpdated(AActor* Actor, FAIStimulus 
     {
       id: "state-ownership",
       kicker: "Persistence",
-      title: "State ownership follows lifetime",
+      title: "The Data Should Last",
       decision:
-        "Anything that must outlive the actor holding it lives in the Game Instance — the one object guaranteed to exist for the whole session.",
+        "Anything that had to be longer than the actor was present in the Game Instance. It guaranteed to exist the whole time.",
       why: [
-        "The player character is destroyed and respawned on death. Levels stream in and out. Any variable stored on an actor is therefore only as durable as that actor, which is not durable at all.",
-        "The Willow Tree checkpoint and the equipped weapon both have to survive both events, so both belong to UMKGameInstance. Exactly one exists per session, and it outlives every level and every respawn.",
-        "This was the fix for a real bug: equipment was resetting on level load. The instinct is to patch it — re-apply the weapon in BeginPlay, cache it on the controller, add a save call. The actual fix was to ask which object was supposed to own that state in the first place, and the answer was none of the ones I had been patching.",
+        "There were some things that needed to be destroyed eventually, like the character or the levels. These things relied on the 3D objects.",
+        "The Willow Tree's checkpoint and the inventory had to survive death and respawn, so I placed them in UMKGameInstance.",
+        "This was actually a bug had I couldn't fix for a long time. The equipment system disappeared when the character died. I tried to add this to BeginPLay, but the better option was to ask which object was supposed to own that state.",
       ],
       code: {
         filename: "MKGameInstance.h",
@@ -490,44 +475,44 @@ protected:
 
   combat: {
     kicker: "System deep-dive",
-    title: "The combat state machine",
+    title: "The Combat State Machine",
     intro:
-      "Moon-Knight has no block. Defence is a parry or it is a dodge, and both cost commitment, which is what makes aggression the correct answer rather than the reckless one. That design reads straight off the state machine: there is no defensive state you can simply hold.",
+      "Moon-Knight has no block. Defence is a parry or a dodge, which is what makes the gameplay aggressive and fast-paced. That design can be seen in the combat state machine as there is no defensive state.",
     states: [
       {
         name: "Idle",
-        detail: "Free movement. The only state that accepts every input.",
+        detail: "Free movement. It accepts every input.",
         exits: "Attacking · Dodging · Parrying",
       },
       {
         name: "Attacking",
         detail:
-          "Up to a 4-hit chain. ComboCounter advances on an input inside the window; an auto-reset timer returns to Idle when it lapses.",
+          "Up to a 4-hit combo chain. ComboCounter advances the animations and an auto-reset timer returns to Idle when it gets to last move.",
         exits: "Attacking (next hit) · Idle (timer lapse)",
         accent: "gold",
       },
       {
         name: "Dodging",
-        detail: "A committed roll with invulnerability frames. Cannot be cancelled into an attack.",
+        detail: "A roll with invulnerability frames. Cannot be cancelled into an attack.",
         exits: "Idle",
       },
       {
         name: "Parrying",
         detail:
-          "A timed window. A hit landing inside it is negated outright in TakeDamage — not reduced.",
+          "A narrow timed window. A hit landing inside it is negated outright in TakeDamage.",
         exits: "Idle · Staggered (missed window)",
         accent: "emerald",
       },
       {
         name: "Staggered",
-        detail: "The cost of a mistimed defence. Input is locked until recovery finishes.",
+        detail: "The cost of TakeDamage. The input is locked until the recovery finishes.",
         exits: "Idle · Dead",
         accent: "scarlet",
       },
       {
         name: "Dead",
         detail:
-          "Death handling runs, the Game Instance is read for the last checkpoint, and the player respawns at the Willow Tree.",
+          "The death handling. The Game Instance checks the last checkpoint and the player respawns there.",
         exits: "Idle (respawn at last Willow Tree)",
         accent: "scarlet",
       },
@@ -620,7 +605,7 @@ void AMKPlayerCharacter::Respawn()
 
   screenshots: {
     kicker: "From the editor",
-    title: "The Blueprint side",
+    title: "The Blueprints",
     intro:
       "These captures are the Blueprint half of the split. Some of them are also its history: the combat chain and the sword trace were prototyped as the graphs below and later moved into C++, because iterating a montage window in Blueprint takes seconds and shipping it does not. What survives in Blueprint is what genuinely reads better as a graph than as code — the trees, the tuning, the generation. Click any capture to read it full size.",
     items: [

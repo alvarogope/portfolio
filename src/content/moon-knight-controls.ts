@@ -1,41 +1,3 @@
-/**
- * Moon-Knight — the control scheme, as a gamepad map.
- *
- * WHERE EACH BINDING COMES FROM, because they do not all come from the same
- * place. `source` records it on every row and the page prints it:
- *
- *   "gdd"      read off the original controls diagram
- *              (`public/images/moon-knight/controls.png`), which is the scheme
- *              the game was built to.
- *   "alvaro"   given directly by Álvaro afterwards, filling the gaps the
- *              diagram left — the stick clicks, the spell grid, and the
- *              context-sensitive parry.
- *   "proposed" reserved for a suggestion that has not been confirmed. NOTHING
- *              currently carries it — RT as the heavy attack was the last one
- *              and Álvaro has since confirmed it. Keep the value: if a future
- *              binding is guessed rather than known, it belongs here so the
- *              page can flag it rather than letting it harden into fact.
- *
- * CONTEXT-SENSITIVE BINDINGS. Two triggers do different things depending on
- * whether the knight is in combat, which is the design idea worth showing:
- * the out-of-combat action is the one you would never want mid-fight, and the
- * in-combat action is the one you would never want while exploring. `combat`
- * holds the second meaning; a row without it does the same thing everywhere.
- *
- * LAYOUT IS XBOX-ORDER, and the labels use Xbox names (A/B/X/Y, LB/RB, LT/RT,
- * L3/R3) because that is what the source diagram drew. `ControllerMap` renders
- * a stylised pad rather than any manufacturer's, so the names are the only
- * thing tying it to a real controller.
- *
- * `id` is the load-bearing field. It is the React key, and the `data-ctl` hook
- * on both the SVG control and its legend row — which is what lets a hover or a
- * focus on either one light up the other with no JavaScript at all. Adding a
- * control means adding geometry for that id in `ControllerMap`. Note that the
- * stick CLICKS are their own ids: physically they are the same stick, but they
- * are separate inputs with separate actions, so they get separate rows and the
- * pad lights the stick's cap rather than its well.
- */
-
 export type ControlGroup = "sticks" | "face" | "shoulder" | "system" | "dpad";
 
 export type BindingSource = "gdd" | "alvaro" | "proposed";
@@ -57,29 +19,18 @@ export type ControlId =
   | "view"
   | "menu";
 
-/** The second meaning a context-sensitive input takes on. */
 export interface CombatAction {
   action: string;
-  /** Why the input carries two meanings. The design point, in one line. */
   why: string;
 }
 
 export interface ControlBinding {
   id: ControlId;
-  /** The input as the diagram names it — "LB", "Y", "Left stick", "L3". */
   input: string;
-  /** Short code drawn on the pad itself. Two characters where possible. */
   code: string;
   group: ControlGroup;
-  /** The action. On a context-sensitive input, the out-of-combat one. */
   action: string;
-  /** Present only where the input changes meaning in combat. */
   combat?: CombatAction;
-  /**
-   * Why the binding is interesting, where it is. Only the rows that carry a
-   * design point have one — most of a control scheme is just a control scheme,
-   * and annotating every row would bury the few that matter.
-   */
   note?: string;
   source: BindingSource;
 }
@@ -92,7 +43,6 @@ export const groupLabels: Record<ControlGroup, string> = {
   system: "System",
 };
 
-/** Reading order for the legend. */
 export const groupOrder: readonly ControlGroup[] = [
   "sticks",
   "face",
@@ -118,7 +68,7 @@ export const controlBindings: readonly ControlBinding[] = [
     group: "sticks",
     action: "Stealth",
     note:
-      "Clicking the stick you already move with. Going quiet is a change to how you walk, so it is bound to the thing that walks.",
+      "Having the stealth in the moving button allows the player to access this move quickly.",
     source: "alvaro",
   },
   {
@@ -136,7 +86,7 @@ export const controlBindings: readonly ControlBinding[] = [
     group: "sticks",
     action: "Lock on to target",
     note:
-      "The same symmetry: the camera stick takes the camera decision. Clicking it hands the framing to the game.",
+      "The same reason as stealth: Easy access while moving the camera.",
     source: "alvaro",
   },
 
@@ -148,7 +98,7 @@ export const controlBindings: readonly ControlBinding[] = [
     group: "face",
     action: "Heal",
     note:
-      "The harp. Healing is something the knight stops and plays, so it sits on a face button. There is no inventory to open and no potion to select.",
+      "The harp. Healing requires the player to fully stop. There is no inventory.",
     source: "gdd",
   },
   {
@@ -166,7 +116,7 @@ export const controlBindings: readonly ControlBinding[] = [
     group: "face",
     action: "Dodge",
     note:
-      "Unlimited, with i-frames. No block is bound anywhere on the pad — defence had to be a movement, so it is bound like one.",
+      "Unlimited, with i-frames, to keep agressiveness in the combat system.",
     source: "gdd",
   },
   {
@@ -186,7 +136,7 @@ export const controlBindings: readonly ControlBinding[] = [
     group: "shoulder",
     action: "Raise weapon",
     note:
-      "The navigation gesture: lift the sword, catch the moonlight, and the blade points the way. A shoulder button, not a map screen.",
+      "The navigation animation: lift the sword, catch the moonlight and the light points the way.",
     source: "gdd",
   },
   {
@@ -198,7 +148,7 @@ export const controlBindings: readonly ControlBinding[] = [
     combat: {
       action: "Parry",
       why:
-        "The bow is an opener, drawn on something that has not noticed you yet. That leaves the trigger free the moment a fight starts, so parry takes it over — the highest-risk defensive move goes under the idle finger.",
+        "",
     },
     source: "alvaro",
   },
@@ -219,7 +169,7 @@ export const controlBindings: readonly ControlBinding[] = [
     combat: {
       action: "Strong melee",
       why:
-        "LT's reasoning, mirrored. Picking things up is not a combat verb, so the right trigger is idle in a fight. Light on the bumper, heavy on the trigger, which is where a hand already expects them.",
+        "",
     },
     source: "alvaro",
   },
@@ -230,9 +180,9 @@ export const controlBindings: readonly ControlBinding[] = [
     input: "D-pad",
     code: "+",
     group: "dpad",
-    action: "The spell grid — select and cast a quantum ability",
+    action: "The spell grid. It selects and casts a Quantum Ability",
     note:
-      "Four directions for the four abilities the player is ever given: Master of Matters, Instability, Inversion and Elliptical Force. The fifth is enemy-exclusive, so it has no key on the grid. The decision is stated in the control scheme rather than in prose.",
+      "Four directions for the abilities the player is ever given: Master of Matters, Instability, Inversion and Elliptical Force.",
     source: "alvaro",
   },
 
@@ -263,26 +213,21 @@ export const controlsById = Object.fromEntries(
 
 export const controlsIntro = {
   kicker: "The pad",
-  title: "Every action, on one controller",
+  title: "The Controller Map",
   body:
-    "The scheme the game is built to. Three things are worth reading off it. There is no block " +
-    "button anywhere on the pad. Wayfinding and healing sit on controls you can reach mid-fight, " +
-    "where a conventional RPG would bury both in menus. And two triggers change meaning the " +
+    "Things are worth reading off it. There is no block " +
+    "button and two triggers change meaning the " +
     "moment a fight starts.",
-  hint: "Point at a control on the pad, or at a row in the list — the other lights up, and its reasoning reads out here.",
+  hint: "Point at a control on the pad, or at a row in the list. It will light up with its design choices.",
 };
 
-/** Explains the two-meaning rows, once, above the legend. */
 export const contextNote = {
   label: "Triggers that change in combat",
   body:
-    "LT and RT each carry two actions. Out of combat they are the bow and the hands. Neither is " +
-    "any use once a fight starts, so the same two fingers become parry and the heavy attack. " +
-    "Nothing is modal and nothing is toggled — the game already knows whether you are fighting, " +
-    "because the same combat state drives the health readout.",
+    "LT and RT depend on the player's status to change its actions." +
+    "The game already knows whether you are fighting.",
 };
 
-/** The pad's text equivalent, for the SVG's description. */
 export const padSummary =
   "A stylised modern gamepad. Across the top, the left trigger is Use bow, or Parry once a fight " +
   "has started, and the left bumper is Raise weapon; the right trigger is Pick up item or throw " +

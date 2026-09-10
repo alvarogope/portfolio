@@ -11,56 +11,8 @@ import {
 } from "@/content/moon-knight-controls";
 import InteractiveHint from "./InteractiveHint";
 
-/**
- * Moon-Knight — the control scheme, drawn rather than screenshotted.
- *
- * This replaces a flat PNG of the design document's controls page. The reason
- * to code it is not fidelity, it is that a picture of a mapping cannot be read
- * by a screen reader, cannot be themed, and cannot be corrected without opening
- * an image editor. Here the mapping is data
- * (`src/content/moon-knight-controls.ts`), the pad is geometry, and the two are
- * joined by an id.
- *
- * THE PAD AND THE MAPPING ARE SHOWN TOGETHER. That is the whole layout brief,
- * and it is why the section breaks out wider than the page column: pad on the
- * left, the full fifteen-row mapping on the right, both on screen at once and
- * cross-lit so pointing at either end shows you the other. Two earlier passes
- * failed it — a sticky pad slid down the page and pinned itself under the site
- * header, and a pad stacked above a long list meant you could never see a
- * binding and its button at the same moment.
- *
- * THE ROWS STAY SHORT SO THE PAIRING FITS. Each row is an input and an action
- * and nothing else. The reasoning — why parry is on the trigger, why there is
- * no block anywhere — goes to the readout under the pad, which shows whichever
- * control is currently lit. That keeps fifteen rows beside a 400px pad instead
- * of a 1700px column beside it.
- *
- * ALL OF IT IS CSS. Every control carries `data-ctl="<id>"` on the pad AND on
- * its legend row, and the generated rules at the foot do three things off a
- * single `:has()` per id: light the pad control, light the row, and swap the
- * readout to that control's detail. No state, no client component, no
- * JavaScript shipped. Same technique the planetary dossier uses.
- *
- * THE READOUT IS DECORATIVE, THE ROWS ARE NOT. Only one detail block is
- * revealed at a time and the rest are `visibility: hidden`, which takes them
- * out of the accessibility tree — so the readout is `aria-hidden` and the notes
- * also live inside their own rows, clipped visually on wide screens and shown
- * inline below 900px where there is no readout. Assistive tech gets every note
- * from the list; nobody gets the same sentence twice.
- *
- * THE STICK CLICKS ARE THEIR OWN CONTROLS. L3 and R3 are separate inputs with
- * separate actions, so they are separate rows — and on the pad they light the
- * stick's CAP while the stick's own row lights the well around it. Two targets,
- * one physical stick, which is how the hardware works.
- */
-
-/* ---- pad geometry -------------------------------------------------------
-   Symmetric about x = 320. The viewBox is cropped to the art: the drawing runs
-   roughly x 64..576 and y 24..374, so the box below adds an even margin around
-   that rather than framing empty space. */
 const VB = { x: 52, y: 12, w: 536, h: 374 };
 
-/** The body silhouette. Mirrored about 320 so the two grips match exactly. */
 const BODY =
   "M 200 100 Q 320 86 440 100 " +
   "C 508 104 548 140 560 202 " +
@@ -75,15 +27,11 @@ const BODY =
 const LEFT_STICK = { x: 198, y: 172, r: 40 };
 const RIGHT_STICK = { x: 398, y: 258, r: 40 };
 const DPAD = { x: 252, y: 258, arm: 17, thick: 15 };
-/* Cluster centre. Constrained on three sides and worth writing down: Y must
-   clear the shell's top curve (about y=102 at this x), X must clear the Menu
-   button, and B must stay inside the right edge (about x=554 at this y). */
 const FACE = { x: 462, y: 170, r: 19, spread: 38 };
 const GUIDE = { x: 320, y: 132, r: 15 };
 const VIEW = { x: 274, y: 164, r: 11 };
 const MENU = { x: 366, y: 164, r: 11 };
 
-/** The four face buttons, in Xbox positions. */
 const FACE_BUTTONS: { id: ControlId; dx: number; dy: number }[] = [
   { id: "y", dx: 0, dy: -FACE.spread },
   { id: "x", dx: -FACE.spread, dy: 0 },
@@ -91,13 +39,11 @@ const FACE_BUTTONS: { id: ControlId; dx: number; dy: number }[] = [
   { id: "a", dx: 0, dy: FACE.spread },
 ];
 
-/** Well = the stick itself; cap = the click. Two controls, one component. */
 const STICKS: { id: ControlId; press: ControlId; s: typeof LEFT_STICK }[] = [
   { id: "left-stick", press: "left-stick-press", s: LEFT_STICK },
   { id: "right-stick", press: "right-stick-press", s: RIGHT_STICK },
 ];
 
-/** A plus sign, drawn as one path so the d-pad is a single hit target. */
 function dpadPath(cx: number, cy: number, arm: number, t: number) {
   return (
     `M ${cx - t} ${cy - t - arm} H ${cx + t} V ${cy - t} H ${cx + t + arm} ` +
@@ -106,12 +52,6 @@ function dpadPath(cx: number, cy: number, arm: number, t: number) {
   );
 }
 
-/**
- * Three rules per control, all hanging off one `:has()`. Written out because
- * CSS cannot compare an ancestor's state against a descendant's attribute
- * value — the same constraint, and the same solution, as the planetary
- * dossier's focus rules.
- */
 const HIGHLIGHT_RULES = controlBindings
   .map(
     (c) => `
@@ -184,10 +124,7 @@ function Pad() {
       {/* ---- guide, inert: it belongs to the console, not the game ---- */}
       <circle className="cm__guide" cx={GUIDE.x} cy={GUIDE.y} r={GUIDE.r} />
 
-      {/* ---- system buttons ----
-              The glyphs are drawn rather than typed: a font may not carry the
-              two characters, and a missing glyph on a control diagram reads as
-              a bug. View is the two panes, Menu the three bars. */}
+      {/* ---- system buttons ---- */}
       <g className="cm__small" data-ctl="view">
         <circle cx={VIEW.x} cy={VIEW.y} r={VIEW.r} />
         <g className="cm__glyph">
@@ -248,12 +185,6 @@ export default function ControllerMap() {
         <p className="mono cm__kicker">{controlsIntro.kicker}</p>
         <h3 className="cm__title">{controlsIntro.title}</h3>
         <p className="cm__body-copy">{controlsIntro.body}</p>
-        {/* The shared chip replaces this component's own quiet mono line. It
-            is the same control the world map, the beat chart and the quantum
-            sigil wear, so a reader learns the convention once instead of
-            four times. `controlsIntro.hint` still renders inside the readout
-            below as its idle state, which is where it belongs — it describes
-            what the empty panel is waiting for. */}
         <InteractiveHint
           what="control"
           does="the pad and the list light up together, and its reasoning reads out beside them"
@@ -267,8 +198,7 @@ export default function ControllerMap() {
             <Pad />
           </figure>
 
-          {/* Decorative: every sentence in here is also inside its own legend
-              row, where assistive tech can reach it whatever is hovered. */}
+          {/* Decorative */}
           <div className="cm__readout" aria-hidden="true">
             <p className="cm__readout-idle">{controlsIntro.hint}</p>
             {controlBindings.map((c) => (

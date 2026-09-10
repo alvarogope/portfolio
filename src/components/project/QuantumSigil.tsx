@@ -92,8 +92,6 @@ export default function QuantumSigil({
           </div>
         </div>
 
-        <p className="mono qs-hint">The sigil, from the game&apos;s design document.</p>
-
         {unplaced.length > 0 && (
           <div className="qs-unplaced">
             <p className="mono qs-unplaced-key">Not on the sigil</p>

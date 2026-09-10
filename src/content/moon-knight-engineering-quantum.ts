@@ -1,23 +1,32 @@
    export const quantumToolkit = {
     title: "The Quantum Toolkit",
-    tagline: "Real quantum simulation for game combat, in C++, and proven statistically.",
+    tagline: "Real quantum simulation for game combat, in C++ and proven statistically.",
   
   
     intro:
-      "Moon-Knight's combat mechanics are built on real quantum computing principles. Not quantum-flavoured randomness, but an actual quantum simulation: a C++17 library wrapping Quantum++ and Eigen that models qubits, gates, measurement, and noise, then exposes a small game-facing API so the mechanics can be tuned by designers who never touch the physics. This page is the engineering behind the design.",
+      "In my game Moon-knight, I designed combat mechanics that were built in quantum computing principles trying to demostrate " +
+      "how this technology could change this media. At the beginning I only designed them and couldn't code it, but I started " +
+      "programming this combat system using a C++17 library that wraps Quantum++ and Eigen that models qubits, gates, measurements, " +
+      "and noise. Then exposes an API so designers could tune them without knowing what quantum computing is." +
+      "This page is the engineering behind the design.",
   
     architecture: {
-      title: "Why a density matrix, not a state vector",
+      title: "Why a Density Matrix and Not a State Vector",
       body:
-        "The load-bearing decision in the whole toolkit is that the core register stores a density matrix, not a state vector. A state vector can only represent pure states, and the Instability mechanic depends on decoherence: a projectile whose outcome distribution degrades toward classical randomness the longer it stays in flight. Only a density matrix can express that partially-mixed state. Everything else follows from that choice.",
+        "The primary decision of the whole toolkit is that the core register stores a density matrix and not a state vector. " +
+        "Because a state vector can only represent pure states and my mechanics, like Instability, require decoherence: a sphere " +
+        "whose outcome is randomised the longer it stays in flight. A density matrix is the only thing that could express a partially mixed state.",
     },
   
     sections: [
       {
         kicker: "Design to physics",
-        title: "Designers think in probabilities; the library speaks radians",
+        title: "Designers Think in Probabilities. The Toolkit in Radians",
         body:
-          "A designer authoring the Instability ability wants to say 'this thrower is 70% likely to amplify.' The register needs an Ry rotation angle. The bridge is one function: given a probability p, it returns the angle that makes the measured outcome match p exactly. Gameplay tuning stays in gameplay units; the quantum layer stays hidden. The projectile is genuinely undecided between four effects while airborne, and environmental noise erodes the thrower's skill-bias toward a flat 25/25/25/25 the longer it flies.",
+          "As a designer, when I developed the abilities I wanted to say 'this sphere is 70% likely to amplify.' However, when I started " +
+          "this work, I needed a Ry rotation angle. The connection between these two is to give a probability p that returns the angle that " +
+          "measures the outcome and matches it to p. The design works in the sense that the projectile is undecided between four effects " +
+          "while its casted and the environmental noise is a flat 25/25/25/25 as long as is casted.",
         code: {
           filename: "src/InstabilitySphere.cpp",
           language: "cpp",
@@ -64,9 +73,10 @@
       },
       {
         kicker: "The physics",
-        title: "Simulating decoherence by hand",
+        title: "Simulating Decoherence by Hand",
         body:
-          "The noise that erodes the projectile is a depolarising channel, written out as the textbook Kraus form rather than pulled from a library helper. It is trace-preserving by construction and drives the qubit toward the maximally mixed state. Measurement is a real projective collapse: the register is replaced by its post-measurement state, so the outcome is irreversible, not a cosmetic dice roll.",
+          "The sphere decays through real quantum noise that were coded from actual physics. When it's measured the outcome is a genuine collapse. " +
+          "It locks the outcome on purpose instead of creating randomness, without breaking video game rules.",
         code: {
           filename: "src/QuantumRegister.cpp",
           language: "cpp",
@@ -99,9 +109,12 @@
       },
       {
         kicker: "The proof",
-        title: "Quantum-correct, not quantum-flavoured",
+        title: "Quantum-Correct",
         body:
-          "The difference between a mechanic that is 'quantum-themed' and one that is quantum-correct is measurable. Each mechanic is validated by a Monte Carlo harness: run it a thousand times and check the empirical frequency against the analytic quantum prediction. The parry mechanic (Inversion) rotates an incoming attack between damage and heal; perfect timing is a full NOT gate, sloppy timing a partial rotation, so the heal chance follows the Born rule exactly. The endpoints are deterministic; the interior points land within one or two standard errors of sin squared.",
+          "What differentiates my designed quantum inspired mechanics with these work is that it is measurable. " +
+          "Each ability is validated by a Monte Carlo control. It runs a thousand times and checks the frequency and compares it to the " +
+          "analytic prediction. The parry mechanic, Inversion, rotates an attack Damage parameter with a Heal, using a NOT gate at the right time, " +
+          "so it follows the Born rule. The endpoints are deterministic and the interior points land within one or two standard errors of sin squared.",
         code: {
           filename: "src/main.cpp",
           language: "cpp",
@@ -129,7 +142,9 @@
     status: {
       title: "Honest status",
       body:
-        "The toolkit maps onto Moon-Knight's five designed mechanics. The core library and two of the five are complete and statistically verified; the third is in progress; two are designed but not yet built. Every finished mechanic is a recombination of the same verified primitives, so the remaining work is composition, not new physics.",
+        "The toolkit is about the Moon-Knight's five designed mechanics. The core library and two of the five are complete and statistically " + 
+        "verified. The third one is in progress still. Two are designed but not yet built. Every finished mechanic is a recombination of the same " + 
+        "verified mechanics, so the remaining work is just composition",
       rows: [
         { component: "QuantumRegister (core library)", ability: "—", state: "Complete · verified" },
         { component: "InstabilitySphere", ability: "Instability", state: "Complete · verified" },

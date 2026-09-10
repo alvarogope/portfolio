@@ -17,10 +17,7 @@ export const metadata: Metadata = {
 export default function QuantumToolkitPage() {
   return (
     <Section>
-      {/* Breadcrumb. This page is the research branch of the engineering
-          page, so the trail runs project → game engineering → here. It was an
-          inline `<nav>` — the fourth hand-maintained copy of one control — and
-          now renders the shared `Breadcrumb` the other three pages use. */}
+
       <Breadcrumb
         items={[
           { label: "Moon-Knight", href: "/moon-knight" },
@@ -125,17 +122,6 @@ export default function QuantumToolkitPage() {
         </div>
       </Reveal>
 
-      {/* No repo link. The toolkit is not published yet, and the data carried
-          a repoUrl of "#" that this block guarded against — so the link never
-          rendered and the field was a dead value pretending to be one. To
-          bring it back: add repoUrl to moonKnightQuantum and restore this
-          block. Same treatment as the unmounted screenshot band on the game
-          engineering page. */}
-
-      {/* THE WAY BACK. This is the deepest page on the site, and until now it
-          ended on a status table with no exit but the browser's back button
-          and a breadcrumb five sections above. Both parents are offered here,
-          in the control every other page under `/moon-knight` ends with. */}
       <Reveal>
         <div
           style={{
@@ -149,15 +135,15 @@ export default function QuantumToolkitPage() {
           <CtaPanel
             kicker="Back one level"
             title="Programming Moon-Knight"
-            body="The game this research was built inside: the boundary between C++ and Blueprint and the five choices that drew it, the combat state machine, the data-driven tuning layer, and the captures from the editor."
+            body="The engineering side of the projet. The limitations of Blueprints translated in C++ and the main code choices. The combat state machine, the data-driven layer and the quantum C++ engine limits."
             href="/moon-knight/engineering"
             linkLabel="Back to the engineering write-up"
             accent="silver"
           />
           <CtaPanel
-            kicker="Back to the project"
+            kicker="Back to the design project"
             title="Moon-Knight"
-            body="The design side: the game running, the five quantum abilities on the design document's own sigil, the creatures they are taught through, the control scheme, the world of Kaelum and the beat chart the game was planned from."
+            body="The design project: video gameplays, the five quantum abilities, the type of enemies, the control scheme, the world of Kaelum and the beat chart the game was planned."
             href="/moon-knight"
             linkLabel="Back to Moon-Knight"
             accent="silver"
@@ -165,12 +151,6 @@ export default function QuantumToolkitPage() {
         </div>
       </Reveal>
 
-      {/* THE RAIL. Until now a subpage navigated by breadcrumb at the top and
-          the panels above at the foot, and by nothing at all in between — on a
-          page this long that meant reaching one end of it before any sideways
-          move was possible. It renders the same control the four project pages
-          carry: pinned to the right gutter above 1560px, and folded into the
-          page here below that, under the panels rather than instead of them. */}
       <Reveal>
         <ProjectNav
           items={moonKnightNavItems}

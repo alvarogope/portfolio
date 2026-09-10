@@ -607,67 +607,76 @@ void AMKPlayerCharacter::Respawn()
     kicker: "From the editor",
     title: "The Blueprints",
     intro:
-      "These captures are the Blueprint half of the split. Some of them are also its history: the combat chain and the sword trace were prototyped as the graphs below and later moved into C++, because iterating a montage window in Blueprint takes seconds and shipping it does not. What survives in Blueprint is what genuinely reads better as a graph than as code — the trees, the tuning, the generation. Click any capture to read it full size.",
+      "These are the Blueprints that I used for the prototype. Some of them are the old blueprints that were eventually moved to " +
+      "the C++, like the combat combo and the sword trace. I built them first in Blueprints to have the build ready firstly and I " +
+      "decided to code them in the C++ later. However, what remains as a Blueprint are the Behaviour Trees, the generation and the tuning. " +
+      "Click fto read in full size.",
     items: [
       {
         id: "bt-standard",
-        label: "Behaviour Tree — standard enemy",
+        label: "Behaviour Tree · Standard Enemy",
         caption:
-          "The patrol / investigate / chase selector, reading the TargetActor and InvestigateLocation keys the C++ controller writes. Still Blueprint: a decision tree is a diagram, and it is easier to reason about as one.",
+          "Patrol / Investigate / Chase selector. It reads the TargetActor and InvestigateLocation that the C++ controller writes. Showing this as a Blueprint because it is easier to understand as a graph.",
         src: "/images/moon-knight/BT_AI.png",
         alt:
           "Unreal Behaviour Tree for the standard enemy: a root selector branching into patrol, investigate and chase sequences, with Blackboard decorators gating each branch.",
       },
       {
         id: "bt-werewolf",
-        label: "Behaviour Tree — werewolf",
+        label: "Behaviour Tree · Werewolf",
         caption:
-          "The boss variant. Same Blackboard contract, different decision structure and a more aggressive chase decorator — which is the point of keeping the contract in C++ and the decisions in the tree.",
+          "The boss class. Same Blackboard with a different decision structure and a more aggressive chase decorator, which is the point of keeping the contract in C++ and the decisions in the tree.",
         src: "/images/moon-knight/BT_Werewolf.png",
         alt:
           "Unreal Behaviour Tree for the werewolf boss: the same Blackboard keys as the standard enemy driving a shallower, more aggressive branch structure.",
       },
       {
         id: "combo-chain",
-        label: "Combo chain — BPC_Attack System",
+        label: "Combo chain · BPC_Attack System",
         caption:
-          "The 4-hit montage sequencing and the combo-continuation gate. Prototyped here, then reimplemented in C++ so the ComboCounter has one owner and the window timing survives a level load.",
+          "The 4-hit montage sequencing and the combo-continuation gate. Prototyped here and then reimplemented in C++ so the ComboCounter is handled in code and the window timing survives the level loading.",
         src: "/images/moon-knight/Combat_System_Blueprints.png",
         alt:
           "The whole BPC_Attack System graph: attack input, montage sequencing, the combo continuation gate, and the stop-combo path, drawn as one Blueprint.",
       },
       {
         id: "sword-trace",
-        label: "Sword trace & ApplyDamage",
+        label: "Sword Trace & ApplyDamage",
         caption:
-          "The weapon trace during the active frames of each swing — sphere radius 12, base damage 20, filtered on a Damageable tag — funnelling into the engine's damage pipeline. The trace stayed Blueprint while it was being tuned and moved to C++ once the numbers stopped changing.",
+          "The weapon trace during the active frames of the swings, a sphere radius of 12, a base damage of 20 with a Damageable tag that comes into the damage system. " +
+          "The trace stayed as a Blueprint while I translated it into C++ once the numbers stopped changing.",
         src: "/images/moon-knight/Sword_Trace.png",
         alt:
           "Blueprint sword trace: a sphere trace along the blade during the active frames, tag-filtered, calling ApplyDamage into Unreal's own damage pipeline.",
       },
       {
         id: "target-lock",
-        label: "Target lock",
+        label: "Target Lock",
         caption:
-          "Lock-on selection and the camera behaviour that follows it: a 200-unit sphere trace against PhysicsBody and Pawn, tag-filtered, storing the actor the camera then tracks.",
+          "The lock is related to the camera, making it a 200-unit sphere trace, so it will never miss. This will lock to PhysicsBody and Pawn " +
+          "bodies.",
         src: "/images/moon-knight/Target_Lock.png",
         alt:
           "Blueprint target-lock graph: a 200-unit sphere trace selecting the nearest tagged enemy and storing it for the camera to follow.",
       },
       {
         id: "wb-equipment",
-        label: "WB_Equipment — the equipment screen",
+        label: "WB_Equipment · The Equipment Screen",
         caption:
-          "The one conventional menu in the game, and the reason the diegetic thesis on the main page is scoped rather than absolute. Swapping a sword for a bow is a rare, deliberate act performed in safety, and it wants a grid you can compare in — not a gesture. Built in UMG against the DB_Items data table, so a new item is a row rather than a widget.",
+          "The conventional menu in the game, as in the end I had to create a menu so the players could interact even though the design " +
+          "document seeks a diegetic design due to the lack of time. This menu needed a grid for understanding the equipment system. " +
+          "It was built in UMG against the DB_Items data table, so every new item is a row and not a widget.",
         src: "/images/moon-knight/WB_Equipment.png",
         alt:
           "The WB_Equipment widget open in Unreal's UMG designer: a canvas with the character viewport in the centre and labelled Bow, Sword and Armor equipment slots down the right, with the widget hierarchy listed beside it.",
       },
       {
         id: "pcg-forest",
-        label: "PCG forest — the level's ground cover",
+        label: "PCG Forest · The Level's Ground Cover",
         caption:
-          "Three labelled lanes — rocks, trees, grass — each sampling the terrain and then differencing against the others so nothing spawns inside anything else. This is the graph behind the claim on the level-design page that the forest is authored, not randomised, and it is the clearest case for the split: nobody wants to tune this in code.",
+          "The three objects are rocks, trees and gras, molding the terrain and differenciating them so it wouldn't spawn inside anything else. " +
+          "This graph is related to the level design section stating that the forest is handmade and not randomised." +
+          "It was made in Blueprints because nobody would want to tune this in code having Blueprints.",
         src: "/images/moon-knight/PCG_Forest.png",
         alt:
           "Unreal PCG graph with three lanes for rocks, trees and grass, each sampling the landscape and differencing against the other lanes so placements never overlap.",
@@ -678,10 +687,12 @@ void AMKPlayerCharacter::Respawn()
   /* ---------------------------------------------------------------- */
 
   quantumCta: {
-    kicker: "The research branch",
-    title: "The quantum research built within this game",
+    kicker: "Researching Quantum Computing",
+    title: "The Quantum Research for Building this Game",
     body:
-      "The systems on this page are the foundation — the shipped, playable game. Built inside it is a second, more specialised piece of engineering: five combat abilities derived from real quantum computing principles, backed by a hand-written C++17 simulation library and validated statistically against the analytic predictions. That work has its own deep-dive.",
+      "The programming in this page is the foundation of the game. Making it shipped and playable. However, there is a second " +
+      "piece of engineering: The Quantum Abilities using actual quantum programming, using a C++17 library called QPP " +
+      "and validting it statiscally. This work has its own deep-dive.",
     href: "/moon-knight/engineering/quantum",
     linkLabel: "Read the quantum toolkit deep-dive",
   },

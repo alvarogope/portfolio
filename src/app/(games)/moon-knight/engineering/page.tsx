@@ -478,9 +478,9 @@ export default function GameEngineeringPage() {
             linkLabel={g.quantumCta.linkLabel}
           />
           <CtaPanel
-            kicker="Back to the project"
+            kicker="Back to the design project"
             title="Moon-Knight"
-            body="The design side: the game running, the five quantum abilities on the design document's own sigil, the creatures they are taught through, the control scheme, the world of Kaelum and the beat chart the game was planned from."
+            body= "The design project: video gameplays, the five quantum abilities, the type of enemies, the control scheme, the world of Kaelum and the beat chart the game was planned."
             href="/moon-knight"
             linkLabel="Back to Moon-Knight"
             accent="silver"

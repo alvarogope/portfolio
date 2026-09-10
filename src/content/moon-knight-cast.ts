@@ -1,34 +1,3 @@
-/**
- * Moon-Knight — Dramatis Personae, the cast.
- *
- * Five characters, and for each one the DESIGN PURPOSE: why they exist and
- * what they do for the player. The role line is the "who"; the purpose is the
- * portfolio value, so both are first-class fields rather than one blob.
- *
- * The cast is not a flat list — it is three bands, and `band` is what sorts a
- * character into one:
- *
- *   - "player"    THE MOON-KNIGHT, rendered large. Carries a `contrast`, the
- *                 silent-warrior / heals-with-an-instrument opposition that is
- *                 the headline character-design decision on this project.
- *   - "encounter" DEATH and ORPHEUS — the two figures the world sends at you.
- *   - "mirror"    THE WITCH and THE DRUID, always a PAIR. They carry `stance`
- *                 and `answer` because they are the same question asked twice:
- *                 see `mirrorTruth` below, which is the question itself.
- *
- * `accent` is a render token, not lore — it tints the plate behind the
- * character's emblem and their stance label. Every accent is checked to clear
- * AA as small text on the card panel (#0F141E), because the mono labels are
- * actually painted with it.
- *
- * `id` is the React key AND the emblem selector in `CastEmblems.tsx`
- * (`EMBLEMS[id]`), so adding a character means adding an emblem of that id.
- *
- * WHERE THE CARDS RENDER. On the deep-dive subpage, `/moon-knight/world` —
- * not on the main page any more. Anything linking to a character must use
- * `castHref` at the foot of this file, never a bare fragment.
- */
-
 import { deepDivePath } from "./moon-knight-deep-dive";
 
 export type CastId = "moon-knight" | "death" | "witch" | "druid" | "orpheus";
@@ -39,26 +8,19 @@ interface CastBase {
   id: CastId;
   name: string;
   band: CastBand;
-  /** Mono label above the name — their function, not their job title. */
   title: string;
-  /** One line, scannable: who they are and what they do to you. */
   role: string;
-  /** The design/narrative reasoning. The reason this section exists. */
   designPurpose: string;
-  /** Plate wash + stance ink. AA-checked on the card panel. */
   accent: string;
 }
 
-/** One half of the Moon-Knight's contrast. Two of these, set against each other. */
 export interface ContrastFace {
-  /** Three or four words. Read at a glance, in mono. */
   label: string;
   note: string;
 }
 
 export interface PlayerMember extends CastBase {
   band: "player";
-  /** [how they read, how they heal] — the opposition, in that order. */
   contrast: readonly [ContrastFace, ContrastFace];
 }
 
@@ -68,9 +30,7 @@ export interface EncounterMember extends CastBase {
 
 export interface MirrorMember extends CastBase {
   band: "mirror";
-  /** One word: the position they hold. Printed large — it is the pairing. */
   stance: string;
-  /** What they would have you do about the truth, in their own voice. */
   answer: string;
 }
 
@@ -85,24 +45,25 @@ export const castPlayer: PlayerMember = {
   title: "The Player",
   accent: "#B8C4D4",
   role:
-    "The silent protagonist. Fully customizable, and wakes with no memory — so the player learns the world at exactly the speed the character does.",
+    "It is fully customizable and wakes up with no memory, making the player and the character learn about the world at the same time.",
   contrast: [
     {
-      label: "Never speaks",
+      label: "Does not speak",
       note:
-        "No dialogue and no voice. The focus is on feeling, and silence under armour reads as a hard, capable warrior before the player has done anything.",
+        "Not giving them a dialogue or voice makes the player to focus on the feeling and gameplay. Seeming a very hard and tough warrior.",
     },
     {
       label: "Heals by playing",
       note:
-        "The one way back to full strength is to stop, sit, and play an instrument — the harp Death hands you in the first minutes.",
+        "To contrast with the silence, healing is through playing an instrument given by Death. Adding a romantic touch to the character.",
     },
   ],
   designPurpose:
-    "The contrast is the point. A mute warrior whose only act of self-repair is music opens a gap between how the character looks and how they mend, and that gap is where empathy gets in — you stop reading the armour and start reading the person inside it. Amnesia does the same job for the world: neither of you knows Kaelum yet.",
+    "The focus is on the contrast between these two. A character that doesn't talk and only expresses themselves through music " +
+    "can create a great empathy in players, trying to forget the armour and focusing on the character. The amnesia serveds the same purpose.",
 };
 
-/* --------------------------------------------------------- the encounters -- */
+/* --------------------------------------------------------- Death / Orpheus -- */
 
 export const castEncounters: readonly EncounterMember[] = [
   {
@@ -112,7 +73,8 @@ export const castEncounters: readonly EncounterMember[] = [
     title: "First NPC",
     accent: "#CE727E",
     role:
-      "A veiled woman in white. She gives you the harp that heals and revives you every time you fall; her energy runs through the willow trees. Her purpose is never stated.",
+      "A veiled woman in white. She gives you the harp that heals and she revives you every time you die in the game. " + 
+      "Her energy runs through the willow trees. Her purpose is never unknown.",
     designPurpose:
       "She is the mystery engine — she feeds the player just enough context to move and never enough to understand, so the questions stay open for three acts. At the end she embraces you, and her white dress stains with blood, like a white rose.",
   },
@@ -120,90 +82,66 @@ export const castEncounters: readonly EncounterMember[] = [
     id: "orpheus",
     name: "Orpheus",
     band: "encounter",
-    title: "The Cost",
+    title: "The Warrior",
     accent: "#E07A45",
     role:
-      "A fallen soldier in the Woods village who gave up the life you are still living. He introduces the jousting minigame; win it and he points you at a hidden menace in the woods.",
+      "A fallen soldier in The Woods village who gave up being a knight." + 
+      "He introduces the jousting minigame, when you finish jousting, he points you at the enemies in The Woods.",
     designPurpose:
-      "A quiet gut-punch. He is always there to talk to — right up until you come back after his warning and find him dead and the village burned. He is the proof that the world takes what the player does not protect.",
+      "If you follow his story, he thanks you for eliminating the enemies in The Woods. But, when you come back to him " +
+      "you find him dead with wounds made by thieves. His villaged is reduced to ashes.",
   },
 ];
 
-/* ------------------------------------------------------------- the mirror -- */
+/* ------------------------------------------------------------- The Witch / Druid -- */
 
-/** The question the Witch and the Druid are two answers to. */
 export const mirrorTruth = {
-  label: "The same truth",
-  line: "The gods are a gap in what people can explain — and both of them work it out.",
-  note: "Two answers. The player follows one.",
+  label: "The God of the gaps",
+  line: "Two ways for the player to solve the world",
 } as const;
 
-/** Always rendered as a pair, in this order: inquiry on the left, faith on the right. */
 export const castMirror: readonly [MirrorMember, MirrorMember] = [
   {
     id: "witch",
     name: "The Witch",
     band: "mirror",
-    title: "The Seeker",
+    title: "",
     stance: "Inquiry",
     accent: "#57A886",
     role:
-      "Follows you from the Woods to the Misty Lands to the Frozen Mountains, granting the powers of the old gods — the quantum mechanics.",
-    answer: "Tear down the order of the gods. Begin an age of humankind.",
+      "She follows you from The Woods to the Misty Lands to the Frozen Mountains so the player can upgrade everytime they need.",
+    answer: "Kill the gods. Begin the Age of Humankind.",
     designPurpose:
-      "She embodies inquiry: she digs at the world's mysteries instead of settling for the god-of-the-gaps fallacy. Follow her the whole way and she opens an ending no other path reaches.",
+      "She mbraces the mysteries of the world and facing against the gods. If you follow her quest she opens up one ending",
   },
   {
     id: "druid",
     name: "The Druid",
     band: "mirror",
-    title: "The Keeper",
+    title: "",
     stance: "Faith",
     accent: "#C9A961",
     role:
-      "In the Misty Lands village he asks your help against the banshees; succeed and he reveals the hidden second fortress. He returns later in the Frozen Mountains.",
-    answer: "Keep it buried. Society is not ready to be told.",
+      "In a Misty Lands village, he asks for help for defeating banshees. If you agree, he reveals a hidden fortress. He comes back in the Frozen Mountains",
+    answer: "Keep it buried. The wolrd is not ready to know.",
     designPurpose:
-      "He sees the same fallacy the Witch does and asks you to bury it anyway — caution as a whole worldview, not cowardice. Built as her deliberate mirror, so choosing between them is choosing how knowledge should be held.",
+      "He discovers the fallacy, but asks you to hide it for keeping the state of the world. Is your call if you want to hide the information or expose it.",
   },
 ];
 
-/** Reading order for the section: player, then the two you meet, then the pair. */
 export const moonKnightCast: readonly CastMember[] = [
   castPlayer,
   ...castEncounters,
   ...castMirror,
 ];
 
-/** DOM anchor for a character's card, so anything can deep-link to one. */
 export const castAnchor = (id: CastId) => `cast-${id}`;
 
-/**
- * A LINK to a character's card — path included.
- *
- * WHY THIS IS NOT JUST `#${castAnchor(id)}` ANY MORE. The cast used to sit on
- * the main page, so a fragment alone reached it. It now lives on the deep-dive
- * subpage while the world map — which links to five characters by name — stayed
- * on the main page, so those links have to carry the path or they resolve to a
- * fragment that does not exist on the page the reader is standing on. That
- * failure is SILENT: no error, no console line, the page simply does not
- * scroll. Every link to a cast card must be built here.
- *
- * `base` is a parameter rather than a constant so the subpage itself can pass
- * `""` and keep its own internal links as plain fragments — same-page links
- * should not force a navigation.
- */
 export const castHref = (id: CastId, base: string = deepDivePath) =>
   `${base}#${castAnchor(id)}`;
 
 const castById = new Map(moonKnightCast.map((c) => [c.id, c]));
 
-/**
- * One character by id. Added for the world map, which indexes Kaelum by place
- * and needs to turn "the Witch is in the Woods" into her name and her anchor
- * without holding a second copy of her. Same shape as `getMarker` and
- * `getBeatLevel` so the three read alike.
- */
 export function getCastMember(id: CastId): CastMember {
   const member = castById.get(id);
   if (!member) throw new Error(`Unknown Moon-Knight cast member: ${id}`);

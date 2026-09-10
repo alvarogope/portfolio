@@ -1,7 +1,7 @@
 export const diegeticThesis = {
   kicker: "The philosophy",
   line:
-    "The health, the progression and healing are all diegetic systems in the game.",
+    "The health, the progression and healing are alive in the world.",
   body:
     "These could have been a bar or an overlay, but instead they are an action in the wolrd. " +
     "By making the systems like this, I prioritise the player's on screen view and makes the game have more amplitude." +

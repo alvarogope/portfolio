@@ -9,31 +9,6 @@ import {
 } from "@/content/moon-knight-cast";
 import { CastEmblem, CastSprite } from "./CastEmblems";
 
-/**
- * Moon-Knight — Dramatis Personae, the cast.
- *
- * Reads `src/content/moon-knight-cast.ts`. Every card answers two questions in
- * this order: who is this, and WHY DO THEY EXIST. The second is the reason the
- * section is on a portfolio at all, so "Design purpose" is a labelled block on
- * every card rather than a trailing sentence.
- *
- * Three bands, and each band's shape is an argument:
- *
- *   1. THE PLAYER, given the full width. The Moon-Knight's contrast — silent
- *      warrior, heals by playing an instrument — is rendered as two cells with
- *      an axis between them, so the opposition is visible before it is read.
- *   2. WHO FINDS YOU. Death and Orpheus, two ordinary cards side by side.
- *   3. THE MIRROR. The Witch and the Druid are NOT two cards that happen to be
- *      adjacent: the truth they share is printed once above them as a
- *      keystone, and the pair hangs off it facing each other across a centre
- *      axis — she right-aligned, he left-aligned, emblems flanking the line.
- *      Under the breakpoint the axis rotates flat and both cards return to
- *      left-aligned, which keeps the pairing without asking a phone to render
- *      a diptych.
- *
- * Server component. The only motion is a hover lift, off under reduced motion.
- */
-
 export default function Cast({ kicker }: { kicker?: string }) {
   const [witch, druid] = castMirror;
 
@@ -42,22 +17,18 @@ export default function Cast({ kicker }: { kicker?: string }) {
       <CastSprite />
 
       <header className="mkc__head">
-        {kicker && <p className="mono mkc__kicker">{kicker}</p>}
         <div className="mkc__title-row">
           <span className="mkc__rule mkc__rule--l" aria-hidden />
           <h2 id="mkc-title" className="mkc__title">
-            The Cast
+            The Characters
           </h2>
           <span className="mkc__rule mkc__rule--r" aria-hidden />
         </div>
-        <p className="mono mkc__subtitle">Dramatis Personae · Moon-Knight</p>
       </header>
 
       {/* ---- band 1: the player ---- */}
       <div className="mkc__band">
-        <h3 className="mono mkc__band-name">The One You Play</h3>
         <span className="mkc__band-rule" aria-hidden />
-        <p className="mono mono-note mkc__band-note">Silence, by design</p>
       </div>
 
       <article
@@ -99,9 +70,8 @@ export default function Cast({ kicker }: { kicker?: string }) {
 
       {/* ---- band 2: the encounters ---- */}
       <div className="mkc__band">
-        <h3 className="mono mkc__band-name">Who Finds You</h3>
+        <h3 className="mono mkc__band-name">The NPCs</h3>
         <span className="mkc__band-rule" aria-hidden />
-        <p className="mono mono-note mkc__band-note">One gives, one is taken</p>
       </div>
 
       <div className="mkc__encounters">
@@ -112,15 +82,12 @@ export default function Cast({ kicker }: { kicker?: string }) {
 
       {/* ---- band 3: the mirror ---- */}
       <div className="mkc__band">
-        <h3 className="mono mkc__band-name">Two Answers, One Truth</h3>
         <span className="mkc__band-rule" aria-hidden />
-        <p className="mono mono-note mkc__band-note">The Witch · The Druid</p>
       </div>
 
       <div className="mkc__keystone">
         <p className="mono mkc__keystone-label">{mirrorTruth.label}</p>
         <p className="mkc__keystone-line">{mirrorTruth.line}</p>
-        <p className="mono mkc__keystone-note">{mirrorTruth.note}</p>
         <span className="mkc__keystone-stem" aria-hidden />
       </div>
 
@@ -176,12 +143,6 @@ function EncounterCard({ member }: { member: EncounterMember }) {
   );
 }
 
-/**
- * One half of the diptych. `side` says which way it faces: the left card packs
- * itself against the centre axis (text right-aligned, emblem last) and the
- * right card mirrors it. Both fall back to plain left-aligned cards under the
- * breakpoint — see `.mkc__mirror` in the stylesheet.
- */
 function MirrorCard({ member, side }: { member: MirrorMember; side: "left" | "right" }) {
   return (
     <article

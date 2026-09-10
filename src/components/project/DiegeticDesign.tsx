@@ -11,46 +11,6 @@ import {
 import { HarpMark, ROSE_INNER, ROSE_PETAL, ROSE_PETAL_INNER, ROSE_PETALS } from "./CastEmblems";
 import { MoonPhaseGlyph } from "./MoonPhaseGlyph";
 
-/**
- * Moon-Knight — diegetic design: the mechanics that hide in the world.
- *
- * The thesis of the project and the thing this whole page is arguing, so the
- * section is built to be READ AS AN ARGUMENT rather than browsed as a feature
- * list. Five bands, in the order the case is made:
- *
- *   1. THE THESIS. One line. Everything under it is evidence.
- *   2. THE MOON HUD, with the phase strip as the headline visual — full, half,
- *      new, running silver to scarlet. It is the fastest possible statement of
- *      the idea: that is a health bar, and it is also the moon.
- *   3. THREE MORE. Roses, sword, harp — XP, navigation and healing, each an
- *      object instead of a menu.
- *   4. INVISIBLE DESIGN. Four decisions the player never sees, where the
- *      reasoning IS the content, so they render as decision → why.
- *   5. CORE COMBAT, kept deliberately small and last.
- *
- * EVERY MECHANIC SHOWS ITS REASONING. The `Why` line is marked in every card,
- * because a reader skimming only the gold `Why` labels should still finish the
- * section with the argument. Prose-led on purpose: the emblems are punctuation
- * at 1.6–2rem, never diagrams, and the one thing allowed to be big is the moon
- * strip.
- *
- * NOTHING HERE MOVES. No state, no effects — a server component, and the only
- * transition in the file is a hover hairline that reduced-motion turns off.
- *
- * MOTIFS ARE SHARED, NOT COPIED. The moon comes from `MoonPhaseGlyph` (the
- * same discs the narrative arc is crowned with) and the rose and harp come
- * from `CastEmblems` (Death's flower, the Moon-Knight's instrument). Only the
- * sword is drawn here, and it is built to the bestiary's sword grammar —
- * tapered blade, barred guard, round pommel — so it reads as the same weapon.
- */
-
-/* ---- local paint --------------------------------------------------------
-   The cast emblems hang their gradients off ids registered by `CastSprite`,
-   which must render exactly once per page and is owned by the `Cast` section.
-   This section re-uses the cast's GEOMETRY but not its sprite: the ids below
-   are its own, so the emblems here render identically no matter where on the
-   page this section is placed, and nothing breaks if the cast is moved or
-   dropped. */
 function DiegeticSprite() {
   return (
     <svg width="0" height="0" aria-hidden focusable="false" style={{ position: "absolute" }}>
@@ -59,9 +19,6 @@ function DiegeticSprite() {
           <stop offset="0%" stopColor="#E8D9A8" />
           <stop offset="100%" stopColor="#B8974E" />
         </linearGradient>
-        {/* The stain, painted as one rect clipped to the whole flower — never
-            petal by petal, which would tint each of them evenly and just read
-            as a pink rose instead of a white one taking blood from the hem. */}
         <linearGradient id="mkd-bleed" x1="0" y1="0" x2="0" y2="1">
           <stop offset="0%" stopColor="#8E2F3C" stopOpacity="0" />
           <stop offset="30%" stopColor="#9E2F3B" stopOpacity="0.32" />
@@ -81,16 +38,6 @@ function DiegeticSprite() {
   );
 }
 
-/* ---- emblems ------------------------------------------------------------ */
-
-/**
- * THE WHITE ROSE, TAKING THE STAIN — one point of XP.
- *
- * Death's flower from `CastEmblems`, same petals, cropped to the head and a
- * stub of stem. It is deliberately the identical mark: the rose you stain is
- * hers, and a second, subtly different rose on the same page would quietly
- * break that.
- */
 function RoseGlyph() {
   return (
     <svg className="mkd-emblem" viewBox="20 14 80 84" aria-hidden="true" focusable="false">
@@ -121,24 +68,6 @@ function RoseGlyph() {
   );
 }
 
-/**
- * THE SWORD, CATCHING MOONLIGHT — the navigation gesture.
- *
- * The only mark drawn from scratch in this section, because the bestiary's
- * swords are baked into character compositions at absolute coordinates and
- * there is no single blade to import. So it is built to the same grammar
- * instead — tapered blade, barred guard, short grip, round pommel — and held
- * upright the way the bestiary holds them.
- *
- * The mark has to say moon → blade → direction in three elements, because at
- * 2rem there is room for three. So the moon is set clear to the LEFT rather
- * than behind the blade, and the three rays leave the right edge and fan out
- * with the light falling off: light arrives from the moon, the steel throws it,
- * and it points somewhere. That is the mechanic — the blade tells you which
- * way to walk. Silhouetting the sword across the moon was the first attempt
- * and it failed: the reflection rays then had to cross the disc, and moon and
- * light became one grey smudge at emblem size.
- */
 function SwordGlyph() {
   return (
     <svg className="mkd-emblem" viewBox="0 0 48 48" aria-hidden="true" focusable="false">
@@ -158,13 +87,6 @@ function SwordGlyph() {
   );
 }
 
-/**
- * THE HARP — how the player heals.
- *
- * Lifted whole from the Moon-Knight's own emblem in `CastEmblems`, cropped to
- * the instrument. Same gold frame over lighter strings, because at this size
- * one ink for both loses the strings and the mark stops being a harp.
- */
 function HarpGlyph() {
   return (
     <svg className="mkd-emblem" viewBox="70 14 48 84" aria-hidden="true" focusable="false">
@@ -173,7 +95,6 @@ function HarpGlyph() {
   );
 }
 
-/** The moon HUD's own card mark: the three phases, small, in a row. */
 function MoonHudGlyph() {
   return (
     <span className="mkd-emblem mkd-emblem--row" aria-hidden="true">
@@ -197,13 +118,6 @@ function Glyph({ glyph }: { glyph: DiegeticGlyph }) {
   return <MoonHudGlyph />;
 }
 
-/* ---- a mechanic --------------------------------------------------------- */
-
-/**
- * `replaces` sits above the title as the fastest read in the card: the thing
- * the mechanic is NOT. The contrast between that line and the title is the
- * whole argument in two lines, before any prose is asked for.
- */
 function MechanicCard({ mechanic: m, hero = false }: { mechanic: DiegeticMechanic; hero?: boolean }) {
   return (
     <li className={`mkd-card${hero ? " mkd-card--hero" : ""}`}>
@@ -211,9 +125,9 @@ function MechanicCard({ mechanic: m, hero = false }: { mechanic: DiegeticMechani
         <Glyph glyph={m.glyph} />
       </span>
       <p className="mono mkd-replaces">
-        <span className="mkd-replaces-key">Replaces</span>
+        <span className="mkd-replaces-key">Replaces the</span>
         <span className="mkd-replaces-sep" aria-hidden="true">
-          ·
+          
         </span>
         <span className="mkd-replaces-val">{m.replaces}</span>
       </p>
@@ -227,23 +141,6 @@ function MechanicCard({ mechanic: m, hero = false }: { mechanic: DiegeticMechani
   );
 }
 
-/* ---- the section -------------------------------------------------------- */
-
-/**
- * TWO DEPTHS, ONE OWNER — the `Split` discipline.
- *
- * `full` is this section as it has always been, and it renders on the deep-dive
- * subpage. `short` renders on the condensed main page: the thesis, the scope
- * note, the moon-HUD strip, and the four mechanics as `replaces → title` pairs.
- *
- * THE SHORT VARIANT WRITES NOTHING OF ITS OWN. Every string it shows is a key
- * exported by `moon-knight-diegetic.ts` — `diegeticThesis.line`,
- * `diegeticThesis.scope`, `moonHudStates`, `m.replaces`, `m.title`. There is no
- * hand-typed summary anywhere in this file, because a hand-typed summary is a
- * second copy and second copies drift. The short version shows FEWER FIELDS of
- * the same data, never different words about it. Same rule the opening
- * statement band follows.
- */
 export default function DiegeticDesign({
   variant = "full",
 }: {
@@ -263,8 +160,6 @@ export default function DiegeticDesign({
           <p className="mkd-thesis-body">{diegeticThesis.body}</p>
         </section>
 
-        {/* The fastest statement of the idea, and the only big visual the
-            short version keeps: that is a health bar, and it is also the moon. */}
         <section className="mkd-band">
           <h3 className="mono mkd-band-title">The health bar is a moon</h3>
           <ol className="mkd-hud">
@@ -285,8 +180,6 @@ export default function DiegeticDesign({
           </ol>
         </section>
 
-        {/* The four systems as the contrast alone: what it replaces, and what
-            it became. The `mechanic` and `why` prose stays on the subpage. */}
         <section className="mkd-band">
           <h3 className="mono mkd-band-title">Four systems, dissolved</h3>
           <ul className="mkd-swaps">
@@ -305,9 +198,6 @@ export default function DiegeticDesign({
           </ul>
         </section>
 
-        {/* Where the principle STOPS. Kept in the short version deliberately:
-            a scoped claim a reader can check is worth more than a sweeping one
-            they can disprove with the equipment screen. */}
         <section className="mkd-band mkd-band--scope">
           <h3 className="mono mkd-band-title">Where it stops</h3>
           <p className="mkd-thesis-body">{diegeticThesis.scope}</p>
@@ -329,9 +219,6 @@ export default function DiegeticDesign({
         <p className="mkd-thesis-body">{diegeticThesis.body}</p>
       </section>
 
-      {/* 1b — the limit of the claim, said immediately after it rather than
-          buried at the foot: a reader who is going to find the equipment menu
-          should find the caveat first. */}
       <section className="mkd-band mkd-band--scope">
         <h3 className="mono mkd-band-title">Where it stops</h3>
         <p className="mkd-thesis-body">{diegeticThesis.scope}</p>
@@ -341,9 +228,6 @@ export default function DiegeticDesign({
       <section className="mkd-band">
         <h3 className="mono mkd-band-title">The health bar is a moon</h3>
 
-        {/* The one big visual in the section. Full → half → new, left to right,
-            with the rule under the plates running silver to scarlet: the strip
-            is a gradient, and reading it left to right is losing the fight. */}
         <ol className="mkd-hud">
           {moonHudStates.map((s) => (
             <li key={s.phase} className={`mkd-hud-state is-${s.phase}`}>
@@ -376,11 +260,7 @@ export default function DiegeticDesign({
         </ul>
       </section>
 
-      {/* 4 — the dual skill tree, which the role bullet claims and nothing on
-          any page showed. Sits directly under the mechanic cards because the
-          rose card one band up is the currency this spends: two weapon lines,
-          one currency, and only the two facts the repo actually records. See
-          docs/section-ownership-map.md, Gap G3. */}
+      {/* 4 — the dual skill tree */}
       <section className="mkd-band">
         <h3 className="mono mkd-band-title">{skillTree.kicker}</h3>
         <p className="mkd-thesis-body">{skillTree.line}</p>
@@ -446,10 +326,6 @@ export default function DiegeticDesign({
 }
 
 
-/* ----------------------------------------------------------------- styles --
-   Extracted so BOTH variants can render them. The short main-page version
-   and the full subpage version share one stylesheet by construction, which
-   is what stops the two depths from diverging visually. */
 function DiegeticStyles() {
   return (
         <style>{`

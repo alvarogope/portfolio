@@ -1,26 +1,3 @@
-/**
- * Moon-Knight — Liber Monstrorum, the bestiary.
- *
- * Two tiers. The four BOSSES each own one of the game's quantum combat
- * mechanics — the fight is how the player is taught that mechanic, so the
- * mechanic name here matches an entry in `moonKnight.abilities`
- * (`src/content/games/moon-knight.ts`). The six ENEMIES are read instead
- * through gameplay + weakness: the bestiary is the thing "Master of Matters"
- * asks the player to learn before committing an element.
- *
- * Stage 2 hangs an interactive world map off this file. Every entry therefore
- * carries a stable `id` (`BestiaryId`) which is:
- *   - the React key and the DOM anchor id (`#bestiary-<id>`), so the map can
- *     deep-link to a card;
- *   - the emblem selector in `Bestiary.tsx` (`EMBLEMS[id]`);
- *   - the intended key for a future `mapRegion` lookup, kept OUT of this file
- *     so region data can be added without touching the codex.
- * Look entries up with `bestiaryById` rather than indexing the arrays.
- *
- * `accent` is a render token, not lore: it tints the stained-glass wash behind
- * that creature's emblem and its rules. Same idea as `Planet.accent`.
- */
-
 export type BestiaryId =
   | "werewolf"
   | "centaur-knight"
@@ -35,14 +12,11 @@ export type BestiaryId =
 
 export type BestiaryTier = "boss" | "enemy";
 
-/** Elemental answer the player is meant to find. `none` = no elemental key. */
 export type WeaknessType = "fire" | "lightning" | "light" | "ice" | "melee" | "none";
 
-/** Selects the schematic plate drawn beneath a boss's mechanic text. */
 export type MechanicDiagramId = "instability" | "matters" | "inversion" | "elliptical";
 
 export interface QuantumMechanic {
-  /** Matches the player-facing ability of the same name. */
   name: string;
   description: string;
   diagram: MechanicDiagramId;
@@ -50,7 +24,6 @@ export interface QuantumMechanic {
 
 export interface Weakness {
   type: WeaknessType;
-  /** Always rendered as text beside the icon — the icon never carries it alone. */
   label: string;
 }
 
@@ -59,21 +32,9 @@ interface BestiaryEntryBase {
   name: string;
   tier: BestiaryTier;
   lore: string;
-  /** Stained-glass wash + rule tint for this creature's arch. */
   accent: string;
 }
 
-/**
- * A real capture of the fight, shown on the boss's own card.
- *
- * ABSORBED FROM THE OLD GALLERY. `boss-werewolf.png` used to sit in a strip of
- * thumbnails at the foot of the page, roughly 1,500 words away from this entry,
- * under a caption that re-explained the fight the card already describes. A
- * picture of a boss belongs on that boss, where it is evidence for the claim
- * beside it rather than decoration at the end — so the gallery dissolved and
- * the image came here. `caption` says what the SHOT shows; it must never
- * restate `lore` or `mechanic`, which the card already owns.
- */
 export interface BossPlate {
   src: string;
   alt: string;
@@ -82,35 +43,22 @@ export interface BossPlate {
 
 export interface BossEntry extends BestiaryEntryBase {
   tier: "boss";
-  /** 1-based order the player meets them in. */
   rank: number;
-  /** Tier label on the card: "Boss I" … "Boss IV", or "Final" for the last. */
   rankLabel: string;
   isFinal: boolean;
-  /** One line, set in italics under the name. Drawn from the lore below. */
   epithet: string;
   mechanic: QuantumMechanic;
-  /** Present only where a capture of the fight exists. Most have none. */
   plate?: BossPlate;
 }
 
 export interface EnemyEntry extends BestiaryEntryBase {
   tier: "enemy";
-  /** How it fights, in one line. */
   gameplay: string;
   weakness: Weakness;
 }
 
 export type BestiaryEntry = BossEntry | EnemyEntry;
 
-/**
- * ENCOUNTER ORDER, AND IT IS THE NARRATIVE'S. Werewolf on the prologue island,
- * Wizard-Knight in the Woods, Centaur-Knight in the Misty Lands, Sun-Knight in
- * the Frozen Mountains — the order `narrativeActs` and `fullStory` set, the
- * beat chart plays and the world map indexes by place. `rank` and the array
- * position say the same thing twice, so they move together; nothing sorts by
- * `rank`, which means the array is what a reader actually sees.
- */
 export const bestiaryBosses: readonly BossEntry[] = [
   {
     id: "werewolf",
@@ -120,15 +68,15 @@ export const bestiaryBosses: readonly BossEntry[] = [
     rankLabel: "Boss I",
     isFinal: false,
     accent: "#8E2F3C",
-    epithet: "Sent as a weapon, kept as a prisoner.",
+    epithet: "The first big challenge.",
     mechanic: {
       name: "Instability",
       description:
-        "Throws an orb that changes speed and size on contact with anything in the environment.",
+        "Throws an orb that changes speed and size on contact with anything from the environment.",
       diagram: "instability",
     },
     lore:
-      "Sent by the Sun-Knight, captured and tortured. It tries to turn on the soldiers it came with.",
+      "It was sent by the Sun-Knight, captured and tortured. It turns on the soldiers it came to get you.",
     plate: {
       src: "/images/moon-knight/boss-werewolf.png",
       alt: "The Werewolf boss encounter at night: the knight facing the werewolf, with the named enemy health bar across the top of the screen.",
@@ -144,14 +92,14 @@ export const bestiaryBosses: readonly BossEntry[] = [
     rankLabel: "Boss II",
     isFinal: false,
     accent: "#6F5AA8",
-    epithet: "Once a servant of the moon.",
+    epithet: "Once a servant of the Moon.",
     mechanic: {
       name: "Inversion",
       description:
-        "An undodgeable area attack. The player must counter it with their own Instability attack — and he counters yours in turn.",
+        "An undodgeable attack. The player must parry it with the Instability ability. He can counters yours in return.",
       diagram: "inversion",
     },
-    lore: "Once a servant of the moon, he turned against it.",
+    lore: "Once a servant of the moon, he turned against her.",
   },
   {
     id: "centaur-knight",
@@ -161,14 +109,14 @@ export const bestiaryBosses: readonly BossEntry[] = [
     rankLabel: "Boss III",
     isFinal: false,
     accent: "#3B7A5E",
-    epithet: "Hidden all his life, until alchemy made a place for him.",
+    epithet: "Hidden all his life, until he found alchemy.",
     mechanic: {
       name: "Master of Matters",
       description: "Attacks using several states of matter.",
       diagram: "matters",
     },
     lore:
-      "Hid all his life because of his appearance. He found acceptance in alchemy, and alchemy drew him to the Sun-Knight's side.",
+      "Hid all his life because of his appearance. He found strength in alchemy, and alchemy drew him to the Sun-Knight.",
   },
   {
     id: "sun-knight",
@@ -182,11 +130,11 @@ export const bestiaryBosses: readonly BossEntry[] = [
     mechanic: {
       name: "Elliptical Force",
       description:
-        "Throws two orbs — sun and moon — on elliptical arcs that collide on the player.",
+        "Throws two orbs, a Sun and a Moon, on elliptical circles that collide on the player.",
       diagram: "elliptical",
     },
     lore:
-      "Once the Moon-Knight's partner, he betrayed the moon. The last fight in the game: every soldier the player has cut down marched under his sigil.",
+      "Once the Moon-Knight's partner, he betrayed the Moon. The last fight in the game: every soldier the player has fight against followed him.",
   },
 ];
 
@@ -197,9 +145,9 @@ export const bestiaryEnemies: readonly EnemyEntry[] = [
     tier: "enemy",
     accent: "#B8C4D4",
     gameplay:
-      "Sword in the right hand, melee with the left. Their combat mirrors the Moon-Knight's, but they cannot dodge, jump or heal.",
+      "Equipped with a sword. The combat is similar to the player's. They cannot dodge, jump or heal.",
     weakness: { type: "none", label: "No elemental weakness" },
-    lore: "Fallen soldiers under the Sun-Knight's control.",
+    lore: "Fallen soldiers following the Sun-Knight.",
   },
   {
     id: "wooden-humanoids",
@@ -208,14 +156,14 @@ export const bestiaryEnemies: readonly EnemyEntry[] = [
     accent: "#8A6A3B",
     gameplay: "Camouflage as trees. Spear in melee, thrown splinters at range.",
     weakness: { type: "fire", label: "Fire" },
-    lore: "Once soldiers, who rested here so long they became tree-like.",
+    lore: "Once soldiers, who rested so long they became tree-like.",
   },
   {
     id: "amphibian-humanoids",
     name: "Amphibian Humanoids",
     tier: "enemy",
     accent: "#3B7A5E",
-    gameplay: "Swamp-dwellers. Strong-arm melee, and a long tongue at range.",
+    gameplay: "Swamp dwellers. Strong-arm melee and a long tongue at range.",
     weakness: { type: "melee", label: "Cut the tongue mid-attack" },
     lore: "Once swamp people, who adapted to survive.",
   },
@@ -225,18 +173,18 @@ export const bestiaryEnemies: readonly EnemyEntry[] = [
     tier: "enemy",
     accent: "#C9A961",
     gameplay:
-      "Hide in the fog and lure with a beautiful song, then strike with claws. The fastest enemy in the game.",
+      "They hide in the fog and sing a beautiful song to attrack you then strike with claws. The fastest enemy in the game.",
     weakness: { type: "lightning", label: "Lightning" },
-    lore: "Cursed royalty, turned monstrous.",
+    lore: "Cursed royalty, turned into monsters.",
   },
   {
     id: "ghosts",
     name: "Ghosts",
     tier: "enemy",
     accent: "#E8E6DF",
-    gameplay: "Invisible until you are very close. The fog moves oddly to warn you.",
+    gameplay: "Invisible until very close. The fog moves oddly to warn you.",
     weakness: { type: "light", label: "Light" },
-    lore: "Cursed royalty, turned monstrous.",
+    lore: "Cursed royalty, turned into monsters.",
   },
   {
     id: "ice-knights",
@@ -244,22 +192,19 @@ export const bestiaryEnemies: readonly EnemyEntry[] = [
     tier: "enemy",
     accent: "#8FD4E8",
     gameplay:
-      "Wizards strike at range and are weak to melee; knights close in with ice swords and are weak to ice.",
+      "Wizards strike at range and are weak to melee. Knights attack with ice swords.",
     weakness: { type: "ice", label: "Ice, or melee for the wizards" },
     lore: "Revived by star-seeking wizards to protect them.",
   },
 ];
 
-/** Bosses first, in encounter order, then the common ranks. */
 export const moonKnightBestiary: readonly BestiaryEntry[] = [
   ...bestiaryBosses,
   ...bestiaryEnemies,
 ];
 
-/** Stage 2: resolve a map pin to its codex entry. */
 export const bestiaryById: Readonly<Record<BestiaryId, BestiaryEntry>> = Object.fromEntries(
   moonKnightBestiary.map((e) => [e.id, e])
 ) as Record<BestiaryId, BestiaryEntry>;
 
-/** DOM anchor for an entry's card, so the Stage-2 map can deep-link to it. */
 export const bestiaryAnchor = (id: BestiaryId) => `bestiary-${id}`;

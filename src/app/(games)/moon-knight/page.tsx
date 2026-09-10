@@ -43,7 +43,6 @@ export default function MoonKnightPage() {
     <>
       {/* Hero */}
       <div className="mk-hero">
-        {/* Tuning lives in `SubpageBackdrop`. */}
         <Aurora
           className="mk-hero-aurora"
           {...MOON_KNIGHT_AURORA}
@@ -64,20 +63,6 @@ export default function MoonKnightPage() {
                 <p style={{ marginTop: "1rem" }}>{p.vision}</p>
                 <p style={{ marginTop: "1rem", color: "var(--color-mist)" }}>{p.built}</p>
               </div>
-              <dl className="mk-scoreboard">
-                {[
-                  { n: p.abilities?.length ?? 0, label: "quantum abilities" },
-                  { n: beatLevels.length, label: "levels, planned & built" },
-                  { n: bestiaryBosses.length, label: "bosses, each teaching a mechanic" },
-                  { n: bestiaryEnemies.length, label: "enemy types" },
-                  { n: narrativeActs.length, label: "acts, one per land" },
-                ].map((row) => (
-                  <div key={row.label} className="mk-scoreboard-row">
-                    <dt className="mono mk-scoreboard-n">{String(row.n).padStart(2, "0")}</dt>
-                    <dd className="mk-scoreboard-label">{row.label}</dd>
-                  </div>
-                ))}
-              </dl>
             </div>
           </div>
         </Reveal>

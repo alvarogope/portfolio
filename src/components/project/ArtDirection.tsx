@@ -7,14 +7,10 @@ import {
   type SublimeTranslation,
 } from "@/content/moon-knight-art";
 
-function TranslationCard({ item, index }: { item: SublimeTranslation; index: number }) {
+function TranslationCard({ item }: { item: SublimeTranslation }) {
   return (
     <li className={`mka-move${item.key ? " is-key" : ""}`}>
       <p className="mono mka-move-head">
-        <span className="mka-move-index">{String(index + 1).padStart(2, "0")}</span>
-        <span className="mka-move-sep" aria-hidden="true">
-          ·
-        </span>
         <span className="mka-move-tag">{item.tag}</span>
         {item.crossover && <span className="mka-move-chip">{item.crossover}</span>}
       </p>
@@ -34,8 +30,6 @@ export default function ArtDirection({
   variant?: "full" | "short";
 }) {
   const short = variant === "short";
-  const keyMove = sublimeTranslations.find((t) => t.key) ?? sublimeTranslations[0];
-  const keyMoveIndex = sublimeTranslations.indexOf(keyMove);
 
   return (
     <div className="mka">
@@ -51,43 +45,42 @@ export default function ArtDirection({
           ))}
       </section>
 
-      {/* 2 — what the principle decides. */}
-      <section className="mka-band">
-        <h3 className="mono mka-band-title">
-          {short ? "Where the look becomes difficulty" : "How the Sublime works in the design"}
-        </h3>
-        <ol className="mka-moves">
-          {short ? (
-            <TranslationCard key={keyMove.id} item={keyMove} index={keyMoveIndex} />
-          ) : (
-            sublimeTranslations.map((item, i) => (
-              <TranslationCard key={item.id} item={item} index={i} />
-            ))
-          )}
-        </ol>
-      </section>
-
-      {/* 3 — the one visual */}
-      <section className="mka-band">
-        <h3 className="mono mka-band-title">The palette</h3>
-        <div className="mka-frame">
-          <ul className="mka-swatches">
-            {palette.map((c) => (
-              <li key={c.hex} className="mka-swatch">
-                <span
-                  className="mka-chip"
-                  style={{ background: c.hex }}
-                  aria-hidden="true"
-                />
-                <span className="mono mka-hex">{c.hex}</span>
-                <span className="mka-swatch-name">{c.name}</span>
-                <span className="mka-swatch-role">{c.role}</span>
-              </li>
+      {/* 2 — what the principle decides. Deep dive only: the translation
+         moves, darkness included, are owned by /moon-knight/world. */}
+      {!short && (
+        <section className="mka-band">
+          <h3 className="mono mka-band-title">How the Sublime works in the design</h3>
+          <ol className="mka-moves">
+            {sublimeTranslations.map((item) => (
+              <TranslationCard key={item.id} item={item} />
             ))}
-          </ul>
-        </div>
-        <p className="mka-lede">{paletteNote}</p>
-      </section>
+          </ol>
+        </section>
+      )}
+
+      {/* 3 — the one visual. Deep dive only, next to the moves it explains. */}
+      {!short && (
+        <section className="mka-band">
+          <h3 className="mono mka-band-title">The palette</h3>
+          <div className="mka-frame">
+            <ul className="mka-swatches">
+              {palette.map((c) => (
+                <li key={c.hex} className="mka-swatch">
+                  <span
+                    className="mka-chip"
+                    style={{ background: c.hex }}
+                    aria-hidden="true"
+                  />
+                  <span className="mono mka-hex">{c.hex}</span>
+                  <span className="mka-swatch-name">{c.name}</span>
+                  <span className="mka-swatch-role">{c.role}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <p className="mka-lede">{paletteNote}</p>
+        </section>
+      )}
 
       {/* 4 — framing and composition, decision */}
       {!short && (
@@ -213,8 +206,6 @@ export default function ArtDirection({
           margin: 0;
           font-size: 0.70rem;
         }
-        .mka-move-index { color: var(--mka-quiet); }
-        .mka-move-sep { color: var(--mka-edge); }
         .mka-move-tag {
           color: var(--color-silver);
           letter-spacing: 0.16em;

@@ -118,6 +118,40 @@ function Glyph({ glyph }: { glyph: DiegeticGlyph }) {
   return <MoonHudGlyph />;
 }
 
+/* The decisions with no surface at all. One band, two render sites: inside the
+   full diegetic write-up on the deep dive, and on its own on the main page,
+   where the page heading already names it. */
+function InvisibleDesignBand({ heading = true }: { heading?: boolean }) {
+  return (
+    <section className="mkd-band">
+      {heading && <h3 className="mono mkd-band-title">Invisible design</h3>}
+      <p className="mkd-lede">
+        Four key design decisions and their reason.
+      </p>
+      <dl className="mkd-decisions">
+        {invisibleDesign.map((d) => (
+          <div key={d.id} className="mkd-decision">
+            <dt className="mkd-decision-name">{d.decision}</dt>
+            <dd className="mkd-decision-why">
+              <span className="mono mkd-why-key">Why</span>
+              {d.why}
+            </dd>
+          </div>
+        ))}
+      </dl>
+    </section>
+  );
+}
+
+export function InvisibleDesign() {
+  return (
+    <div className="mkd">
+      <InvisibleDesignBand heading={false} />
+      <DiegeticStyles />
+    </div>
+  );
+}
+
 function MechanicCard({ mechanic: m, hero = false }: { mechanic: DiegeticMechanic; hero?: boolean }) {
   return (
     <li className={`mkd-card${hero ? " mkd-card--hero" : ""}`}>
@@ -283,23 +317,7 @@ export default function DiegeticDesign({
       </section>
 
       {/* 5 — decisions with no surface at all */}
-      <section className="mkd-band">
-        <h3 className="mono mkd-band-title">Invisible design</h3>
-        <p className="mkd-lede">
-          Four key design decisions and their reason.
-        </p>
-        <dl className="mkd-decisions">
-          {invisibleDesign.map((d) => (
-            <div key={d.id} className="mkd-decision">
-              <dt className="mkd-decision-name">{d.decision}</dt>
-              <dd className="mkd-decision-why">
-                <span className="mono mkd-why-key">Why</span>
-                {d.why}
-              </dd>
-            </div>
-          ))}
-        </dl>
-      </section>
+      <InvisibleDesignBand />
 
       {/* 6 — the generic verbs, kept small on purpose */}
       <section className="mkd-band">

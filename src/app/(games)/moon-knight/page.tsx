@@ -18,7 +18,7 @@ import {
 import MoonKnightAudio from "@/components/project/MoonKnightAudio";
 import Bestiary from "@/components/project/Bestiary";
 import WorldMap from "@/components/project/WorldMap";
-import DiegeticDesign from "@/components/project/DiegeticDesign";
+import DiegeticDesign, { InvisibleDesign } from "@/components/project/DiegeticDesign";
 import ControllerMap from "@/components/project/ControllerMap";
 import ArtDirection from "@/components/project/ArtDirection";
 import AudioDesign from "@/components/project/AudioDesign";
@@ -303,7 +303,7 @@ export default function MoonKnightPage() {
         {/* 8 — UI DESIGN */}
         <Reveal>
           <div style={{ marginTop: "5rem" }} id="diegetic-design">
-            <SectionHeading kicker="UI Design" title="The Design Lives in the World" />
+            <SectionHeading kicker="UI and Main Design" title="The Main Design Decisions" />
             <p style={{ color: "var(--color-mist)", maxWidth: "35rem", marginTop: "1.5rem", marginBottom: "1.75rem" }}>
               The Health Bar is the moon on the knight&apos;s back. The Experience is a white rose stained in
               the boss&apos;s blood. The map player knows where to go by raising the sword and reflecting the moonlight.
@@ -372,9 +372,19 @@ export default function MoonKnightPage() {
               />
             </div>
 
+        {/* 10 — INVISIBLE DESIGN */}
+        <Reveal>
+          <div style={{ marginTop: "5rem" }}>
+            <SectionHeading kicker="Invisible Design" title="The Decisions With No Interface" />
+            <InvisibleDesign />
+          </div>
+        </Reveal>
+
+
+
             <div style={{ marginTop: "2rem" }}>
               <RampLink href={deepDiveHref("diegetic")}>
-                The Full Diegetic UI Design. Every system&apos;s decision
+                The Full Diegetic UI and Systems Design decision
               </RampLink>
             </div>
           </div>
@@ -442,7 +452,7 @@ export default function MoonKnightPage() {
           </div>
         </Reveal>
 
-        {/* 10 — Development Issuess. */}
+        {/* 11 — Development Issuess. */}
         {p.designChallenge && (
           <Reveal>
             <div style={{ marginTop: "5rem" }}>
@@ -475,7 +485,7 @@ export default function MoonKnightPage() {
           </Reveal>
         )}
 
-        {/* 11 — The Audio and Music Design. */}
+        {/* 12 — The Audio and Music Design. */}
         <Reveal>
           <div style={{ marginTop: "5rem" }}>
             <SectionHeading kicker="Audio Design" title="The Soundtrack" />

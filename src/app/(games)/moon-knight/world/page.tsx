@@ -166,7 +166,7 @@ export default function MoonKnightWorldPage() {
           id={deepDiveAnchors.jousting}
           style={{ marginTop: "5rem", scrollMarginTop: "2rem" }}
         >
-          <SectionHeading kicker="07 · A Side Feature" title="The Jousting Minigame" />
+          <SectionHeading kicker="A MiniGame" title="The Jousting Minigame" />
           <p
             style={{
               color: "var(--color-mist)",
@@ -175,8 +175,7 @@ export default function MoonKnightWorldPage() {
               marginBottom: "1.75rem",
             }}
           >
-            The Woods still keeps the duelling tradition of a fallen noble house. Two riders, two
-            lances, and one moment to decide.
+            An old duelling tradition that is shown to the Moon-Knight.
           </p>
           <Jousting />
         </div>
@@ -188,7 +187,7 @@ export default function MoonKnightWorldPage() {
           id={deepDiveAnchors.expansions}
           style={{ marginTop: "5rem", scrollMarginTop: "2rem" }}
         >
-          <SectionHeading kicker="08 · And Beyond" title="Where the World Goes Next" />
+          <SectionHeading kicker="Expansions" title="Potential DLCs" />
           <p
             style={{
               color: "var(--color-mist)",
@@ -197,9 +196,8 @@ export default function MoonKnightWorldPage() {
               marginBottom: "1.75rem",
             }}
           >
-            Two expansion concepts, each grown from a quantum mechanic the game already has.
-            Unbuilt, and kept here as evidence of the same thing the project argues throughout:
-            that these systems generate story on their own.
+            I thought of two potential expansions. Each will focus on a quantum mechanic already in the game.
+            They were kept only in the Design Document as a way to show the market potential of the game.
           </p>
           <Expansions />
         </div>
@@ -216,17 +214,17 @@ export default function MoonKnightWorldPage() {
           }}
         >
           <CtaPanel
-            kicker="Back to the project"
+            kicker="Back to the Design Project"
             title="Moon-Knight"
-            body="The built work: the quantum combat systems, the creatures they are taught through, the control scheme, the world of Kaelum, the beat chart the game was planned from, and the engine limit that turned into a C++ toolkit."
+            body="The design project: video gameplays, the five quantum abilities, the type of enemies, the control scheme, the world of Kaelum and the beat chart the game was planned."
             href="/moon-knight"
             linkLabel="Back to Moon-Knight"
             accent="silver"
           />
           <CtaPanel
-            kicker="The other subpage"
-            title="Game Engineering"
-            body="How the game is actually built: what lives in Blueprint and what lives in C++, the combat state machine, the data-driven tuning layer, and captures from the editor."
+            kicker="The Codebase"
+            title="Programming Moon-Knight"
+            body="The engineering side of the projet. The limitations of Blueprints translated in C++ and the main code choices. The combat state machine, the data-driven layer and the quantum C++ engine limits."
             href="/moon-knight/engineering"
             linkLabel="Read the engineering write-up"
             accent="silver"

@@ -4,37 +4,6 @@ import {
   expansionsFraming,
 } from "@/content/moon-knight-expansions";
 
-/**
- * Moon-Knight — two expansion concepts, kept deliberately small.
- *
- * The page's "and beyond": proof that the world and its systems keep giving,
- * placed after the beat chart has finished planning the four levels that exist.
- * Two panels and a framing line, and that is the whole section — these are
- * premises, not built content, and a section that looked as substantial as the
- * pillars above it would be claiming otherwise.
- *
- * WORLDBUILDING, NOT A PLAN TO SHIP. Every card is stamped `Concept`, the
- * framing says "neither of these is built" in its first four words, and there
- * is no roadmap, no ordering, no achievements and nothing resembling a
- * commercial argument anywhere in the section. The Roman numerals are labels,
- * not a release order.
- *
- * THE MECHANIC IS THE POINT, so it is the loudest thing on each card after the
- * title, and it is drawn in the grammar section 03 already taught the reader:
- * a gold left rule with the quantum basis beside it, exactly as the sigil
- * readout in `QuantumSigil` annotates its abilities. A reader who saw those
- * should recognise this one as the same kind of statement and know to read it
- * back up the page.
- *
- * EACH CARD IS AN ARGUMENT IN TWO LINES. The hook is the story; the `Why` line
- * under the rule is why the story counts as evidence. Someone skimming only
- * the titles, the mechanic chips and the gold `Why` labels should still leave
- * with the section's claim intact, which is the same skim contract the
- * diegetic and jousting sections keep.
- *
- * A server component. Nothing here has state, and nothing moves except a
- * hover hairline that reduced-motion turns off.
- */
 export default function Expansions() {
   return (
     <div className="ex">
@@ -59,10 +28,6 @@ export default function Expansions() {
 
             <p className="ex-hook">{x.hook}</p>
 
-            <p className="ex-why">
-              <span className="mono ex-why-key">Why</span>
-              {x.designPoint}
-            </p>
           </li>
         ))}
       </ul>

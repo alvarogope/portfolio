@@ -233,7 +233,7 @@ export default function DiegeticDesign({
         </section>
 
         <section className="mkd-band mkd-band--scope">
-          <h3 className="mono mkd-band-title">Where it stops</h3>
+          <h3 className="mono mkd-band-title">Equipment System</h3>
           <p className="mkd-thesis-body">{diegeticThesis.scope}</p>
         </section>
 

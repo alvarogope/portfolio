@@ -4,11 +4,11 @@ export const diegeticThesis = {
     "The health, the progression and healing are alive in the world.",
   body:
     "These could have been a bar or an overlay, but instead they are an action in the wolrd. " +
-    "By making the systems like this, I prioritise the player's on screen view and makes the game have more amplitude." +
-    "Health is always in the centre and can be seen easily. The progression doesn't tell where to go exactly, just to which direction." +
+    "By making the systems like this, I prioritise the player's on screen view and makes the game have more amplitude. " +
+    "Health is always in the centre and can be seen easily. The progression doesn't tell where to go exactly, just to which direction. " +
     "Making the healing process play an instrument creates a bond with the melody and the player, specially if it's done in the ssafe space.",
   scope:
-    "The equipment system is still a convencional menu. I thought it was the better way to represent the items and the system" +
+    "The equipment system is still a convencional menu. I thought it was the better way to represent the items and the system " +
     "since this is a system that players can take more time to feel comfortable since is interactable and not information that is just read " +
     "like health and direction.",
 } as const;

@@ -30,7 +30,7 @@ export const moonKnight: Project = {
   showcase: "Shown at Develop:Brighton 2025",
 
   vision:
-    "Moon-Knight is a action RPG where I tried to think on how could Quantum Computing principles change RPGs mechanics " + 
+    "Moon-Knight is an action RPG where I tried to think on how could Quantum Computing principles change RPGs mechanics. " + 
     "I designed five combat abilities from these principles and built the systems. " + 
     "It began as my MA dissertation to research what this cutting edge technology could change the designing side of video games, while " + 
     "also design every single aspect of it.",
@@ -59,7 +59,7 @@ export const moonKnight: Project = {
       accent: "scarlet",
     },
     {
-      label: "Diegetic UI",
+      label: "Design Decisions",
       description:
         "I designed the interfac with a diegetic approach. By making the UI like this, " + 
         "I put what the player can see on screen first without adding HUD and just blend these in the game world.",

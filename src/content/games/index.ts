@@ -36,7 +36,7 @@ export const projectNavItems: ProjectNavItem[] = [
 /* THE SUBPAGE RAILS. */
 export const moonKnightNavItems: ProjectNavItem[] = [
   HOME_NAV_ITEM,
-  { label: moonKnight.title, slug: moonKnight.slug, accent: "#c8cde0" },
+  { label: "Back to the design", slug: moonKnight.slug, accent: "#c8cde0" },
   {
     label: "The deep dive",
     slug: "moon-knight-world",

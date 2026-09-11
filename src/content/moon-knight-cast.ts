@@ -74,7 +74,7 @@ export const castEncounters: readonly EncounterMember[] = [
     accent: "#CE727E",
     role:
       "A veiled woman in white. She gives you the harp that heals and she revives you every time you die in the game. " + 
-      "Her energy runs through the willow trees. Her purpose is never unknown.",
+      "Her energy runs through the willow trees. Her purpose is unknown.",
     designPurpose:
       "She is the mystery engine — she feeds the player just enough context to move and never enough to understand, so the questions stay open for three acts. At the end she embraces you, and her white dress stains with blood, like a white rose.",
   },

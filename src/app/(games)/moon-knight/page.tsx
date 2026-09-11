@@ -303,7 +303,7 @@ export default function MoonKnightPage() {
         {/* 8 — UI DESIGN */}
         <Reveal>
           <div style={{ marginTop: "5rem" }} id="diegetic-design">
-            <SectionHeading kicker="UI and Main Design" title="The Main Design Decisions" />
+            <SectionHeading kicker="Main Design" title="The Main Design Decisions" />
             <p style={{ color: "var(--color-mist)", maxWidth: "35rem", marginTop: "1.5rem", marginBottom: "1.75rem" }}>
               The Health Bar is the moon on the knight&apos;s back. The Experience is a white rose stained in
               the boss&apos;s blood. The map player knows where to go by raising the sword and reflecting the moonlight.

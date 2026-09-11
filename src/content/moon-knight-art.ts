@@ -1,16 +1,16 @@
 export const artThesis = {
   kicker: "The Artistic Approach",
   line:
-    "The Sublime: The beauty of experiencing vast and ruined world in solitude.",
+    "The Sublime: The beauty of experiencing a ruined world in solitude.",
   body: [
-    "Moon-Knight is art-directed from a single Romantic idea. The Sublime is the feeling of " +
-      "standing before something immense and indifferent — a drowned coast, a fallen city, a " +
-      "sky with one moon in it — and being moved and frightened at once. Beauty and dread " +
-      "arriving together, and neither of them addressed to you.",
-    "Naming the principle is the easy half. The value is in what it decides: the player travels " +
-      "alone because awe needs solitude, the world is a ruin because the Sublime is the beauty of " +
-      "decay, the palette is cold and night-bound because the game is lit by one moon — and light " +
-      "is scarce because scarcity of light is also a difficulty setting.",
+    "Moon-Knight art direction is based from the Romantic idea of the medieval times. " + 
+      "The Sublime is the feeling of standing before something immense and indifferent " + 
+      "and being attracted and frightened at once. It is not based on medieval art, but " + 
+      "its romantisation during the 19th Century.",
+    "The game is made for making the player feel small and alone. The world the player experiences " +
+      "is in decay, no civilisation remains and everything has been forgotten. Life is not valued " +
+      "because nobody remembers. The moon is always present, but being nearly the only light in a " + 
+      "world that is already dead.",
   ],
 } as const;
 
@@ -28,41 +28,35 @@ export const sublimeTranslations: readonly SublimeTranslation[] = [
   {
     id: "solitude",
     tag: "Solitude",
-    title: "The player goes alone",
+    title: "The player is alone",
     decision:
-      "There is no companion, no party and no escort. The knight crosses every land, every ruin " +
-      "and every dungeon by themself, and the few characters they meet stay where they are.",
+      "The knight goes through the whole game by themself. The NPCs could help you momentarily, but they are alone.",
     why:
-      "The Sublime is a feeling one person has in front of something enormous, and it does not " +
-      "survive company — someone to talk to converts awe into conversation. Enforcing solitude " +
-      "for the whole journey is what makes the scale felt rather than described, and it lets the " +
-      "silence do the work no line of dialogue could.",
+      "The Sublime is a feeling one person has in front of something enormous. I wanted the player to feel in silence." + 
+      "Making this happen makes the scale felt, while silence does the work.",
   },
   {
     id: "ruins",
-    tag: "Ruin & sorrow",
-    title: "A fallen civilisation, reclaimed by nature",
+    tag: "Ruins & past",
+    title: "A civilisation long forgotten",
     decision:
-      "Environments are built as remains: broken fortresses, drowned streets and old-god " +
-      "sanctuaries with roots through the stonework and water where the floor used to be.",
+      "Buildings in the world, broken fortresses, drowned streets and old-god " +
+      "sanctuaries, are just an echo of what once was and no longer be again.",
     why:
-      "Decay is where the Sublime lives — a ruin is beautiful precisely because it is evidence of " +
-      "something ended. Building the world as a place that was already lost before the player " +
-      "arrived means the player walks through mourning instead of being told about it, and every " +
-      "room becomes a piece of narrative that needs no cutscene.",
+      "The feeling of things ending is what made the Sublime real. Death, decay, oblivion " +
+      "and sorrow is what the player finds and making them walk through a world full of this " +
+      "sets the tone perfectly. All things end, wether we like it or not. ",
   },
   {
     id: "palette",
-    tag: "Cold & night-bound",
-    title: "A cold palette, under one moon",
+    tag: "Cold colours",
+    title: "The Colour Palette",
     decision:
-      "Cold colours predominate — void blue, moonlit indigo, stone grey, arcane emerald. The " +
-      "game is set at night, and the warm end of the spectrum is almost entirely withheld.",
+      "Cold colours are predominant. The game is set at night with, basically, not any warmth in colours.",
     why:
-      "Cold reads as distance, indifference and the absence of shelter, which is exactly the " +
-      "emotional register the Sublime asks for. Withholding warmth also gives the few bright " +
-      "moments real value: when light does appear it means something, because the player has " +
-      "been given so little of it.",
+      "The same colour palette appears in the Romantic paintings that inspired the art approach. " +
+      "These colours relate to the topics explored in the sublime, like death and feeling small against a big force. " +
+      "It also amkes contrast easier, like the piano, if warmth appears is fully intentioanl and noticeable by the player.",
   },
   {
     id: "darkness",
@@ -110,35 +104,29 @@ export const visualDecisions: readonly VisualDecision[] = [
     id: "menu-is-place",
     decision: "The main menu is the starting location",
     why:
-      "There is no separate title screen: the menu is the place the game begins, framed so that " +
-      "one image states what the game is about before a button is pressed. The moon, the " +
-      "moon-sword and the willow tree are all in shot, which means the player has already seen " +
-      "the story, the mechanics and the safe place they will keep coming back to — and pressing " +
-      "start simply releases the camera into a world they are already standing in.",
+      "The menu is where the games begin, being also a perfect setting. The moonlight reflecting on the " +
+      "sword, and the sword being placed in a stone, like Excallibur, next to a Willow Tree. " +
+      "Three of the most important motifs of the game and representing the parts of the game: " +
+      "the mechanics, the checkpoints, the story and the progression.",
     pillars: [
-      { subject: "The moon", stands: "Narrative" },
-      { subject: "The moon-sword", stands: "Mechanics & navigation" },
+      { subject: "The moon", stands: "Narrative & Progression" },
+      { subject: "The moon-sword", stands: "Mechanics & Progression" },
       { subject: "The willow tree", stands: "Safety & healing" },
     ],
   },
   {
     id: "scale",
-    decision: "The player character is smaller than the bosses",
+    decision: "The character is smaller most of the enemies",
     why:
-      "Scale is set for readability before it is set for drama. A boss clearly larger than the " +
-      "knight gives its wind-ups more room on screen, so attacks can be read early enough to be " +
-      "answered and the dodge becomes a decision rather than a guess. It happens to serve the " +
-      "Sublime as well — a small figure in front of something enormous — but the reason it " +
-      "survived tuning is that the fights got fairer.",
+      "This serves a double purpose: the player can crearly see the enemy and making them feel small. " +
+      "The enemies' attacks can be read better and players can decide where to dodge to. " +
+      "It realtes to the Sublime too, making it a David agains Goliath situation.",
   },
   {
     id: "visibility",
-    decision: "Camera and character tuned for maximum visibility",
-    why:
-      "Everything the camera and the character silhouette do is aimed at giving the player as " +
-      "much of the world as possible: framing that keeps the ground and the threats in view, and " +
-      "a figure that never eats the space in front of it. Same philosophy as the integrated UI — " +
-      "the player should be reading the world, not fighting the view. In a game this dark, " +
-      "visibility is the resource the design is most careful with.",
+    decision: "Camera and character working towards visibility",
+    why: 
+      "Both the camera and the character work together to give the player as much view as possible. " +
+      "This also relates to the UI Design, prioritisizing what the players see and can scan in one glance of the screen ",
   },
 ];

@@ -119,7 +119,7 @@ export default function MoonKnightWorldPage() {
           id={deepDiveAnchors.art}
           style={{ marginTop: "5rem", scrollMarginTop: "2rem" }}
         >
-          <SectionHeading kicker="05 · Art Direction" title="The Sublime, Made Playable" />
+          <SectionHeading kicker="Art Direction" title="The Sublime" />
           <p
             style={{
               color: "var(--color-mist)",
@@ -128,9 +128,9 @@ export default function MoonKnightWorldPage() {
               marginBottom: "1.75rem",
             }}
           >
-            One aesthetic idea and every rule it decides — how the player travels, what the world
-            is made of, how big the bosses are, and how hard it is to see what is about to kill
-            you.
+            The Sublime and their way of romanticise the medieval ages is what inspired the artstyle direction.
+            This art philosophy adapted to games, exposes the player to solitude, open spaces and big challenges
+            whether internal or external.
           </p>
           <ArtDirection />
         </div>
@@ -142,7 +142,7 @@ export default function MoonKnightWorldPage() {
           id={deepDiveAnchors.score}
           style={{ marginTop: "5rem", scrollMarginTop: "2rem" }}
         >
-          <SectionHeading kicker="06 · Score & Audio Design" title="Music for a Borrowed Moon" />
+          <SectionHeading kicker="Music & Audio Design" title="The Music of Kaelum" />
           <p
             style={{
               color: "var(--color-mist)",
@@ -151,9 +151,8 @@ export default function MoonKnightWorldPage() {
               marginBottom: "1.75rem",
             }}
           >
-            I composed the game&apos;s score, and designed the rules it obeys: where music is
-            allowed to play, what each instrument is permitted to mean, and why most of this game
-            is scored with nothing but footsteps.
+            I composed the game&apos;s music and also designed the reasons behind it. Where music is
+            played, what each instrument to means and why this audio design.
           </p>
           <AudioDesign>
             <MoonKnightAudio />

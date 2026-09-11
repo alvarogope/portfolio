@@ -57,16 +57,14 @@ export const diegeticMechanics: readonly DiegeticMechanic[] = [
     id: "moon-hud",
     glyph: "moon-hud",
     replaces: "Health bar",
-    title: "The Moon Health HUD",
+    title: "The Moon Health Bar",
     mechanic:
-      "The health bar is the moon on the knight's armour. Full health is a full moon; " +
-      "as you take damage it wanes to a half-moon, then to a new moon. There is no " +
-      "floating bar anywhere on screen — your condition is worn on your back.",
+      "The health bar is a moon on the knight's armour. Full health is a full moon, " +
+      "but as you take damage it transforms  into a half-moon, then to a new moon.",
     why:
-      "The most-read stat in the game becomes the game's central symbol. The player " +
-      "checks their health by looking at the character they are already watching, so " +
-      "the eye never leaves the world, and every glance at the moon is one more " +
-      "repetition of the motif the whole story is built on.",
+      "I decided to put the health bar where the player is going to look most of the time since " +
+      "its the stat that is going to be read the most. The player's eye never leaves the world, " +
+      "while also being the most important figure in the game's world.",
   },
   {
     id: "white-rose-xp",
@@ -74,44 +72,38 @@ export const diegeticMechanics: readonly DiegeticMechanic[] = [
     replaces: "XP & levelling",
     title: "The White-Rose XP System",
     mechanic:
-      "Experience comes only from defeating bosses. You stain a white rose in the " +
-      "boss's blood, and each stained rose is one point toward the next sword tier. " +
-      "The last tier costs two.",
+      "XP comes only from defeating enemies and following objectives. The player has to stain " +
+      "a white rose with the boss's blood, making each one of them one XP.",
     why:
-      "There is nothing to farm. XP is gated to story and optional bosses, so " +
-      "progression regulates its own difficulty through the narrative instead of a " +
-      "grind loop — a player who wants to be stronger has to go and beat something, " +
-      "and the record of that is an object they carry, not a number that went up.",
+      "I wanted to prevent farming XPs, so I conditioned these levels to objective and bosses. " +
+      "This also makes it easier to tune the difficulty since there are limited XP across the levels. " +
+      "It also relates to the narrative instead of guessing how much XP each enemy costs.",
   },
   {
     id: "moonlight-wayfinding",
     glyph: "sword",
     replaces: "Map & compass",
-    title: "Moonlight Wayfinding",
+    title: "Moonlight",
     mechanic:
-      "No map and no compass. To find the next Moon Fragment the knight raises their " +
-      "sword to catch the moonlight, and the blade reflects toward the objective. It " +
-      "cannot be used in combat.",
+      "There is no map or compass, so I had to think of how to tell the player where to go. " +
+      "Raising the sword to catch moonlight, points to the next Moon Fragment.",
     why:
-      "Navigation becomes a gesture performed in the world rather than an overlay drawn " +
-      "on top of it. It costs time and leaves you open, so orienting yourself is a " +
-      "decision with a price — and locking it out of combat keeps it a moment of " +
-      "stillness between fights instead of a button held down forever.",
+      "I wanted the player to experience the world rather than look in a map for directions. " +
+      "It forces the player to recognise the places and puts a lot of weight on the level design, " + 
+      "which has to guide with the environment",
   },
   {
     id: "harp-healing",
     glyph: "harp",
     replaces: "Potions & rest menu",
-    title: "Healing by Instrument",
+    title: "Healing by Playing an Instrument",
     mechanic:
-      "Death gives you a harp. You heal by playing it, and heal fully only at a willow " +
-      "tree, where the music grows louder and runs longer.",
+      "Death gives you a harp. You heal by playing it and can only heal fully at a willow " +
+      "tree, where the music has more harmonies mysteriously.",
     why:
-      "The silent warrior restores themself with music — the one thing they do that is " +
-      "not violence, and the sharpest contrast available to a character who never " +
-      "speaks. Tying the full heal to the willow trees makes restoration a place as " +
-      "well as an act, and hands the game's themes of sorrow and rebirth to the system " +
-      "the player touches most.",
+      "I wanted healing to be emotional and to have a meaning for the player, so I made healing a " +
+      "very touching action. By making them only fully heal at the willow tree conditions the gameplay " +
+      "and makes healing in a checkpoint more emotional and memorable.",
   },
 ];
 
@@ -125,33 +117,28 @@ export interface SkillBranch {
 }
 
 export const skillTree = {
-  kicker: "What the roses buy",
-  line: "Two weapon lines, one currency, and the currency is a boss you beat.",
+  kicker: "The Othe XP",
+  line: "By defeating the main bosses, the player gewt XP for upgrading thei combat skills.",
   body:
-    "The roses are the only experience in the game, and they spend in two places. " +
-    "Both lines are capped rather than open-ended, which is the same decision as the " +
-    "no-farming rule one card up: the ceiling is fixed so the difficulty curve stays " +
-    "the story's to set, not the player's to grind past.",
+    "",
   currency: { label: "The White-Rose XP System", id: "white-rose-xp" },
   branches: [
     {
       id: "sword",
-      index: "B1",
-      name: "The sword line",
-      kind: "Melee",
+      index: "",
+      name: "The melee upgrade",
+      kind: "Sword",
       body:
-        "Each stained rose is one point toward the next sword tier, and the last tier " +
-        "costs two — so the final upgrade is deliberately the one you cannot stumble into.",
-      pin: { value: "Last tier costs 2 roses", source: "Diegetic design · white-rose-xp" },
+        "This upgrade grantes the player a normal upgrade in their sword's attacks.",
+      pin: { value: "Last tier costs 2 XPs", source: "Diegetic design" },
     },
     {
       id: "bow",
-      index: "B2",
-      name: "The bow line",
-      kind: "Ranged",
+      index: "",
+      name: "Long Distance Upgrade",
+      kind: "Bow",
       body:
-        "The ranged half of the tree, and the one the build actually pins a number to: " +
-        "the bow's damage bonus is capped in the tuning header rather than left to scale.",
+        "This upgrade grantes the player a normal upgrade in their bow's attacks.",
       pin: { value: "MaxBowDamageBonus = 100.0f", source: "Engineering · tuning constants" },
     },
   ] as readonly SkillBranch[],
@@ -166,36 +153,30 @@ export interface DesignDecision {
 export const invisibleDesign: readonly DesignDecision[] = [
   {
     id: "no-difficulty",
-    decision: "No difficulty select",
+    decision: "No difficulty selection",
     why:
-      "You meet the enemies as they were designed to be met. Every encounter is tuned " +
-      "against one set of numbers, so the fight the designer built is the fight the " +
-      "player gets — and nobody has to declare what kind of player they are before " +
-      "they have played.",
+      "The enemies have the difficulty they were designed to have. The fight the designer built " +
+      "is the fight that gets to the player.",
   },
   {
     id: "camouflaged-loading",
-    decision: "Loading screens camouflaged in gameplay",
+    decision: "Loading screens",
     why:
-      "Elevators, doors that take a moment to unbar, long slow passages between " +
-      "regions. The world keeps running while it streams, so the fiction is never " +
-      "cut by a spinner and a tip of the day.",
+      "Elevators, the enviornment covering spaces and doors could help as loading screen while " +
+      "the player is doing something else. Trying to smoothe gameplay as much as possible.",
   },
   {
     id: "no-block",
-    decision: "You cannot block, by design",
+    decision: "No blocking",
     why:
-      "Blocking bred conservative play — players held the guard up and waited the fight " +
-      "out. Removing it keeps combat moving: dodge is unlimited, parry is high risk for " +
-      "high reward, and there is no button that turns defence into standing still.",
+      "I wanted the players to be aggressive while they play and blocking created the opposite circumstance. " +
+      "Removing it I had to also tune the combat: dodging doesn't consume stealth, add a parry and constant movement.",
   },
   {
     id: "willow-saves",
     decision: "Saving only at willow trees",
     why:
-      "Resting resets the area with new enemy placements. Rest is a place you travel to " +
-      "rather than a menu you open, and ground you already cleared re-earns its tension " +
-      "the moment you leave the tree.",
+      "Resting resets the area, like in a soulslike. The tension reappears once the player leaves the tree.",
   },
 ];
 

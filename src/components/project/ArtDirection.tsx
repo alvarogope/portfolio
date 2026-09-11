@@ -54,7 +54,7 @@ export default function ArtDirection({
       {/* 2 — what the principle decides. */}
       <section className="mka-band">
         <h3 className="mono mka-band-title">
-          {short ? "Where the look becomes difficulty" : "How the Sublime becomes design"}
+          {short ? "Where the look becomes difficulty" : "How the Sublime works in the design"}
         </h3>
         <ol className="mka-moves">
           {short ? (
@@ -92,7 +92,7 @@ export default function ArtDirection({
       {/* 4 — framing and composition, decision */}
       {!short && (
         <section className="mka-band">
-          <h3 className="mono mka-band-title">Deliberate visual decisions</h3>
+          <h3 className="mono mka-band-title">Visual Decisions</h3>
           <dl className="mka-decisions">
             {visualDecisions.map((d) => (
               <div key={d.id} className="mka-decision">

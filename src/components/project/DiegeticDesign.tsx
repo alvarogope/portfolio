@@ -252,7 +252,7 @@ export default function DiegeticDesign({
 
       {/* 3 — the other three */}
       <section className="mkd-band">
-        <h3 className="mono mkd-band-title">Systems worn as objects</h3>
+        <h3 className="mono mkd-band-title">Game Systems</h3>
         <ul className="mkd-cards">
           {rest.map((m) => (
             <MechanicCard key={m.id} mechanic={m} />
@@ -280,19 +280,13 @@ export default function DiegeticDesign({
             </li>
           ))}
         </ol>
-        <p className="mkd-branch-note">
-          {skillTree.body}{" "}
-          <span className="mkd-branch-currency">
-            The currency itself is the {skillTree.currency.label} above.
-          </span>
-        </p>
       </section>
 
       {/* 5 — decisions with no surface at all */}
       <section className="mkd-band">
         <h3 className="mono mkd-band-title">Invisible design</h3>
         <p className="mkd-lede">
-          Four decisions the player never sees a screen for. The reasoning is the whole of it.
+          Four key design decisions and their reason.
         </p>
         <dl className="mkd-decisions">
           {invisibleDesign.map((d) => (

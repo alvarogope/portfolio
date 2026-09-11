@@ -58,8 +58,8 @@ export default function AudioDesign({
         <section className="mkm-band">
           <h3 className="mono mkm-band-title">The three village themes</h3>
           <p className="mkm-lede">
-            The villages are where the knight is allowed to stop, so they get the only calm music
-            in the game — slow, and each one written to tell its own place&apos;s story.
+            The villages are where the knight stops. Being the music here slow and calm to match the action.
+            The music breathes as well as the player.
           </p>
           <ul className="mkm-villages">
             {villageThemes.map((v) => (
@@ -78,11 +78,10 @@ export default function AudioDesign({
 
         {/* 5 — where the instrument itself is the information */}
         <section className="mkm-band">
-          <h3 className="mono mkm-band-title">Instruments that mean something</h3>
+          <h3 className="mono mkm-band-title">Instruments and their meaning</h3>
           <p className="mkm-lede">
-            The score is medieval folk almost everywhere. These four are where it deliberately
-            stops being that — and each break is telling the player something no line of dialogue
-            does.
+            The music is inspired by Romanticism. These four are where the music changes
+            deliberatedly.
           </p>
           <ul className="mkm-meanings">
             {instrumentMeanings.map((m) => (

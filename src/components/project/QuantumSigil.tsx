@@ -115,10 +115,11 @@ export default function QuantumSigil({
       </div>
 
       <div className="qs-readout panel">
+        {/* No number. The five abilities are a set you pick from, not a
+            sequence you work through — nothing unlocks them in order and
+            nothing refers to "the fourth one" — so an index only invited a
+            reader to look for an order that is not there. */}
         <p className="mono qs-readout-kicker">
-          <span className="qs-readout-index">
-            {String(abilities.indexOf(current) + 1).padStart(2, "0")}
-          </span>
           <span>Ability</span>
           {isEnemyOnly(current) ? (
             <span className="qs-chip qs-chip--enemy">Enemy only</span>
@@ -262,7 +263,6 @@ export default function QuantumSigil({
           text-transform: uppercase;
           color: var(--qs-quiet);
         }
-        .qs-readout-index { color: var(--color-gold); }
         .qs-chip {
           text-transform: none;
           letter-spacing: 0.06em;

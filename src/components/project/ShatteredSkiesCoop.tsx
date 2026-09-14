@@ -925,7 +925,7 @@ export default function ShatteredSkiesCoop({
           <p className="ssc__pointer-body">
             {gatingPointer.body}{" "}
             <Link className="ssc__pointer-link" href={mainHref("worlds", variant)}>
-              {gatingPointer.linkLabel}
+              Click here for {gatingPointer.linkLabel}
             </Link>
           </p>
         </aside>

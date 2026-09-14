@@ -28,12 +28,46 @@
 }
 
 html {
-  font-size: 112.5%; 
+  font-size: 112.5%;
   scroll-behavior: smooth;
+
+  /* ---- the sticky header's height ----
+     The header in `layout.tsx` is `position: sticky; top: 0`, so it covers the
+     top of the viewport and a fragment link lands its target UNDERNEATH it —
+     the section heading you clicked to reach is the first thing hidden.
+
+     Its height is 1.25rem padding + a 1.7rem line box + 1.25rem padding + a 1px
+     rule ≈ 4.25rem, and everything in that stack is in rem, so this holds at
+     both root font sizes. IF THE HEADER'S PADDING OR TYPE SIZE CHANGES, CHANGE
+     THIS WITH IT — nothing enforces the relationship. */
+  --header-h: 4.25rem;
+
+  /* The header, plus air, so the heading is not flush against it.
+     The air is 2.5rem rather than 1rem because `Reveal` holds an unrevealed
+     section 22px lower than its settled position: jump to one that has not
+     animated in yet and the browser aligns the pushed-down box, then the
+     reveal lifts the heading ~22px closer to the header than you asked for.
+     The buffer absorbs that in the worst case and still looks deliberate in
+     the best one. */
+  --scroll-clear: calc(var(--header-h) + 2.5rem);
 }
 
 @media (max-width: 640px) {
-  html { font-size: 106.25%; } 
+  html { font-size: 106.25%; }
+}
+
+/* Anything a `#fragment` can land on clears the header.
+   `[id]` rather than a hand-kept list of section classes: every id in this
+   codebase is either a scroll target or an element nobody scrolls to, and on
+   the second kind `scroll-margin-top` is inert. A list would need a new entry
+   every time a section is added, and the failure is silent — the browser
+   navigates, the heading is just invisible under the header.
+
+   DO NOT re-add inline `scrollMarginTop` on section wrappers. Inline styles
+   beat this rule, which is exactly how the pages ended up with a 2rem offset
+   that did not clear a 4.25rem header. */
+[id] {
+  scroll-margin-top: var(--scroll-clear);
 }
 
 body {

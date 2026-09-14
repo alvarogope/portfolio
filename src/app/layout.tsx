@@ -3,6 +3,7 @@ import { Cinzel, UnifrakturCook, Spectral, JetBrains_Mono, Rajdhani, Fraunces, A
 import "./globals.css";
 import Link from "next/link";
 import ScrollToTop from "@/components/layout/ScrollToTop";
+import PreserveScrollOnResize from "@/components/layout/PreserveScrollOnResize";
 
 /* ============================================
    FONTS
@@ -92,6 +93,9 @@ export default function RootLayout({
     >
       <body>
         <ScrollToTop />
+        {/* Reflow on resize moves the reader up to 28% of the page away from
+            what they were reading. This puts them back. See the component. */}
+        <PreserveScrollOnResize />
 
         {/* Placeholder nav */}
         <header

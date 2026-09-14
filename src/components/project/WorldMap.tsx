@@ -38,8 +38,20 @@ import InteractiveHint from "./InteractiveHint";
  *
  * There is now ONE detail panel, always on, under the art. What sits on the
  * map is only what the map has to say — a small label naming the selected
- * sigil — and the list below is an INDEX of eight chips, name and sigil only,
+ * sigil — and between the two is an INDEX of eight chips, name and sigil only,
  * which is a control strip rather than a second set of cards.
+ *
+ * ═══ THE READING ORDER: ART → INDEX → DETAIL ═══
+ *
+ * The index sits directly under the art and ABOVE the detail panel, because
+ * that is the order the questions arrive in: what does the world look like,
+ * what places are in it, and then tell me about this one. The panel used to
+ * come first, which answered the third question before the reader had been
+ * shown the second — you met a page of lore about Centralis without yet
+ * knowing there were seven other places to ask about.
+ *
+ * The chips are also the only full list of the eight places; the art hides
+ * them in 30px targets. A table of contents belongs above the chapter.
  *
  * ═══ THE CONVENTIONS IT SHARES ═══
  *
@@ -304,21 +316,13 @@ export default function WorldMap() {
         </div>
       </div>
 
-      {/* THE ONE DETAIL PANEL. Always rendered, at every width, and the only
-          place a marker's lore and profile appear. `role="status"` because a
-          mouse user watches it swap and a screen-reader user otherwise would
-          not. */}
-      <div className="wm-readout" role="status">
-        <p className="mono wm-readout-type">{markerTypeMeta[marker.type].term}</p>
-        <p className="wm-readout-name">{marker.label}</p>
-        <p className="wm-readout-lore">{marker.lore}</p>
-        {region && !region.isEmpty && <RegionProfileView region={region} />}
-      </div>
-
-      {/* THE INDEX. Eight chips, name and sigil only — this is a control
-          strip, not a second set of cards. It is what makes every place
-          reachable without hunting the art for a 30px target, and on a phone
-          it is how the map is read at all. */}
+      {/* THE INDEX, DIRECTLY UNDER THE ART. Eight chips, name and sigil only —
+          this is a control strip, not a second set of cards. It sits here, and
+          not under the detail panel, because it is the map's TABLE OF CONTENTS:
+          a reader who has just looked at the art wants to know what the eight
+          places are before they read about any one of them, and on a phone
+          this strip is how the map is read at all. Pick a chip and the panel
+          below answers. */}
       <div className="wm-index" role="group" aria-label="Places in Kaelum">
         {mapMarkers.map((m) => (
           <button
@@ -336,6 +340,17 @@ export default function WorldMap() {
             {m.label}
           </button>
         ))}
+      </div>
+
+      {/* THE ONE DETAIL PANEL, and the answer to whatever the index or the art
+          was just asked. Always rendered, at every width, and the only place a
+          marker's lore and profile appear. `role="status"` because a mouse user
+          watches it swap and a screen-reader user otherwise would not. */}
+      <div className="wm-readout" role="status">
+        <p className="mono wm-readout-type">{markerTypeMeta[marker.type].term}</p>
+        <p className="wm-readout-name">{marker.label}</p>
+        <p className="wm-readout-lore">{marker.lore}</p>
+        {region && !region.isEmpty && <RegionProfileView region={region} />}
       </div>
 
       {/* The key decodes the three sigils AND carries what each kind of place

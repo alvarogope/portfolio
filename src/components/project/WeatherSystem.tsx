@@ -644,7 +644,7 @@ export default function WeatherSystem() {
             <p className="mono sw-credit-tag">Design note · The weather</p>
             <p className="sw-credit-body">{weatherCredit.body}</p>
             <p className="sw-credit-pointer">
-              <a href={loopPointer.href}>{loopPointer.label} &uarr;</a>
+              <a href={loopPointer.href}>Click here for {loopPointer.label} &uarr;</a>
               <span>{loopPointer.body}</span>
             </p>
           </aside>

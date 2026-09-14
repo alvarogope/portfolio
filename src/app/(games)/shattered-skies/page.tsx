@@ -14,6 +14,11 @@ import ShatterstormWorld from "@/components/project/ShatterstormWorld";
 import ShatteredSkiesMechanics from "@/components/project/ShatteredSkiesMechanics";
 import ShatteredSkiesCoop from "@/components/project/ShatteredSkiesCoop";
 import ProjectNav from "@/components/layout/ProjectNav";
+import ChapterNav from "@/components/layout/ChapterNav";
+import {
+  shatteredSkiesChapters as ch,
+  shatteredSkiesChapterList,
+} from "@/content/project-chapters";
 import { projectNavItems } from "@/content/games";
 import Galaxy from "@/components/effects/Galaxy";
 import {
@@ -99,11 +104,16 @@ export default function ShatteredSkiesPage() {
         </div>
       </div>
 
-      <Section>
+      {/* `tight`: this Section follows the hero, so its 4rem top padding
+          would be the second of three stacked gaps. See Section.tsx. */}
+      <Section tight>
+        {/* The contents of the page, before the page starts arguing. */}
+        <ChapterNav chapters={shatteredSkiesChapterList} />
+
         {/* ═══ 01 · OVERVIEW ═══ */}
         <Reveal>
-          <div style={{ maxWidth: "35rem" }}>
-            <SectionHeading kicker="01 · Overview" title="The Vision" />
+          <div id={ch.overview.id} style={{ maxWidth: "35rem" }}>
+            <SectionHeading kicker="01 · Overview" title={ch.overview.title} />
             <p style={{ marginTop: "1rem" }}>{p.vision}</p>
           </div>
         </Reveal>
@@ -128,7 +138,7 @@ export default function ShatteredSkiesPage() {
             besides §06's levelsCredit. */}
         <Reveal>
           <div style={GAP} id={mainAnchors.theGame}>
-            <SectionHeading kicker="03 · The Game" title="The Game We Made" />
+            <SectionHeading kicker="03 · The Game" title={ch.theGame.title} />
             <NarrativeMap variant="main" />
 
             <div style={{ marginTop: "3rem" }}>
@@ -168,8 +178,8 @@ export default function ShatteredSkiesPage() {
             the same change, because moving an untrimmed recap only relocates
             it. */}
         <Reveal>
-          <div style={GAP}>
-            <SectionHeading kicker="04 · My Role" title="My Contribution" />
+          <div id={ch.role.id} style={GAP}>
+            <SectionHeading kicker="04 · My Role" title={ch.role.title} />
             <div style={{ display: "grid", gap: "1.25rem", marginTop: "1.5rem" }}>
               {p.contributions.map((c) => (
                 <div key={c.label}>
@@ -200,7 +210,7 @@ export default function ShatteredSkiesPage() {
             so the dossier is passed as children and both stay here. */}
         <Reveal>
           <div style={GAP} id={mainAnchors.worlds}>
-            <SectionHeading kicker="05 · World Design" title="The World & the Five Worlds" />
+            <SectionHeading kicker="05 · World Design" title={ch.worlds.title} />
             <div style={{ marginTop: "1.5rem", marginBottom: "2rem" }}>
               <ShatterstormWorld variant="main" />
             </div>
@@ -235,7 +245,7 @@ export default function ShatteredSkiesPage() {
             easier to read once you know which world taught it. */}
         <Reveal>
           <div style={GAP} id={mainAnchors.levels}>
-            <SectionHeading kicker="06 · Level Design" title="Each Planet Teaches a Skill" />
+            <SectionHeading kicker="06 · Level Design" title={ch.levels.title} />
             <p style={LEAD}>
               The same five worlds, re-sequenced as a curriculum: what each one is built to teach,
               the puzzle that teaches it, and what it sounds like while it does.
@@ -255,7 +265,7 @@ export default function ShatteredSkiesPage() {
             went with the band by accident. */}
         <Reveal>
           <div style={GAP} id={mainAnchors.mechanics}>
-            <SectionHeading kicker="07 · Core Mechanics" title="Systems That Force You Together" />
+            <SectionHeading kicker="07 · Core Mechanics" title={ch.mechanics.title} />
             <p style={LEAD}>
               Three systems, co-designed with the team, that all answer the same question: how do
               you make two players who cannot understand each other depend on each other anyway?
@@ -297,7 +307,7 @@ export default function ShatteredSkiesPage() {
             governs. The full prose is on the deep dive. */}
         <Reveal>
           <div style={GAP} id={mainAnchors.coop}>
-            <SectionHeading kicker="08 · Co-op Design" title="Split, Distorted, Rebuilt" />
+            <SectionHeading kicker="08 · Co-op Design" title={ch.coop.title} />
             <p style={LEAD}>
               How the cooperation actually works, one system at a time: what each minigame takes
               away from which player, and what the pair have to invent to get it back.

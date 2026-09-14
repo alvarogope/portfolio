@@ -97,7 +97,7 @@ export default function EngineeringPage() {
                 paddingBottom: "2px",
               }}
             >
-              {e.quantumNote.linkLabel} →
+              Click here for {e.quantumNote.linkLabel} →
             </Link>
           </div>
         </Reveal>

@@ -177,8 +177,19 @@ function MechanicCard({ mechanic: m, hero = false }: { mechanic: DiegeticMechani
 
 export default function DiegeticDesign({
   variant = "full",
+  withInvisible = true,
 }: {
   variant?: "full" | "short";
+  /**
+   * Whether the full write-up carries the invisible-design band itself.
+   *
+   * The main page renders that band as a section of its own, with its own
+   * heading — so when the full write-up moved onto the main page too, the four
+   * decisions would have printed twice on one screen. This turns the inner
+   * copy off rather than deleting the band, because the band is still the
+   * right shape inside a full write-up anywhere it renders alone.
+   */
+  withInvisible?: boolean;
 }) {
   const [hud, ...rest] = diegeticMechanics;
   const short = variant === "short";
@@ -317,7 +328,7 @@ export default function DiegeticDesign({
       </section>
 
       {/* 5 — decisions with no surface at all */}
-      <InvisibleDesignBand />
+      {withInvisible && <InvisibleDesignBand />}
 
       {/* 6 — the generic verbs, kept small on purpose */}
       <section className="mkd-band">

@@ -9,6 +9,11 @@ import EngineeringNote from "@/components/project/EngineeringNote";
 import ChallengeQuote from "@/components/project/ChallengeQuote";
 import Reveal from "@/components/layout/Reveal";
 import ProjectNav from "@/components/layout/ProjectNav";
+import ChapterNav from "@/components/layout/ChapterNav";
+import {
+  moonKnightChapters as ch,
+  moonKnightChapterList,
+} from "@/content/project-chapters";
 import { projectNavItems } from "@/content/games";
 import Aurora from "@/components/effects/Aurora";
 import {
@@ -53,11 +58,16 @@ export default function MoonKnightPage() {
         </div>
       </div>
 
-      <Section>
+      {/* `tight`: this Section follows the hero, so its 4rem top padding
+          would be the second of three stacked gaps. See Section.tsx. */}
+      <Section tight>
+        {/* The contents of the page, before the page starts arguing. */}
+        <ChapterNav chapters={moonKnightChapterList} />
+
         {/* 1 — OVERVIEW */}
         <Reveal>
-          <div>
-            <SectionHeading kicker="The Overview" title="The Vision" />
+          <div id={ch.overview.id}>
+            <SectionHeading kicker="The Overview" title={ch.overview.title} />
             <div className="mk-overview">
               <div className="mk-overview-prose">
                 <p style={{ marginTop: "1rem" }}>{p.vision}</p>
@@ -69,8 +79,8 @@ export default function MoonKnightPage() {
 
         {/* 2 — Contributions */}
         <Reveal>
-          <div style={{ marginTop: "5rem" }}>
-            <SectionHeading kicker="My Role" title="My Contribution" />
+          <div id={ch.role.id} style={{ marginTop: "5rem" }}>
+            <SectionHeading kicker="My Role" title={ch.role.title} />
             <div style={{ display: "grid", gap: "1.5rem" }}>
               {p.contributions.map((c) => (
                 <div key={c.label}>
@@ -86,7 +96,7 @@ export default function MoonKnightPage() {
 
         {/* 3 — Videos Section */}
         <Reveal>
-          <div style={{ marginTop: "5rem" }}>
+          <div id={ch.inMotion.id} style={{ marginTop: "5rem" }}>
             <SectionHeading kicker={inMotionIntro.kicker} title={inMotionIntro.title} />
             <p
               style={{
@@ -114,8 +124,11 @@ export default function MoonKnightPage() {
         {/* 4 — THE QUANTUM SYSTEM. */}
         {p.abilities && (
           <Reveal>
-            <div style={{ marginTop: "5rem" }} id="signature-systems">
-              <SectionHeading kicker="The Quantum Abilities" title="The Power of the Gods" />
+            <div
+              id={ch.abilities.id}
+              style={{ marginTop: "5rem" }}
+            >
+              <SectionHeading kicker="The Quantum Abilities" title={ch.abilities.title} />
               <p style={{ color: "var(--color-mist)", maxWidth: "35rem", marginTop: "1.5rem", marginBottom: "2rem" }}>
                 Five abilities built on a real quantum computing principle. One
                 equipped at a time with high risk and high reward.
@@ -128,7 +141,7 @@ export default function MoonKnightPage() {
 
         {/* 5 — Bestiary */}
         <Reveal>
-          <div style={{ marginTop: "5rem" }}>
+          <div id={ch.bestiary.id} style={{ marginTop: "5rem" }}>
             <Bestiary kicker="The Enemies" />
             <div style={{ marginTop: "3rem" }}>
               <h3
@@ -169,8 +182,8 @@ export default function MoonKnightPage() {
 
         {/* 6 — Controls */}
         <Reveal>
-          <div style={{ marginTop: "5rem" }}>
-            <SectionHeading kicker="The Controls" title="The Input Map in a Controller" />
+          <div id={ch.controls.id} style={{ marginTop: "5rem" }}>
+            <SectionHeading kicker="The Controls" title={ch.controls.title} />
             <div style={{ marginTop: "1.75rem" }}>
               <ControllerMap />
             </div>
@@ -223,11 +236,8 @@ export default function MoonKnightPage() {
 
         {/* 7 — THE WORLD AND THE LEVELS. */}
         <Reveal>
-          <div style={{ marginTop: "5rem" }}>
-            <SectionHeading
-              kicker="The World & Level Design"
-              title="Kaelum and How It Was Planned"
-            />
+          <div id={ch.world.id} style={{ marginTop: "5rem" }}>
+            <SectionHeading kicker="The World & Level Design" title={ch.world.title} />
             <p style={{ color: "var(--color-mist)", maxWidth: "38rem", marginTop: "1.5rem", marginBottom: "2.5rem" }}>
               There are three main areas and an island in the world of Kaelum.
               This is the drawn map. It shows where each place is and which NPCs will the player encounter.
@@ -240,7 +250,7 @@ export default function MoonKnightPage() {
             <WorldMap />
 
             {/* Band B */}
-            <div id="the-plan" style={{ marginTop: "4.5rem", scrollMarginTop: "2rem" }}>
+            <div id="the-plan" style={{ marginTop: "4.5rem" }}>
               <h3 className="mono mk-band-title">The plan</h3>
               <p style={{ color: "var(--color-mist)", maxWidth: "38rem", marginTop: 0, marginBottom: "1.75rem" }}>
                 The Beatchart of shows the tutorial and the three main areas which represent one act per area. 
@@ -302,8 +312,8 @@ export default function MoonKnightPage() {
 
         {/* 8 — UI DESIGN */}
         <Reveal>
-          <div style={{ marginTop: "5rem" }} id="diegetic-design">
-            <SectionHeading kicker="Main Design" title="The Main Design Decisions" />
+          <div id={ch.diegetic.id} style={{ marginTop: "5rem" }}>
+            <SectionHeading kicker="Main Design" title={ch.diegetic.title} />
             <p style={{ color: "var(--color-mist)", maxWidth: "35rem", marginTop: "1.5rem", marginBottom: "1.75rem" }}>
               The Health Bar is the moon on the knight&apos;s back. The Experience is a white rose stained in
               the boss&apos;s blood. The map player knows where to go by raising the sword and reflecting the moonlight.
@@ -325,7 +335,13 @@ export default function MoonKnightPage() {
               />
             </figure>
 
-            <DiegeticDesign variant="short" />
+            {/* The WHOLE argument, not the key strip it used to be. This was
+                the deep dive's §04 and it is back here, because the decisions
+                it describes are the design of the game and a reader should not
+                have to leave the project page to meet them. `withInvisible` is
+                off: the four no-interface decisions are the section directly
+                below, with a heading of their own. */}
+            <DiegeticDesign withInvisible={false} />
 
             {/* Blueprint Screenshots */}
             <div style={{ marginTop: "2.5rem" }}>
@@ -371,29 +387,24 @@ export default function MoonKnightPage() {
                 ]}
               />
             </div>
+          </div>
+        </Reveal>
 
-        {/* 10 — INVISIBLE DESIGN */}
+        {/* 9 — INVISIBLE DESIGN
+            A sibling of the section above, not a child of it — it was nested
+            inside §08's <div> by accident, which put its heading inside
+            another section's body. */}
         <Reveal>
-          <div style={{ marginTop: "5rem" }}>
-            <SectionHeading kicker="Invisible Design" title="The Decisions With No Interface" />
+          <div id={ch.invisible.id} style={{ marginTop: "5rem" }}>
+            <SectionHeading kicker="Invisible Design" title={ch.invisible.title} />
             <InvisibleDesign />
           </div>
         </Reveal>
 
-
-
-            <div style={{ marginTop: "2rem" }}>
-              <RampLink href={deepDiveHref("diegetic")}>
-                The Full Diegetic UI and Systems Design decision
-              </RampLink>
-            </div>
-          </div>
-        </Reveal>
-
-        {/* 9 — Art Direction */}
+        {/* 10 — Art Direction */}
         <Reveal>
-          <div style={{ marginTop: "5rem" }}>
-            <SectionHeading kicker="Art Direction" title="The Sublime" />
+          <div id={ch.art.id} style={{ marginTop: "5rem" }}>
+            <SectionHeading kicker="Art Direction" title={ch.art.title} />
             <p style={{ color: "var(--color-mist)", maxWidth: "35rem", marginTop: "1.5rem", marginBottom: "1.75rem" }}>
               The Sublime and their way of romanticise the medieval ages is what inspired the artstyle direction.
               This art philosophy adapted to games, exposes the player to solitude, open spaces and big challenges whether internal or external.
@@ -455,8 +466,8 @@ export default function MoonKnightPage() {
         {/* 11 — Development Issuess. */}
         {p.designChallenge && (
           <Reveal>
-            <div style={{ marginTop: "5rem" }}>
-              <SectionHeading kicker="The Development" title="The Quantum and Engineering Design" />
+            <div id={ch.development.id} style={{ marginTop: "5rem" }}>
+              <SectionHeading kicker="The Development" title={ch.development.title} />
               <div style={{ marginTop: "1.5rem" }}>
                 <ChallengeQuote challenge={p.designChallenge} />
               </div>
@@ -487,8 +498,8 @@ export default function MoonKnightPage() {
 
         {/* 12 — The Audio and Music Design. */}
         <Reveal>
-          <div style={{ marginTop: "5rem" }}>
-            <SectionHeading kicker="Audio Design" title="The Soundtrack" />
+          <div id={ch.audio.id} style={{ marginTop: "5rem" }}>
+            <SectionHeading kicker="Audio Design" title={ch.audio.title} />
             <p style={{ color: "var(--color-mist)", maxWidth: "35rem", marginTop: "1.5rem", marginBottom: "1.75rem" }}>
               The two main compositions of the game. Press either to play.
             </p>
@@ -518,7 +529,7 @@ export default function MoonKnightPage() {
               kicker="The deep dive"
               title="The World, the Story and the Music"
               body= 
-                "The full length of the project. The Narrative Design, the NPCs and their story, the worldbuilding and its symbolism, the full diegetic UI and art-direction arguments. How the music and the audio design was planned, the jousting minigame and the potential DLCs."
+                "The full length of the project. The Narrative Design, the NPCs and their story, the worldbuilding and its symbolism, and the full art-direction argument. How the music and the audio design was planned, the jousting minigame and the potential DLCs."
               href={deepDivePath}
               linkLabel="Read the deep dive"
             />

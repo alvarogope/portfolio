@@ -10,6 +10,11 @@ import PlateGrid from "@/components/project/PlateGrid";
 import SeedsLevelDesign from "@/components/project/SeedsLevelDesign";
 import WeatherSystem from "@/components/project/WeatherSystem";
 import ProjectNav from "@/components/layout/ProjectNav";
+import ChapterNav from "@/components/layout/ChapterNav";
+import {
+  seedsChapters as ch,
+  seedsChapterList,
+} from "@/content/project-chapters";
 import RampLink from "@/components/project/RampLink";
 import { contributionHomes } from "@/content/seeds-levels";
 import { projectNavItems } from "@/content/games";
@@ -98,18 +103,26 @@ export default function SeedsOfTomorrowPage() {
         </div>
       </div>
 
-      <Section>
+      {/* `tight`: this Section follows the hero, so its 4rem top padding
+          would be the second of three stacked gaps. See Section.tsx. */}
+      <Section tight>
         {/* The way back up. No subpage, so there is no trail to descend — but
             the homepage IS the project index, and the page needs an exit that
             is not the browser's back button. */}
         <Breadcrumb items={[{ label: "Projects", href: "/" }, { label: p.title }]} />
 
+        {/* The contents of the page, before the page starts arguing. */}
+        <ChapterNav chapters={seedsChapterList} />
+
         {/* ═══ 01 · OVERVIEW ═══
             Prose only now. The charcoal sketch that used to sit under this
             moved to §06, where it is the premise the weather system undoes. */}
         <Reveal>
-          <div style={{ maxWidth: "35rem", marginTop: "1.5rem" }}>
-            <SectionHeading kicker="01 · Overview" title="The Vision" />
+          <div
+            id={ch.overview.id}
+            style={{ maxWidth: "35rem", marginTop: "1.5rem" }}
+          >
+            <SectionHeading kicker="01 · Overview" title={ch.overview.title} />
             <p style={{ marginTop: "1rem" }}>{p.vision}</p>
           </div>
         </Reveal>
@@ -119,7 +132,7 @@ export default function SeedsOfTomorrowPage() {
             above the clips, because it is a comparison: two frames of one plot
             of ground, and it only reads if they are big enough to compare. */}
         <Reveal>
-          <div style={GAP}>
+          <div id={ch.inMotion.id} style={GAP}>
             <SectionHeading kicker={inMotionIntro.kicker} title={inMotionIntro.title} />
             <p style={LEAD}>{inMotionIntro.body}</p>
 
@@ -139,8 +152,8 @@ export default function SeedsOfTomorrowPage() {
             `contributionHomes` still prints its description, so adding one can
             never silently lose it. */}
         <Reveal>
-          <div style={GAP}>
-            <SectionHeading kicker="03 · My Role" title="My Contribution" />
+          <div id={ch.role.id} style={GAP}>
+            <SectionHeading kicker="03 · My Role" title={ch.role.title} />
             <p className="mono" style={{ fontSize: "0.72rem", color: "var(--color-silver)", marginBottom: "1.5rem" }}>
               {p.facts.role} · {p.facts.team} · each one shown below, not just claimed
             </p>
@@ -169,8 +182,8 @@ export default function SeedsOfTomorrowPage() {
 
         {/* ═══ 04 · ORIGINAL SCORE ═══ */}
         <Reveal>
-          <div id="score" style={{ ...GAP, scrollMarginTop: "6rem" }}>
-            <SectionHeading kicker="04 · Original Score" title="Plant a Sound" />
+          <div id={ch.score.id} style={GAP}>
+            <SectionHeading kicker="04 · Original Score" title={ch.score.title} />
             <p style={LEAD}>
               I composed and recorded eleven original tracks for the game. The main theme plays as
               you explore this page; the seeds below are moments from the score. Plant one to hear
@@ -205,8 +218,8 @@ export default function SeedsOfTomorrowPage() {
             component as its third band. It owns the loop; §06 owns what the sky
             does. See docs/section-ownership-map.md G1. */}
         <Reveal>
-          <div id="level-design" style={{ ...GAP, scrollMarginTop: "6rem" }}>
-            <SectionHeading kicker="05 · Level Design" title="Fight, Then Mend" />
+          <div id={ch.levels.id} style={GAP}>
+            <SectionHeading kicker="05 · Level Design" title={ch.levels.title} />
             <p style={LEAD}>
               I designed the levels and the puzzles, and the rhythm they run on. Every place in the
               game is paced the same way: a burst of tension, then the quieter work of putting it
@@ -262,8 +275,8 @@ export default function SeedsOfTomorrowPage() {
             machinery that undoes it. */}
         {p.designChallenge && (
           <Reveal>
-            <div id="weather" style={{ ...GAP, scrollMarginTop: "6rem" }}>
-              <SectionHeading kicker="06 · The Hard Part" title="A World That Heals" />
+            <div id={ch.weather.id} style={GAP}>
+              <SectionHeading kicker="06 · The Hard Part" title={ch.weather.title} />
               <blockquote className="sot-quote">
                 <p className="sot-quote-body">{p.designChallenge.quote}</p>
                 <footer className="mono sot-quote-foot">

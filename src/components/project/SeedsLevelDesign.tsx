@@ -222,7 +222,7 @@ export default function SeedsLevelDesign() {
                   <p className="sl-step-body">{step.body}</p>
                   {step.isPayoff && (
                     <p className="sl-step-pointer">
-                      <a href={payoffPointer.href}>{payoffPointer.label} →</a>
+                      <a href={payoffPointer.href}>Click here for {payoffPointer.label} →</a>
                       <span>{payoffPointer.body}</span>
                     </p>
                   )}

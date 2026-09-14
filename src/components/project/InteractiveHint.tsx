@@ -1,3 +1,27 @@
+/**
+ * The sign above a figure that does something when you touch it.
+ *
+ * WHY IT WAS REWRITTEN. It used to read *"Interactive · Point at, tap or tab
+ * any level. its full design sheet opens below the chart"* — three problems in
+ * one line. "Interactive" is a category, not an instruction. "Point at" is not
+ * a thing a reader thinks they are doing. And the two halves were joined with
+ * a full stop, so the sentence restarted in lower case and the cause/effect
+ * link between them was lost.
+ *
+ * It now says the action, the target and the result in that order, in one
+ * sentence — *"Interactable · Choose any level — its full design sheet opens
+ * below the chart."* — with the keyboard route on its own line underneath,
+ * where it helps the people who need it without taxing the people who do not.
+ *
+ * The lead stays a LABEL for what the figure is, not an instruction: the
+ * instruction is the sentence beside it, and "Click here" said the same thing
+ * twice in a row. "Interactable" names the kind of thing this is, which is
+ * what a badge is for.
+ *
+ * `what` is the singular noun for one thing in the figure ("level", "disc",
+ * "seat"). `does` is what happens, phrased to follow the dash — a clause, no
+ * leading capital, no full stop; this component supplies both.
+ */
 export default function InteractiveHint({
   what,
   does,
@@ -20,11 +44,19 @@ export default function InteractiveHint({
           />
         </svg>
       </span>
-      <span className="mono ih-lead">Interactive</span>
+      <span className="mono ih-lead">Interactable</span>
       <span className="ih-body">
-        {mode === "pan"
-          ? `Drag, scroll or tab to the ${what} and use the arrow keys ${does}`
-          : `Point at, tap or tab any ${what}. ${does}`}
+        {mode === "pan" ? (
+          <>
+            Drag the {what} to move it, and scroll to zoom in and out — {does}.
+            <span className="ih-keys">Keyboard: press Tab to reach it, then the arrow keys.</span>
+          </>
+        ) : (
+          <>
+            Choose any {what} — {does}.
+            <span className="ih-keys">Click, tap, or press Tab to reach it and then Enter.</span>
+          </>
+        )}
       </span>
 
       <style>{`
@@ -34,7 +66,7 @@ export default function InteractiveHint({
           align-items: center;
           gap: 0.45rem 0.6rem;
           margin: 0 0 1.1rem;
-          padding: 0.4rem 0.8rem 0.42rem;
+          padding: 0.5rem 0.9rem 0.55rem;
           border: 1px solid color-mix(in srgb, var(--color-gold) 45%, transparent);
           border-radius: 999px;
           background: color-mix(in srgb, var(--color-gold) 7%, transparent);
@@ -56,6 +88,17 @@ export default function InteractiveHint({
           /* Lifted steel rather than --color-mist, which is 4.41:1 on this
              ground and under the AA bar for small type. This is 6.3:1. */
           color: #93A0B3;
+        }
+        /* The keyboard route is a second line inside the same chip: everyone
+           who needs it finds it, and it never gets between the instruction and
+           the figure it describes. */
+        .ih-keys {
+          display: block;
+          margin-top: 0.15rem;
+          font-family: var(--font-mono);
+          font-size: 0.68rem;
+          letter-spacing: 0.04em;
+          color: #7F8CA0;
         }
       `}</style>
     </p>

@@ -7,6 +7,11 @@ import ProjectHero from "@/components/project/ProjectHero";
 import ChallengeQuote from "@/components/project/ChallengeQuote";
 import Reveal from "@/components/layout/Reveal";
 import ProjectNav from "@/components/layout/ProjectNav";
+import ChapterNav from "@/components/layout/ChapterNav";
+import {
+  breakInChapters as ch,
+  breakInChapterList,
+} from "@/content/project-chapters";
 import { projectNavItems } from "@/content/games";
 import Prism from "@/components/effects/Prism";
 import RoleTerms from "@/components/project/RoleTerms";
@@ -99,17 +104,25 @@ export default function BreakInPage() {
         </div>
       </div>
 
-      <Section>
+      {/* `tight`: this Section follows the hero, so its 4rem top padding
+          would be the second of three stacked gaps. See Section.tsx. */}
+      <Section tight>
         {/* The way back up. This project has no subpage, so there is no trail
             to descend — but the page still needs an exit that is not the
             browser's back button, and the homepage IS the project index. The
             foot of the page carries the sideways moves; this is the up. */}
         <Breadcrumb items={[{ label: "Projects", href: "/" }, { label: p.title }]} />
 
+        {/* The contents of the page, before the page starts arguing. */}
+        <ChapterNav chapters={breakInChapterList} />
+
         {/* ═══ 01 · OVERVIEW ═══ */}
         <Reveal>
-          <div style={{ maxWidth: "35rem", marginTop: "1.5rem" }}>
-            <SectionHeading kicker="01 · Overview" title="The Vision" />
+          <div
+            id={ch.overview.id}
+            style={{ maxWidth: "35rem", marginTop: "1.5rem" }}
+          >
+            <SectionHeading kicker="01 · Overview" title={ch.overview.title} />
             <p style={{ marginTop: "1rem" }}>
               <RoleTerms text={p.vision} />
             </p>
@@ -125,7 +138,7 @@ export default function BreakInPage() {
             paragraph about it. `hacker_vision.mp4` deliberately stayed in §07,
             where the five-on/thirty-off duty cycle is the evidence. */}
         <Reveal>
-          <div style={GAP}>
+          <div id={ch.inMotion.id} style={GAP}>
             <SectionHeading kicker={inMotionIntro.kicker} title={inMotionIntro.title} />
             <p style={LEAD}>{inMotionIntro.body}</p>
             <PlateGrid minWidth="24rem" items={[...inMotionItems]} />
@@ -138,8 +151,8 @@ export default function BreakInPage() {
             trying to do. `teamNote` inside `HeistLoop` is the page's canonical
             attribution, which is why My Role can only come after it. */}
         <Reveal>
-          <div style={GAP}>
-            <SectionHeading kicker="03 · The Run" title="Eight minutes, four phases" />
+          <div id={ch.theRun.id} style={GAP}>
+            <SectionHeading kicker="03 · The Run" title={ch.theRun.title} />
             <p style={LEAD}>
               <RoleTerms text="One run is eight minutes long and reads in four phases: get in, take the vault, take the servers, and get out separately. Two of those phases happen at the same time. Below is the run drawn on its own clock — where the pressure sits, what each player is doing in each window, and the two ways it ends." />
             </p>
@@ -155,8 +168,8 @@ export default function BreakInPage() {
             enumerations went with the move — see the note in the content file,
             which records exactly which ones and why. */}
         <Reveal>
-          <div style={GAP}>
-            <SectionHeading kicker="04 · My Role" title="My Contribution" />
+          <div id={ch.role.id} style={GAP}>
+            <SectionHeading kicker="04 · My Role" title={ch.role.title} />
             <div style={{ display: "grid", gap: "1.25rem", marginTop: "1.5rem" }}>
               {p.contributions.map((c) => (
                 <div key={c.label}>
@@ -181,8 +194,8 @@ export default function BreakInPage() {
             prose. `p.roles` still feeds RoleTerms, which lights the four names
             wherever they appear in prose. */}
         <Reveal>
-          <div style={GAP}>
-            <SectionHeading kicker="05 · Signature Systems" title="Nobody wins alone" />
+          <div id={ch.systems.id} style={GAP}>
+            <SectionHeading kicker="05 · Signature Systems" title={ch.systems.title} />
             <p style={LEAD}>
               <RoleTerms text="Four cameras, four roles, and nine dependencies wired between them — and they are two webs, not one. Six lines are what a player switches on for a teammate: an ability turned on, a window opened, patrol positions handed over. Three run the other way round. Those are the traps one role takes off another's board, and a teammate you need for the laser you cannot see is as load-bearing as one who hands you a key. Cut any one wire and the run ends. The Distraction clip at the top of the page is one of them firing." />
             </p>
@@ -196,8 +209,8 @@ export default function BreakInPage() {
             in the same room on two different phases, and neither view can draw
             the other's shape. */}
         <Reveal>
-          <div style={GAP}>
-            <SectionHeading kicker="06 · Level Design" title="The Route" />
+          <div id={ch.levels.id} style={GAP}>
+            <SectionHeading kicker="06 · Level Design" title={ch.levels.title} />
             <p style={LEAD}>
               <RoleTerms text="The phase clock above was the run in time. This is the same run in space: the bank is one level with two places the team has to split up and two places it has to be back together. Below: the route through it, the tension curve the five stages are tuned to, and why each stage sits where it does on that curve." />
             </p>
@@ -329,8 +342,8 @@ export default function BreakInPage() {
             component two inches below, so the standfirst counts them and stops
             rather than listing them twice on one screen. */}
         <Reveal>
-          <div style={GAP}>
-            <SectionHeading kicker="07 · Stealth" title="Being Seen" />
+          <div id={ch.stealth.id} style={GAP}>
+            <SectionHeading kicker="07 · Stealth" title={ch.stealth.title} />
             <p style={LEAD}>
               <RoleTerms text="Detection is four states and four transitions, and the design is in how loudly it announces itself. From the moment an enemy starts investigating, the player is being told three separate ways at once — because nobody else on the team can tell them." />
             </p>
@@ -368,8 +381,8 @@ export default function BreakInPage() {
             premise is that nobody can talk. Direction credit, so it is sized as
             one console rather than a pillar. */}
         <Reveal>
-          <div style={GAP}>
-            <SectionHeading kicker="08 · Audio" title="What the heist sounds like" />
+          <div id={ch.audio.id} style={GAP}>
+            <SectionHeading kicker="08 · Audio" title={ch.audio.title} />
             <p style={LEAD}>
               <RoleTerms text="Four players, four rooms, and nothing any of them can say to each other. Everything below is what I asked the sound to carry instead." />
             </p>
@@ -381,8 +394,8 @@ export default function BreakInPage() {
             The only place in the portfolio that shows tuning intent as data
             rather than assertion. Three rules, three charts. */}
         <Reveal>
-          <div style={GAP}>
-            <SectionHeading kicker="09 · Balance" title="Tuned so nobody can carry" />
+          <div id={ch.balance.id} style={GAP}>
+            <SectionHeading kicker="09 · Balance" title={ch.balance.title} />
             <p style={LEAD}>
               <RoleTerms text="Four asymmetric roles only stay interesting if all four stay necessary. Three rules held that line: no role can reach past its quarter of the run, difficulty answers the team's performance instead of sitting still, and the payout is shared before it is individual." />
             </p>
@@ -397,8 +410,8 @@ export default function BreakInPage() {
             above is a consequence of. */}
         {p.designChallenge && (
           <Reveal>
-            <div style={GAP}>
-              <SectionHeading kicker="10 · The Hard Part" title="Design Challenge" />
+            <div id={ch.challenge.id} style={GAP}>
+              <SectionHeading kicker="10 · The Hard Part" title={ch.challenge.title} />
               <div style={{ marginTop: "1.5rem" }}>
                 <ChallengeQuote
                   challenge={p.designChallenge}

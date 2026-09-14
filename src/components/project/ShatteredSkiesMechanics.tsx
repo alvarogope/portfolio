@@ -491,7 +491,7 @@ export default function ShatteredSkiesMechanics({
                   <span className="ssm__pointer-body">
                     {ship.repairs.pointer}{" "}
                     <Link className="ssm__pointer-link" href={mainHref("coop", variant)}>
-                      {ship.repairs.linkLabel}
+                      Click here for {ship.repairs.linkLabel}
                     </Link>
                   </span>
                 </p>

@@ -44,8 +44,11 @@ export default function ProjectFactsBlock({
 
       {links.length > 0 && (
         <div style={{ display: "flex", flexDirection: "column", gap: "0.35rem" }}>
+          {/* "Links" named the category and said nothing about what to do with
+              it. The column label is the cheapest place on the page to say it,
+              because it costs no extra line. */}
           <span className="mono" style={{ fontSize: "0.7rem", color: "var(--color-mist)" }}>
-            Links
+            Click here for
           </span>
           <div style={{ display: "flex", flexWrap: "wrap", gap: "1rem" }}>
             {links.map((l) => (

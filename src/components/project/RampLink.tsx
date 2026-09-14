@@ -18,6 +18,13 @@ import Link from "next/link";
  * `tone` exists because those two engineering links are deliberately ranked:
  * the game programming leads in gold and the quantum research follows in
  * silver. Same control, stated priority.
+ *
+ * IT SAYS "CLICK HERE FOR" IN SO MANY WORDS. A gold mono line with an arrow
+ * reads as a link to anyone who has used a portfolio site before and as
+ * decoration to plenty of people who have not — and a ramp nobody clicks is a
+ * section nobody reads. The lead is rendered as its own uppercase key so the
+ * label after it stays the thing the reader is choosing between; every ramp on
+ * the site gets it from here, so they cannot say it in five different ways.
  */
 export default function RampLink({
   href,
@@ -32,17 +39,43 @@ export default function RampLink({
   return (
     <Link
       href={href}
-      className="mono"
-      style={{
-        display: "inline-block",
-        fontSize: "0.78rem",
-        lineHeight: 1.5,
-        color,
-        borderBottom: `1px solid color-mix(in srgb, ${color} 50%, transparent)`,
-        paddingBottom: "2px",
-      }}
+      className="mono ramp"
+      style={
+        {
+          "--ramp-color": color,
+        } as React.CSSProperties
+      }
     >
-      {children} <span aria-hidden="true">→</span>
+      <span className="ramp__key">Click here for</span>
+      <span className="ramp__label">
+        {children} <span aria-hidden="true">→</span>
+      </span>
+
+      <style>{`
+        .ramp {
+          display: inline-flex;
+          flex-wrap: wrap;
+          align-items: baseline;
+          gap: 0.2rem 0.5rem;
+          font-size: 0.78rem;
+          line-height: 1.5;
+          color: var(--ramp-color);
+        }
+        .ramp__key {
+          font-size: 0.64rem;
+          letter-spacing: 0.16em;
+          text-transform: uppercase;
+          opacity: 0.85;
+        }
+        .ramp__label {
+          border-bottom: 1px solid color-mix(in srgb, var(--ramp-color) 50%, transparent);
+          padding-bottom: 2px;
+        }
+        .ramp:hover .ramp__label,
+        .ramp:focus-visible .ramp__label {
+          border-bottom-color: var(--ramp-color);
+        }
+      `}</style>
     </Link>
   );
 }

@@ -634,7 +634,7 @@ function ActBand({ act }: { act: Act }) {
             color: accent,
           }}
         >
-          {project.routingVerb}
+          Click here · {project.routingVerb}
           <span aria-hidden className="hp-arrow">
             →
           </span>

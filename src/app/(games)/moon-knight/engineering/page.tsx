@@ -261,7 +261,7 @@ export default function GameEngineeringPage() {
 
       {g.choices.map((c, i) => (
         <Reveal key={c.id}>
-          <article id={c.id} style={{ marginTop: "2rem", scrollMarginTop: "2rem" }}>
+          <article id={c.id} style={{ marginTop: "2rem" }}>
             <p
               className="mono"
               style={{

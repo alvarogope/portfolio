@@ -8,7 +8,6 @@ import { moonKnightNavItems } from "@/content/games";
 import CtaPanel from "@/components/project/CtaPanel";
 import NarrativeDesign from "@/components/project/NarrativeDesign";
 import Cast from "@/components/project/Cast";
-import DiegeticDesign from "@/components/project/DiegeticDesign";
 import ArtDirection from "@/components/project/ArtDirection";
 import AudioDesign from "@/components/project/AudioDesign";
 import MoonKnightAudio from "@/components/project/MoonKnightAudio";
@@ -19,7 +18,7 @@ import { deepDiveAnchors } from "@/content/moon-knight-deep-dive";
 export const metadata: Metadata = {
   title: "The World, the Story and the Score | Moon-Knight",
   description:
-    "The deep dive: Moon-Knight's three-act arc and its reversal, the cast, the symbolism, the jousting minigame, and the full diegetic, art-direction and score arguments.",
+    "The deep dive: Moon-Knight's three-act arc and its reversal, the cast, the symbolism, the jousting minigame, and the full art-direction and score arguments.",
 };
 
 export default function MoonKnightWorldPage() {
@@ -63,7 +62,7 @@ export default function MoonKnightWorldPage() {
       <Reveal>
         <div
           id={deepDiveAnchors.narrative}
-          style={{ marginTop: "4rem", scrollMarginTop: "2rem" }}
+          style={{ marginTop: "4rem" }}
         >
           <SectionHeading kicker="Narrative Design" title="The Three Acts" />
           <p
@@ -86,38 +85,23 @@ export default function MoonKnightWorldPage() {
       <Reveal>
         <div
           id={deepDiveAnchors.cast}
-          style={{ marginTop: "5rem", scrollMarginTop: "2rem" }}
+          style={{ marginTop: "5rem" }}
         >
           <Cast kicker="The Characters" />
         </div>
       </Reveal>
 
-      {/* 04 — diegetic design */}
-      <Reveal>
-        <div
-          id={deepDiveAnchors.diegetic}
-          style={{ marginTop: "5rem", scrollMarginTop: "2rem" }}
-        >
-          <SectionHeading kicker="UI Diegetic Design" title="The In-World UI Design" />
-          <p
-            style={{
-              color: "var(--color-mist)",
-              maxWidth: "35rem",
-              marginTop: "1.5rem",
-              marginBottom: "1.75rem",
-            }}
-          >
-            The main page shows what it was built, but here is the explanation and the full deep-dive.
-          </p>
-          <DiegeticDesign />
-        </div>
-      </Reveal>
+      {/* The diegetic UI design used to be §04 here. It MOVED to the main
+          project page, whole — it is the design of the game, and a reader
+          should meet it on the page about the game rather than one click
+          further in. Nothing was summarised on the way: `/moon-knight` now
+          renders the same `<DiegeticDesign />` full write-up this page did. */}
 
-      {/* 05 — art direction */}
+      {/* 03 — art direction */}
       <Reveal>
         <div
           id={deepDiveAnchors.art}
-          style={{ marginTop: "5rem", scrollMarginTop: "2rem" }}
+          style={{ marginTop: "5rem" }}
         >
           <SectionHeading kicker="Art Direction" title="The Sublime" />
           <p
@@ -136,11 +120,11 @@ export default function MoonKnightWorldPage() {
         </div>
       </Reveal>
 
-      {/* 06 — the music */}
+      {/* 04 — the music */}
       <Reveal>
         <div
           id={deepDiveAnchors.score}
-          style={{ marginTop: "5rem", scrollMarginTop: "2rem" }}
+          style={{ marginTop: "5rem" }}
         >
           <SectionHeading kicker="Music & Audio Design" title="The Music of Kaelum" />
           <p
@@ -160,11 +144,11 @@ export default function MoonKnightWorldPage() {
         </div>
       </Reveal>
 
-      {/* 07 — THE JOUSTING minigame */}
+      {/* 05 — THE JOUSTING minigame */}
       <Reveal>
         <div
           id={deepDiveAnchors.jousting}
-          style={{ marginTop: "5rem", scrollMarginTop: "2rem" }}
+          style={{ marginTop: "5rem" }}
         >
           <SectionHeading kicker="A MiniGame" title="The Jousting Minigame" />
           <p
@@ -181,11 +165,11 @@ export default function MoonKnightWorldPage() {
         </div>
       </Reveal>
 
-      {/* 08 — the expansions */}
+      {/* 06 — the expansions */}
       <Reveal>
         <div
           id={deepDiveAnchors.expansions}
-          style={{ marginTop: "5rem", scrollMarginTop: "2rem" }}
+          style={{ marginTop: "5rem" }}
         >
           <SectionHeading kicker="Expansions" title="Potential DLCs" />
           <p

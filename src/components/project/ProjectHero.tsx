@@ -16,7 +16,12 @@ export default function ProjectHero({
         gridTemplateColumns: "minmax(0, 1fr) minmax(0, 1.1fr)",
         gap: "clamp(2rem, 5vw, 4rem)",
         alignItems: "start",
-        padding: "clamp(1rem, 3vw, 2rem) 1.5rem clamp(2rem, 6vw, 5rem)",
+        /* The bottom was `clamp(2rem, 6vw, 5rem)`. It stacked with the
+           following <Section>'s own 4rem top padding and the chapter index's
+           1.75rem, so a wide screen opened with ~11rem of nothing between the
+           hero and the page's contents. Cut to a normal section break; the
+           other two halves of that stack are trimmed at their own sites. */
+        padding: "clamp(1rem, 3vw, 2rem) 1.5rem clamp(1.5rem, 3vw, 2.25rem)",
         maxWidth: "min(92vw, 78rem)",
         margin: "0 auto",
       }}

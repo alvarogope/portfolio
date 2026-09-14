@@ -77,8 +77,12 @@ export default function Jousting() {
         </figure>
 
         <div className="mkj-prose">
+          {/* `joustingIntro.practice` was rendered here. The const was cut
+              from `moon-knight-jousting.ts` and this read was left behind, so
+              the page no longer type-checked; the second line is gone with the
+              copy rather than replaced with new copy this component does not
+              own. */}
           <p className="mkj-line">{joustingIntro.tournament}</p>
-          <p className="mkj-line mkj-line--quiet">{joustingIntro.practice}</p>
           <p className="mkj-design">
             <span className="mono mkj-design-key">Why</span>
             {joustDesignNote}

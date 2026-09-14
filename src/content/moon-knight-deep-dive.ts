@@ -31,7 +31,11 @@ export const deepDiveAnchors = {
   narrative: "narrative-design",
   cast: "the-cast",
   motifs: "symbolism-and-motifs",
-  diegetic: "diegetic-design",
+  /* `diegetic` was here. The diegetic UI design moved back to `/moon-knight`
+     in full, so the anchor was removed rather than left pointing at a section
+     that no longer exists — a stale entry here is exactly the silent failure
+     this file was written to prevent. The main page's own id for it comes from
+     `project-chapters.ts`. */
   art: "art-direction",
   score: "score-and-audio",
   jousting: "the-jousting-minigame",

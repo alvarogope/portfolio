@@ -155,7 +155,7 @@ export default function ShatteredSkiesPage() {
 
             <div style={{ marginTop: "2rem" }}>
               <RampLink href={deepDiveHref("world")}>
-                What the place is like to stand on: the texture, the relics, who is left
+                The Full Description of the Planetary System and What is found there
               </RampLink>
             </div>
           </div>
@@ -164,10 +164,9 @@ export default function ShatteredSkiesPage() {
         {/* ═══ 06 · LEVEL DESIGN ═══*/}
         <Reveal>
           <div style={GAP} id={mainAnchors.levels}>
-            <SectionHeading kicker="06 · Level Design" title={ch.levels.title} />
+            <SectionHeading kicker="Level Design" title={ch.levels.title} />
             <p style={LEAD}>
-              The same five worlds, re-sequenced as a curriculum: what each one is built to teach,
-              the puzzle that teaches it, and what it sounds like while it does.
+              The planets and what the players learn in them. The level, the puzzles and the music in each.
             </p>
             <PlanetLevels />
           </div>

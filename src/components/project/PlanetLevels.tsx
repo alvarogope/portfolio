@@ -19,63 +19,15 @@ import type { PlanetId } from "@/content/shattered-skies-planets";
 import { PlanetGlyph } from "./PlanetGlyphs";
 import InteractiveHint from "./InteractiveHint";
 
-/**
- * Shattered Skies — the planetary level design beat chart.
- *
- * The counterpart to `PlanetDossier`. The dossier is what each world IS; this
- * is how each one PLAYS. Six bands, in reading order:
- *
- *   1. THE CREDIT — audio and level design split apart, because they were not
- *      made the same way: the audio is mine, the level design was co-designed
- *      with one other designer. First, so nobody can skim past it.
- *   2. THE THESIS — each planet teaches a different skill, plus one line
- *      pointing back at the dossier so the two sections are not confused.
- *   3. THE CURRICULUM RAIL — the five worlds in PLAY order (not orbit order),
- *      strung on one line, each labelled with the skill it owns. The rail is
- *      the teaching progression drawn as a line, and it is also the selector.
- *   4. THE MATRIX — six design dimensions against five worlds. Read down for a
- *      world, across for the escalation. The audio row is emphasised because
- *      it is the row that is entirely mine.
- *   5. THE DESIGN SHEET — the selected world expanded into the three passes a
- *      world gets designed in (curriculum, systems, sensory), led by one line
- *      on how those layers cohere. Defaults to Pyroterra.
- *   6. SPACE, and THE PROGRESSION — the ship's soundscape with the silence
- *      rule, then the five worlds distilled to a phrase each.
- *
- * THE RAIL IS A TABLIST. Five worlds, one visible panel: that is what tabs
- * are, so the rail is `role="tablist"` with roving tabindex, arrow/Home/End
- * keys and automatic activation, and the sheet is its `tabpanel`. The matrix
- * column headers select the same world through ordinary buttons — two tablists
- * driving one panel would lie to a screen reader about how many panels exist.
- *
- * THE SPRITE IS THE PAGE'S. `PlanetGlyph` stamps out symbols defined by
- * `PlanetSprite`, which is rendered exactly once per page by `PlanetDossier`
- * further up. Do not add a second sprite here — the ids are global.
- *
- * NO SCREENSHOTS, DELIBERATELY. This is the planning view; captures live in
- * the gallery. Every matrix cell is a phrase, and the fuller writing is in the
- * sheet, one world at a time.
- *
- * MOBILE. A six-by-five matrix cannot be honestly squeezed into 360px and CSS
- * cannot transpose a table, so below 900px the `<table>` is swapped for
- * per-world cards built from the same arrays — same six labels, one world per
- * card. Only one of the two is ever in the accessibility tree, because
- * `display: none` removes the other.
- */
-
-/* Dimensions pre-bucketed into the sheet's three groups. Module scope: frozen
-   content, so this is computed once rather than per render. */
 const SHEET_GROUPS = dimensionGroups.map((group) => ({
   ...group,
   dims: levelDimensions.filter((d) => d.group === group.id),
 }));
 
-/** Per-world colour, read from the dossier's data so the two cannot drift. */
 function toneStyle(id: PlanetId): React.CSSProperties {
   return { ["--tone" as string]: planetFacet(id).accent };
 }
 
-/** The badge that marks every audio surface as mine. One definition, reused. */
 function MineTag({ className }: { className?: string }) {
   return (
     <span className={`mono pl-mine${className ? ` ${className}` : ""}`}>
@@ -84,15 +36,6 @@ function MineTag({ className }: { className?: string }) {
   );
 }
 
-/**
- * A highlighted audio note — the design gems.
- *
- * These live in their own standing band rather than inside the world they
- * belong to: a note buried in Tidalor's sheet is only ever seen by a reader
- * who happens to select Tidalor, and both of these are the kind of decision
- * the section exists to show. `source` is what puts each one back in its
- * place without needing the sheet open.
- */
 function Gem({ source, label, body }: { source: string; label: string; body: string }) {
   return (
     <aside className="pl-gem" aria-label={label}>
@@ -106,7 +49,6 @@ function Gem({ source, label, body }: { source: string; label: string; body: str
   );
 }
 
-/* The worlds carrying a design note. Module scope — frozen content. */
 const GEM_WORLDS = levelPlanets.filter((p) => p.audioGem);
 
 export default function PlanetLevels() {
@@ -114,9 +56,6 @@ export default function PlanetLevels() {
   const tabRefs = useRef<Partial<Record<PlanetId, HTMLButtonElement | null>>>({});
   const planet: LevelPlanet = getLevelPlanet(selected);
 
-  /* Automatic activation: the arrow keys move focus and selection together,
-     which is the expected behaviour for a tablist whose panel is already
-     rendered and costs nothing to swap. */
   function onRailKeyDown(event: React.KeyboardEvent<HTMLButtonElement>, index: number) {
     const last = levelPlanets.length - 1;
     let next: number | null = null;
@@ -135,7 +74,7 @@ export default function PlanetLevels() {
 
   return (
     <div className="pl">
-      {/* 1 — the credit, before anything it could be mistaken for */}
+      {/* 1 — the credit */}
       <aside className="pl-credit" aria-label="Attribution">
         <p className="mono pl-credit-tag">{levelsCredit.headline}</p>
         <p className="pl-credit-role">
@@ -157,19 +96,13 @@ export default function PlanetLevels() {
       {/* 2 — the thesis */}
       <div className="pl-thesis">
         <p className="pl-thesis-line">{teachingThesis}</p>
-        <p className="mono pl-pointer">{dossierPointer}</p>
       </div>
 
-      {/* 3 — the curriculum rail. Play order, not orbit order: the numbering
-          runs 01–05 in the sequence the player meets the worlds, and each
-          station is labelled with the skill that world owns. */}
+      {/* 3 — the rail */}
       <div className="pl-railwrap">
         <p className="mono pl-rail-caption">
-          Play order — each world teaches one new skill, then assumes it
+          The play order and each skills.
         </p>
-        {/* The rail is a five-tab tablist driving the design sheet below it,
-            and until now it said so nowhere. The site's shared chip, above the
-            control rather than under it. */}
         <InteractiveHint
           what="world"
           does="its full design sheet and score notes open below the rail"
@@ -202,8 +135,6 @@ export default function PlanetLevels() {
               >
                 <span className="mono pl-station-ord">{p.ordinal}</span>
 
-                {/* Rule, world, rule — the segments run edge to edge with no
-                    gutter, so five stations meet as one continuous line. */}
                 <span className="pl-crown">
                   <span className="pl-rule pl-rule--l" aria-hidden="true" />
                   <span className="pl-orb">
@@ -221,9 +152,6 @@ export default function PlanetLevels() {
         </div>
       </div>
 
-      {/* 4a — the matrix, wide screens. A real table: the dimension is the row
-          header, the world is the column header, every cell announced with
-          both. */}
       <div className="pl-scroll">
         <table className="pl-matrix">
           <caption className="pl-sr">
@@ -280,9 +208,7 @@ export default function PlanetLevels() {
         </table>
       </div>
 
-      {/* 4b — the matrix, narrow screens. Same six dimensions, one world per
-          card. Not interactive: the rail above is still on screen and is the
-          only selector, so a phone gets one control surface, not two. */}
+      {/* 4b — the matrix */}
       <ul className="pl-cards">
         {levelPlanets.map((p) => (
           <li
@@ -317,7 +243,7 @@ export default function PlanetLevels() {
         ))}
       </ul>
 
-      {/* 5 — the design sheet for the selected world */}
+      {/* 5 — the design sheet for the worlds */}
       <div
         className="panel pl-sheet"
         id="pl-sheet"
@@ -339,8 +265,6 @@ export default function PlanetLevels() {
           </div>
         </div>
 
-        {/* The payoff line. First, because it is the only writing in the whole
-            artifact that argues rather than lists. */}
         <p className="pl-cohesion">{planet.cohesion}</p>
 
         <div className="pl-groups">
@@ -356,9 +280,6 @@ export default function PlanetLevels() {
                   <div key={dim.id} className="pl-group-row">
                     <dt className="mono pl-group-key">{dim.label}</dt>
                     <dd className="pl-group-val">
-                      {/* Most dimensions are a paragraph. Three are structured,
-                          and flattening them into prose would lose the shape
-                          that makes them worth reading. */}
                       {dim.id === "teaches" && (
                         <>
                           <span className="pl-lede">{planet.skillNote}</span>
@@ -381,7 +302,6 @@ export default function PlanetLevels() {
                           {planet.hazards.map((hazard) => (
                             <li key={hazard.name} className="pl-hazard">
                               <span className="pl-hazard-name">{hazard.name}</span>
-                              <span className="pl-hazard-effect">{hazard.effect}</span>
                             </li>
                           ))}
                         </ul>
@@ -403,16 +323,14 @@ export default function PlanetLevels() {
         </div>
       </div>
 
-      {/* 6a — the audio notes. Outside the chart on purpose: one of these
-          belongs to a single world and the other belongs to the space between
-          them, and neither should depend on the reader selecting anything. */}
+      {/* 6a — the audio notes */}
       <section className="pl-notes" aria-labelledby="pl-notes-head">
         <p className="mono pl-notes-kicker">
           Audio design
           <MineTag className="pl-mine--notes" />
         </p>
         <h4 id="pl-notes-head" className="pl-notes-head">
-          Two notes worth stopping on
+          Two main audio decisions
         </h4>
 
         <div className="pl-gems">
@@ -427,7 +345,6 @@ export default function PlanetLevels() {
           <Gem source={spaceAudio.kicker} label={spaceAudio.gem.label} body={spaceAudio.gem.body} />
         </div>
 
-        {/* The ship's own score — the context the silence rule sits inside. */}
         <div className="pl-ship">
           <p className="mono pl-ship-kicker">{spaceAudio.kicker}</p>
           <h5 className="pl-ship-head">{spaceAudio.headline}</h5>
@@ -435,7 +352,7 @@ export default function PlanetLevels() {
         </div>
       </section>
 
-      {/* 6b — the progression, distilled */}
+      {/* 6b — the progression */}
       <figure className="pl-arc">
         <figcaption className="mono pl-arc-caption">{progressionCaption}</figcaption>
         <ol className="pl-arc-line">

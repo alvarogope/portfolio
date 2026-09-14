@@ -8,21 +8,6 @@ import {
 } from "@/content/shattered-skies-planets";
 import { PlanetGlyph, PlanetSprite } from "./PlanetGlyphs";
 
-/**
- * Shattered Skies — survey dossier.
- *
- * A schematic strip of the system over a stat grid, one column per world,
- * ordered outward from the star. Static: everything reads without hover.
- *
- * The one-world-in-focus highlight is driven entirely by CSS: any ANCESTOR
- * carrying `data-active-planet="<id>"` dims the other worlds and lifts that one.
- * Passing `activePlanetId` puts the attribute on this section's own root, and
- * Stage 2's client wrapper puts it on a div above — same rules match either way,
- * which is what lets the orrery drive the highlight while this stays a server
- * component with no client JavaScript of its own.
- */
-
-/* Schematic strip geometry, in viewBox units. Not to distance scale. */
 const STRIP_W = 1400;
 const STRIP_H = 300;
 const SUN_X = 96;
@@ -33,16 +18,6 @@ const ORBIT_RY = 118;
 const stripX = (p: Planet) => SUN_X + p.orbitRadius * SPAN;
 const stripSize = (p: Planet) => 20 + p.renderScale * 50;
 
-/* ---- the alignment figure ------------------------------------------------
-   The one drawing in this section, and it exists because the rule it shows is
-   the only part of the access model that is genuinely GEOMETRIC: a door that
-   is a relationship between two bodies rather than a thing on a wall.
-
-   Deliberately schematic and deliberately unattributed to a planet — the
-   source copy never named the world, so neither does this. One orbit, the body
-   at the point where it lines up through the star with the place it has to
-   reach, and the same body ghosted somewhere else on the arc where the cave is
-   shut. Nothing else, because anything else would make it a second dossier. */
 const FIG_W = 520;
 const FIG_H = 190;
 const FIG_CX = 260;
@@ -50,8 +25,6 @@ const FIG_CY = 96;
 const FIG_RX = 196;
 const FIG_RY = 58;
 
-/* The ghost sits at 300° on the arc: far enough round to read as "somewhere
-   else", high enough not to collide with the alignment line or its caption. */
 const GHOST_A = (300 * Math.PI) / 180;
 const GHOST_X = FIG_CX + FIG_RX * Math.cos(GHOST_A);
 const GHOST_Y = FIG_CY + FIG_RY * Math.sin(GHOST_A);
@@ -66,7 +39,7 @@ function AlignmentFigure() {
       aria-labelledby="pd-fig-title pd-fig-desc"
       focusable="false"
     >
-      <title id="pd-fig-title">The door is the orbit</title>
+      <title id="pd-fig-title">Orbit Hint</title>
       <desc id="pd-fig-desc">{figureSummary}</desc>
 
       <ellipse
@@ -78,7 +51,6 @@ function AlignmentFigure() {
         fill="none"
       />
 
-      {/* the alignment: body, star and destination on one line */}
       <line
         className="pd__fig-line"
         x1={FIG_CX - FIG_RX}
@@ -89,7 +61,6 @@ function AlignmentFigure() {
 
       <circle className="pd__fig-star" cx={FIG_CX} cy={FIG_CY} r={11} />
 
-      {/* the ghost: same body, wrong part of the arc */}
       <circle className="pd__fig-ghost" cx={GHOST_X} cy={GHOST_Y} r={9} />
       <text className="pd__fig-label is-shut" x={GHOST_X} y={GHOST_Y - 18} textAnchor="middle">
         {figureShutLabel}
@@ -116,7 +87,6 @@ export default function PlanetDossier({
   activePlanetId = null,
 }: {
   planets?: readonly Planet[];
-  /** Stage 2: the world the orrery is pointing at. Null means "show them all evenly". */
   activePlanetId?: PlanetId | null;
 }) {
   const habitable = planets.filter((p) => p.habitable);
@@ -124,8 +94,6 @@ export default function PlanetDossier({
   const coldest = planets[planets.length - 1];
   const ramp = planets.map((p) => p.accent).join(", ");
 
-  /* One pair of rules per world: CSS cannot compare an ancestor's attribute
-     value against a descendant's, so the pairing is written out per id. */
   const focusRules = planets
     .map(
       (p) => `
@@ -146,9 +114,8 @@ export default function PlanetDossier({
     >
       <PlanetSprite />
 
-      {/* Dossier header — summary readings */}
       <header className="pd__head">
-        <p className="pd__kicker">Survey dossier · System of five worlds</p>
+        <p className="pd__kicker">The Planetary System Dossier</p>
         <dl className="pd__summary">
           <div className="pd__metric">
             <dt>Worlds</dt>
@@ -169,7 +136,6 @@ export default function PlanetDossier({
         </dl>
       </header>
 
-      {/* Schematic strip. Decorative: every reading below is repeated in the grid. */}
       <div className="pd__strip" aria-hidden>
         <svg
           className="pd__strip-svg"
@@ -204,7 +170,6 @@ export default function PlanetDossier({
             const top = SUN_Y - size / 2;
             return (
               <g key={p.id} className="pd__strip-world" data-planet={p.id}>
-                {/* Tidalor's host, drawn behind the moon it carries. */}
                 {p.isMoon && (
                   <>
                     <use href="#ssp-gasgiant" x={x - 116} y={SUN_Y - 42} width="118" height="84" />
@@ -238,11 +203,6 @@ export default function PlanetDossier({
         </svg>
       </div>
 
-      {/* Knowledge-gated access. Sits between the schematic and the cards on
-          purpose: it states the rule, draws the one part of it that is
-          geometric, and then every Access row in the grid below is an instance
-          of it. The reader meets "Access" on a card already knowing what the
-          word is doing. */}
       <section className="pd__gate" aria-labelledby="pd-gate-title">
         <header className="pd__gate-head">
           <p className="pd__kicker">{knowledgeGate.kicker}</p>
@@ -280,11 +240,8 @@ export default function PlanetDossier({
             </li>
           ))}
         </ul>
-
-        <p className="pd__gate-credit">{knowledgeGate.credit}</p>
       </section>
 
-      {/* The stat grid — one column per world, ordered outward from the star. */}
       <ol className="pd__grid">
         {planets.map((p) => (
           <li
@@ -334,9 +291,6 @@ export default function PlanetDossier({
 
             <p className="pd__note">{p.note}</p>
 
-            {/* The access rule, one world at a time. `gate` drives the chip's
-                tone, and the chip prints its own word, so colour is never
-                carrying the distinction on its own. */}
             <div className="pd__access" data-gate={p.access.gate}>
               <p className="pd__access-head">
                 <span className="pd__access-label">Access</span>
@@ -352,7 +306,6 @@ export default function PlanetDossier({
         ))}
       </ol>
 
-      {/* Hot → cold, in orbital order */}
       <footer className="pd__ramp">
         <span className="pd__ramp-label">Hottest</span>
         <span
@@ -465,14 +418,16 @@ export default function PlanetDossier({
            ("17.01 m/s²", "Extremely low") on one line and the rows stay aligned. */
         @media (min-width: 75rem) { .pd__grid { grid-template-columns: repeat(5, 1fr); } }
 
-        /* Subgrid keeps the six blocks of every card on the same lines across a
-           row, so the stats stay scannable even though Tidalor carries an extra
-           moon tag. Without subgrid support the card is a plain block flow, which
-           reads fine — only the cross-column alignment is lost. */
+        /* Subgrid keeps the seven blocks of every card on the same lines across
+           a row, so the stats stay scannable even though Tidalor carries an extra
+           moon tag. The span has to match the child count: a child past the end of
+           a subgrid is placed in an implicit track, which is zero-height here, so
+           it escapes the card and prints over whatever sits below it. Without subgrid
+           support the card is a plain block flow, which reads fine — only the cross-column alignment is lost. */
         .pd__card {
           display: grid;
           grid-template-rows: subgrid;
-          grid-row: span 6;
+          grid-row: span 7;
           row-gap: 1rem;
           align-content: start;
           min-width: 0;
@@ -487,6 +442,9 @@ export default function PlanetDossier({
             flex-direction: column;
             gap: 1rem;
           }
+          /* No shared rows to line up against, so the access block is pushed to
+             the foot of the card instead. */
+          .pd__access { margin-top: auto; }
         }
 
         .pd__orbit-row {
@@ -771,8 +729,8 @@ export default function PlanetDossier({
         /* ---- the per-card access row ---- */
         .pd__access {
           display: grid;
+          align-content: start;
           gap: 0.5rem;
-          margin-top: auto;
           padding-top: 0.9rem;
           border-top: 1px solid var(--pd-hairline);
         }
@@ -854,7 +812,6 @@ ${focusRules}
   );
 }
 
-/** `PlanetGlyph` renders its own <svg>; inside the strip we need a bare <use>. */
 function PlanetGlyphUse({
   id,
   x,

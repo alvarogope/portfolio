@@ -86,7 +86,7 @@ export const shatteredSkiesChapters = {
   },
   levels: {
     id: ssMain.levels,
-    title: "Each Planet Teaches a Skill",
+    title: "Each Planet Shows a Skill",
     note: "The level design, planet by planet",
   },
   mechanics: {

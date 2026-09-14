@@ -10,49 +10,22 @@ import {
 import { PlanetGlyph } from "./PlanetGlyphs";
 import InteractiveHint from "./InteractiveHint";
 
-/**
- * Shattered Skies — interactive orrery.
- *
- * Top-down view of the system: the star at centre, one ring per world placed by
- * its `orbitRadius`, each world a focusable button that drives the dossier's
- * highlight below.
- *
- * Depends on `<PlanetSprite />`, which `PlanetDossier` renders once further down
- * the page — the gradients and symbols here are referenced by id, not redefined.
- *
- * All geometry is expressed in `cqw`, i.e. percent of the stage's own width, so
- * the whole system scales with its container and never needs a media query.
- */
-
-/* Ring radii, as a share of the stage width. The star occupies the middle, so
-   `orbitRadius` (0–1) is remapped into the band that clears it rather than used
-   raw — at 0.16 Pyroterra would otherwise sit inside the star. The band runs as
-   wide as the outermost label can go without leaving the stage. */
 const RING_MIN = 11;
 const RING_MAX = 40;
 const ringRadius = (p: Planet) => RING_MIN + (RING_MAX - RING_MIN) * p.orbitRadius;
 
-/* Glyph diameter, same units, and the size range compressed hard against
-   `renderScale`. Five worlds on one square cannot all clear each other when
-   their orbits line up — the two innermost orbits are 5.2cqw apart and the two
-   largest worlds live on them — but this keeps the worst crossing to a graze
-   instead of one world sitting on top of another. */
 const glyphSize = (p: Planet) => 4 + 5.2 * p.renderScale;
 
 const STAR_SIZE = 11;
 
-/** Kepler's third law, loosely: period grows with radius^1.5, so inner worlds lap outer ones. */
 const BASE_PERIOD = 420;
 const period = (p: Planet) => Math.round(BASE_PERIOD * Math.pow(p.orbitRadius, 1.5));
 
-/** Golden-angle spread, so the worlds start well separated whatever the count. */
 const startAngle = (index: number) => (200 + index * 137.5) % 360;
 
-/** Tidalor's host, relative to Tidalor's own glyph. Mirrors the dossier strip: behind and to the left. */
 const HOST_WIDTH = 2.2;
 const HOST_OFFSET = -0.95;
 
-/** Last resort, so a missing observer can never leave the system invisible. */
 const ENTRANCE_FAIL_OPEN_MS = 1500;
 
 export default function PlanetOrrery({
@@ -63,24 +36,15 @@ export default function PlanetOrrery({
   onSelect,
 }: {
   planets?: readonly Planet[];
-  /** The world currently being shown — hover/focus if there is one, otherwise the selection. */
   active?: PlanetId | null;
-  /** The sticky choice, which survives the pointer leaving. */
   selected?: PlanetId | null;
-  /** Transient hover/focus target. */
   onPreview: (id: PlanetId | null) => void;
-  /**
-   * Sticky selection. Passing null clears it. `viaPointer` is false for
-   * keyboard activation, where scrolling the page would strand focus offscreen.
-   */
   onSelect: (id: PlanetId | null, viaPointer?: boolean) => void;
 }) {
   const buttons = useRef<(HTMLButtonElement | null)[]>([]);
   const root = useRef<HTMLElement>(null);
   const activePlanet = planets.find((p) => p.id === active) ?? null;
 
-  /* The orrery sits below the fold, so the entrance waits until it is in view
-     rather than firing at first paint where nobody would see it. */
   const [entered, setEntered] = useState(false);
   useEffect(() => {
     const reveal = () => setEntered(true);
@@ -140,7 +104,6 @@ export default function PlanetOrrery({
     event.preventDefault();
   };
 
-  /* A click that missed every world clears the selection. */
   const onStageClick = (event: React.MouseEvent) => {
     if ((event.target as HTMLElement).closest("button")) return;
     onSelect(null);
@@ -155,20 +118,13 @@ export default function PlanetOrrery({
       data-entered={entered ? "true" : "pending"}
       onKeyDown={onKeyDown}
     >
-      <p className="orr__kicker">Orrery · Top-down system view</p>
+      <p className="orr__kicker">The Planetary System in Movement</p>
 
-      {/* The chip goes ABOVE the stage, in the site's shared words. This
-          component used to carry its own quiet hint at the BOTTOM, inside the
-          status readout, where it was both the smallest text in the figure and
-          underneath the thing it was explaining. The readout now says only what
-          is selected; the instruction is here, where it is read first. */}
       <InteractiveHint
         what="world"
         does="its survey entry opens below and the other four dim"
       />
 
-      {/* The backdrop click is a redundant shortcut for clearing — Escape and the
-          Clear button do the same thing, so there is no keyboard-only path here. */}
       <div className="orr__stage" onClick={onStageClick}>
         <svg className="orr__rings" viewBox="0 0 100 100" aria-hidden focusable="false">
           <circle cx="50" cy="50" r="48" fill="url(#ssp-halo)" />
@@ -176,8 +132,6 @@ export default function PlanetOrrery({
             <circle
               key={p.id}
               className="orr__ring"
-              /* Pinned beats previewed: a selection keeps its solid ring even
-                 while the pointer is off looking at something else. */
               data-state={
                 p.id === selected
                   ? "selected"
@@ -225,7 +179,6 @@ export default function PlanetOrrery({
                   } as React.CSSProperties
                 }
               >
-                {/* Undo the arm's spin, then its phase, so labels stay upright. */}
                 <div className="orr__unspin">
                   <div className="orr__unphase">
                     {p.isMoon && (
@@ -254,7 +207,6 @@ export default function PlanetOrrery({
                       onPointerLeave={() => onPreview(null)}
                       onFocus={() => onPreview(p.id)}
                       onBlur={() => onPreview(null)}
-                      /* detail is 0 when a button is activated from the keyboard. */
                       onClick={(e) => onSelect(p.id === selected ? null : p.id, e.detail > 0)}
                     >
                       <span className="orr__body">
@@ -288,8 +240,6 @@ export default function PlanetOrrery({
             </>
           ) : (
             <span className="orr__status-hint">
-              {/* No instruction here any more — it is in the chip above the
-                  stage. This says only what state the figure is in. */}
               No world selected.
             </span>
           )}

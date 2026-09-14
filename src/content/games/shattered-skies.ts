@@ -3,14 +3,11 @@ import type { Project } from "../schema";
 export const shatteredSkies: Project = {
   slug: "shattered-skies",
   title: "Shattered Skies",
-  tagline: "A fractured world, a united purpose. Two enemies, one life, and a voice that will not carry.",
+  tagline: "A fractured world with a united purpose. Two enemies, one life they must preserve.",
   pillar: true,
 
-  facts: { engine: "Unity", role: "Systems & World Designer", team: "Team of 5", year: "2025" },
-  /* The subpage. The main page was condensed to the built, working game; the
-     full story, the world's soul and the design reasoning live here. Named for
-     what a reader gets rather than for the site's structure. */
-  links: [{ label: "The world & the reasoning", url: "/shattered-skies/world" }],
+  facts: { engine: "Unity", role: "Game Designer", team: "Team of 5", year: "2025" },
+  links: [{ label: "The World", url: "/shattered-skies/world" }],
 
   eyebrow: "UNITY · TEAM OF 5 · 2025",
   systemsHook: "Two players share one life and cannot understand each other. What you say in five clear seconds decides how it ends.",
@@ -20,57 +17,47 @@ export const shatteredSkies: Project = {
 
   posterAlt: "Shattered Skies key art placeholder",
 
-  /* The parasite's MECHANICS are deliberately not described here. `premise` in
-     shattered-skies-overview.ts owns them and states them two sections later,
-     and §07's telepathy block states their consequence. The vision names the
-     Symbiochord and moves on to what I designed, which is what this paragraph
-     is for. */
   vision:
-    "Shattered Skies binds two soldiers of enemy species to a single parasite, the Symbiochord, and gives them no shared language. Across a hand-built miniature solar system they have to cooperate to survive, and decide along the way whether to trust the person they were raised to hate. I designed the world they move through and the systems that force them together: the planets and their physics, the interdependent puzzles, the traversal, and the knowledge-gated progression that turns understanding the universe into the way forward.",
-
-  /* The five worlds now live in src/content/shattered-skies-planets.ts, with the
-     full survey data the planetary dossier and the orrery both read. */
+    "Shattered Skies entwines two soldiers from enemy species that hold the same parasite, The Symbiochord. " +
+    "These two characters do not share the same language, making communication difficult. The action takes place " +
+    "in a dangerous and dynamic planetary system forcing them to cooperate to survive and decide whether to trust " +
+    "the person they wre raised to hate. I mainly designed the world they move through and the systems that force them to " +
+    "stay together. Planets and their physics, interdependent puzzles, the traversal mechanics and their power-ups and the " +
+    "progression based in the learning and understanding of the universe.",
 
   designChallenge: {
     quote:
-      "The planetary system had to be a puzzle in itself, not a backdrop. I researched how gravity, orbit, and tides actually behave, then built each planet so that understanding it was the way to progress: Tidalor's paths open only when the moon it orbits pulls the tides low, and Dunestorm's gravity locks players in until they have learned to upgrade their thruster elsewhere. Progression is knowledge, not stats. Players advance by observing the system, forming a theory, and testing it, which is the metroidvania loop rebuilt around a solar system.",
+      "The main challenge as a designer in the level and world design was to make a planetary system that functions as a puzzle, " +
+      "at the same time that it had to be as realistic as possible. The realistic approach made the learning easier for the players " +
+      "when it comes to recognise the same patterns in physics in the game and in the real world. The main decision that connects all of " +
+      "these decisions together is the moon Tidalor, since its path open when the orbit pulls the tides low. Another example is " +
+      "Dunestorm, which gravity locks player until they learn how to upgrade theirjetpacks. That's how progression becomes knowledge " +
+      "advancing through systems observation.",
     engine: "Unity",
     system: "World design / physics / progression",
-    resolution: "Knowledge-gated a five-planet system where understanding the physics is the upgrade.",
+    resolution: "Make physics realistic for a better pattern recognision and progression based in knowledge.",
   },
 
-  /* ONE LINE EACH, AND THAT IS THE WHOLE POINT.
-
-     This block used to be the last thing on an 8,000-word page: four
-     paragraphs re-describing the jetpacks, the collision booster, the planetary
-     system and the gating rule, all of which are designed in full further down.
-     The ownership map called it "a fourth recap after 8,000 words".
-
-     It now sits at position 04, directly after the team context, where the same
-     four claims read as a promise of what is coming rather than a summary of
-     what has gone. Moving it without cutting it would only have relocated the
-     recap, so each entry is one sentence that NAMES the contribution and hands
-     off. Nothing here explains a mechanic; the sections below do that, once. */
   contributions: [
     {
-      label: "The planetary system & world design",
+      label: "The planetary system & the world design",
       description:
-        "Five worlds researched against real gravity, orbit and tide behaviour, so the physics of the system is the thing the player is actually learning.",
+        "Researched real gravity, orbit and tide behaviour for the five worlds, so the physics are as natural and easier to learn for the players.",
     },
     {
       label: "Interdependent puzzle design",
       description:
-        "Puzzles neither player can finish alone — built on simultaneous action, shared timing and the two characters' asymmetry.",
+        "Designed the interdependancy of the puzzles, requiring cooperation, simultaneous action and timing within the gameplay's assymetry.",
     },
     {
-      label: "Traversal & asymmetry",
+      label: "Traversal & asymmetry mechanics",
       description:
-        "All movement design: two bodies with opposite strengths, a weight-sensitive jetpack on a shared fuel supply, and a boost that only exists when both players commit at once.",
+        "All movement design: the two bodies with opposite strengths, jetpacks sensible to weight and the shared fuel supply, and their own cooperative mechanics like the boost.",
     },
     {
-      label: "Knowledge-gated progression",
+      label: "Progression based in knowledge",
       description:
-        "A metroidvania built around comprehension instead of upgrades: the system opens as the players work out how it moves.",
+        "Inspired by metroidvania's world comprehension instead of systems upgrades. Player need to understand the world for powering-up and progressing.",
     },
   ],
 };

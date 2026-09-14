@@ -1,30 +1,3 @@
-/**
- * Shattered Skies — the world of Shatterstorm: the setting's soul, as opposed
- * to its facts.
- *
- * THE DIVISION OF LABOUR with `shattered-skies-planets.ts` is deliberate and
- * should be kept. That file is the survey: five worlds, gravity, diameter,
- * temperature, ecosystem, the hazard each one poses. This file is the world
- * those numbers are numbers ABOUT — what the place feels like to stand on,
- * why it is broken, and what the breakage is doing for the story. Nothing
- * here repeats a planet, a stat or a hazard, and `bridge` below is the one
- * sentence that hands the reader over to the dossier.
- *
- * ATTRIBUTION. Shattered Skies is a team project (team of 5); the world design
- * is mine. `roleNote` says exactly that and no more — the framing to avoid is
- * one that reads as though I wrote the whole game.
- *
- * ON THE NAME. "Shatterstorm" is used two ways across the project and both are
- * correct: the cataclysm that broke the crust, and the world it left behind.
- * `lead.reconcile` below is the line that makes that explicit rather than
- * leaving the reader to trip over it — see the Shatterstorm note in
- * `shattered-skies-overview.ts`, which uses the event sense.
- */
-
-/* ---- attribution -------------------------------------------------------- */
-
-/* ---- the lead: the core world-design premise ---------------------------- */
-
 export const lead = {
   tag: "The premise",
   body:
@@ -33,9 +6,7 @@ export const lead = {
     "was never built to hold this long. Storm-wracked skies, glowing energy fissures, debris " +
     "drifting where ground used to be — destruction and beauty in the same frame, and never one " +
     "without the other.",
-  /** Both senses of the name, said once, so neither reading trips the reader. */
   reconcile: "The cataclysm was called the Shatterstorm. So is what it left.",
-  /** The design claim underneath the picture. This is the part that is a decision. */
   note:
     "The premise is a design decision before it is a description: the ground is not a given. " +
     "Every space in the game is a fragment with an edge, and every way between two fragments is " +
@@ -43,27 +14,15 @@ export const lead = {
     "assume solid ground, which is what makes traversal a question rather than a control scheme.",
 } as const;
 
-/* ---- the thematic argument ---------------------------------------------- */
-
 export const metaphor = {
-  title: "The world is the argument",
+  title: "The Shatterstorm",
   body:
-    "A shattered planet for two shattered peoples, forced together. The Shatterstorm is not a " +
-    "backdrop the story happens in front of — it is the story's argument, made in terrain. Drayk " +
-    "and Aevi are two destinies twined too closely to pull apart, crossing a world in precisely " +
-    "that condition: broken into pieces that hold only because something is holding them. Every " +
-    "bridge they cross restates the thesis, and every one of those bridges is rotting.",
-  /** Kept separate so the claim above can be read as craft, not as poetry. */
+    "The main event of the game is a metaphor of the relationship of the characters. " +
+    "This event broke the world into pieces that stay together. The same as Aevi and Drayk.",
   note:
-    "Designing the setting to embody the premise rather than decorate it is the world-design call " +
-    "I would defend hardest here. Two species fractured by war, bound by a parasite neither chose, " +
-    "moving across a fractured world bound by machinery nobody maintains: the reader should reach " +
-    "the same conclusion from the landscape that the story reaches out loud.",
+    "Designing this setting was an important world design decision. The environment of the world have the same patterns as " +
+    "their characters. Broken by war, but fully connected",
 } as const;
-
-/* ---- the living ruins: sensory texture ----------------------------------
-   Four notes, one sense each where it can be. Short on purpose — this band is
-   meant to be skimmed and remembered, not studied. */
 
 export interface WorldTexture {
   id: string;
@@ -102,7 +61,6 @@ export const textures: readonly WorldTexture[] = [
   },
 ];
 
-/* ---- relics of the Veynar ------------------------------------------------ */
 
 export const relicsLead =
   "The technology that survives here is not the players' technology. Veynar machinery is still " +
@@ -143,7 +101,6 @@ export const relics: readonly Relic[] = [
   },
 ];
 
-/* ---- who is left --------------------------------------------------------- */
 
 export const whoRemains = {
   title: "Who remains",
@@ -154,13 +111,3 @@ export const whoRemains = {
     "each adapted to the broken world in their own way, which is part of why they are still at " +
     "war over what is left of it.",
 } as const;
-
-/* ---- the handover: DELETED, and deliberately not replaced ---------------
-   There used to be a `bridge` const here — one line handing the reader from
-   this section to the planetary survey. The two sections have since MERGED
-   into one (`05 · The World & the Five Worlds` on the main page), which turned
-   that sentence into a pointer at the block it was already inside.
-
-   Adjacency replaced it, exactly as it did in the Moon-Knight world/level
-   merge. If a handover line ever reappears here, check first whether the thing
-   it points at is still a separate section. */

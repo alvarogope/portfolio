@@ -8,63 +8,12 @@ import {
 } from "@/content/shattered-skies-world";
 import type { SsVariant } from "@/content/shattered-skies-deep-dive";
 
-/**
- * Shattered Skies — the world of Shatterstorm: the setting's soul, placed
- * directly above the planetary dossier, which is its facts.
- *
- * PROSE IS THE LEAD HERE, and that is a decision rather than a shortcut. The
- * planets already have the picture — the orrery and the survey grid are the
- * page's visual for this material — so a second diagram in front of them would
- * compete with the one that has the data. What this section owes the reader is
- * the voice: what the place is, why it is broken, and what the breakage is
- * doing for the story. So it reads as a setting bible, banded so it can be
- * skimmed:
- *
- *   1. THE PREMISE, at lead size. The shattered crust, then the design claim
- *      under it — the ground is not a given.
- *   2. THE ARGUMENT. A shattered world for two shattered peoples. This is the
- *      thesis panel, and it wears the two hosts' colours on its edge because
- *      it is about the two of them.
- *   3. THE LIVING RUINS — four sensory notes, one line each.
- *   4. RELICS OF THE VEYNAR — prose, then five terms as a light glossary.
- *   5. WHO REMAINS — short.
- *
- * SPLIT ACROSS TWO PAGES. Band 2 — the argument — renders on the MAIN page, as
- * the standfirst of the merged world section, because the orrery directly under
- * it is that argument's evidence. Bands 1, 3, 4 and 5 render on the DEEP DIVE.
- * `variant` selects; no band renders twice, and no sentence exists twice.
- *
- * THERE IS NO LONGER A HANDOVER BAND. Band 6 used to be one line pointing at
- * the dossier below. The two sections have merged, so it pointed at the block
- * it was already inside; `bridge` was deleted from the content file rather than
- * hidden here.
- *
- * NO PLANETS. Not a name, not a stat, not a hazard: `PlanetDossier` owns all
- * of that a few hundred pixels further down, and repeating it here would make
- * the reader skim both. The single exception is Zyrium's gloss, which has to
- * say the journey ends at the coldest world for the relic to mean anything —
- * and it says it without naming the planet.
- *
- * The only ornament is a hairline fracture rule, drawn twice. It is
- * `aria-hidden` decoration, and its one animation is gated behind
- * `prefers-reduced-motion: no-preference`.
- *
- * Static server component: no state, no client JavaScript.
- */
-
-/* ---- the fracture rule ---------------------------------------------------
-   A crack, not a border. The line steps between four heights across the width
-   with three short branches falling off the step points, and the stroke runs
-   through a gradient that is transparent at both ends, so it reads as a
-   fissure crossing the page rather than a rule that stops. */
-
 const FR_W = 1200;
 const FR_H = 44;
 
 const FRACTURE_MAIN =
   "M 0 22 H 118 L 166 12 H 298 L 344 28 H 520 L 566 15 H 758 L 802 30 H 978 L 1022 19 H 1200";
 
-/** Hairlines falling off the step points. Each one is a fracture giving up. */
 const FRACTURE_BRANCHES = [
   "M 344 28 L 360 40",
   "M 566 15 L 552 3",
@@ -72,7 +21,6 @@ const FRACTURE_BRANCHES = [
   "M 1022 19 L 1008 8",
 ];
 
-/** The step points, lit. Staggered so the pulse never reads as a metronome. */
 const FRACTURE_NODES = [
   { cx: 344, cy: 28, delay: "0s" },
   { cx: 566, cy: 15, delay: "-2.6s" },
@@ -120,13 +68,6 @@ export default function ShatterstormWorld({ variant = "main" }: { variant?: SsVa
 
   return (
     <div className="sw" data-variant={variant}>
-      {/* No credit block here. The page states its attribution once, in
-          §03's teamNote — team of five, my seat was systems and world design —
-          and §06's levelsCredit is the only other one, because it makes a
-          distinction (audio mine, level design shared) rather than a
-          disclaimer. Four near-identical restatements of the same sentence
-          made a strong page read as an anxious one. */}
-
       {/* ---- 1 · the premise — DEEP DIVE ---- */}
       {deep && (
         <div className="sw__lead">
@@ -139,10 +80,7 @@ export default function ShatterstormWorld({ variant = "main" }: { variant?: SsVa
 
       {deep && <FractureRule id="a" />}
 
-      {/* ---- 2 · the argument — MAIN PAGE ----
-          The world-design claim, and the call I would defend hardest. It stays
-          on the main page because the orrery immediately below it is the
-          evidence for it: claim, then the diagram that proves it. */}
+      {/* ---- 2 · the argument — MAIN PAGE  */}
       {!deep && (
         <section className="sw__thesis" aria-labelledby="sw-thesis-title">
           <h3 className="sw__thesis-title" id="sw-thesis-title">

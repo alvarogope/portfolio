@@ -11,83 +11,22 @@ import {
 } from "@/content/shattered-skies-overview";
 import type { SsVariant } from "@/content/shattered-skies-deep-dive";
 
-/**
- * Shattered Skies — "The Game": the context section, with the narrative
- * structure map as its centrepiece.
- *
- * THIS SECTION IS NOT A CREDIT. It describes a team project, and it opens with
- * a visible attribution panel saying so and naming my role on it. Everything
- * after this section on the page is the part that is mine. That order — their
- * game first, my work second — is the whole reason the section exists.
- *
- * Read top to bottom:
- *
- *   1. THE PREMISE, and the two hosts as a pair of cards. The cards come
- *      before the diagram deliberately: they are where the reader learns that
- *      green is Drayk and cyan is Aevi, so the map never has to stop and
- *      explain its own colours.
- *   2. THE WORLD — three lore notes, short, because this is context.
- *   3. THE MAP — two backstories converge at the Symbiochord, run a spine of
- *      four beats, drop into the fifth (the final choice), and fan through two
- *      sealed decisions into the GDD's three endings. Every ending takes one
- *      line from each host, because two players with two options each is four
- *      combinations but only three outcomes: it does not matter which of them
- *      betrays the other, only that one of them did.
- *   4. THE BEATS and THE ENDINGS as real HTML text.
- *
- * WHY 3 AND 4 BOTH EXIST. The map carries only names; the prose under it
- * carries the actual beats. It is also why the SVG is a single `role="img"`
- * with a `<desc>`: a screen reader gets one summary of the shape instead of
- * forty loose fragments of node text, then reads the real content below.
- *
- * SPLIT ACROSS TWO PAGES. `variant="main"` renders bands 1 and 3 plus the beat
- * NAMES — the team context, the two hosts and the shape of the story, which is
- * what the systems further down the main page need in order to land.
- * `variant="deep"` renders band 2 and the written form of band 4: the world
- * notes, each beat's body, the sealed-choice mechanism and the three endings.
- *
- * THE DIAGRAM STAYS ON MAIN, and is not drawn twice. It is built entirely from
- * keys — `mapLabel`, `mapTag`, host names — so it costs the condensed page
- * almost nothing in words while carrying the whole structure. The deep dive
- * gets the prose the diagram is a picture OF, which is the split working: one
- * literal per sentence, one render site each.
- *
- * BELOW 900px ON MAIN the drawing is switched off with `display: none` and the
- * beat NAMES remain as a vertical rail. That is lossy compared with the old
- * single-page version, which is why `mapNotes.narrow` says what is happening
- * rather than implying the reader has everything.
- *
- * Static server component: no state, no client JavaScript.
- */
-
-/* ---- geometry ----------------------------------------------------------
-   viewBox units, laid out for a 1200-wide drawing that renders at about 1:1
-   in the breakout width below. The spine runs left to right across the top,
-   turns down at the end into the decisive beat, and fans out to the endings
-   along the bottom — vertical space rather than horizontal, because four
-   backstory-to-ending columns side by side would need a canvas twice this
-   wide and half this readable. */
-
 const VB_W = 1200;
 const VB_H = 676;
 const PAD = 14;
 
 const SPINE_Y = 164;
 
-/** Backstories: two nodes stacked left, meeting at the chain. */
 const BS_X = PAD;
 const BS_W = 140;
 const BS_H = 68;
 const BS_CY = [108, 220];
 
-/** The Symbiochord itself — two interlocked links where the fates merge. */
 const CHAIN_X = 209;
-/** Vertical offset of the chain's two labels, clear of the links. */
 const CHAIN_LABEL_DY = 25;
 const CHAIN_RX = 9;
 const CHAIN_RY = 6.5;
 
-/** Spine beats: everything except the decisive one. */
 const spineBeats = storyBeats.filter((b) => !b.decisive);
 const finalBeat = storyBeats.find((b) => b.decisive) ?? storyBeats[storyBeats.length - 1];
 
@@ -95,14 +34,12 @@ const B_W = 198;
 const B_H = 86;
 const B_Y = SPINE_Y - B_H / 2;
 const B_X0 = 264;
-/** Derived, not authored: add a beat and the spine re-spaces itself. */
 const B_PITCH =
   spineBeats.length > 1 ? (VB_W - PAD - B_X0 - B_W) / (spineBeats.length - 1) : 0;
 
 const beatX = (i: number) => B_X0 + i * B_PITCH;
 const lastBeatCx = beatX(spineBeats.length - 1) + B_W / 2;
 
-/** The decisive beat, centred and given room — it is the pivot of the map. */
 const FC_W = 328;
 const FC_H = 96;
 const FC_X = (VB_W - FC_W) / 2;
@@ -110,16 +47,12 @@ const FC_Y = 296;
 const FC_CX = VB_W / 2;
 const FC_BOTTOM = FC_Y + FC_H;
 
-/** The two sealed decisions. Nothing passes between them. */
 const G_W = 196;
 const G_H = 48;
 const G_Y = 424;
 const G_BOTTOM = G_Y + G_H;
 const G_CX = [FC_CX - 110, FC_CX + 110];
 
-/** Endings across the foot, in content order: both selfless, one selfish,
-    both selfish. Centred as a group, so the middle one sits directly under the
-    wall between the two sealed decisions. */
 const E_W = 260;
 const E_H = 76;
 const E_Y = 580;
@@ -130,7 +63,6 @@ const endX = (i: number) => E_X0 + i * (E_W + E_GAP);
 const endCx = (i: number) => endX(i) + E_W / 2;
 
 
-/* A fixed star field. Seeded so server and client draw the same sky. */
 const STARS = (() => {
   let seed = 20250824;
   const rand = () => {
@@ -146,8 +78,6 @@ const STARS = (() => {
   }));
 })();
 
-/** Greedy wrap for node labels. Node widths are fixed, so a character budget
-    is enough — no measurement, and it stays a server component. */
 function wrap(text: string, max: number): string[] {
   const lines: string[] = [];
   let current = "";
@@ -164,8 +94,6 @@ function wrap(text: string, max: number): string[] {
   return lines;
 }
 
-/** A cubic that leaves and arrives vertically — the fan reads as a delta
-    rather than four diagonals. */
 function fanPath(x0: number, y0: number, x1: number, y1: number): string {
   const lift = (y1 - y0) * 0.55;
   return `M ${x0} ${y0} C ${x0} ${y0 + lift}, ${x1} ${y1 - lift}, ${x1} ${y1}`;
@@ -197,8 +125,6 @@ function NarrativeDiagram() {
         >
           <path className="nm-arrowhead" d="M 0 0 L 8 4 L 0 8 Z" />
         </marker>
-        {/* Both selfless: the two hosts stop being two. The Unity node is the
-            only place on the map where the colours are one object. */}
         <linearGradient id="nm-merge" x1="0" y1="0" x2="1" y2="0">
           <stop offset="0%" className="nm-merge-a" />
           <stop offset="100%" className="nm-merge-b" />
@@ -212,20 +138,18 @@ function NarrativeDiagram() {
         ))}
       </g>
 
-      {/* ---- band label rail ---- */}
       <g className="nm-rail">
         <text className="nm-rail-text" x={PAD} y={44}>
-          01 · BACKSTORIES
+          THE BACKSTORIES
         </text>
         <text className="nm-rail-text" x={PAD} y={300}>
-          02 · THE CHOICE
+          THE CHOICE
         </text>
         <text className="nm-rail-text" x={PAD} y={560}>
-          03 · ENDINGS
+           THE ENDINGS
         </text>
       </g>
 
-      {/* ---- backstories → the chain ---- */}
       {hosts.map((host, i) => (
         <path
           key={`bind-${host.id}`}
@@ -262,7 +186,6 @@ function NarrativeDiagram() {
         );
       })}
 
-      {/* The Symbiochord: two links, interlocked, one in each host's colour. */}
       <g className="nm-chain">
         <ellipse
           className="nm-chain-link is-drayk"
@@ -369,7 +292,6 @@ function NarrativeDiagram() {
         </text>
       </g>
 
-      {/* ---- the two sealed decisions ---- */}
       {hosts.map((host, i) => (
         <path
           key={`seal-${host.id}`}
@@ -401,25 +323,22 @@ function NarrativeDiagram() {
             SEALED
           </text>
           <text className="nm-gate-label" x={G_CX[i]} y={G_Y + 35} textAnchor="middle">
-            {host.name.toUpperCase()} CHOOSES ALONE
+            {host.name.toUpperCase()} CHOOSES
           </text>
         </g>
       ))}
 
-      {/* The wall between them. This is the mechanism the endings hang on. */}
       <path className="nm-wall" d={`M ${FC_CX} ${G_Y - 8} V ${G_BOTTOM + 8}`} />
       <text className="nm-wall-label" x={G_CX[1] + G_W / 2 + 20} y={G_Y + 20}>
         NO INFORMATION
       </text>
       <text className="nm-wall-label" x={G_CX[1] + G_W / 2 + 20} y={G_Y + 34}>
-        PASSES BETWEEN THEM
+        BETWEEN THEM
       </text>
       <text className="nm-wall-sub" x={G_CX[1] + G_W / 2 + 20} y={G_Y + 50}>
-        THE PAIR DECIDES THE ENDING
+        THE PLAYERS DECIDE THE ENDING
       </text>
 
-      {/* ---- the fan: the pair of choices decides, never one of them, so
-              every ending takes one line from each host ---- */}
       {storyEndings.map((ending, ei) =>
         hosts.map((host, hi) => (
           <path
@@ -430,7 +349,6 @@ function NarrativeDiagram() {
         ))
       )}
 
-      {/* ---- endings ---- */}
       {storyEndings.map((ending, i) => {
         const x = endX(i);
         const cx = endCx(i);
@@ -464,11 +382,6 @@ export default function NarrativeMap({ variant = "main" }: { variant?: SsVariant
 
   return (
     <div className="nm" data-variant={variant}>
-      {/* ---- attribution, before anything it might be mistaken for ----
-          MAIN ONLY, and deliberately. `teamNote` is the page's canonical
-          "team of five, my role was Systems & World Designer" statement, and
-          the ownership map's rule is that no other section repeats it. The
-          deep dive links back to this section rather than restating it. */}
       {!deep && (
         <aside className="nm__credit" aria-label="Attribution">
           <p className="mono nm__credit-tag">{teamNote.headline}</p>
@@ -481,7 +394,6 @@ export default function NarrativeMap({ variant = "main" }: { variant?: SsVariant
 
       {!deep && <p className="nm__premise">{premise}</p>}
 
-      {/* ---- the two hosts: also the map's colour key ---- */}
       {!deep && (
         <ul className="nm__hosts">
           {hosts.map((host) => (
@@ -520,7 +432,7 @@ export default function NarrativeMap({ variant = "main" }: { variant?: SsVariant
           <figcaption className="nm__figcap">
             <h3 className="nm__band-title">Narrative structure</h3>
             <p className="mono nm__figcap-meta">
-              Two backstories · {storyBeats.length} beats · {storyEndings.length} endings
+              Two Stories · {storyEndings.length} endings
             </p>
           </figcaption>
 
@@ -533,13 +445,6 @@ export default function NarrativeMap({ variant = "main" }: { variant?: SsVariant
             <NarrativeDiagram />
           </div>
 
-          {/* CHIP REMOVED. This figure has no interaction handler of any kind:
-              it is a plain `overflow-x: auto` frame with a `tabIndex`, and
-              nothing inside it responds to a pointer or a key. It carried a
-              `pan` chip, which promised dragging and arrow keys that do not
-              exist. A chip that over-promises teaches a reader to distrust the
-              chips on the figures where the targets ARE real, so this says the
-              one true thing instead, and only at the widths where it is true. */}
           <p className="mono mono-note nm__scroll-note">Scroll the map sideways to follow it →</p>
 
           <p className="nm__map-note nm__map-note--wide">{mapNotes.main}</p>
@@ -547,10 +452,7 @@ export default function NarrativeMap({ variant = "main" }: { variant?: SsVariant
         </figure>
       )}
 
-      {/* ---- the beats ----
-          MAIN gets the spine as names: index and title, which is the same
-          content the diagram nodes carry and costs the condensed page nothing.
-          DEEP gets the written beat under each name. */}
+      {/* ---- the beats ---- */}
       <ol className="nm__beats" data-mode={deep ? "full" : "spine"}>
         {storyBeats.map((beat) => (
           <li key={beat.id} className="nm__beat" data-decisive={beat.decisive ? "true" : undefined}>
@@ -571,9 +473,7 @@ export default function NarrativeMap({ variant = "main" }: { variant?: SsVariant
         </section>
       )}
 
-      {/* ---- the endings — DEEP DIVE ----
-          The diagram on the main page names all three; what it cannot carry is
-          the pair of choices each one takes and what it costs. That is here. */}
+      {/* ---- the endings — DEEP DIVE ---- */}
       {deep && (
         <ul className="nm__endings">
           {storyEndings.map((ending) => (

@@ -1,31 +1,11 @@
 import Link from "next/link";
 import { chapterHref, type Chapter } from "@/content/project-chapters";
 
-/**
- * The horizontal chapter index, directly under a project hero.
- *
- * WHY THIS SHAPE. A project page is long and its best material — the level
- * design, the score, the screenshots — used to be invisible until you had
- * scrolled past it. This is the page stating its own contents in one screen,
- * before the first argument starts.
- *
- * It is a table of contents and nothing more. Each tile carries the section's
- * own title and a six-word label, never an explanation — the section below is
- * still the only place its idea is made. See `project-chapters.ts` for the
- * rule and `docs/section-ownership-map.md` § "Pointers are not owners".
- *
- * EVERY TILE GOES DOWN THIS PAGE. It listed the project's subpages too, and
- * that was a mistake twice over: they are already in the hero's links block a
- * few inches above and in the `ProjectNav` at the foot, and a tile that left
- * the page was indistinguishable at a glance from one that scrolled. One row,
- * one promise — `↓`, always.
- */
 export default function ChapterNav({
   chapters,
   label = "Chapters on this page",
 }: {
   chapters: readonly Chapter[];
-  /** The accessible name. Only worth overriding on a page that has two. */
   label?: string;
 }) {
   return (
@@ -33,7 +13,7 @@ export default function ChapterNav({
       <p className="mono chn__lead">
         <span className="chn__lead-key">Click here for</span>
         <span className="chn__lead-body">
-          any chapter of this project — it jumps straight to it
+          the chapters in this project, jumping straight to them
         </span>
       </p>
 
@@ -41,12 +21,8 @@ export default function ChapterNav({
         {chapters.map((c, i) => (
           <li key={c.id} className="chn__item">
             <Link className="chn__tile" href={chapterHref(c)}>
-              <span className="mono chn__index">{String(i + 1).padStart(2, "0")}</span>
               <span className="chn__title">{c.title}</span>
               <span className="chn__note">{c.note}</span>
-              {/* The "click here" cue is on the block lead above, once, and not
-                  on every tile: a grid where each cell shouts the same three
-                  words stops being read at about the third one. */}
               <span className="mono chn__go">
                 Jump to it
                 <span aria-hidden="true" className="chn__arrow">

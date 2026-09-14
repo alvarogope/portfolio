@@ -37,46 +37,10 @@ export const metadata: Metadata = {
 
 /* ═══════════════════════════════════════════════════════════════════════════
    SHATTERED SKIES · THE MAIN PAGE
-
-   THE SHAPE, AND WHY IT CHANGED. This page ran to ~8,100 rendered words — ten
-   times the reading-load audit's benchmark, the longest on the site — with the
-   first frame of actual gameplay at 58% depth, behind key art, a design
-   document, a title screen and an empty hub. The material was not filler; the
-   SHAPE was wrong for the first reader it has to survive.
-
-   It was split by KIND, not trimmed by taste. This page keeps the built,
-   working game. `/shattered-skies/world` took the fiction and the reasoning,
-   whole. Four components render both halves from the same content files under a
-   `variant` prop, so no sentence exists in two places.
-
-   THE ORDER IS EVIDENCE-FIRST, WITH ONE DELIBERATE DEPARTURE FROM MOON-KNIGHT.
-   Moon-Knight runs Overview → My Role → In Motion. This page runs Overview →
-   In Motion → The Game → My Role, because the ownership map protects §02's
-   placement in those words: "their game first, my work second — the reason the
-   whole page works. Protect it." Footage IS the team's game, so it sits
-   naturally before the team note, and My Role still follows the team context
-   rather than pre-empting it. Attribution order is preserved; the footage just
-   stopped being buried.
-
-   THE OPENING STATEMENT WAS CUT. It was a two-item pull quote above §01,
-   quoting §05 and §07 and linking down to them. Both reasons for it are gone:
-   the audio credit it surfaced is now four sections up rather than at 41%
-   depth, and the waveform payoff it surfaced is pulled inside the co-op section
-   itself. It also would have become a cross-page pull quote after the split,
-   which is the exact shape retired as D5 on Moon-Knight. The rule that removal
-   established: a standfirst may only quote a section far below it on the SAME
-   page.
-
-   HARD CONSTRAINT S5. `ShatteredSkiesSystem` scrolls to a dossier card through
-   a DOM query when a world is selected, so the orrery and the dossier must stay
-   on one page. They are both here, in §05, together with the knowledge-gating
-   rule they absorbed. Do not move either to the subpage.
    ═══════════════════════════════════════════════════════════════════════════ */
 
-/** Shared spacing between top-level sections, so the rhythm is stated once. */
 const GAP = { marginTop: "5rem" } as const;
 
-/** The standfirst under a section heading. Same measure everywhere. */
 const LEAD = {
   color: "var(--color-mist)",
   maxWidth: "35rem",
@@ -89,56 +53,39 @@ export default function ShatteredSkiesPage() {
     <>
       {/* Hero */}
       <div className="ss-hero">
-        {/* Tuning lives in `SubpageBackdrop`, which is also where the deep
-            dive reads it from, so the hero and the subpage band cannot drift
-            apart. Every knob keeps its comment there. Only strength differs. */}
         <Galaxy
           className="ss-hero-galaxy"
           {...SHATTERED_SKIES_GALAXY}
           opacity={BACKDROP_OPACITY.shatteredSkies.hero}
         />
         <div className="ss-hero-content">
-          {/* The facts block renders `p.links`, which is where the deep dive is
-              reachable from the top of the page. */}
           <ProjectHero project={p} posterSrc="/images/shattered-skies/poster.png" />
         </div>
       </div>
 
-      {/* `tight`: this Section follows the hero, so its 4rem top padding
-          would be the second of three stacked gaps. See Section.tsx. */}
       <Section tight>
-        {/* The contents of the page, before the page starts arguing. */}
         <ChapterNav chapters={shatteredSkiesChapterList} />
 
         {/* ═══ 01 · OVERVIEW ═══ */}
         <Reveal>
           <div id={ch.overview.id} style={{ maxWidth: "35rem" }}>
-            <SectionHeading kicker="01 · Overview" title={ch.overview.title} />
+            <SectionHeading kicker="Overview" title={ch.overview.title} />
             <p style={{ marginTop: "1rem" }}>{p.vision}</p>
           </div>
         </Reveal>
 
-        {/* ═══ 02 · IN MOTION ═══
-            The whole point of the restructure, in one band: proof before prose.
-            The audit put the first frame of gameplay at 4,700 words; it is at
-            about 120 now. Every clip is muted, loops, and refuses to autoplay
-            under reduced motion. */}
+        {/* ═══ 02 · IN MOTION ═══ */}
         <Reveal>
           <div style={GAP} id={mainAnchors.inMotion}>
             <SectionHeading kicker={inMotionIntro.kicker} title={inMotionIntro.title} />
-            <p style={{ ...LEAD, marginBottom: "1.75rem" }}>{inMotionIntro.body}</p>
             <PlateGrid minWidth="22rem" items={[...inMotionItems]} />
           </div>
         </Reveal>
 
-        {/* ═══ 03 · THE GAME ═══
-            Context before contributions: this is the game we made together, and
-            the sections after it are the parts that are mine. `teamNote` inside
-            `NarrativeMap` is the page's canonical attribution and the only one
-            besides §06's levelsCredit. */}
+        {/* ═══ 03 · THE GAME ═══ */}
         <Reveal>
           <div style={GAP} id={mainAnchors.theGame}>
-            <SectionHeading kicker="03 · The Game" title={ch.theGame.title} />
+            <SectionHeading kicker="The Game" title={ch.theGame.title} />
             <NarrativeMap variant="main" />
 
             <div style={{ marginTop: "3rem" }}>
@@ -147,17 +94,17 @@ export default function ShatteredSkiesPage() {
                 items={[
                   {
                     src: "/images/shattered-skies/story-beats.jpg",
-                    label: "The structure",
+                    label: "The narrative structure",
                     alt: "The narrative structure chart: two backstories for Drayk and Aevi converging through four story beats into four endings — Unity, two Betrayal variants, and Extinction.",
                     caption:
-                      "The branch structure as it was authored, cropped to the diagram band. The whole sheet — the written beats, and the column where we marked the backstory down for being too black-and-white — is on the deep dive.",
+                      "The narrative structure that all designers had access in the GDD. The beats, the character backstories and the three endings posibilities.",
                   },
                   {
                     src: "/images/shattered-skies/shattered-skies-spaceship.png",
-                    label: "The build",
+                    label: "The planets in game",
                     alt: "In-engine view of the ship on the hub floor with a wall of planets behind it. The planet textures are placeholders from a stock solar-system set, not the five designed worlds.",
                     caption:
-                      "The hub as it stood at the end of the module. The planets on that wall are placeholder textures from a stock solar-system set — we ran out of time to swap them, and the five worlds they stand in for are designed in §05 below, not here.",
+                      "The planet layout in-game. The planets are placeholder textures due to lack of time, but the system works for adding the new 3D models. The design of the five planets are below.",
                   },
                 ]}
               />
@@ -165,21 +112,16 @@ export default function ShatteredSkiesPage() {
 
             <div style={{ marginTop: "2rem" }}>
               <RampLink href={deepDiveHref("story")}>
-                The whole story, the sealed choice and the three endings
+                The whole story, the final choice and the three endings
               </RampLink>
             </div>
           </div>
         </Reveal>
 
-        {/* ═══ 04 · MY ROLE ═══
-            Moved up from last. At the end of an 8,000-word page these four
-            claims were a recap; here, straight after the team context, they are
-            a promise of the four sections that follow. Cut to one line each in
-            the same change, because moving an untrimmed recap only relocates
-            it. */}
+        {/* ═══ 04 · MY ROLE ═══ */}
         <Reveal>
           <div id={ch.role.id} style={GAP}>
-            <SectionHeading kicker="04 · My Role" title={ch.role.title} />
+            <SectionHeading kicker="My Role" title={ch.role.title} />
             <div style={{ display: "grid", gap: "1.25rem", marginTop: "1.5rem" }}>
               {p.contributions.map((c) => (
                 <div key={c.label}>
@@ -193,24 +135,10 @@ export default function ShatteredSkiesPage() {
           </div>
         </Reveal>
 
-        {/* ═══ 05 · THE WORLD & THE FIVE WORLDS ═══
-            THE MERGE. These were two sections, both kickered "World Design",
-            586 + 827 words apart — a reader skimming the rail saw the same
-            label twice and could not tell what the second one added. They are
-            one chapter in two halves and always were: the claim, then the
-            evidence for it.
-
-            `ShatterstormWorld variant="main"` is the claim — a shattered planet
-            for two shattered peoples. The challenge quote is the orrery's
-            thesis and stands directly above it. Then the diagram that proves
-            both. The texture, relics and politics went to the deep dive.
-
-            S5: the orrery and the dossier are one unit. `ShatteredSkiesSystem`
-            owns the selection and scrolls to the picked world's dossier card,
-            so the dossier is passed as children and both stay here. */}
+        {/* ═══ 05 · THE WORLD & THE FIVE WORLDS ═══ */}
         <Reveal>
           <div style={GAP} id={mainAnchors.worlds}>
-            <SectionHeading kicker="05 · World Design" title={ch.worlds.title} />
+            <SectionHeading kicker="World Design" title={ch.worlds.title} />
             <div style={{ marginTop: "1.5rem", marginBottom: "2rem" }}>
               <ShatterstormWorld variant="main" />
             </div>
@@ -233,16 +161,7 @@ export default function ShatteredSkiesPage() {
           </div>
         </Reveal>
 
-        {/* ═══ 06 · LEVEL DESIGN ═══
-            Moved up four positions. The audit was blunt: this holds the solo
-            audio credit and "the best material on the page", and "if anything
-            this needs to move UP, not shrink". It is also the cheapest long
-            section on the site to skim — 2,090 authored words, but four fifths
-            of them sit behind the tab rail.
-
-            Placed directly after the dossier so the pair read as one chapter,
-            facts then play, and before the mechanics because a mechanic is
-            easier to read once you know which world taught it. */}
+        {/* ═══ 06 · LEVEL DESIGN ═══*/}
         <Reveal>
           <div style={GAP} id={mainAnchors.levels}>
             <SectionHeading kicker="06 · Level Design" title={ch.levels.title} />
@@ -254,15 +173,7 @@ export default function ShatteredSkiesPage() {
           </div>
         </Reveal>
 
-        {/* ═══ 07 · CORE MECHANICS ═══
-            Condensed: what each system IS, plus the telepathy figure and the
-            Conversation Panel on screen. The `decision → why → impact` rails
-            are on the deep dive.
-
-            The four channel bodies decode on scroll — the terminal effect this
-            page used to carry on exactly this copy, before the four-card
-            transmission band was superseded by this component and the effect
-            went with the band by accident. */}
+        {/* ═══ 07 · CORE MECHANICS ═══ */}
         <Reveal>
           <div style={GAP} id={mainAnchors.mechanics}>
             <SectionHeading kicker="07 · Core Mechanics" title={ch.mechanics.title} />
@@ -272,9 +183,6 @@ export default function ShatteredSkiesPage() {
             </p>
             <ShatteredSkiesMechanics variant="main" />
 
-            {/* The communication system as an interface rather than as a
-                claim: the Conversation Panel is on screen, under fire, beside
-                the objective and the weapon slot. */}
             <div style={{ marginTop: "2.5rem", maxWidth: "54rem" }}>
               <PlateGrid
                 minWidth="100%"
@@ -299,12 +207,7 @@ export default function ShatteredSkiesPage() {
           </div>
         </Reveal>
 
-        {/* ═══ 08 · CO-OP DESIGN ═══
-            Condensed to the three schematics, which are drawn from `sides` —
-            data, not prose — so they carry the whole split at almost no reading
-            cost. The pattern that governs all three is folded in above them as
-            five labels, because a rule belongs in front of the examples it
-            governs. The full prose is on the deep dive. */}
+        {/* ═══ 08 · CO-OP DESIGN ═══ */}
         <Reveal>
           <div style={GAP} id={mainAnchors.coop}>
             <SectionHeading kicker="08 · Co-op Design" title={ch.coop.title} />
@@ -337,8 +240,6 @@ export default function ShatteredSkiesPage() {
           </div>
         </Reveal>
 
-        {/* The hand-off. One panel: unlike Moon-Knight this project has a
-            single subpage, so there is nowhere sideways to go. */}
         <Reveal>
           <div style={{ ...GAP, maxWidth: "34rem" }}>
             <CtaPanel
@@ -356,7 +257,6 @@ export default function ShatteredSkiesPage() {
         </Reveal>
       </Section>
 
-      {/* Scoped to this page. Two layers: the starfield, then the hero. */}
       <style>{`
         .ss-hero {
           position: relative;

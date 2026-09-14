@@ -1,42 +1,6 @@
-/**
- * Shattered Skies — "The Game": the premise, the world, and the narrative
- * structure the TEAM built.
- *
- * WHERE THIS FILE RENDERS, AFTER THE SPLIT. `teamNote`, `premise`, `hosts` and
- * the diagram (which draws from `storyBeats[].mapLabel` and
- * `storyEndings[].mapTag`) render on the MAIN page — the team context and the
- * shape of the story, which is what the systems below need in order to land.
- * `worldNotes`, the beat BODIES, `hiddenChoice` and the endings' conditions and
- * outcomes render on the DEEP DIVE. `storyBeats[].title` appears on both, as
- * the key that joins a named beat to its written form.
- *
- * ATTRIBUTION. Everything in this file describes a team project (team of 5).
- * It is context, not credit: it exists so that the contribution sections
- * further down the page — the planetary system, the interdependent puzzles,
- * the traversal, the knowledge-gated progression — land against a game the
- * reader already understands. My role on it was Systems & World Designer, and
- * `teamNote` below is rendered visibly at the head of the section so the
- * distinction is never left to inference.
- *
- * THE SHAPE the diagram draws is the reason this is one file: two backstories
- * converge onto a single spine of five beats, the spine ends in a choice each
- * player makes alone, and the pair of choices — not either one — selects the
- * ending. `NarrativeMap` reads the arrays below in order and derives every
- * coordinate from them, so the geometry lives in the component and the story
- * lives here.
- *
- * Pronouns: the two hosts are written without gendered pronouns throughout.
- * They are aliens, the game never fixes it, and neutral phrasing costs nothing.
- */
-
-/* ---- attribution -------------------------------------------------------- */
-
 export interface TeamNote {
-  /** The headline claim, kept blunt. */
   headline: string;
-  /** My role on the team. Matches `facts.role` in the project file. */
   role: string;
-  /** The sentence that separates this section from the ones after it. */
   body: string;
 }
 
@@ -44,24 +8,15 @@ export const teamNote: TeamNote = {
   headline: "Team project · Team of 5",
   role: "Systems & World Designer",
   body:
-    "This section is the game we made together — the premise, the world and the narrative " +
-    "structure are the team's work, and the story was written as a shared effort. It is here " +
-    "as context. My own contributions to Shattered Skies are the sections that follow it.",
+    "This section shows how we worked together as a team for the same goal. The premise world and narrative " +
+    "were designed together, as a team. This section is mainly for context that represents our work as a team.",
 };
 
-/* ---- the premise -------------------------------------------------------- */
 
 export const premise =
-  "A two-player narrative exploration adventure set in a miniature solar system. Two members " +
-  "of opposing alien species — Drayk, a Rynor soldier, and Aevi, a Tethran scientist — are " +
-  "infected by the Symbiochord, a parasite that physically chains them together and merges " +
-  "their fates: if one dies, both die. They have to cooperate despite centuries of war between " +
-  "their species.";
-
-/* ---- the hosts ----------------------------------------------------------
-   Two ids, two colours. The map, the host cards and the sealed-choice gates
-   all key off these, so the reader learns the colour coding from the cards
-   above the diagram and never has to be told it twice. */
+  "This two-player narrative exploration adventure is set in a solar system. Two members of enemies species are infected by " +
+  "the Symbiochord. Their names: Drayk, a Rynor soldier, and Aevi, a Tethran scientist. This parasite connects their bodies and " +
+  "their fate. If one dies, the other dies too. They have to cooperate althought their species were in war for centuries.";
 
 export type HostId = "drayk" | "aevi";
 
@@ -70,9 +25,7 @@ export interface Host {
   name: string;
   species: string;
   vocation: string;
-  /** "Rynor · Soldier" — pre-joined for the diagram's second line. */
   tag: string;
-  /** Two sentences at most: this is a backstory node, not a character sheet. */
   backstory: string;
 }
 
@@ -84,8 +37,9 @@ export const hosts: readonly Host[] = [
     vocation: "Soldier",
     tag: "Rynor · Soldier",
     backstory:
-      "Raised inside the war and trained to read every Tethran as the reason their world burned. " +
-      "Meets the Symbiochord as a weapon, and the stranger on the other end of it as a captor.",
+      "Raised and trained in war. Prepared to kill Tethrans as they made his world burn. " +
+      "From his side, he thinks of the Symbiochord as a weapon and the stranger on the other side of it " +
+      "its his captor.",
   },
   {
     id: "aevi",
@@ -94,8 +48,8 @@ export const hosts: readonly Host[] = [
     vocation: "Scientist",
     tag: "Tethran · Scientist",
     backstory:
-      "A researcher who studied the Symbiochord from the outside and now wears it. Understands " +
-      "the parasite better than anyone alive, which makes what it will cost harder to ignore.",
+      "She studied the Symbiochord from the outside and now has to war it. She understands this parasite better than " +
+      "anyone, making her aware of the risks that she's taking and the danger their in.",
   },
 ];
 
@@ -105,7 +59,6 @@ export const getHost = (id: HostId): Host => {
   return host;
 };
 
-/* ---- the world ---------------------------------------------------------- */
 
 export interface WorldNote {
   id: string;
@@ -139,18 +92,10 @@ export const worldNotes: readonly WorldNote[] = [
   },
 ];
 
-/* ---- the spine ----------------------------------------------------------
-   Five beats. `mapLabel` is the short form the diagram node carries; `body` is
-   the full beat, and it is real HTML text below the diagram — which is also
-   what the narrow-screen fallback reads. `decisive` marks the beat the endings
-   hang off, drawn apart from the spine. */
-
 export interface StoryBeat {
   id: string;
-  /** "Beat 01". Authored rather than derived so the copy can change freely. */
   index: string;
   title: string;
-  /** Short enough to sit in a diagram node at two lines. */
   mapLabel: string;
   body: string;
   decisive?: boolean;
@@ -171,7 +116,7 @@ export const storyBeats: readonly StoryBeat[] = [
   {
     id: "timer",
     index: "Beat 02",
-    title: "Limited Time — Stakes Raised",
+    title: "Limited Time",
     mapLabel: "Limited Time",
     body:
       "The parasite is spreading through both hosts and the window in which it can still be " +
@@ -201,7 +146,7 @@ export const storyBeats: readonly StoryBeat[] = [
   {
     id: "final-choice",
     index: "Beat 05",
-    title: "The Final Choice — Moment of Truth",
+    title: "The Final Choice & The Moment of Truth",
     mapLabel: "The Final Choice",
     decisive: true,
     body:
@@ -211,7 +156,6 @@ export const storyBeats: readonly StoryBeat[] = [
   },
 ];
 
-/* ---- the hidden-information choice -------------------------------------- */
 
 export const hiddenChoice = {
   label: "How the endings are selected",
@@ -223,24 +167,13 @@ export const hiddenChoice = {
     "kill? A prisoner's dilemma with a species on each side of the table.",
 } as const;
 
-/* ---- the endings --------------------------------------------------------
-   The GDD's three victory conditions, and they are exactly the three cells of
-   a two-by-two choice matrix: both selfless, one selfish, both selfish. Two
-   players with two options each gives four combinations and three distinct
-   outcomes, because it does not matter WHICH of them betrays the other — only
-   that one of them did. That collapse is the reason there are three endings
-   rather than four, and it is what makes the structure a prisoner's dilemma
-   rather than a menu. */
-
 export type EndingTone = "unity" | "betrayal" | "destruction";
 
 export interface StoryEnding {
   id: string;
   name: string;
   tone: EndingTone;
-  /** The pair of choices that reaches it, long form. */
   condition: string;
-  /** The same thing at diagram size. */
   mapTag: string;
   outcome: string;
 }
@@ -280,17 +213,6 @@ export const storyEndings: readonly StoryEnding[] = [
   },
 ];
 
-/* ---- the diagram's own captions -----------------------------------------
-   These have to differ between the two pages, so they live here as keys rather
-   than as literals in the component.
-
-   On the MAIN page the diagram carries the shape and the five beat NAMES; the
-   beats are written out in full on the deep dive. On the DEEP DIVE there is no
-   diagram — it stays with the condensed section, one render site — and the
-   beats are the content. A caption claiming "the same content, in full" would
-   be false on the main page, which is exactly the kind of quiet inaccuracy the
-   split is most likely to introduce. */
-
 export const mapNotes = {
   main:
     "The map carries the shape and the names. Each beat, each ending and how the two sealed " +
@@ -300,7 +222,6 @@ export const mapNotes = {
     "hosts above, then the five beats in order.",
 } as const;
 
-/** The `<desc>` the diagram is announced with. One sentence per band. */
 export const mapSummary =
   "Two backstory nodes, Drayk of the Rynor and Aevi of the Tethrans, converge where the " +
   "Symbiochord chains them together. From there a single spine runs through four story beats — " +

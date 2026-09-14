@@ -1,34 +1,3 @@
-/**
- * The chapter index that sits under every project hero.
- *
- * WHY THIS FILE EXISTS. A reader landing on a project page could not see what
- * was on it without scrolling the whole thing. The index under the hero fixes
- * that: one horizontal row of chapters — the level design, the score, the
- * screenshots — so the page announces its own contents in one screen.
- *
- * It is a POINTER BLOCK, not a second home, and the map's rule applies whole
- * (`docs/section-ownership-map.md` § "Pointers are not owners"):
- *
- *   1. **A chapter's `title` is the section's own title**, not a new name for
- *      it. Where the section heading comes from a content const the chapter
- *      reads the same const, so there is one literal and two render sites.
- *      Where the page typed the heading, the PAGE now reads it from here —
- *      `<SectionHeading title={ch.levels.title} />` — which is the same
- *      one-literal rule pointing the other way.
- *   2. **`note` is a label, never an argument.** Six words, what the chapter
- *      holds. The moment a note starts explaining, the owning section has been
- *      duplicated and the note has to be cut back.
- *   3. **The address is built, never typed.** Every chapter carries an `id` the
- *      page renders as `id={...}`, so a renamed chapter moves the link and its
- *      target together.
- *   4. **It lists THIS page's sections and nothing else.** Subpages — the deep
- *      dive, the engineering write-ups — are already in the hero's links block
- *      and in the `ProjectNav` at the foot. A third copy in here made the index
- *      answer two questions at once ("what is on this page" and "where else can
- *      I go"), and the tiles that left the page looked exactly like the tiles
- *      that did not.
- */
-
 import { inMotionIntro as mkInMotion } from "./moon-knight-in-motion";
 import { inMotionIntro as biInMotion } from "./break-in-in-motion";
 import { inMotionIntro as sotInMotion } from "./seeds-in-motion";
@@ -36,22 +5,15 @@ import { inMotionIntro as ssInMotion } from "./shattered-skies-in-motion";
 import { mainAnchors as ssMain } from "./shattered-skies-deep-dive";
 
 export interface Chapter {
-  /** The section id on this page. */
   id: string;
-  /** The section's own title. Never a fresh name for it. */
   title: string;
-  /** At most six words. What it holds, not what it argues. */
   note: string;
 }
 
-/** The same-page fragment for one chapter. */
 export const chapterHref = (c: Chapter) => `#${c.id}`;
 
 /* ═══════════════════════════════════════════════════════════════════════
    MOON-KNIGHT
-
-   The design decisions came back from the deep dive and are chapter 08
-   again, whole — see the map's Moon-Knight §08 entry.
    ═══════════════════════════════════════════════════════════════════════ */
 
 export const moonKnightChapters = {
@@ -110,19 +72,16 @@ export const moonKnightChapterList: readonly Chapter[] = [
 
 /* ═══════════════════════════════════════════════════════════════════════
    SHATTERED SKIES
-
-   Six of the eight ids already existed as `mainAnchors`, because other
-   components link to them. Those are read here, not restated.
    ═══════════════════════════════════════════════════════════════════════ */
 
 export const shatteredSkiesChapters = {
   overview: { id: "overview", title: "The Vision", note: "What the game is" },
   inMotion: { id: ssMain.inMotion, title: ssInMotion.title, note: "Captures from the build" },
-  theGame: { id: ssMain.theGame, title: "The Game We Made", note: "The loop, start to end" },
+  theGame: { id: ssMain.theGame, title: "The Game We Worked On", note: "The loop, start to end" },
   role: { id: "my-role", title: "My Contribution", note: "What I designed and built" },
   worlds: {
     id: ssMain.worlds,
-    title: "The World & the Five Worlds",
+    title: "The World & the Five Planets",
     note: "Shatterstorm and its five planets",
   },
   levels: {
@@ -155,8 +114,6 @@ export const shatteredSkiesChapterList: readonly Chapter[] = [
 
 /* ═══════════════════════════════════════════════════════════════════════
    BREAK-IN
-
-   One page, no subpage, so every chapter is a fragment.
    ═══════════════════════════════════════════════════════════════════════ */
 
 export const breakInChapters = {
@@ -195,9 +152,6 @@ export const breakInChapterList: readonly Chapter[] = [
 
 /* ═══════════════════════════════════════════════════════════════════════
    SEEDS OF TOMORROW
-
-   Three ids already existed on the page and are kept exactly as they were —
-   they are what the site's existing deep links point at.
    ═══════════════════════════════════════════════════════════════════════ */
 
 export const seedsChapters = {

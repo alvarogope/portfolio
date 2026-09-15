@@ -91,7 +91,7 @@ export const shatteredSkiesChapters = {
   },
   mechanics: {
     id: ssMain.mechanics,
-    title: "Systems That Force You Together",
+    title: "Creating Cooperation",
     note: "The core co-op mechanics",
   },
   coop: {

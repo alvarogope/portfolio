@@ -11,96 +11,23 @@ import { mainHref } from "@/content/shattered-skies-deep-dive";
 import DecodeOnView from "./DecodeOnView";
 import Link from "next/link";
 
-/**
- * Shattered Skies — the core mechanics: three systems, one argument.
- *
- * THE SECTION HAS A SPINE and the layout is built to keep it visible. Every
- * block restates the same claim in a different material — cooperation across a
- * communication barrier the design refuses to lower — so the section opens
- * with that claim as a panel and closes each block with the design point that
- * ties back to it. A reader who only reads the spine panel and the three
- * design points has still read the argument.
- *
- * WEIGHTING. Block 01, the communication system, is the signature mechanic and
- * gets the fullest treatment: four channels, each with its own decision → why
- * → impact rail, and the telepathy → endings figure. Blocks 02 and 03 are
- * deliberately compact: prose leads, one small reference list each, one
- * reasoning rail on the part that is actually a design decision. The imbalance
- * is the design of the section, not an omission.
- *
- * ATTRIBUTION. The credit line at the top says co-designed with the team, in
- * those words, before any mechanic is described. Team of 5; my seat was
- * systems and world design.
- *
- * THE FIGURE. `TelepathyFlow` draws the one link the section exists to make
- * visible: the game's signature communication mechanic is the input to its
- * prisoner's-dilemma endings. It is a single `role="img"` with a `<desc>`
- * summary rather than forty loose text fragments, and everything it draws is
- * repeated underneath as real HTML — the ordered rail of window → choice →
- * endings — so nothing is lost when the drawing is scrolled, zoomed past, or
- * read by a screen reader. Ending names and colours match `NarrativeMap`
- * further up the page on purpose; the two diagrams are describing the same
- * three endings and should not disagree about what colour Betrayal is.
- *
- * SPLIT ACROSS TWO PAGES, AND SPLIT BY KIND. `variant="main"` renders what the
- * mechanic IS — the spine, each channel's label, tag and body, the telepathy
- * figure, the ship's stations, the two traversal bodies and the booster.
- * `variant="deep"` renders the `decision → why → impact` rails, which are the
- * argument rather than the description. A reader on the main page learns what
- * the systems do; a reader who follows the ramp learns why each one is shaped
- * that way.
- *
- * No sentence renders on both pages. A channel's `label` does, because it is
- * the key that joins a condensed entry to its reasoning — that is the whole
- * mechanism of a keys-not-copy split.
- *
- * `block` exists because the deep dive splits this file's material across TWO
- * of its sections — the communication reasoning is its own chapter, and the
- * ship and traversal reasoning share another. One component with a block
- * filter keeps a single stylesheet and a single set of class names; two
- * components would have meant duplicating the CSS or hoisting it, and the CSS
- * is the part most likely to drift.
- *
- * THE FOUR CHANNEL BODIES DECODE ON THE MAIN PAGE. `DecodeOnView` scrambles
- * each one and resolves it when it scrolls into view — the effect this page
- * used to carry on the same copy, before the four-card transmission band was
- * superseded by this component and the effect went with the band by accident.
- * It runs on the bodies only, never on the reasoning: decoding an argument
- * withholds it, where decoding a one-line description performs it. The glyph
- * noise is tinted with `--color-emerald`, the route's terminal green.
- *
- * Server component. `DecodeOnView` is the one client child.
- */
-
-/* ---- the telepathy figure: geometry -------------------------------------
-   Three columns, left to right: the resource, the choice each player makes
-   inside it, the ending it feeds. Laid out for a 1040-wide drawing, which is
-   about 1:1 inside the section column — no breakout needed, unlike the
-   narrative map. */
-
 const FLOW_W = 1040;
 const FLOW_H = 372;
 
-/** Column 1 — the window. */
 const WIN = { x: 12, y: 124, w: 236, h: 124 };
 const WIN_CY = WIN.y + WIN.h / 2;
 
-/** The countdown, drawn as one segment per second. */
 const TICK = { y: WIN.y + 88, w: 32, h: 6, gap: 8 };
 
-/** Column 2 — the two choices. */
 const CH = { x: 396, w: 212, h: 90 };
 const CH_Y = [72, 204];
 
-/** Column 3 — the three endings. */
 const END = { x: 756, w: 272, h: 84 };
 const END_Y = [36, 150, 264];
 
 const chCy = (i: number) => CH_Y[i] + CH.h / 2;
 const endCy = (i: number) => END_Y[i] + END.h / 2;
 
-/** A flat S-curve between two points. Horizontal at both ends, so edges leave
-    and arrive parallel to the reading direction. */
 function link(x1: number, y1: number, x2: number, y2: number) {
   const dx = (x2 - x1) * 0.5;
   return `M ${x1} ${y1} C ${x1 + dx} ${y1}, ${x2 - dx} ${y2}, ${x2} ${y2}`;
@@ -132,10 +59,7 @@ function TelepathyFigure() {
         </text>
       </g>
 
-      {/* ---- edges, drawn under the nodes ----
-          Window into both choices, then each choice into the endings it can
-          produce. Betrayal is the only ending fed by both, which is exactly
-          the claim: one lie is enough. */}
+      {/* ---- edges, drawn under the nodes ---- */}
       <g className="ssm-flow-edges">
         {choices.map((c, i) => (
           <path
@@ -159,8 +83,6 @@ function TelepathyFigure() {
             );
           })
         )}
-        {/* A lit point where each edge arrives, so direction reads without
-            arrowheads cluttering a drawing this small. */}
         {endings.map((e, ei) => (
           <circle key={`dot-${e.id}`} className="ssm-flow-dot" data-tone={e.tone} cx={END.x} cy={endCy(ei)} r={2.6} />
         ))}
@@ -218,11 +140,6 @@ function TelepathyFigure() {
   );
 }
 
-/* ---- the reasoning rail --------------------------------------------------
-   decision → why → player impact, as a definition list. Every mechanic in the
-   section states its reasoning in the same three moves, so the reader learns
-   the shape once and can then find the part they want in any block. */
-
 function ReasoningRail({ reasoning }: { reasoning: Reasoning }) {
   const rows: readonly [string, string][] = [
     ["Decision", reasoning.decision],
@@ -241,12 +158,7 @@ function ReasoningRail({ reasoning }: { reasoning: Reasoning }) {
   );
 }
 
-/** Chrome for the two channels the block leans on hardest. Presentation, not
-    content: the emphasis flag lives in the data, the words for it live here. */
-const EMPHASIS_BADGE: Record<string, string> = {
-  meta: "A rule outside the software",
-  payoff: "The payoff",
-};
+
 
 function BlockHeader({
   order,
@@ -275,7 +187,6 @@ function BlockHeader({
   );
 }
 
-/** The line that hands each block back to the spine. */
 function DesignPoint({ body }: { body: string }) {
   return (
     <p className="ssm__point">
@@ -287,7 +198,6 @@ function DesignPoint({ body }: { body: string }) {
 
 export default function ShatteredSkiesMechanics({
   variant = "main",
-  /** Which material to render. See the `block` note in the file header. */
   block = "all",
 }: {
   variant?: SsVariant;
@@ -299,17 +209,8 @@ export default function ShatteredSkiesMechanics({
 
   return (
     <div className="ssm" data-variant={variant}>
-      {/* No credit block here. The page states its attribution once, in
-          §03's teamNote — team of five, my seat was systems and world
-          design — and §06's levelsCredit is the only other one, because it
-          makes a distinction (audio mine, level design shared) rather than a
-          disclaimer. Four near-identical restatements of the same sentence
-          made a strong page read as an anxious one. */}
 
-      {/* ---- the spine — MAIN ONLY ----
-          It is the claim the three blocks are each an instance of, and the
-          main page is where the claim is made. The deep dive is already
-          inside the argument by the time a reader arrives. */}
+      {/* ---- the spine — MAIN ONLY ---- */}
       {!deep && (
         <section className="ssm__spine" aria-labelledby="ssm-spine-title">
           <p className="mono ssm__spine-tag" id="ssm-spine-title">
@@ -346,13 +247,8 @@ export default function ShatteredSkiesMechanics({
                     <h4 className="ssm__channel-label">{c.label}</h4>
                     {!deep && <p className="mono ssm__channel-tag">{c.tag}</p>}
                   </div>
-                  {c.emphasis && !deep && (
-                    <p className="mono ssm__channel-badge">{EMPHASIS_BADGE[c.emphasis]}</p>
-                  )}
                 </div>
 
-                {/* The transmission. Staggered so four channels arrive as a
-                    queue rather than as one animation. */}
                 {!deep && (
                   <p className="ssm__channel-body">
                     <DecodeOnView text={c.body} delay={i * 260} />
@@ -374,17 +270,6 @@ export default function ShatteredSkiesMechanics({
                 <p className="ssm__flow-sub">{telepathyFlow.caption}</p>
               </figcaption>
 
-              {/* Scrolls rather than shrinks below about 1080px: the mono labels
-                  are 10px in viewBox units and stop being readable well before
-                  the picture stops fitting.
-
-                  CHIP REMOVED. This carried a `pan` chip on the reasoning that
-                  "focusable so a keyboard can scroll it" is an affordance. It is
-                  not one the chip can honestly describe: there is no drag
-                  handler and no key handler here, and the arrow keys do nothing
-                  at the widths where the drawing already fits. The chip is for
-                  figures with real targets; this gets the narrow-only note that
-                  claims scrolling and nothing else. */}
               <div
                 className="ssm__flow-frame"
                 tabIndex={0}
@@ -396,41 +281,6 @@ export default function ShatteredSkiesMechanics({
               <p className="mono mono-note ssm__scroll-note">
                 Scroll the flow sideways to follow it →
               </p>
-              <p className="ssm__flow-hint">
-                The same flow is written out below it, at every width.
-              </p>
-
-              {/* The same flow as real text, at every width. The drawing is the
-                  quick read; this is the one that survives everything. */}
-              <ol className="ssm__steps">
-                <li className="ssm__step">
-                  <p className="mono ssm__step-tag">{telepathyFlow.window.column}</p>
-                  <p className="ssm__step-body">
-                    <strong>{telepathyFlow.window.label}.</strong> {telepathyFlow.window.detail}
-                  </p>
-                </li>
-                <li className="ssm__step">
-                  <p className="mono ssm__step-tag">{telepathyFlow.choicesLabel}</p>
-                  <ul className="ssm__step-list">
-                    {telepathyFlow.choices.map((c) => (
-                      <li key={c.id} data-tone={c.tone}>
-                        <strong>{c.label}.</strong> {c.gloss}
-                      </li>
-                    ))}
-                  </ul>
-                </li>
-                <li className="ssm__step">
-                  <p className="mono ssm__step-tag">{telepathyFlow.endingsLabel}</p>
-                  <ul className="ssm__step-list">
-                    {telepathyFlow.endings.map((e) => (
-                      <li key={e.id} data-tone={e.tone}>
-                        <strong>{e.name}</strong> — <em>{e.combo}.</em> {e.gloss}
-                      </li>
-                    ))}
-                  </ul>
-                </li>
-              </ol>
-
               <p className="ssm__flow-note">{telepathyFlow.note}</p>
             </figure>
           )}
@@ -473,14 +323,6 @@ export default function ShatteredSkiesMechanics({
                 </dl>
               </section>
 
-              {/* The three minigames used to be listed here as three cards. They
-                  now live in the co-op design section, taken apart into their
-                  asymmetries — so this is a setup and a pointer, and nothing else.
-
-                  S2: the pointer is a LINK, and its address is resolved from
-                  `mainHref` rather than typed, because this block renders on the
-                  main page and on the deep dive and "below" is only true on one
-                  of them. */}
               <section className="ssm__aside" aria-labelledby="ssm-repairs-title">
                 <h4 className="mono ssm__aside-title" id="ssm-repairs-title">
                   {ship.repairs.label}
@@ -537,8 +379,6 @@ export default function ShatteredSkiesMechanics({
                 <p className="ssm__aside-lead">{traversal.jetpackBody}</p>
               </section>
 
-              {/* The highlight of the block: emergent cooperation. The panel is
-                  here; the reasoning behind it is on the deep dive. */}
               <section className="ssm__highlight" aria-labelledby="ssm-booster-title">
                 <h4 className="ssm__highlight-title" id="ssm-booster-title">
                   {traversal.booster.label}
@@ -552,10 +392,6 @@ export default function ShatteredSkiesMechanics({
 
           {deep && (
             <>
-              {/* The three environmental uses of the thruster. They belong with
-                  the reasoning rather than the description: each one is a
-                  decision to make movement double as a verb, and the main page
-                  states that in one clause inside `jetpackBody`. */}
               <section className="ssm__aside" aria-labelledby="ssm-jetpack-uses-title">
                 <h4 className="mono ssm__aside-title" id="ssm-jetpack-uses-title">
                   The thruster as an environmental verb
@@ -975,67 +811,6 @@ export default function ShatteredSkiesMechanics({
         .ssm [data-tone="unity"] { --tone: var(--ssm-unity); }
         .ssm [data-tone="betrayal"] { --tone: var(--ssm-betrayal); }
         .ssm [data-tone="destruction"] { --tone: var(--ssm-destruction); }
-
-        /* ---- the figure in words ----
-           Present at every width. The drawing can be scrolled past, zoomed
-           out of, or read aloud as a single summary; this is the copy that
-           survives all three. */
-        .ssm__steps {
-          list-style: none;
-          margin: 0;
-          padding: 0;
-          display: grid;
-          gap: 1.1rem;
-        }
-        @media (min-width: 56rem) {
-          .ssm__steps { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.5rem; }
-        }
-        .ssm__step {
-          display: grid;
-          gap: 0.45rem;
-          align-content: start;
-          padding-top: 0.7rem;
-          border-top: 1px solid var(--ssm-edge);
-          min-width: 0;
-        }
-        .ssm__step-tag {
-          margin: 0;
-          font-size: 0.70rem;
-          letter-spacing: 0.18em;
-          color: var(--ssm-cyan);
-        }
-        .ssm__step-body,
-        .ssm__step-list {
-          margin: 0;
-          font-size: 0.88rem;
-          line-height: 1.65;
-          color: var(--ssm-quiet);
-        }
-        .ssm__step-body strong,
-        .ssm__step-list strong { color: var(--color-moonlight); font-weight: 600; }
-        .ssm__step-list {
-          list-style: none;
-          padding: 0;
-          display: grid;
-          gap: 0.6rem;
-        }
-        .ssm__step-list li {
-          padding-left: 0.75rem;
-          border-left: 2px solid var(--tone, var(--ssm-edge));
-        }
-        .ssm__step-list li strong { color: var(--tone, var(--color-moonlight)); }
-        .ssm__step-list em { font-style: normal; color: var(--ssm-quiet); }
-
-        .ssm__flow-hint {
-          margin: -0.35rem 0 0;
-          font-size: 0.72rem;
-          line-height: 1.5;
-          color: var(--ssm-quiet);
-        }
-        /* Hidden once the column is wide enough to show the whole drawing. */
-        @media (min-width: 69rem) {
-          .ssm__flow-hint { display: none; }
-        }
 
         .ssm__flow-note {
           margin: 0;

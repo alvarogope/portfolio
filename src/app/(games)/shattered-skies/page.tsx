@@ -175,10 +175,10 @@ export default function ShatteredSkiesPage() {
         {/* ═══ 07 · CORE MECHANICS ═══ */}
         <Reveal>
           <div style={GAP} id={mainAnchors.mechanics}>
-            <SectionHeading kicker="07 · Core Mechanics" title={ch.mechanics.title} />
+            <SectionHeading kicker="The Core Mechanics" title={ch.mechanics.title} />
             <p style={LEAD}>
-              Three systems, co-designed with the team, that all answer the same question: how do
-              you make two players who cannot understand each other depend on each other anyway?
+              These systems were designed with the team. The purpose of them was to make the players
+              cooperate and rely on each other without any kind of communication.
             </p>
             <ShatteredSkiesMechanics variant="main" />
 

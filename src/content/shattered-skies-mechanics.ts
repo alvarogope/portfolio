@@ -1,88 +1,16 @@
-/**
- * Shattered Skies — the core mechanics: the three systems that make two
- * players who cannot talk to each other cooperate anyway.
- *
- * ATTRIBUTION. Shattered Skies is a team project (team of 5) and my role on it
- * was Systems & World Designer. The three mechanics in this file were
- * CO-DESIGNED with the team — `roleNote` below is rendered visibly at the head
- * of the section and says exactly that. The framing to avoid is one that reads
- * as though these systems were authored alone; every heading, note and design
- * point in here is written in that register on purpose, and should stay there.
- *
- * THE SPINE. Every mechanic in this file is the same argument in a different
- * material: cooperation is not encouraged, it is structurally required, and it
- * has to happen across a communication barrier the design refuses to lower.
- * The communication system states it, the ship makes it mechanical, and
- * traversal makes it physical. `spine` is that claim said once, so the section
- * has a thesis rather than three loose subsections.
- *
- * WHERE THIS FILE RENDERS, AFTER THE SPLIT. The MAIN page gets the claim and
- * its evidence: the spine, each channel's label, tag and `body`, the telepathy
- * flow diagram, the ship's stations and the two traversal bodies. The DEEP DIVE
- * gets the `reasoning` triples — `decision → why → impact` for every channel,
- * `ship.dualControl`, `traversal.booster.reasoning` — and the `jetpackUses`.
- *
- * The two pages never render the same sentence. A channel's `label` appears on
- * both because it is the KEY that joins the condensed entry to its reasoning;
- * everything else has exactly one render site.
- *
- * THE FOUR CHANNEL BODIES DECODE. `DecodeOnView` scrambles each `body` and
- * resolves it when it scrolls into view. That is not decoration bolted on: this
- * copy is the direct descendant of the four `TransmissionCard` bodies the page
- * used to render, and a sentence that arrives as noise and resolves is the
- * section's own argument performed on the section's own words. Keep the bodies
- * SHORT for that reason — a decoding paragraph is a paragraph withheld.
- *
- * WEIGHTING IS DELIBERATE. The communication system is the signature mechanic
- * and carries the fullest treatment: four channels, each with its own design
- * reasoning, plus the telepathy → endings flow, which is the clearest single
- * expression of the whole game's design. The ship and the traversal are strong
- * but compact — prose-led, small supporting tables, no second diagram. Do not
- * "balance" the three by growing the last two; the imbalance is the point.
- *
- * THE REASONING TRIPLE. Every mechanic states `decision → why → impact` rather
- * than describing itself. A description of a mechanic is a feature list; the
- * decision and its consequence are the portfolio value, and the components
- * render the three as labelled lines so a reader can find them at a glance.
- *
- * NO PLANETS, NO STORY BEATS. `shattered-skies-planets.ts` owns the worlds and
- * `shattered-skies-overview.ts` owns the narrative structure and the three
- * endings. The one crossing point is the telepathy flow below, which has to
- * name the endings for the link to mean anything — it names them and stops,
- * leaving the outcomes to the narrative section further up the page.
- *
- * Pronouns: the two hosts are aliens and the game never fixes their gender.
- * Aevi and Drayk are written without gendered pronouns throughout, as in the
- * other Shattered Skies content files.
- */
-
-/* ---- shared shapes ------------------------------------------------------ */
-
-/** The heading furniture each of the three mechanics carries. */
 export interface MechanicMeta {
   id: string;
-  /** "01" — rendered as the mono index on the block's rule. */
   order: string;
-  /** Short mono kicker over the title. */
   kicker: string;
   title: string;
-  /** One line under the title: the claim, not the description. */
   standfirst: string;
 }
 
-/** decision → why → player impact. The reason this file exists. */
 export interface Reasoning {
   decision: string;
   why: string;
   impact: string;
 }
-
-/* ---- attribution -------------------------------------------------------- */
-
-
-/* ---- the spine ----------------------------------------------------------
-   One claim, stated once, that the three mechanics below are each an instance
-   of. If a mechanic stops being an instance of it, the mechanic is wrong. */
 
 export interface Spine {
   tag: string;
@@ -93,35 +21,27 @@ export interface Spine {
 export const spine: Spine = {
   tag: "The throughline",
   body:
-    "Two players. Two species. No shared language. Every core system in Shattered Skies exists to " +
-    "make that barrier real and then make cooperation the only way through it — the voice you " +
-    "cannot understand, the ship neither of you can fly alone, and the jump neither of you can " +
-    "make without the other.",
+    "The two characters belong to two different species. They don't share language, so when we built " +
+    "these systems we had to consider this barrier and the way cooperation should work without communiation. " +
+    "So the players could feel comfortable with the system we decided to enhance this cooperation by having it " +
+    "through the whole game, like in the ship and the jetpack boost.",
   note:
-    "The design question was never “how do we let two players work together” — co-op does that " +
-    "by default. It was “how do we make trust cost something”. So the systems withhold the " +
-    "cheapest thing in multiplayer, clear speech, and hand the players problems that cannot be " +
-    "solved without it.",
+    "The design reasoning was more centred about “how do we make trust cost something”. Then the system " +
+    "had to be arround not having a voice chat and design problems they can solve without them.",
 };
 
 /* ==========================================================================
    01 · THE COMMUNICATION SYSTEM — the signature mechanic
    ==========================================================================
-   Four channels, in escalating order: noise, then a rule the software cannot
-   enforce, then a vocabulary that betrays you, then the one window where you
-   can finally speak — and have to decide whether to lie. The order is the
-   argument; keep it. */
+*/
 
 export interface CommChannel {
   id: string;
   order: string;
   label: string;
-  /** Short mono line: the implementation in a breath. */
   tag: string;
-  /** What the mechanic is. Written to be read aloud. */
   body: string;
   reasoning: Reasoning;
-  /** Marks the two channels the section leans on hardest. */
   emphasis?: "meta" | "payoff";
 }
 
@@ -135,30 +55,27 @@ export interface CommunicationSection {
 export const communication: CommunicationSection = {
   meta: {
     id: "communication",
-    order: "01",
-    kicker: "The signature mechanic",
-    title: "A language that will not carry",
+    order: "1",
+    kicker: "The Main Mechanic",
+    title: "Characters with Difference Language",
     standfirst:
-      "Two players controlling two alien species with no shared language — and four systems that " +
-      "make the incomprehension something you play rather than something you are told.",
+      "Drayk and Aevi do not share the same language and we had to make that miscommunication " +
+      "exist within the game.",
   },
 
   lead:
-    "Most co-op games hand players a channel and trust them with it. Shattered Skies takes the " +
-    "channel apart. The four systems below escalate: noise, then a rule the software cannot " +
-    "enforce, then a vocabulary that betrays you, then the one window where you can finally " +
-    "speak — and have to decide whether to lie.",
+    "We tried to twist how co-op games are usually designed, because they have a channel and build trust " +
+    "through it. However, we were taking that away, so we had to design some other kind of communication channel.",
 
   channels: [
     {
       id: "voice",
-      order: "01",
+      order: "1",
       label: "Distorted voice chat",
-      tag: "Unity · voice run through a distortion plugin",
+      tag: "Unity Voice Channel Distortion plugin",
       body:
-        "Voice chat is run through a distortion plugin in Unity — words come out unintelligible, " +
-        "but urgency and emotion survive. You can hear that your partner is afraid; you cannot " +
-        "hear why.",
+        "Voice chat is run through a distortion plugin in Unity. " +
+        "The only thing that players can receive is the tone, but not the words.",
       reasoning: {
         decision:
           "Break the voice channel rather than remove it, and introduce it at the exact moment " +
@@ -179,14 +96,13 @@ export const communication: CommunicationSection = {
     },
     {
       id: "out-of-game-rule",
-      order: "02",
-      label: "The rule beyond the screen",
-      tag: "A social rule, enforced outside the build",
+      order: "2",
+      label: "A rule outside the game",
+      tag: "",
       emphasis: "meta",
       body:
-        "Players agree not to discuss the story outside the distorted voice chat. The restriction " +
-        "lives outside the game to protect the fiction inside it, and it keeps every intention " +
-        "ambiguous.",
+        "Players have to agree to not talk the game while they are playing. This restriction has to " +
+        "exists outside the game to keep the intention of the whole design.",
       reasoning: {
         decision:
           "Write a rule the software cannot enforce, and count it as part of the design rather " +
@@ -205,13 +121,12 @@ export const communication: CommunicationSection = {
     },
     {
       id: "gestures",
-      order: "03",
+      order: "3",
       label: "Gestures that get lost in translation",
-      tag: "Non-verbal signals · some render differently per player",
+      tag: "Some render differently per player",
       body:
-        "Simple non-verbal gestures — but some render differently to each player, so even body " +
-        "language is lost in translation. Players have to invent a shared vocabulary across a " +
-        "divide that keeps moving.",
+        "Simple gestures, but some render differently to each player, so even body " +
+        "language is lost in translation.",
       reasoning: {
         decision:
           "Give players a non-verbal vocabulary — then break part of it too, so the same signal " +
@@ -230,14 +145,14 @@ export const communication: CommunicationSection = {
     },
     {
       id: "telepathy",
-      order: "04",
-      label: "The telepathy window",
-      tag: "Rare resource · 5 seconds · filter off",
+      order: "4",
+      label: "Telepathy window",
+      tag: "5 seconds with the voce filter off",
       emphasis: "payoff",
       body:
-        "A rare resource grants five seconds with the filter off and speech perfectly clear. Never " +
-        "enough to say everything — and what you say in the window, true or false, feeds straight " +
-        "into the endings.",
+        "This resource grants five seconds with the filter off and voice chat perfectly clear. It is a rare one. " + 
+        "It is not too long for building a proper phrase, but give the opportunity to communicate through a voice. " +
+        "Players can use this for lying too. Linking this to the Lie ending.",
       reasoning: {
         decision:
           "Make clarity a scarce collectible rather than a permanent unlock, cap it at five " +
@@ -259,17 +174,12 @@ export const communication: CommunicationSection = {
   ],
 
   close:
-    "One escalation: the noise makes incomprehension real, the out-of-game rule keeps it honest, " +
-    "the gestures make players build across it, and the window puts a price on the one thing they " +
-    "have missed all game. Every other mechanic in the game is played through this one.",
+    "The reason behind this was to let the players decide a single moment of communication. " +
+    "However, every single mechanic embraces the misscommunication, while the telepathy permits what " +
+    "players have been missing the whole game.",
 };
 
-/* ---- the telepathy → endings flow ---------------------------------------
-   The diagram that closes the communication block. It exists to make one link
-   visible: the signature communication mechanic is the input to the game's
-   prisoner's-dilemma endings. Ending names and tones match
-   `shattered-skies-overview.ts` so the two diagrams on the page agree; the
-   outcomes are deliberately NOT repeated here. */
+/* ---- the telepathy → endings flow ---------------------------------------*/
 
 export type FlowTone = "truth" | "deceit";
 export type EndingTone = "unity" | "betrayal" | "destruction";
@@ -278,27 +188,21 @@ export interface FlowChoice {
   id: string;
   tone: FlowTone;
   label: string;
-  gloss: string;
 }
 
 export interface FlowEnding {
   id: string;
   tone: EndingTone;
   name: string;
-  /** The combination of the two players' choices that leads here. */
   combo: string;
-  gloss: string;
-  /** Which choice nodes feed this ending. Drives the diagram's edges. */
   from: readonly FlowTone[];
 }
 
 export interface TelepathyFlow {
   title: string;
   caption: string;
-  /** The SVG's <desc>: the whole shape in one sentence, for screen readers. */
   summary: string;
-  /** All three column headers live in the data, so no diagram copy sits in the component. */
-  window: { column: string; label: string; detail: string; seconds: number };
+  window: { column: string; label: string; seconds: number };
   choicesLabel: string;
   choices: readonly FlowChoice[];
   endingsLabel: string;
@@ -307,9 +211,9 @@ export interface TelepathyFlow {
 }
 
 export const telepathyFlow: TelepathyFlow = {
-  title: "Five seconds, and what they decide",
+  title: "How the Telepathy Works",
   caption:
-    "The telepathy window is the game's clearest line from a communication mechanic to an ending.",
+    "Here is a graph explaining the mechanic",
   summary:
     "A flow in three columns. On the left, the telepathy window: five seconds of clear speech, " +
     "granted by a rare resource. In the middle, the choice each player makes inside it — speak " +
@@ -318,32 +222,28 @@ export const telepathyFlow: TelepathyFlow = {
   window: {
     column: "The resource",
     label: "The telepathy window",
-    detail: "A rare resource. Five seconds, filter off, perfectly clear speech.",
     seconds: 5,
   },
-  choicesLabel: "Each player, alone",
+  choicesLabel: "Each player decision",
   choices: [
     {
       id: "truth",
       tone: "truth",
       label: "Speak true",
-      gloss: "Spend the window on what is actually happening, or on what you actually intend.",
     },
     {
       id: "deceit",
       tone: "deceit",
       label: "Speak false",
-      gloss: "Withhold, mislead, or promise something you already know you will not do.",
     },
   ],
-  endingsLabel: "Where it lands",
+  endingsLabel: "Link to endings",
   endings: [
     {
       id: "unity",
       tone: "unity",
       name: "Unity",
       combo: "Both spoke true",
-      gloss: "Two players who spent their scarcest resource on each other.",
       from: ["truth"],
     },
     {
@@ -351,7 +251,6 @@ export const telepathyFlow: TelepathyFlow = {
       tone: "betrayal",
       name: "Betrayal",
       combo: "One of the two lied",
-      gloss: "The lie only has to be one-sided. Which side decides who survives.",
       from: ["truth", "deceit"],
     },
     {
@@ -359,22 +258,18 @@ export const telepathyFlow: TelepathyFlow = {
       tone: "destruction",
       name: "Mutual Destruction",
       combo: "Both spoke false",
-      gloss: "Neither player trusted the window, so nothing crossed it.",
       from: ["deceit"],
     },
   ],
   note:
-    "The windows do not pick the ending on their own — the final choice does, and each player " +
-    "makes it alone. What the telepathy windows decide is what each player knows, and believes, " +
-    "walking into it. That is the design in one line: the communication system is the evidence, " +
-    "and the ending is the verdict.",
+    "This window does not pick the ending by itself, only the final decision does. This moment " +
+    "can be used to expresss what players know and believes or the complete opposite",
 };
 
 /* ==========================================================================
    02 · THE SPACESHIP HUB — compact
    ==========================================================================
-   Prose-led with one small reference table. Lovers in a Dangerous Spacetime is
-   named as the reference because it is the honest one. */
+*/
 
 export interface ShipStation {
   id: string;
@@ -382,20 +277,10 @@ export interface ShipStation {
   role: string;
 }
 
-/**
- * The three repair minigames are NOT described here. They are the centrepiece
- * of the co-op design section further down the page
- * (`shattered-skies-gameplay.ts`), where each one is taken apart into its
- * asymmetry and its comms-barrier twist. This block names them once and hands
- * the reader on; if a description of one ever reappears here, delete it.
- */
 export interface RepairsPointer {
   label: string;
-  /** Why the ship generates repairs at all — the setup, not the minigames. */
   body: string;
-  /** The one line that hands the depth to the co-op design section. */
   pointer: string;
-  /** Link text for that hand-off. The href is built at the render site. */
   linkLabel: string;
 }
 
@@ -413,20 +298,19 @@ export interface ShipSection {
 export const ship: ShipSection = {
   meta: {
     id: "ship",
-    order: "02",
-    kicker: "The hub",
-    title: "A ship that takes two",
+    order: "2",
+    kicker: "Cooperative move",
+    title: "The Spaceship",
     standfirst:
-      "Home base and the road between planets, with its systems spread far enough apart that one " +
-      "player can never be at all of them.",
+      "The home base. Players will have to learn how to use it to navigate through the planetary system.",
   },
 
   inspiration: {
-    ref: "Lovers in a Dangerous Spacetime",
+    ref: "Combined driving",
     body:
-      "The reference we took to the team openly. What we wanted from it was its central trick: a " +
-      "vehicle whose controls are physically distributed, so that flying it is a running " +
-      "argument about who is where.",
+      "The reference we took as a team and what we wanted from it. We wanted the players " + 
+      "to cooperate in a ship where the controls were phisically distributed. This helped to " +
+      "understand cooperation without communication.",
   },
 
   lead:
@@ -483,14 +367,9 @@ export const ship: ShipSection = {
       "Asteroid fields and the hazards between worlds do real damage, and damage is repaired by " +
       "hand, mid-flight, while the other player keeps the ship alive. Nobody can afford to leave " +
       "their station for long, so every repair is a second job taken on under load.",
-    /* S2 — no direction word. This block renders on the main page and its
-       reasoning renders on the deep dive, so "below" is true on one page and
-       false on the other. The render site resolves the address; this file
-       states the fact and stops. */
     pointer:
       "Three minigames handle it — Circuit Realignment, Seal Hull Breach and Calibrate Sensors. " +
       "Each one splits the knowledge or the control between the two players in a different way.",
-    /** The link text. The address is resolved by the component. */
     linkLabel: "How the three splits work",
   },
 
@@ -502,8 +381,7 @@ export const ship: ShipSection = {
 /* ==========================================================================
    03 · ASYMMETRIC TRAVERSAL — compact
    ==========================================================================
-   The collision booster is the highlight: it is the point where the traversal
-   system produces cooperation the design did not have to script. */
+*/
 
 export interface HostBody {
   id: "aevi" | "drayk";

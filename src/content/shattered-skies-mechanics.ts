@@ -314,13 +314,10 @@ export const ship: ShipSection = {
   },
 
   lead:
-    "The ship is both home base and the way between planets — and it takes two. Steering, " +
-    "shields, cannons and radar sit at separate stations, so players must physically move to " +
-    "their posts and constantly coordinate: one steers while the other defends, and whoever is " +
-    "on radar is the only one who can see what is coming. The hull carries realistic weight and " +
-    "inertia, so a course correction has to be started long before it is needed — which means " +
-    "the call to make it has to come earlier still, through a voice channel that cannot carry " +
-    "the words.",
+    "The ship is the way players navigate through planets, but it is also the main hub and their safe place. " +
+    "To control it, it takes both of them, as steering, shields, cannons and radars are in separate rooms, making " +
+    "the players to physically move and coordinate: one is steering while the other one turns on the sields. " +
+    "We gave the ship realistic weight and inertia, making the navigation difficult even through communication.",
 
   dualControl: {
     decision:
@@ -337,45 +334,44 @@ export const ship: ShipSection = {
       "the skill the planets below spend the rest of the game testing.",
   },
 
-  stationsLabel: "Ship systems",
+  stationsLabel: "The main ship systems",
   stations: [
     {
       id: "steer",
       name: "Steering",
-      role: "Heading and thrust. Weight and inertia are real, so turns begin early or not at all.",
+      role: "Heading and thrust. Weight and inertia are real, forcing turns to begin early.",
     },
     {
       id: "shield",
       name: "Shields",
-      role: "Directional cover. Holding one arc always means leaving another one open.",
+      role: "Directional cover. To hold one arc makes another one open.",
     },
     {
       id: "cannons",
       name: "Cannons",
-      role: "Clears asteroids and hostiles, aimed independently of where the ship is pointed.",
+      role: "Clears asteroids and hostiles, can be aimed independently of where the ship points to.",
     },
     {
       id: "radar",
       name: "Radar",
-      role: "Reads hazards, debris and approaching worlds — and is worthless unless the other player is told.",
+      role: "Reads hazards, space trash and celestial bodies.",
     },
   ],
 
   repairs: {
     label: "Repair under fire",
     body:
-      "Asteroid fields and the hazards between worlds do real damage, and damage is repaired by " +
-      "hand, mid-flight, while the other player keeps the ship alive. Nobody can afford to leave " +
-      "their station for long, so every repair is a second job taken on under load.",
+      "The ateroids and space hazards can damage the ship, which then has to be repaired. The repair becomes " +
+      "a minigame, so players can still navigate.",
     pointer:
-      "Three minigames handle it — Circuit Realignment, Seal Hull Breach and Calibrate Sensors. " +
-      "Each one splits the knowledge or the control between the two players in a different way.",
-    linkLabel: "How the three splits work",
+      "They are three minigames: circuit realignment, seal the breach and calibrate sensors. Each one " +
+      "divides the knowledge and control between the two players.",
+    linkLabel: "how the three mini-games work",
   },
 
   designPoint:
-    "The ship is where cooperation stops being a theme and becomes mechanical. You cannot fly it " +
-    "alone — not because the game forbids it, but because the controls are in two places at once.",
+    "We were trying to make cooperation mechanical and intuitive as possible in the spaceship. " +
+    "Helpful for future puzzles and forcing it in the most important mechanic.",
 };
 
 /* ==========================================================================
@@ -405,7 +401,6 @@ export interface TraversalSection {
   jetpackBody: string;
   jetpackUses: readonly JetpackUse[];
   booster: { label: string; body: string; reasoning: Reasoning };
-  designPoint: string;
 }
 
 export const traversal: TraversalSection = {
@@ -413,45 +408,43 @@ export const traversal: TraversalSection = {
     id: "traversal",
     order: "03",
     kicker: "Movement",
-    title: "Two bodies, one tank of fuel",
+    title: "Sharing a Fuel Tank",
     standfirst:
-      "Asymmetric characters, a fuel-limited jetpack that cares how much you weigh, and a boost " +
-      "that only exists when both players commit to it at once.",
+      "The characters move assymetrically, but they share the same tank that makes their jetpacks function.",
   },
 
   lead:
-    "Aevi is small, quick, and jumps poorly. Drayk is big, slow, and jumps hard. Their bodies " +
-    "shape how they move and therefore how they cooperate — one of them reaches a ledge the " +
-    "other has to be helped to, and neither is the better traversal character in general, only " +
-    "in a particular place.",
+    "Both characters have different traversal mechanics. Aevi is small, quick and doesn't jump far. " +
+    "Drayk is big, slow and jumps high. Both their bodies show how they moves work and how they could " +
+    "help each other with. Many puzzles are designed around this: one reaches a ledge and the other one helpes to reach it. " +
+    "This makes both characters well-balanced.",
 
   bodiesLabel: "The two bodies",
   bodies: [
     {
       id: "aevi",
       name: "Aevi",
-      build: "Small · quick · weak jump",
+      build: "Small · quick · short jump",
       body:
-        "Covers ground fast and fits where Drayk cannot, but cannot clear height unaided. Lighter " +
-        "on the jetpack, so the same tank of fuel carries Aevi further.",
+        "Runs fast and can fit where Drayk can't, but needs him for jumping far. The jetpack takes her " +
+        "higher due to her lightweight and consumes less fuel. This makes her strong when the players need to be " + 
+        "quick.",       
     },
     {
       id: "drayk",
       name: "Drayk",
-      build: "Large · slow · strong jump",
+      build: "Large · slow · long jump",
       body:
-        "Reaches by jumping what Aevi needs fuel for, but burns through that fuel faster and " +
-        "loses time on any route that rewards speed.",
+        "Can reach through jumping where Aevi cannot, however, he burns the fuel faster than her when using " +
+        "a jetpack, but very useful when strength is required.",
     },
   ],
 
-  jetpackLabel: "Jetpacks, from the first minute",
+  jetpackLabel: "Jetpacks",
   jetpackBody:
-    "Both players carry a jetpack from the start of the game — the traversal is not an unlock, it " +
-    "is the baseline. Fuel is limited and weight-sensitive: Aevi's lighter frame makes the pack " +
-    "more efficient, which is precisely what balances Aevi against Drayk's stronger jump. The " +
-    "same thruster is also a tool, and doubling movement as an environmental verb is what keeps " +
-    "the fuel gauge tense — every metre spent solving a puzzle is a metre you cannot fly.",
+    "Both have access to a jetpack from the very beginning, permitting this move from the start. " +
+    "They are limited by fuel and they are sensitive to the character's weight. Aevi being lighter than " +
+    "Drayk and balancing the jumping mechanics. They are also used in some puzzles.",
   jetpackUses: [
     {
       id: "underwater",
@@ -473,10 +466,8 @@ export const traversal: TraversalSection = {
   booster: {
     label: "The collision booster",
     body:
-      "When both players jetpack into each other mid-air, they create a booster that flings them " +
-      "higher than either could reach alone. Fuel drains fast while it happens, players can " +
-      "share fuel between packs, and running dry can strand you somewhere neither of you can get " +
-      "out of. Movement itself is a resource the two of you manage together.",
+      "When both players jetpack into each other while on use, they create a booster to move them " +
+      "higher. Fuel drains fast while this happens, so the movement has to be intentional at every point.",
     reasoning: {
       decision:
         "Make the highest point in the traversal kit reachable only by two players colliding on " +
@@ -494,9 +485,4 @@ export const traversal: TraversalSection = {
         "nobody can explain whose fault it was.",
     },
   },
-
-  designPoint:
-    "Asymmetric bodies plus a shared, finite fuel supply gives you traversal that only functions " +
-    "through cooperation — and, because fuel can be given away, only functions well through " +
-    "trust.",
 };

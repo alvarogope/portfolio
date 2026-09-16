@@ -385,8 +385,6 @@ export default function ShatteredSkiesMechanics({
                 </h4>
                 <p className="ssm__highlight-body">{traversal.booster.body}</p>
               </section>
-
-              <DesignPoint body={traversal.designPoint} />
             </>
           )}
 

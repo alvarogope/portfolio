@@ -189,10 +189,10 @@ export default function ShatteredSkiesPage() {
                 items={[
                   {
                     src: "/images/shattered-skies/shattered-skies-gameplay-ui.png",
-                    label: "The communication channel, on screen",
+                    label: "The communication channel in-game",
                     alt: "In-game view of a corridor fight: the objective panel top-left, the weapon slot bottom-left, and the Conversation Panel bottom-right — the interface two players who cannot understand each other have to talk through.",
                     caption:
-                      "The Conversation Panel, bottom right, sitting in the HUD next to the objective and the weapon slot. It is the only channel the two players get, and it is deliberately as load-bearing on screen as the ammo count.",
+                      "The Conversation Panel, bottom right, in the HUD next to the objective and the weapon slot.",
                   },
                 ]}
               />
@@ -209,7 +209,7 @@ export default function ShatteredSkiesPage() {
         {/* ═══ 08 · CO-OP DESIGN ═══ */}
         <Reveal>
           <div style={GAP} id={mainAnchors.coop}>
-            <SectionHeading kicker="08 · Co-op Design" title={ch.coop.title} />
+            <SectionHeading kicker="Co-op Design" title={ch.coop.title} />
             <p style={LEAD}>
               How the cooperation actually works, one system at a time: what each minigame takes
               away from which player, and what the pair have to invent to get it back.

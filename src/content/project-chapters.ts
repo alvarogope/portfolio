@@ -96,7 +96,7 @@ export const shatteredSkiesChapters = {
   },
   coop: {
     id: ssMain.coop,
-    title: "Split, Distorted, Rebuilt",
+    title: "Division, Distortion and Improvisation",
     note: "The two seats and their mini-games",
   },
 } as const satisfies Record<string, Chapter>;

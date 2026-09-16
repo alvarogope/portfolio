@@ -17,124 +17,26 @@ import { mainHref } from "@/content/shattered-skies-deep-dive";
 import InteractiveHint from "./InteractiveHint";
 import Link from "next/link";
 
-/**
- * Shattered Skies — co-op design. The depth behind the mechanics section.
- *
- * WHAT IT IS. Three minigame breakdowns, each with a small schematic of its
- * asymmetry, then two compact supporting blocks: the co-op puzzle pattern and
- * the knowledge-gating rule. `ShatteredSkiesMechanics` further up the page
- * introduces the ship and the communication barrier and points here; nothing
- * in this component restates it.
- *
- * THE THREE FIGURES SHARE A GRAMMAR, on purpose — they are three expressions
- * of one thesis, so they are drawn with one visual vocabulary and differ only
- * where the design differs:
- *
- *   · a BROKEN ARC across the top of every figure, with the barrier label
- *     sitting in the gap. Same path, same pill, same place, all three times:
- *     the channel between the players is the constant.
- *   · LEFT IS ALWAYS PLAYER A AND CYAN, RIGHT IS ALWAYS PLAYER B AND WARM, in
- *     all three drawings and in the text rail beneath them, so a reader who
- *     learns the code once can read the other two at a glance.
- *   · the body of each figure is what the split actually looks like: two
- *     screens holding different knowledge (maze, waveform), or two controls
- *     holding different halves of one tool (welder).
- *
- * THE SEATS ARE ROLES, NOT CHARACTERS, AND THE LABELS MUST STAY THAT WAY.
- *
- * A reasonable instinct on seeing this toggle is to relabel it "Aevi" and
- * "Drayk". Do not. Nothing in `shattered-skies-gameplay.ts` assigns a repair
- * seat to a host, and that is the design rather than an omission: either player
- * can be the blind hand or the guide, and in play they swap. "The guide" is not
- * a person, it is a position you end up in. Naming the seats after the two
- * characters would assert a fixed assignment the game does not make.
- *
- * There is a second reason, and it is mechanical. The narrative map teaches
- * Drayk = emerald and Aevi = nebula-cyan, and the ownership map records that
- * the rest of the page depends on that key. These figures are toned seat A =
- * cyan, seat B = warm gold. Seat A therefore already carries Aevi's colour by
- * coincidence, and seat B carries neither host's. Labelling by character would
- * print at least one host in the other host's colour.
- *
- * If the assignment ever does become real, both things have to move together:
- * the labels in the content file AND seat B's tone from gold to emerald.
- *
- * THE SEAT TOGGLE — WHY THE FIGURES ARE INTERACTIVE AT ALL.
- *
- * These three drawings were static, and static was the wrong call. Each one's
- * entire subject is WHO CAN SEE WHAT AND WHO CAN TOUCH WHAT, and a reader
- * looking at both halves side by side is in the one position neither player is
- * ever in: they can see everything. The asymmetry was drawn but never felt.
- *
- * Picking a seat drops the diagram to that seat's half — the other half stays
- * on the canvas at 12% so it reads as "there, and not yours", which is the
- * actual experience. Dimming rather than hiding matters for the guide in
- * particular: they CAN see the answer, they simply cannot act on it, and
- * removing their panel would misstate the design.
- *
- * The three figures need no geometry changes to support this, which is the tell
- * that the drawings were built right the first time: every per-player element
- * already sits inside a `data-tone` group, because the two players were always
- * the organising principle. The toggle only sets `data-seat` on the SVG and CSS
- * does the rest — and the same attribute dims the matching row of the text rail
- * below, so the picture and the prose move together.
- *
- * DATA, NOT COPY. Every string a figure prints — panel names, the compressed
- * chips inside the panels, the barrier label, the stakes line, the dial names —
- * comes from `shattered-skies-gameplay.ts`. The component owns geometry and
- * nothing else, which is what keeps the drawing and its `<desc>` from drifting
- * apart about who can see what.
- *
- * ACCESSIBILITY. Each figure is one `role="img"` with a `<title>` and a
- * `<desc>` that names who sees what and who controls what, rather than a
- * scatter of loose text nodes. Underneath every figure the same split is
- * repeated as a real HTML definition list — side, what it sees, what it
- * controls — so nothing is lost when the drawing is scrolled past, zoomed, or
- * read aloud. The drawings scroll rather than shrink below about 640px,
- * because the mono labels are 9–11px in viewBox units and stop being readable
- * long before the picture stops fitting; the scroll frame is focusable so a
- * keyboard can reach it.
- *
- * ATTRIBUTION. The credit line at the top says co-designed with the team, in
- * those words, before anything is described. Team of five; my seat was systems
- * and world design.
- */
-
-/* ==========================================================================
-   FIGURE GEOMETRY
-   ==========================================================================
-   One 720×380 canvas for all three. Two layouts inside it: SPLIT (two equal
-   screens, used by the maze and the waveform) and SHARED (two narrow control
-   blocks flanking one object, used by the welder). */
-
 const W = 720;
 const H = 380;
 
-/** The broken channel. The pill sits in the gap; the arcs stop at its edges. */
 const PILL = { x: 250, y: 8, w: 220, h: 30 };
 
-/** Arc ends land above the centre of each panel — narrow for SPLIT, wide for SHARED. */
 const ARC = {
   split: ["M 176 100 C 206 62, 220 42, 250 26", "M 470 26 C 500 42, 514 62, 544 100"],
   shared: ["M 88 100 C 138 60, 194 40, 250 26", "M 470 26 C 526 40, 582 60, 632 100"],
 } as const;
 
-/** SPLIT layout: two screens, 336 wide, 32 apart. */
 const PANEL = { y: 104, h: 240, w: 336 };
 const PANEL_X = { a: 8, b: 376 } as const;
-/** Where a panel's own content may start, below its name and chip. */
 const CONTENT_Y = PANEL.y + 62;
 
-/** SHARED layout: control block, one object, control block. */
 const CTRL = { y: 104, h: 176, w: 160 };
 const CTRL_X = { a: 8, b: 552 } as const;
 const PLATE = { x: 216, y: 104, w: 288, h: 200 };
 
 const STAKES_Y = 366;
 
-/* ---- small drawing helpers ---------------------------------------------- */
-
-/** A filled arrowhead at (x, y) pointing in one of four directions. */
 function head(x: number, y: number, dir: "l" | "r" | "u" | "d", s = 6) {
   const t = s * 0.62;
   if (dir === "r") return `M ${x} ${y} L ${x - s} ${y - t} L ${x - s} ${y + t} Z`;
@@ -143,8 +45,6 @@ function head(x: number, y: number, dir: "l" | "r" | "u" | "d", s = 6) {
   return `M ${x} ${y} L ${x - t} ${y - s} L ${x + t} ${y - s} Z`;
 }
 
-/** A sine, sampled. `amp` is the height and `cycles` the pitch — the two
-    properties the sensor minigame asks the players to agree on. */
 function wave(x: number, y: number, w: number, amp: number, cycles: number, n = 72) {
   const pts: string[] = [];
   for (let i = 0; i <= n; i += 1) {
@@ -156,16 +56,12 @@ function wave(x: number, y: number, w: number, amp: number, cycles: number, n = 
   return `M ${pts.join(" L ")}`;
 }
 
-/* ---- shared figure furniture -------------------------------------------- */
-
-/** The constant of all three drawings: a channel that does not reach across. */
 function BrokenChannel({ label, layout }: { label: string; layout: "split" | "shared" }) {
   const [left, right] = ARC[layout];
   return (
     <g className="ssc-chan">
       <path className="ssc-chan-arc" d={left} />
       <path className="ssc-chan-arc" d={right} />
-      {/* The severed ends, pointing into the gap. */}
       <path className="ssc-chan-jag" d="M 244 12 L 236 23 L 244 34" />
       <path className="ssc-chan-jag" d="M 476 12 L 484 23 L 476 34" />
       <rect className="ssc-chan-pill" x={PILL.x} y={PILL.y} width={PILL.w} height={PILL.h} rx={2} />
@@ -176,7 +72,6 @@ function BrokenChannel({ label, layout }: { label: string; layout: "split" | "sh
   );
 }
 
-/** One player's screen in the SPLIT layout. */
 function Screen({ side, children }: { side: MinigameSide; children?: React.ReactNode }) {
   const x = PANEL_X[side.id];
   return (
@@ -194,7 +89,6 @@ function Screen({ side, children }: { side: MinigameSide; children?: React.React
   );
 }
 
-/** One player's control block in the SHARED layout. */
 function ControlBlock({ side, children }: { side: MinigameSide; children?: React.ReactNode }) {
   const x = CTRL_X[side.id];
   return (
@@ -220,20 +114,11 @@ function Stakes({ text }: { text: string }) {
   );
 }
 
-/* ==========================================================================
-   FIGURE 01 · CIRCUIT REALIGNMENT — the knowledge split
-   ==========================================================================
-   The same 8×8 lattice is drawn twice. The left copy is missing the walls and
-   the source; the right copy has them and cannot move the node. That single
-   difference between two otherwise identical grids is the whole drawing. */
-
 const CELL = 20;
 const GRID = CELL * 8;
 const GRID_Y = CONTENT_Y;
-/** Grid origin inside a panel — centred horizontally. */
 const gridX = (panelX: number) => panelX + (PANEL.w - GRID) / 2;
 
-/** Walls, in cell coordinates. `h` sits on a cell's top edge, `v` on its left. */
 const WALL_H: readonly (readonly [number, number])[] = [
   [1, 2], [2, 2], [3, 2], [5, 1], [6, 1], [0, 4], [1, 4],
   [2, 4], [4, 5], [5, 5], [6, 5], [2, 6], [3, 6],
@@ -242,7 +127,6 @@ const WALL_V: readonly (readonly [number, number])[] = [
   [2, 0], [2, 1], [5, 2], [5, 3], [3, 4], [3, 5], [6, 6], [6, 7], [1, 5],
 ];
 
-/** The node the blind player drives, and the source it has to reach. */
 const NODE_CELL = [1, 6] as const;
 const SRC_CELL = [6, 1] as const;
 
@@ -270,10 +154,8 @@ function MazeFigure({ game }: { game: Minigame }) {
     <>
       <BrokenChannel label={game.diagram.barrier} layout="split" />
 
-      {/* ---- left: the hand. The lattice, the node, and nothing else. ---- */}
       <Screen side={a}>
         <Lattice x={ax} dim />
-        {/* The four inputs this player has, drawn around the node they own. */}
         <g className="ssc-maze-input">
           <path d={head(nodeCx(ax), nodeCy - 17, "u", 5)} />
           <path d={head(nodeCx(ax), nodeCy + 17, "d", 5)} />
@@ -289,7 +171,6 @@ function MazeFigure({ game }: { game: Minigame }) {
         />
       </Screen>
 
-      {/* ---- right: the guide. Every wall, the source, and no input. ---- */}
       <Screen side={b}>
         <Lattice x={bx} />
         <g className="ssc-maze-wall">
@@ -312,7 +193,6 @@ function MazeFigure({ game }: { game: Minigame }) {
             />
           ))}
         </g>
-        {/* The source: what the node has to be driven to. */}
         <circle
           className="ssc-maze-src"
           cx={bx + (SRC_CELL[0] + 0.5) * CELL}
@@ -325,7 +205,6 @@ function MazeFigure({ game }: { game: Minigame }) {
           cy={GRID_Y + (SRC_CELL[1] + 0.5) * CELL}
           r={2.6}
         />
-        {/* The node as an outline: visible to the guide, untouchable by them. */}
         <rect
           className="ssc-maze-ghost"
           x={nodeCx(bx) - 6}
@@ -339,14 +218,6 @@ function MazeFigure({ game }: { game: Minigame }) {
     </>
   );
 }
-
-/* ==========================================================================
-   FIGURE 02 · SEAL HULL BREACH — the control split
-   ==========================================================================
-   One object in the middle and two controls that each own one axis of it. The
-   left control's line runs straight in along the horizontal axis; the right
-   control's drops under the plate and comes up the vertical one, so the two
-   axes are legible before either label is read. */
 
 const WELD = { x: 360, y: 214 };
 const CRACK =
@@ -362,7 +233,6 @@ function WelderFigure({ game }: { game: Minigame }) {
     <>
       <BrokenChannel label={game.diagram.barrier} layout="shared" />
 
-      {/* ---- the shared object ---- */}
       {game.diagram.sharedLabel && (
         <text className="ssc-fig-shared" x={W / 2} y={PLATE.y - 10} textAnchor="middle">
           {game.diagram.sharedLabel}
@@ -384,7 +254,6 @@ function WelderFigure({ game }: { game: Minigame }) {
       </g>
       <path className="ssc-weld-crack" d={CRACK} />
 
-      {/* ---- the Horizontal seat: its axis runs straight in from the left ---- */}
       <g data-tone="a">
         <line className="ssc-axis-lead" x1={CTRL_X.a + CTRL.w} y1={trackY} x2={252} y2={trackY} />
         <line className="ssc-axis" x1={258} y1={WELD.y} x2={462} y2={WELD.y} />
@@ -392,7 +261,6 @@ function WelderFigure({ game }: { game: Minigame }) {
         <path className="ssc-axis-head" d={head(468, WELD.y, "r")} />
       </g>
 
-      {/* ---- the Vertical seat: in under the plate from the right ---- */}
       <g data-tone="b">
         <path
           className="ssc-axis-lead"
@@ -404,11 +272,9 @@ function WelderFigure({ game }: { game: Minigame }) {
         <path className="ssc-axis-head" d={head(WELD.x, 278, "d")} />
       </g>
 
-      {/* The one tool, at the intersection of two people's inputs. */}
       <circle className="ssc-weld-tool ssc-pulse" cx={WELD.x} cy={WELD.y} r={6.5} />
       <circle className="ssc-weld-tool-ring" cx={WELD.x} cy={WELD.y} r={11} />
 
-      {/* ---- the two controls ---- */}
       <ControlBlock side={a}>
         <line className="ssc-ctrl-track" x1={ax - 52} y1={trackY} x2={ax + 52} y2={trackY} />
         <path className="ssc-ctrl-head" d={head(ax - 58, trackY, "l", 5)} />
@@ -428,15 +294,8 @@ function WelderFigure({ game }: { game: Minigame }) {
   );
 }
 
-/* ==========================================================================
-   FIGURE 03 · CALIBRATE SENSORS — both halves of the split
-   ==========================================================================
-   Two scopes at identical geometry so the mismatch is a direct comparison, and
-   two dials that exist on one screen and are drawn as absences on the other. */
-
 const SCOPE = { y: CONTENT_Y, h: 96, inset: 24 };
 const SCOPE_MID = SCOPE.y + SCOPE.h / 2;
-/** The two dial rows, at the same y on both screens so the absence lines up. */
 const DIAL_Y = [298, 330] as const;
 
 function Scope({ panelX, path, dim }: { panelX: number; path: string; dim?: boolean }) {
@@ -467,20 +326,17 @@ function WaveformFigure({ game }: { game: Minigame }) {
   const scopeW = PANEL.w - SCOPE.inset * 2;
   const dialX = (panelX: number) => panelX + SCOPE.inset;
   const dialW = PANEL.w - SCOPE.inset * 2 - 24;
-  /** Where each dial currently sits — both short of the target, which is the point. */
   const dialAt = [0.34, 0.24] as const;
 
   return (
     <>
       <BrokenChannel label={game.diagram.barrier} layout="split" />
 
-      {/* ---- left: the target, and no way to act on it ---- */}
       <Screen side={a}>
         <Scope
           panelX={PANEL_X.a}
           path={wave(PANEL_X.a + SCOPE.inset, SCOPE_MID, scopeW, 34, 2.5)}
         />
-        {/* The dials this player does not have, drawn as the gap they are. */}
         {DIAL_Y.map((y, i) => (
           <g key={y} className="ssc-dial is-absent">
             <text className="ssc-dial-label" x={dialX(PANEL_X.a)} y={y - 10}>
@@ -503,7 +359,6 @@ function WaveformFigure({ game }: { game: Minigame }) {
         ))}
       </Screen>
 
-      {/* ---- right: the dials, and only the wave they are making ---- */}
       <Screen side={b}>
         <Scope
           panelX={PANEL_X.b}
@@ -544,7 +399,6 @@ function WaveformFigure({ game }: { game: Minigame }) {
   );
 }
 
-/* ---- the figure wrapper -------------------------------------------------- */
 
 const FIGURES = {
   maze: MazeFigure,
@@ -571,18 +425,6 @@ function AsymmetryFigure({ game, seat }: { game: Minigame; seat: Seat }) {
   );
 }
 
-/**
- * One minigame's schematic, with the seat toggle that drives it.
- *
- * State is per-figure rather than per-section on purpose: the three minigames
- * are three separate arguments, and a reader who sits in the guide's seat for
- * the maze has said nothing about which seat they want for the welder.
- *
- * The toggle is three real buttons with `aria-pressed`, not a custom widget —
- * a segmented control is a set of toggle buttons and the platform already has
- * one. The status line names only the side's `label`, which is a key already
- * on screen, so nothing here re-states what the rail below says.
- */
 function Schematic({ game }: { game: Minigame }) {
   const [seat, setSeat] = useState<Seat>("both");
   const [a, b] = game.sides;
@@ -622,16 +464,12 @@ function Schematic({ game }: { game: Minigame }) {
         <AsymmetryFigure game={game} seat={seat} />
       </div>
 
-      {/* Announced, not drawn. The label is the only word here, and it is
-          already on the button that was just pressed. */}
       <p className="ssc__sr" role="status">
         {seat === "both"
           ? "Both seats shown."
           : `Showing ${(seat === "a" ? a : b).label} only.`}
       </p>
 
-      {/* The same split as real text, at every width. `data-seat` dims the row
-          the diagram is currently dimming, so picture and prose agree. */}
       <dl className="ssc__split" data-seat={seat}>
         {game.sides.map((sd) => (
           <div key={sd.id} className="ssc__side" data-tone={sd.id}>
@@ -652,13 +490,11 @@ function Schematic({ game }: { game: Minigame }) {
 
       <p className="mono ssc__fig-barrier">
         <span className="ssc__fig-barrier-jag" aria-hidden="true" />
-        {game.diagram.barrier} — between the two, carrying neither
+        While the {game.diagram.barrier} goes on.
       </p>
     </figure>
   );
 }
-
-/* ---- prose furniture ----------------------------------------------------- */
 
 function BlockHeader({ order, kicker, title, standfirst, titleId }: BlockMeta & { titleId: string }) {
   return (
@@ -675,7 +511,6 @@ function BlockHeader({ order, kicker, title, standfirst, titleId }: BlockMeta & 
   );
 }
 
-/** split → twist → cost, in that order every time. */
 function BeatRail({ beats }: { beats: readonly Beat[] }) {
   return (
     <dl className="ssc__beats">
@@ -702,11 +537,6 @@ function DesignPoint({ body }: { body: string }) {
 
 export default function ShatteredSkiesCoop({
   variant = "main",
-  /**
-   * Which material to render. The deep dive splits this file across two of its
-   * sections, so the component takes a filter rather than being split into two
-   * components that would each need a copy of the stylesheet.
-   */
   block = "all",
 }: {
   variant?: SsVariant;
@@ -718,14 +548,6 @@ export default function ShatteredSkiesCoop({
 
   return (
     <div className="ssc" data-variant={variant}>
-      {/* No credit block here. The page states its attribution once, in
-          §03's teamNote — team of five, my seat was systems and world
-          design — and §06's levelsCredit is the only other one, because it
-          makes a distinction (audio mine, level design shared) rather than a
-          disclaimer. Four near-identical restatements of the same sentence
-          made a strong page read as an anxious one. */}
-
-      {/* ---- the thesis the three figures are three versions of — MAIN ---- */}
       {!deep && (
         <section className="ssc__thesis" aria-labelledby="ssc-thesis-title">
           <p className="mono ssc__thesis-tag" id="ssc-thesis-title">
@@ -749,20 +571,6 @@ export default function ShatteredSkiesCoop({
         </section>
       )}
 
-      {/* ================= THE PATTERN, AS A PRE-INTRO — MAIN =================
-
-          FOLDED IN, NOT DELETED. This used to be its own block AFTER the three
-          minigames: a full header, a lead, five steps written out, the
-          Symbiochord panel and a design point. Which meant the reader met three
-          detailed puzzle breakdowns first and was told the shape they all share
-          afterwards — the rule explained after the examples it governs.
-
-          It is now the short answer to "how do these puzzles work" placed
-          BEFORE the descriptions, and it is built entirely from KEYS: the
-          section's own standfirst, the five step LABELS, and its design point.
-          Not one word of new copy, and not one word repeated — the five step
-          BODIES, the lead and the Symbiochord panel are on the deep dive, under
-          the same five labels. */}
       {!deep && showPattern && (
         <section className="ssc__pattern" aria-labelledby="ssc-pattern-title">
           <h4 className="ssc__pattern-title" id="ssc-pattern-title">
@@ -795,9 +603,6 @@ export default function ShatteredSkiesCoop({
 
           {deep && <p className="ssc__lead">{minigames.lead}</p>}
 
-          {/* The three schematics are wide drawings in focusable, horizontally
-              scrollable frames. One chip for the set: three identical chips
-              down one column would be noise, and the grammar is shared. */}
           {!deep && (
             <InteractiveHint
               what="seat"
@@ -817,21 +622,12 @@ export default function ShatteredSkiesCoop({
                       {g.name}
                     </h4>
                     <p className="mono ssc__game-tag">{g.tag}</p>
-                    {/* The one-line asymmetry. On the main page this IS the
-                        description — it already says who is deprived of what,
-                        which is the only thing the condensed entry owes. */}
                     {!deep && <p className="ssc__game-standfirst">{g.standfirst}</p>}
                   </div>
                 </header>
 
                 {deep && <p className="ssc__game-premise">{g.premise}</p>}
 
-                {/* ---- the asymmetry, drawn AND operable — MAIN ONLY ----
-                    Drawn from `sides`, which is data, so the picture costs the
-                    condensed page almost nothing in words while carrying the
-                    whole split — and now the reader can sit in either seat and
-                    watch the other half go dark. The deep dive gets the prose
-                    the picture is a picture OF. */}
                 {!deep && <Schematic game={g} />}
 
                 {deep && (
@@ -844,25 +640,12 @@ export default function ShatteredSkiesCoop({
             ))}
           </ol>
 
-          {/* THE PAYOFF, ON THE PAGE A RECRUITER READS.
-
-              The ownership map calls the paragraph this sits in "the best
-              paragraph on the page", and the reading-load audit measured it
-              landing at 70–98% depth. It is exported as its own key and
-              composed back into `sensors.barrierTwist.body` on the deep dive,
-              so there is exactly ONE literal with two render sites and they
-              cannot drift. That is the same sanctioned pattern the old
-              highlight band used — the band is gone, this is where the line
-              surfaces now, and the two sites are on different pages so no
-              reader meets it twice in one scroll. */}
           {!deep && (
             <blockquote className="ssc__payoff">
               <p className="ssc__payoff-body">{waveformPayoff}</p>
-              <p className="mono ssc__payoff-src">Calibrate Sensors — what replaces the numbers</p>
+              <p className="mono ssc__payoff-src">Calibrating Sensors Puzzle</p>
             </blockquote>
           )}
-
-          {!deep && <p className="ssc__close">{minigames.close}</p>}
         </article>
       )}
 
@@ -902,23 +685,6 @@ export default function ShatteredSkiesCoop({
         </article>
       )}
 
-      {/* ================= knowledge-gated exploration · POINTER =================
-          The access rule is designed on the planetary system, where the orbits
-          it is about are actually drawn. This is a signpost, not a section: no
-          rule, no worked example, no design point. Growing it back into a block
-          would put the same argument on the site twice, in the half of it with
-          no diagram.
-
-          S1: MAIN PAGE ONLY. The orrery it points at is on the main page (hard
-          constraint S5 — selecting a world scrolls to its dossier card through
-          a DOM query, so the two cannot be separated). Rendering this on the
-          deep dive as well put the same three sentences on both pages, which
-          is the one thing the split exists to prevent; the deep dive already
-          carries four links back to the main page and needs no fifth.
-
-          The href still comes from `mainHref(anchor, variant)` rather than
-          being typed, because that is the guarantee, not a convenience — if
-          this ever does render from the subpage it will be correct. */}
       {showRepairs && !deep && (
         <aside className="ssc__pointer" aria-label={gatingPointer.label}>
           <p className="ssc__pointer-tag">{gatingPointer.label}</p>
@@ -1232,18 +998,12 @@ export default function ShatteredSkiesCoop({
           color: var(--ssc-quiet);
         }
 
-        .ssc__lead,
-        .ssc__close {
+        .ssc__lead {
           margin: 0;
           max-width: 46rem;
           font-size: 0.98rem;
           line-height: 1.8;
           color: var(--color-moonlight);
-        }
-        .ssc__close {
-          padding-top: 1rem;
-          border-top: 1px solid var(--ssc-edge);
-          color: var(--ssc-quiet);
         }
 
         /* ---- a minigame ---- */

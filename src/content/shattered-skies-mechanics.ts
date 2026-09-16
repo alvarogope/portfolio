@@ -359,7 +359,7 @@ export const ship: ShipSection = {
   ],
 
   repairs: {
-    label: "Repair under fire",
+    label: "Repair",
     body:
       "The ateroids and space hazards can damage the ship, which then has to be repaired. The repair becomes " +
       "a minigame, so players can still navigate.",

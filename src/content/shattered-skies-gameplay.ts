@@ -1,154 +1,72 @@
-/**
- * Shattered Skies — co-op design: the depth behind the mechanics section.
- *
- * WHAT THIS FILE OWNS. `shattered-skies-mechanics.ts` introduces the ship, the
- * communication barrier and the traversal — it names the three repair
- * minigames in one pointer line and stops. This file is where those three are
- * actually taken apart, plus the general co-op puzzle pattern and the
- * knowledge-gated exploration rule. If a sentence here is also in the
- * mechanics file, one of the two is wrong: the mechanics file states the
- * system, this one states how the system splits the players.
- *
- * ATTRIBUTION. Shattered Skies is a team project (team of five) and my role on
- * it was Systems & World Designer. Everything described here was CO-DESIGNED
- * with the team. `roleNote` is rendered visibly at the head of the section and
- * says so in those words. Keep every heading and design note in that register;
- * nothing in this file should read as solo authorship.
- *
- * THE THESIS. Each of the three minigames is the same design move in a
- * different material: SPLIT the knowledge or the control between the two
- * players, then force them to bridge the split through a channel that has been
- * deliberately broken. What comes back across the gap is not information — it
- * is a private language the pair invents under time pressure. `thesis` states
- * that once, and every block below is an instance of it. A minigame that stops
- * being an instance of it is a minigame that has drifted.
- *
- * THE SPLIT IS THE DATA. Every minigame carries a `sides` pair, and each side
- * declares exactly what it SEES and what it CONTROLS. The diagrams are drawn
- * from those two fields, and so are their screen-reader descriptions, so the
- * picture and the accessible text can never disagree about who knows what.
- *
- * NO PLANETS HERE. `shattered-skies-planets.ts` owns the five worlds. The
- * knowledge-gating block below only points at that system — it explains the
- * rule that governs access to it and deliberately describes no planet.
- *
- * Pronouns: the two hosts are aliens and the game never fixes their gender.
- * Aevi and Drayk are written without gendered pronouns, as in the other
- * Shattered Skies content files.
- */
-
-/* ---- shared shapes ------------------------------------------------------ */
-
-/** Heading furniture, matched to the mechanics section so the page reads as one document. */
 export interface BlockMeta {
   id: string;
-  /** Mono index on the block's rule, e.g. "01". */
   order: string;
-  /** Short mono kicker over the title. */
   kicker: string;
   title: string;
-  /** One line under the title: the claim, not the description. */
   standfirst: string;
 }
 
-/** A labelled note — used for the asymmetry, the barrier twist and the failure state. */
 export interface Beat {
   label: string;
   body: string;
 }
 
-/* ---- attribution -------------------------------------------------------- */
-
-
-/* ---- the thesis ---------------------------------------------------------
-   One claim. The three minigames are three materials for it. */
 
 export interface Thesis {
   tag: string;
   body: string;
   note: string;
-  /** The three moves, named, so the reader can spot them in each block. */
   moves: readonly Beat[];
 }
 
 export const thesis: Thesis = {
-  tag: "The throughline",
+  tag: "The main design",
   body:
-    "Every minigame on the ship splits something in half — the knowledge, or the control — and " +
-    "gives one half to each player. Neither half is a game on its own. The only way to put them " +
-    "back together is to talk, and talking is the one thing Shattered Skies has already taken " +
-    "away.",
+    "The minigames in the ship are always divided into two. Knowledge and control, giving one to each player, " +
+    "and expecting them to colaborate without talking with each other.",
   note:
-    "Which is why the minigames are not skill tests. The difficulty is never in the maze, the " +
-    "weld or the waveform; it is in the sentence you cannot say. So players stop trying to say " +
-    "it — a rhythm hammered out, a syllable at a pitch that means left, two thumps for stop — " +
-    "and the pair end up running a vocabulary nobody on the team designed.",
+    "The puzzles are not a skill test, they are a communication test. The difficulty comes from the lack of " +
+    "conversation that they could have. The way they communicate is completely up to the players and the way " +
+    "they have to express ideas. The time they take to solve them depend fully on them.",
   moves: [
     {
-      label: "Split",
+      label: "Division",
       body:
-        "One player is given the picture, the other is given the hands. Each is useless with what " +
-        "they were given.",
+        "One player is given the whole pciture of the puzzle, while the other has to interact with it.",
     },
     {
-      label: "Distort",
+      label: "Distortion",
       body:
-        "The only channel between them runs through the voice filter, so the obvious instruction " +
-        "— “left”, “now”, “zero point four” — arrives as noise.",
+        "While this happens, the voice channel is being distorted so the instructions feels like noise.",
     },
     {
-      label: "Improvise",
+      label: "Improvisation",
       body:
-        "The pair invent their own signals to carry it instead, and get measurably faster at the " +
-        "minigame as that private language matures.",
+        "The pair will have to make up their own signals and use common sense to complete the minigames",
     },
   ],
 };
 
-/* ==========================================================================
-   THE THREE MINIGAMES
-   ==========================================================================
-   Order is deliberate: split knowledge (the maze), split control (the welder),
-   then both at once (the waveform). Each block states the same four things in
-   the same order — premise, split, barrier, failure — so a reader learns the
-   shape once. */
-
-/** Which half of the split a side holds. Drives the diagram's tone. */
 export type SideRole = "sees" | "controls" | "both";
 
 export interface MinigameSide {
   id: "a" | "b";
-  /** Short human name for this seat, e.g. "The blind hand". */
   label: string;
   role: SideRole;
-  /** What this player can see. Rendered in the diagram and in its description. */
   sees: string;
-  /** What this player can act on. Rendered in the diagram and in its description. */
   controls: string;
-  /**
-   * The short mono line printed inside this side's panel in the diagram.
-   * `sees`/`controls` are full sentences and do not fit in an SVG panel, so
-   * the compressed version lives here rather than as copy in the component.
-   */
   chip: string;
 }
 
-/** Selects which figure the component draws. Geometry stays in the component. */
 export type DiagramVariant = "maze" | "welder" | "waveform";
 
 export interface DiagramSpec {
   variant: DiagramVariant;
-  /** The SVG <title>. */
   title: string;
-  /** The SVG <desc>: who sees what, who controls what, and what sits between them. */
   summary: string;
-  /** The label in the gap of the broken channel arc. */
   barrier: string;
-  /** Small mono line under the drawing: what failure costs. */
   stakes: string;
-  /** The two named axes a figure draws as dials. Waveform only. */
   axes?: readonly [string, string];
-  /** Caption for an object both players act on. Welder only. */
   sharedLabel?: string;
 }
 
@@ -156,20 +74,14 @@ export interface Minigame {
   id: string;
   order: string;
   name: string;
-  /** Mono line: the system and its shape in a breath. */
   tag: string;
   standfirst: string;
-  /** What the minigame is, plainly. */
   premise: string;
   sides: readonly [MinigameSide, MinigameSide];
-  /** The design move: what got split, and why that split and not another. */
   split: Beat;
-  /** The twist: what the broken channel does to the split. */
   barrierTwist: Beat;
-  /** What losing costs, and what that pressure is for. */
   failure: Beat;
   diagram: DiagramSpec;
-  /** The line that hands this block back to the thesis. */
   designPoint: string;
 }
 
@@ -177,34 +89,21 @@ export interface MinigameSection {
   meta: BlockMeta;
   lead: string;
   games: readonly Minigame[];
-  close: string;
 }
 
-/**
- * The payoff sentence of the waveform repair, lifted out as its own key.
- *
- * The ownership map calls the paragraph it sits in "the best paragraph on the
- * page", and the reading-load audit measures it landing at 70-98% page depth -
- * past the point any first-pass reader reaches. The highlight band at the top
- * of the page quotes this line and links down here.
- *
- * It is exported rather than retyped up there so there is still exactly ONE
- * copy of the sentence: `barrierTwist.body` below composes it back into the
- * paragraph, which renders unchanged. Edit it here and both move together.
- */
 export const waveformPayoff =
-  "Pairs end up humming the target: louder for amplitude, faster for frequency, the filter " +
-  "mangling the timbre but leaving the shape.";
+  "The reader in this last case would have to hum for the target. Maybe louder for amplitude and " +
+  "faster for frequency, but never talking.";
 
 export const minigames: MinigameSection = {
   meta: {
     id: "minigames",
-    order: "01",
-    kicker: "The centrepiece",
-    title: "Three repairs, three splits",
+    order: "1",
+    kicker: "The core puzzles",
+    title: "The Ship Repairs",
     standfirst:
-      "The ship breaks constantly, and every repair is built the same way: cut the problem in " +
-      "half, give each player one half, and put a broken radio between them.",
+      "When the ship is damaged, it has to be repaired through the same pattern: the problem is divided, " +
+      "each player gets one half and the voice chat distortion between them.",
   },
 
   lead:
@@ -218,12 +117,12 @@ export const minigames: MinigameSection = {
     /* -------------------------------------------------------------------- */
     {
       id: "circuit",
-      order: "01",
+      order: "1a",
       name: "Circuit Realignment",
-      tag: "Power · 8×8 grid maze · knowledge split",
+      tag: "Power · 8x8 grid maze · knowledge division",
       standfirst:
-        "One player drives a power node through a maze they cannot see. The other can see the " +
-        "maze and nothing else.",
+        "One of the players has to drive a power node through an invisible maze for them. The other player can " +
+        "see it, but nothing else.",
       premise:
         "A dead system comes back on line when its power node is walked across an eight-by-eight " +
         "grid and reconnected to the source. The grid is a maze — walls between cells, one route " +
@@ -231,19 +130,19 @@ export const minigames: MinigameSection = {
       sides: [
         {
           id: "a",
-          label: "The blind hand",
+          label: "The blind",
           role: "controls",
-          sees: "The node, and the empty grid it sits on. No walls, no source.",
-          controls: "The node — one cell per input, in any of four directions.",
-          chip: "Controls the node · no walls, no source",
+          sees: "The node and the empty grid.",
+          controls: "The node and the movement",
+          chip: "Controlling the node",
         },
         {
           id: "b",
           label: "The guide",
           role: "sees",
-          sees: "The whole maze: every wall, the source, and where the node currently is.",
-          controls: "Nothing. Not one cell of it.",
-          chip: "Sees every wall · moves nothing",
+          sees: "The whole maze and where the node is.",
+          controls: "Nothing.",
+          chip: "Sees walls but cannot move",
         },
       ],
       split: {
@@ -271,7 +170,7 @@ export const minigames: MinigameSection = {
       },
       diagram: {
         variant: "maze",
-        title: "Circuit Realignment — the knowledge split",
+        title: "Puzzle Sample",
         summary:
           "Two panels side by side, joined at the top by a broken arc labelled “distorted voice”. " +
           "On the left, the blind player's screen: an empty eight-by-eight lattice with the power " +
@@ -290,11 +189,11 @@ export const minigames: MinigameSection = {
     /* -------------------------------------------------------------------- */
     {
       id: "hull",
-      order: "02",
-      name: "Seal Hull Breach",
-      tag: "Hull · one welder · control split",
+      order: "2",
+      name: "Seal The Breach",
+      tag: "Hull repair · control split",
       standfirst:
-        "One welder, two players, two axes. Neither of them can move it where it needs to go.",
+        "Neither of the players can move to weld where it needs.",
       premise:
         "A crack opens in the hull and has to be welded shut in zero-g, following the shape of the " +
         "break from one end to the other. There is a single welder, and its two axes of movement " +
@@ -304,16 +203,16 @@ export const minigames: MinigameSection = {
           id: "a",
           label: "Horizontal",
           role: "controls",
-          sees: "The plate and the crack — the same view the other player has.",
-          controls: "The welder's left–right movement. Only left and right.",
+          sees: "The plate and the crack.",
+          controls: "The welder's horizontal movement",
           chip: "Left ↔ right only",
         },
         {
           id: "b",
           label: "Vertical",
           role: "controls",
-          sees: "The plate and the crack — the same view the other player has.",
-          controls: "The welder's up–down movement. Only up and down.",
+          sees: "The plate and the crack.",
+          controls: "The welder's vertical movement.",
           chip: "Up ↕ down only",
         },
       ],
@@ -343,7 +242,7 @@ export const minigames: MinigameSection = {
       },
       diagram: {
         variant: "welder",
-        title: "Seal Hull Breach — the control split",
+        title: "Puzzle Sample",
         summary:
           "One hull plate in the centre with a jagged crack across it and a single welder sitting " +
           "on the crack. From the left, a cyan axis line runs in to the welder and continues " +
@@ -353,8 +252,8 @@ export const minigames: MinigameSection = {
           "an arc joining the two players' control blocks breaks in the middle, where the label " +
           "“distorted voice” sits.",
         barrier: "Distorted voice",
-        stakes: "Off the damaged section = the weld resets · the hull is imploding while you work",
-        sharedLabel: "One welder, one crack",
+        stakes: "Off the damaged section = the puzzle resets · the hull is imploding while this goes on",
+        sharedLabel: "One welder for one crack",
       },
       designPoint:
         "Two people operating one tool on different axes is cooperation you can feel in your " +
@@ -364,12 +263,11 @@ export const minigames: MinigameSection = {
     /* -------------------------------------------------------------------- */
     {
       id: "sensors",
-      order: "03",
-      name: "Calibrate Sensors",
-      tag: "Navigation · waveform · knowledge and control split",
+      order: "3",
+      name: "Calibratig Sensors",
+      tag: "Navigation · waveform · knowledge and control division",
       standfirst:
-        "One player is shown the wave to match. The other holds the only two dials that can make " +
-        "it — and cannot be told a number.",
+        "One player is shown a wave to match. The other holds the only two controllers.",
       premise:
         "Navigation comes back when the sensor output is matched to a target waveform. Two " +
         "properties have to line up: amplitude and frequency. There is one readout of the target " +
@@ -379,17 +277,17 @@ export const minigames: MinigameSection = {
           id: "a",
           label: "The reader",
           role: "sees",
-          sees: "The target waveform, live — its height and its pitch.",
-          controls: "Nothing. The dials are not on this screen.",
-          chip: "Sees the target · no dials",
+          sees: "The target wave.",
+          controls: "Nothing.",
+          chip: "Sees the target",
         },
         {
           id: "b",
           label: "The hands",
           role: "controls",
-          sees: "Only the wave they are currently producing, with nothing to compare it against.",
-          controls: "Amplitude and frequency, as two continuous dials.",
-          chip: "Holds both dials · no target",
+          sees: "The wave currently producing",
+          controls: "Amplitude and frequency.",
+          chip: "Controls both dials",
         },
       ],
       split: {
@@ -420,7 +318,7 @@ export const minigames: MinigameSection = {
       },
       diagram: {
         variant: "waveform",
-        title: "Calibrate Sensors — the split, both halves",
+        title: "Puzzle Sample",
         summary:
           "Two panels side by side, joined at the top by a broken arc labelled “distorted voice”. " +
           "On the left, the reader's screen: a scope showing the target waveform, with no controls " +
@@ -437,19 +335,12 @@ export const minigames: MinigameSection = {
         "discover they were carrying the instrument all along.",
     },
   ],
-
-  close:
-    "Split the knowledge, split the control, split both — and in all three cases the missing piece " +
-    "has to cross a channel that will not carry it. The pair stop trying to send information and " +
-    "start sending signals, and the private code they end up with is the actual reward. The " +
-    "repaired ship is a receipt.",
 };
 
 /* ==========================================================================
-   THE CO-OP PUZZLE PATTERN — compact
+   THE CO-OP PUZZLE PATTERN
    ==========================================================================
-   The general shape the planetside puzzles follow. Deliberately short: it is a
-   pattern, not a catalogue, and the Symbiochord is the part worth the words. */
+*/
 
 export interface PuzzleStep {
   id: string;
@@ -472,10 +363,9 @@ export const puzzlePattern: PuzzleSection = {
     id: "puzzle-pattern",
     order: "02",
     kicker: "The pattern",
-    title: "The shape every puzzle takes",
+    title: "The Puzzle Structure",
     standfirst:
-      "One reachable object, one unreachable player, and a parasite that punishes distance. Almost " +
-      "every puzzle on the planets is a variation on five steps.",
+      "Puzzles cannot be solved by players individually. The way they were designed follow these ways: ",
   },
 
   lead:
@@ -488,47 +378,42 @@ export const puzzlePattern: PuzzleSection = {
   steps: [
     {
       id: "gap",
-      order: "01",
-      label: "An area only one of them can reach",
+      order: "1",
+      label: "An area only one  can get to",
       body:
-        "The puzzle opens with an object — a lever, a socket, a console — behind a gap that suits " +
-        "exactly one of the two bodies. Which one it suits is the puzzle's first sentence.",
+        "There is an object, whether is a lever, a socket or a console, and a gap that can only be jumped " +
+        "by one of the characters. The solution is whoever can jump that far.",
     },
     {
       id: "interact",
-      order: "02",
-      label: "One interacts, the other solves",
+      order: "2",
+      label: "One interacts, to let the other pass",
       body:
-        "The player who got in holds the object. They cannot solve it. The solution is in the " +
-        "other player's movement — where they stand, what they block, when they cross — so the " +
-        "one with their hands on the mechanism is the one with the least control over it.",
+        "The player that can reach the object cannot solve it. The solution relies on the other player's " +
+        "movement when the first triggers a bridge or a platform.",
     },
     {
       id: "leash",
-      order: "03",
-      label: "The Symbiochord limits the distance",
+      order: "3",
+      label: "The Symbiochord limiting the distance",
       body:
-        "The parasite that chains the two hosts together does not stretch for free. Pulling apart " +
-        "to reach the object strains it, and a strained Symbiochord puts both lives at risk — so " +
-        "the distance the puzzle demands is itself part of its cost.",
+        "The parasite lets th character distance from each other in a limited way. If they are too " +
+        "far apart, they die. Some puzzles' solutions put this into risk and positioning is key.",
     },
     {
       id: "exposure",
-      order: "04",
-      label: "The one holding the object is exposed",
+      order: "4",
+      label: "Holding the object is exposes",
       body:
-        "Being at the mechanism usually means being unable to defend yourself. Time stops being " +
-        "abundant. The pair have to decide how long the exposed player can afford to stay there, " +
-        "and they have to decide it without discussing it.",
+        "Interacting usually means vulnerability while this is happening. The players have to decide " +
+        "how long this goes on so the players don't die.",
     },
     {
       id: "resolve",
-      order: "05",
-      label: "The outcome is shared",
+      order: "5",
+      label: "Shared solution",
       body:
-        "The puzzle resolves for both of them or neither of them. There is no version where one " +
-        "player banks a reward and the other does not — which is the rule the Symbiochord already " +
-        "applies to damage, applied to progress.",
+        "Puzzles require both to be solved. If one of them dies while solving it, they both do.",
     },
   ],
 
@@ -544,52 +429,13 @@ export const puzzlePattern: PuzzleSection = {
   },
 
   designPoint:
-    "The pattern makes the leash the real puzzle piece. Every lever is a question about how far " +
-    "apart the two of you are willing to be.",
+    "This is the elements that makes the puzzle design. Players will have to consider every aspect of this " +
+    "to solve them.",
 };
 
-/* ==========================================================================
-   KNOWLEDGE-GATED EXPLORATION — MOVED
-   ==========================================================================
-   This section used to describe the access rule in full: free exploration from
-   the first hour, gated by comprehension rather than keys, with the cave whose
-   door is an orbit as the worked example.
-
-   It now lives with the planetary system further UP the page
-   (`shattered-skies-planets.ts` → `knowledgeGate`, plus `Planet.access` on
-   every world), because that is where the diagram is. The rule is an argument
-   about orbits — a route that opens as a moon travels its arc, a surface
-   gravity you have to out-engineer to leave — and it was being made three
-   thousand words away from the only picture that can show it. The orrery and
-   the dossier own it now: the rule is stated once above the cards, drawn once
-   as an alignment figure, and then every world states its own gate.
-
-   What is left here is `gatingPointer` — one line, no rule, no example. If a
-   description of the access model ever reappears in this file, it is in the
-   wrong one. */
-
-/**
- * S1 — THIS POINTER IS NOW CROSS-PAGE, AND THAT IS WHY IT CARRIES A LINK.
- *
- * It used to say "further up this page", which was true while the co-op
- * section and the planetary system were both on `/shattered-skies`. After the
- * split the co-op section's FULL copy renders on `/shattered-skies/world`,
- * while the orrery and the dossier stay on the main page — the hard constraint
- * S5, because selecting a world scrolls to its dossier card through a DOM
- * query and the two cannot be separated.
- *
- * So the same sentence is read from two different pages, and "further up this
- * page" is wrong on one of them. The body no longer claims a direction, and the
- * href is built by `mainHref('worlds', from)` at the render site, which knows
- * which page it is on. Never hardcode this fragment.
- */
 export const gatingPointer = {
   label: "Where access is designed",
   body:
-    "Access to the five worlds is gated by knowledge rather than by keys. That rule belongs to " +
-    "the planetary system — stated there, and drawn on the orbits it is actually about. The " +
-    "puzzles here are what happens once a pair is standing somewhere; the system decides where " +
-    "they can usefully stand.",
-  /** The link text. The address is resolved by the component, not by this file. */
-  linkLabel: "The world & the five worlds",
+    "The progression in Shattered Skies depend mainly on what the players know about this world. ",
+  linkLabel: "The World",
 } as const;

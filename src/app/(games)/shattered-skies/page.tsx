@@ -211,8 +211,8 @@ export default function ShatteredSkiesPage() {
           <div style={GAP} id={mainAnchors.coop}>
             <SectionHeading kicker="Co-op Design" title={ch.coop.title} />
             <p style={LEAD}>
-              How the cooperation actually works, one system at a time: what each minigame takes
-              away from which player, and what the pair have to invent to get it back.
+              How the main mechanics work. How each player interact with the minigame
+              and the way the were designed to enhance cooperation.
             </p>
             <ShatteredSkiesCoop variant="main" />
 
@@ -222,10 +222,11 @@ export default function ShatteredSkiesPage() {
                 items={[
                   {
                     src: "/images/shattered-skies/spaceship.png",
-                    label: "The ship, annotated",
+                    label: "The ship sketch",
                     alt: "Hand-annotated schematic of the ship from above, marking the weapons, defence, radar, steering, landing gear, resource collection and the two entry points.",
                     caption:
-                      "The working schematic. Every subsystem the repair minigames take away from one player and hand to the other is named and placed here — weapons, defence, radar, steering, landing gear, resource collection, and the two ways in.",
+                      "This is a sketch of the ship we made for the developers to have a visual representation. Everything is annotated: " +
+                      "where the weapons, defence, radar, steering, landing gear and resource management are located in the ship",
                   },
                 ]}
               />
@@ -233,7 +234,7 @@ export default function ShatteredSkiesPage() {
 
             <div style={{ marginTop: "2rem" }}>
               <RampLink href={deepDiveHref("repairs")}>
-                Each repair taken apart, and the five-step pattern every planetside puzzle follows
+                The repairs and the five-step pattern the puzzle follows
               </RampLink>
             </div>
           </div>
@@ -243,8 +244,9 @@ export default function ShatteredSkiesPage() {
           <div style={{ ...GAP, maxWidth: "34rem" }}>
             <CtaPanel
               kicker="The deep dive"
-              title="The World, the Story and the Silence"
-              body="The other half, whole and unsummarised: the full narrative and the three endings two sealed choices pick between, the world of Shatterstorm, and the reasoning behind every system built to stop two players understanding each other."
+              title="The World & the Story"
+              body=
+                "The worldbuilding and the main story unsummarsed. The full narrative, the full endings and the Shatterstorm."
               href={deepDivePath}
               linkLabel="Read the deep dive"
             />

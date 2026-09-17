@@ -369,10 +369,7 @@ export const puzzlePattern: PuzzleSection = {
   },
 
   lead:
-    "The planetside puzzles are not a set of one-offs; they are one loop, re-dressed. Writing the " +
-    "loop down as a pattern was how the team kept five worlds' worth of puzzles feeling like the " +
-    "same game — and it is also what made them fast to prototype, because a new puzzle is a new " +
-    "answer to step two rather than a new design.",
+    "",
 
   stepsLabel: "The loop",
   steps: [
@@ -420,12 +417,9 @@ export const puzzlePattern: PuzzleSection = {
   symbiochord: {
     label: "Why the Symbiochord is in the puzzle design at all",
     body:
-      "Shared fate is usually a story device — two characters bound together, mentioned in " +
-      "cutscenes. Wiring it into the puzzle loop is what stops it being decorative. Because the " +
-      "chain has a length and a consequence, every puzzle becomes a negotiation about distance: " +
-      "how far you are willing to be pulled, how long you are willing to hold there, and how much " +
-      "you trust the person deciding it. Cooperation is not the intended solution to these " +
-      "puzzles. It is the only state in which either player is alive to attempt one.",
+      "Connects the story to the narrative direcctly. This way players stop thinking just about " +
+      "how to solve a puzzle by themselves, and think as a team that cannot separate. This also wires " +
+      "them together in a way that they know, all the time, that they cannot survive without the other.",
   },
 
   designPoint:

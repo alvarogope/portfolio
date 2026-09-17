@@ -57,7 +57,7 @@ export const communication: CommunicationSection = {
     id: "communication",
     order: "1",
     kicker: "The Main Mechanic",
-    title: "Characters with Difference Language",
+    title: "Characters with a Different Language",
     standfirst:
       "Drayk and Aevi do not share the same language and we had to make that miscommunication " +
       "exist within the game.",
@@ -78,20 +78,16 @@ export const communication: CommunicationSection = {
         "The only thing that players can receive is the tone, but not the words.",
       reasoning: {
         decision:
-          "Break the voice channel rather than remove it, and introduce it at the exact moment " +
-          "the two players first meet.",
+          "It breaks the voice channel and it is present since the beginning of the game.",
         why:
-          "“Two species who cannot understand each other” is a premise until a system " +
-          "makes it true. Cutting voice entirely would have made the barrier invisible — players " +
-          "would simply have typed elsewhere and forgotten the fiction. Distorting it keeps the " +
-          "person audible and the meaning gone, which is the actual experience the story is " +
-          "about. It is also what protects the dual narrative: each player is given story the " +
-          "other cannot receive, and the channel between them is too degraded to hand it over.",
+          "These two characters cannot understand each other. If the voice chat was completely removed the experience " +
+          "would have been less genuine, but we wanted to create the sensation that the characters are able to communicate " +
+          "but they simply cannot understand each other at all. Adding the distortion just keeps the character audible but " +
+          "without any meaning, adding up to the kind of story we were trying to tell. This also protects the dual narrative, " +
+          "as it gives the players different stories that they cannot share through any channel.",
         impact:
-          "Players stop talking and start watching. Tone carries and meaning does not, so intent " +
-          "has to be read off behaviour — where a partner is looking, what they are standing " +
-          "next to, whether they came back. Mistrust is the resting state of the relationship, " +
-          "and anything the players build on top of it is built out of actions.",
+          "We noticed that the players focused on playing and not on talking. Voice could have a specific tone but " +
+          "does not have any meaning at all. This builds-up mistrust or the opposite when reading the others behaviour.",
       },
     },
     {
@@ -105,49 +101,42 @@ export const communication: CommunicationSection = {
         "exists outside the game to keep the intention of the whole design.",
       reasoning: {
         decision:
-          "Write a rule the software cannot enforce, and count it as part of the design rather " +
-          "than as etiquette.",
+          "For experiencing the game as it was designed, we asked the players to not talk outside of the sessions.",
         why:
-          "Every in-game barrier we built could be walked around by two people on a shared call " +
-          "or sitting on the same sofa. The ambiguity is only ever as strong as the quietest " +
-          "channel between the players, so the design has to reach past the executable. Naming " +
-          "the rule explicitly — the way a tabletop game names its social contract — turns the " +
-          "obvious exploit into something players decline to do on purpose.",
+          "The game design decisions were focused on miscommunication and this is also part of thhe story. " +
+          "We expect the players to respet these rules. Shattered Skies could have shared a chat and make it as " +
+          "most of every co-op game, but the ambiguity is what this game was build from and every decision was taken " +
+          "towards that direction. Player can break it, but they will not experience the game properly.",
         impact:
-          "The players become co-authors of the barrier. Agreeing to stay in the dark is itself " +
-          "the first cooperative act of the session, and it means the suspicion in the last hour " +
-          "of the game is real suspicion: nobody has been told what the other one is playing for.",
+          "Players become part of the barrier the games require. This is the first cooperative mechanic. " +
+          "Eventually, this could grow in them as suspicion or trust.",
       },
     },
     {
       id: "gestures",
       order: "3",
-      label: "Gestures that get lost in translation",
+      label: "Gestures get lost in translation",
       tag: "Some render differently per player",
       body:
         "Simple gestures, but some render differently to each player, so even body " +
         "language is lost in translation.",
       reasoning: {
         decision:
-          "Give players a non-verbal vocabulary — then break part of it too, so the same signal " +
-          "does not always mean the same thing on both screens.",
+          "This give the player a non-verbal expression, but for each character means different things.",
         why:
-          "A clean gesture wheel would have quietly replaced the language we had just taken away, " +
-          "and the barrier would have lasted about ten minutes. Mismatching some of the gestures " +
-          "keeps the divide alive through the workaround: players cannot trust the vocabulary, " +
-          "only the conventions they establish and confirm through use.",
+          "We thought that different cultures could have different meaning for each gestures, this could be " +
+          "part of the miscommunication system. This doesn't work in all gestures since sometimes players need " +
+          "to know the minimum to understand each other.",
         impact:
-          "Two players end up with a private pidgin nobody designed — a jump that means " +
-          "“now”, a repeated point that means “not that one” — and the " +
-          "puzzles make it load-bearing. When a plan fails, the failure is legible: the signal " +
-          "did not mean on your screen what it meant on mine.",
+          "Players ended up sharing a gestures languge for themsleves and communicate without talking. " +
+          "Through try an error they were able to relate actions to gestures.",
       },
     },
     {
       id: "telepathy",
       order: "4",
       label: "Telepathy window",
-      tag: "5 seconds with the voce filter off",
+      tag: "5 seconds with the voice filter off",
       emphasis: "payoff",
       body:
         "This resource grants five seconds with the filter off and voice chat perfectly clear. It is a rare one. " + 
@@ -155,20 +144,16 @@ export const communication: CommunicationSection = {
         "Players can use this for lying too. Linking this to the Lie ending.",
       reasoning: {
         decision:
-          "Make clarity a scarce collectible rather than a permanent unlock, cap it at five " +
-          "seconds, and wire what is said inside it into the ending the players get.",
+          "We wanted to give the players at least one chance to talk with each other before the ending " +
+          "and even relate to it.",
         why:
-          "If clarity is free it stops being interesting the moment it arrives, and the barrier " +
-          "the rest of the game built becomes a tutorial the players graduated from. Rationing " +
-          "it turns speech itself into a decision — what is worth the window? — and connecting " +
-          "it to the ending is what makes honesty a mechanic instead of a mood. It is the one " +
-          "moment where the two players can properly lie to each other, which is only possible " +
-          "because everything else in the game made lying impossible.",
+          "If talking is constant, it stops being a design decision that was set at the tutorial. " +
+          "This unique opportunity turns it into a great decision for the players: what is worth " +
+          "saying? Connceting it to the ending is what makes it an interesting mechanic since they " +
+          "can also lie to each other, which was impossible during the game.",
         impact:
-          "Five seconds is a prisoner's dilemma with a countdown on it. Players spend the window " +
-          "on a warning, a plan, a confession — or on a lie that buys them the ending they want. " +
-          "It is the one channel in the game where the words themselves are the mechanic, and " +
-          "the three endings are downstream of it.",
+          "This five seconds of communication becomes a prisoner's dilemma. Players used this window " +
+          "for warning, planning, confession or liying, getting the to the ending they want to get.",
       },
     },
   ],
@@ -321,17 +306,13 @@ export const ship: ShipSection = {
 
   dualControl: {
     decision:
-      "Distribute the ship's functions across stations one player cannot cover, and give the " +
-      "hull real mass so nothing can be fixed instantly.",
+      "The functions of the spaceship are distributed and it has real mass, so it cannot be fixed instantly.",
     why:
-      "A ship one player can fly makes the second player a passenger, and a passenger has no " +
-      "reason to communicate. Spreading the systems out turns every flight into a continuous " +
-      "negotiation of roles, and the inertia puts a deadline on that negotiation — you cannot " +
-      "out-react a bad plan in a ship this heavy.",
+      "Both players have to cooperate even in the most basic movement. Spreading the functions makes the " +
+      "navigation a kind of communication.",
     impact:
-      "Players self-organise into roles, then break their own roles the moment a hazard makes " +
-      "them wrong. The ship is where the pair learn to run a shorthand under pressure, which is " +
-      "the skill the planets below spend the rest of the game testing.",
+      "Players ended up auto-organising in roles and then when the ship got damaged, they would change them. " +
+      "This kind of cooperation to one of the most important mechanic helped them in future puzzles.",
   },
 
   stationsLabel: "The main ship systems",

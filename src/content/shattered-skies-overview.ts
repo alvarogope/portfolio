@@ -71,24 +71,23 @@ export const worldNotes: readonly WorldNote[] = [
     id: "veynar",
     label: "The Veynar",
     body:
-      "An older civilisation engineered the Symbiochord as an instrument of peace: a parasite " +
-      "that binds two enemies into one life, so neither can harm the other without harming " +
-      "themselves. They went extinct before they ever used it.",
+      "An ancient civilisation that created the Symbiochord as an peace instrument. It is a parasite " +
+      "that ties two enemies, so they cannot harm each other without harming themselves. The Veynar " +
+      "disappeared befire they even used the Symbiochord.",
   },
   {
     id: "shatterstorm",
     label: "The Shatterstorm",
     body:
-      "The catastrophe that ended them released the parasite across the galaxy and broke whole " +
-      "worlds into floating fragments. The five worlds the game is played across are what was " +
-      "left standing.",
+      "The catastrophe that ended the Veynar. This released the Symbiochord across the galaxy and also " +
+      "broke planets into fragments. The planetary system that the game is based on is the only one remaining.",
   },
   {
     id: "hosts",
     label: "The hosts",
     body:
-      "Centuries later the parasite finds two unwilling hosts on opposite sides of a war neither " +
-      "of them started, and forces the peace the Veynar never got to impose.",
+      "Centuries after the Shatterstorm, the parasite finds two hosts on opposite sides a war. " +
+      "It will try to bring the peace that the Veynar did not get.",
   },
 ];
 

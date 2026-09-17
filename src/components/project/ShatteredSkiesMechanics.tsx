@@ -6,7 +6,6 @@ import {
   traversal,
   type Reasoning,
 } from "@/content/shattered-skies-mechanics";
-import type { SsVariant } from "@/content/shattered-skies-deep-dive";
 import { mainHref } from "@/content/shattered-skies-deep-dive";
 import DecodeOnView from "./DecodeOnView";
 import Link from "next/link";
@@ -196,220 +195,170 @@ function DesignPoint({ body }: { body: string }) {
   );
 }
 
-export default function ShatteredSkiesMechanics({
-  variant = "main",
-  block = "all",
-}: {
-  variant?: SsVariant;
-  block?: "all" | "language" | "ship";
-}) {
-  const deep = variant === "deep";
-  const showLanguage = block === "all" || block === "language";
-  const showShip = block === "all" || block === "ship";
-
+export default function ShatteredSkiesMechanics() {
   return (
-    <div className="ssm" data-variant={variant}>
+    <div className="ssm" data-variant="main">
 
-      {/* ---- the spine — MAIN ONLY ---- */}
-      {!deep && (
-        <section className="ssm__spine" aria-labelledby="ssm-spine-title">
-          <p className="mono ssm__spine-tag" id="ssm-spine-title">
-            {spine.tag}
-          </p>
-          <p className="ssm__spine-body">{spine.body}</p>
-          <p className="ssm__spine-note">{spine.note}</p>
-        </section>
-      )}
+      {/* ---- the spine ---- */}
+      <section className="ssm__spine" aria-labelledby="ssm-spine-title">
+        <p className="mono ssm__spine-tag" id="ssm-spine-title">
+          {spine.tag}
+        </p>
+        <p className="ssm__spine-body">{spine.body}</p>
+        <p className="ssm__spine-note">{spine.note}</p>
+      </section>
 
       {/* ================= 01 · communication ================= */}
-      {showLanguage && (
-        <article
-          className="ssm__block ssm__block--signature"
-          aria-labelledby="ssm-communication-title"
-        >
-          {!deep && <BlockHeader {...communication.meta} titleId="ssm-communication-title" />}
-          {deep && (
-            <h3 className="ssm__deep-title" id="ssm-communication-title">
-              {communication.meta.title}
-            </h3>
-          )}
+      <article
+        className="ssm__block ssm__block--signature"
+        aria-labelledby="ssm-communication-title"
+      >
+        <BlockHeader {...communication.meta} titleId="ssm-communication-title" />
 
-          {!deep && <p className="ssm__lead">{communication.lead}</p>}
+        <p className="ssm__lead">{communication.lead}</p>
 
-          <ol className="ssm__channels" data-mode={deep ? "reasoning" : "body"}>
-            {communication.channels.map((c, i) => (
-              <li key={c.id} className="ssm__channel" data-emphasis={c.emphasis ?? "none"}>
-                <div className="ssm__channel-head">
-                  <p className="mono ssm__channel-order" aria-hidden="true">
-                    {c.order}
-                  </p>
-                  <div className="ssm__channel-titles">
-                    <h4 className="ssm__channel-label">{c.label}</h4>
-                    {!deep && <p className="mono ssm__channel-tag">{c.tag}</p>}
-                  </div>
+        <ol className="ssm__channels" data-mode="reasoning">
+          {communication.channels.map((c, i) => (
+            <li key={c.id} className="ssm__channel" data-emphasis={c.emphasis ?? "none"}>
+              <div className="ssm__channel-head">
+                <p className="mono ssm__channel-order" aria-hidden="true">
+                  {c.order}
+                </p>
+                <div className="ssm__channel-titles">
+                  <h4 className="ssm__channel-label">{c.label}</h4>
+                  <p className="mono ssm__channel-tag">{c.tag}</p>
                 </div>
-
-                {!deep && (
-                  <p className="ssm__channel-body">
-                    <DecodeOnView text={c.body} delay={i * 260} />
-                  </p>
-                )}
-
-                {deep && <ReasoningRail reasoning={c.reasoning} />}
-              </li>
-            ))}
-          </ol>
-
-          {/* ---- the figure: telepathy → the endings — MAIN ONLY ---- */}
-          {!deep && (
-            <figure className="ssm__flow" aria-labelledby="ssm-flow-heading">
-              <figcaption className="ssm__flow-cap">
-                <h4 className="ssm__flow-title" id="ssm-flow-heading">
-                  {telepathyFlow.title}
-                </h4>
-                <p className="ssm__flow-sub">{telepathyFlow.caption}</p>
-              </figcaption>
-
-              <div
-                className="ssm__flow-frame"
-                tabIndex={0}
-                role="group"
-                aria-label={telepathyFlow.title}
-              >
-                <TelepathyFigure />
               </div>
-              <p className="mono mono-note ssm__scroll-note">
-                Scroll the flow sideways to follow it →
-              </p>
-              <p className="ssm__flow-note">{telepathyFlow.note}</p>
-            </figure>
-          )}
 
-          {!deep && <p className="ssm__close">{communication.close}</p>}
-        </article>
-      )}
+              <p className="ssm__channel-body">
+                <DecodeOnView text={c.body} delay={i * 260} />
+              </p>
+
+              <ReasoningRail reasoning={c.reasoning} />
+            </li>
+          ))}
+        </ol>
+
+        {/* ---- the figure: telepathy → the endings ---- */}
+        <figure className="ssm__flow" aria-labelledby="ssm-flow-heading">
+          <figcaption className="ssm__flow-cap">
+            <h4 className="ssm__flow-title" id="ssm-flow-heading">
+              {telepathyFlow.title}
+            </h4>
+            <p className="ssm__flow-sub">{telepathyFlow.caption}</p>
+          </figcaption>
+
+          <div
+            className="ssm__flow-frame"
+            tabIndex={0}
+            role="group"
+            aria-label={telepathyFlow.title}
+          >
+            <TelepathyFigure />
+          </div>
+          <p className="mono mono-note ssm__scroll-note">
+            Scroll the flow sideways to follow it →
+          </p>
+          <p className="ssm__flow-note">{telepathyFlow.note}</p>
+        </figure>
+
+        <p className="ssm__close">{communication.close}</p>
+      </article>
 
       {/* ================= 02 · the ship ================= */}
-      {showShip && (
-        <article className="ssm__block" aria-labelledby="ssm-ship-title">
-          {!deep && <BlockHeader {...ship.meta} titleId="ssm-ship-title" />}
-          {deep && (
-            <h3 className="ssm__deep-title" id="ssm-ship-title">
-              {ship.meta.title}
-            </h3>
-          )}
+      <article className="ssm__block" aria-labelledby="ssm-ship-title">
+        <BlockHeader {...ship.meta} titleId="ssm-ship-title" />
 
-          {!deep && (
-            <>
-              <p className="mono ssm__ref">
-                Reference · <span className="ssm__ref-name">{ship.inspiration.ref}</span>
-              </p>
-              <p className="ssm__ref-body">{ship.inspiration.body}</p>
+        <p className="mono ssm__ref">
+          Reference · <span className="ssm__ref-name">{ship.inspiration.ref}</span>
+        </p>
+        <p className="ssm__ref-body">{ship.inspiration.body}</p>
 
-              <p className="ssm__lead">{ship.lead}</p>
+        <p className="ssm__lead">{ship.lead}</p>
 
-              {/* Small on purpose: this is a reference, not the argument. */}
-              <section className="ssm__aside" aria-labelledby="ssm-stations-title">
-                <h4 className="mono ssm__aside-title" id="ssm-stations-title">
-                  {ship.stationsLabel}
-                </h4>
-                <dl className="ssm__stations">
-                  {ship.stations.map((st) => (
-                    <div key={st.id} className="ssm__station">
-                      <dt className="mono ssm__station-name">{st.name}</dt>
-                      <dd className="ssm__station-role">{st.role}</dd>
-                    </div>
-                  ))}
-                </dl>
-              </section>
+        {/* Small on purpose: this is a reference, not the argument. */}
+        <section className="ssm__aside" aria-labelledby="ssm-stations-title">
+          <h4 className="mono ssm__aside-title" id="ssm-stations-title">
+            {ship.stationsLabel}
+          </h4>
+          <dl className="ssm__stations">
+            {ship.stations.map((st) => (
+              <div key={st.id} className="ssm__station">
+                <dt className="mono ssm__station-name">{st.name}</dt>
+                <dd className="ssm__station-role">{st.role}</dd>
+              </div>
+            ))}
+          </dl>
+        </section>
 
-              <section className="ssm__aside" aria-labelledby="ssm-repairs-title">
-                <h4 className="mono ssm__aside-title" id="ssm-repairs-title">
-                  {ship.repairs.label}
-                </h4>
-                <p className="ssm__aside-lead">{ship.repairs.body}</p>
-                <p className="ssm__pointer">
-                  <span className="mono ssm__pointer-tag">In depth</span>
-                  <span className="ssm__pointer-body">
-                    {ship.repairs.pointer}{" "}
-                    <Link className="ssm__pointer-link" href={mainHref("coop", variant)}>
-                      Click here for {ship.repairs.linkLabel}
-                    </Link>
-                  </span>
-                </p>
-              </section>
+        <section className="ssm__aside" aria-labelledby="ssm-repairs-title">
+          <h4 className="mono ssm__aside-title" id="ssm-repairs-title">
+            {ship.repairs.label}
+          </h4>
+          <p className="ssm__aside-lead">{ship.repairs.body}</p>
+          <p className="ssm__pointer">
+            <span className="mono ssm__pointer-tag">In depth</span>
+            <span className="ssm__pointer-body">
+              {ship.repairs.pointer}{" "}
+              <Link className="ssm__pointer-link" href={mainHref("coop")}>
+                Click here for {ship.repairs.linkLabel}
+              </Link>
+            </span>
+          </p>
+        </section>
 
-              <DesignPoint body={ship.designPoint} />
-            </>
-          )}
+        <ReasoningRail reasoning={ship.dualControl} />
 
-          {deep && <ReasoningRail reasoning={ship.dualControl} />}
-        </article>
-      )}
+        <DesignPoint body={ship.designPoint} />
+      </article>
 
       {/* ================= 03 · traversal ================= */}
-      {showShip && (
-        <article className="ssm__block" aria-labelledby="ssm-traversal-title">
-          {!deep && <BlockHeader {...traversal.meta} titleId="ssm-traversal-title" />}
-          {deep && (
-            <h3 className="ssm__deep-title" id="ssm-traversal-title">
-              {traversal.meta.title}
-            </h3>
-          )}
+      <article className="ssm__block" aria-labelledby="ssm-traversal-title">
+        <BlockHeader {...traversal.meta} titleId="ssm-traversal-title" />
 
-          {!deep && (
-            <>
-              <p className="ssm__lead">{traversal.lead}</p>
+        <p className="ssm__lead">{traversal.lead}</p>
 
-              {/* Same two colours the narrative map uses for the two hosts. */}
-              <ul className="ssm__bodies" aria-label={traversal.bodiesLabel}>
-                {traversal.bodies.map((b) => (
-                  <li key={b.id} className="ssm__body" data-host={b.id}>
-                    <p className="ssm__body-name">{b.name}</p>
-                    <p className="mono ssm__body-build">{b.build}</p>
-                    <p className="ssm__body-copy">{b.body}</p>
-                  </li>
-                ))}
-              </ul>
+        {/* Same two colours the narrative map uses for the two hosts. */}
+        <ul className="ssm__bodies" aria-label={traversal.bodiesLabel}>
+          {traversal.bodies.map((b) => (
+            <li key={b.id} className="ssm__body" data-host={b.id}>
+              <p className="ssm__body-name">{b.name}</p>
+              <p className="mono ssm__body-build">{b.build}</p>
+              <p className="ssm__body-copy">{b.body}</p>
+            </li>
+          ))}
+        </ul>
 
-              <section className="ssm__aside" aria-labelledby="ssm-jetpack-title">
-                <h4 className="mono ssm__aside-title" id="ssm-jetpack-title">
-                  {traversal.jetpackLabel}
-                </h4>
-                <p className="ssm__aside-lead">{traversal.jetpackBody}</p>
-              </section>
+        <section className="ssm__aside" aria-labelledby="ssm-jetpack-title">
+          <h4 className="mono ssm__aside-title" id="ssm-jetpack-title">
+            {traversal.jetpackLabel}
+          </h4>
+          <p className="ssm__aside-lead">{traversal.jetpackBody}</p>
+        </section>
 
-              <section className="ssm__highlight" aria-labelledby="ssm-booster-title">
-                <h4 className="ssm__highlight-title" id="ssm-booster-title">
-                  {traversal.booster.label}
-                </h4>
-                <p className="ssm__highlight-body">{traversal.booster.body}</p>
-              </section>
-            </>
-          )}
+        <section className="ssm__aside" aria-labelledby="ssm-jetpack-uses-title">
+          <h4 className="mono ssm__aside-title" id="ssm-jetpack-uses-title">
+            The thruster as an environmental verb
+          </h4>
+          <ul className="ssm__uses">
+            {traversal.jetpackUses.map((u) => (
+              <li key={u.id} className="ssm__use">
+                <p className="mono ssm__use-label">{u.label}</p>
+                <p className="ssm__use-body">{u.body}</p>
+              </li>
+            ))}
+          </ul>
+        </section>
 
-          {deep && (
-            <>
-              <section className="ssm__aside" aria-labelledby="ssm-jetpack-uses-title">
-                <h4 className="mono ssm__aside-title" id="ssm-jetpack-uses-title">
-                  The thruster as an environmental verb
-                </h4>
-                <ul className="ssm__uses">
-                  {traversal.jetpackUses.map((u) => (
-                    <li key={u.id} className="ssm__use">
-                      <p className="mono ssm__use-label">{u.label}</p>
-                      <p className="ssm__use-body">{u.body}</p>
-                    </li>
-                  ))}
-                </ul>
-              </section>
+        <section className="ssm__highlight" aria-labelledby="ssm-booster-title">
+          <h4 className="ssm__highlight-title" id="ssm-booster-title">
+            {traversal.booster.label}
+          </h4>
+          <p className="ssm__highlight-body">{traversal.booster.body}</p>
+        </section>
 
-              <h4 className="ssm__highlight-title">{traversal.booster.label}</h4>
-              <ReasoningRail reasoning={traversal.booster.reasoning} />
-            </>
-          )}
-        </article>
-      )}
+        <ReasoningRail reasoning={traversal.booster.reasoning} />
+      </article>
 
       <style>{`
         .ssm {
@@ -689,22 +638,8 @@ export default function ShatteredSkiesMechanics({
 
            (No backticks in this block: it is inside a template literal.) */
 
-        /* ---- the deep dive's own headings ----
-           On the main page each block gets the full BlockHeader — order,
-           kicker, title, standfirst. On the deep dive the section already has
-           a numbered SectionHeading above it, so a second full header would
-           be two title systems arguing. One line, at h3. */
-        .ssm__deep-title {
-          margin: 0;
-          font-family: var(--font-hero);
-          font-size: 1.35rem;
-          font-weight: 600;
-          letter-spacing: 0.01em;
-          line-height: 1.25;
-          color: var(--color-moonlight);
-        }
-        /* Reasoning mode: no body copy between the label and the rail, so the
-           channels want tighter spacing than the described version. */
+        /* Reasoning mode: the channels carry a body AND a reasoning rail, so
+           they want more room between them than a bare list would. */
         .ssm__channels[data-mode="reasoning"] { gap: 2.25rem; }
 
         /* ---- the figure ---- */

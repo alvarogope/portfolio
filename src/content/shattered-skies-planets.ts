@@ -27,7 +27,7 @@ export interface Planet {
   temperatureC: number;
 
   ecosystem: string;
-  note: string;
+  note?: string;
   access: PlanetAccess;
 
   accent: string;
@@ -136,7 +136,6 @@ export const shatteredSkiesPlanets: readonly Planet[] = [
     temperature: "7 °C",
     temperatureC: 7,
     ecosystem: "Rock beneath water",
-    note: "Tides open and close paths.",
     access: {
       gate: "orbital",
       label: "Tidal window",
@@ -189,13 +188,6 @@ export const knowledgeGate = {
   lead:
     "There are no keys or hidden traversal upgrades in Shattered Skies. What limitates the players' movement is based in what the world functions: " +
     "the orbits of the planets, how they align and how the environment works. This is the key for progression.",
-
-  rule: {
-    label: "Design guideline",
-    body:
-      "The exploration is free from the start. Everything the players need is already working as a system. " +
-      "Progression is limited through learning and understanding.",
-  },
 
   example: {
     label: "How this looks like in gameplay",

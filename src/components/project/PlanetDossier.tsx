@@ -215,10 +215,6 @@ export default function PlanetDossier({
         <div className="pd__gate-body">
           <div className="pd__gate-prose">
             <p className="pd__gate-lead">{knowledgeGate.lead}</p>
-            <div className="pd__gate-beat">
-              <p className="pd__gate-beat-label">{knowledgeGate.rule.label}</p>
-              <p className="pd__gate-beat-body">{knowledgeGate.rule.body}</p>
-            </div>
           </div>
 
           <figure className="pd__gate-fig">
@@ -283,13 +279,6 @@ export default function PlanetDossier({
                 <dd>{p.temperature}</dd>
               </div>
             </dl>
-
-            <div className="pd__eco">
-              <span className="pd__eco-label">Ecosystem</span>
-              <span className="pd__eco-value">{p.ecosystem}</span>
-            </div>
-
-            <p className="pd__note">{p.note}</p>
 
             <div className="pd__access" data-gate={p.access.gate}>
               <p className="pd__access-head">
@@ -418,7 +407,7 @@ export default function PlanetDossier({
            ("17.01 m/s²", "Extremely low") on one line and the rows stay aligned. */
         @media (min-width: 75rem) { .pd__grid { grid-template-columns: repeat(5, 1fr); } }
 
-        /* Subgrid keeps the seven blocks of every card on the same lines across
+        /* Subgrid keeps the five blocks of every card on the same lines across
            a row, so the stats stay scannable even though Tidalor carries an extra
            moon tag. The span has to match the child count: a child past the end of
            a subgrid is placed in an implicit track, which is zero-height here, so
@@ -427,7 +416,7 @@ export default function PlanetDossier({
         .pd__card {
           display: grid;
           grid-template-rows: subgrid;
-          grid-row: span 7;
+          grid-row: span 5;
           row-gap: 1rem;
           align-content: start;
           min-width: 0;
@@ -535,29 +524,6 @@ export default function PlanetDossier({
           font-size: 0.7rem;
           letter-spacing: 0;
           color: var(--pd-accent) !important;
-        }
-
-        .pd__eco { display: grid; gap: 0.35rem; }
-        .pd__eco-label {
-          font-family: var(--font-mono);
-          font-size: 0.7rem;
-          letter-spacing: 0.14em;
-          text-transform: uppercase;
-          color: var(--pd-quiet);
-        }
-        .pd__eco-value {
-          font-family: var(--font-mono);
-          font-size: 0.8rem;
-          line-height: 1.5;
-          color: var(--color-moonlight);
-        }
-
-        .pd__note {
-          margin: 0;
-          font-family: var(--font-body);
-          font-size: 0.92rem;
-          line-height: 1.6;
-          color: var(--pd-prose);
         }
 
         /* ---- knowledge-gated access ----

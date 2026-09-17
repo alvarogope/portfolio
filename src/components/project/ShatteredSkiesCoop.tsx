@@ -10,9 +10,7 @@ import {
   type BlockMeta,
   type Minigame,
   type MinigameSide,
-  waveformPayoff,
 } from "@/content/shattered-skies-gameplay";
-import type { SsVariant } from "@/content/shattered-skies-deep-dive";
 import { mainHref } from "@/content/shattered-skies-deep-dive";
 import InteractiveHint from "./InteractiveHint";
 import Link from "next/link";
@@ -535,167 +533,112 @@ function DesignPoint({ body }: { body: string }) {
 
 /* ---- the section --------------------------------------------------------- */
 
-export default function ShatteredSkiesCoop({
-  variant = "main",
-  block = "all",
-}: {
-  variant?: SsVariant;
-  block?: "all" | "repairs" | "pattern";
-}) {
-  const deep = variant === "deep";
-  const showRepairs = block === "all" || block === "repairs";
-  const showPattern = block === "all" || block === "pattern";
-
+export default function ShatteredSkiesCoop() {
   return (
-    <div className="ssc" data-variant={variant}>
-      {!deep && (
-        <section className="ssc__thesis" aria-labelledby="ssc-thesis-title">
-          <p className="mono ssc__thesis-tag" id="ssc-thesis-title">
-            {thesis.tag}
-          </p>
-          <p className="ssc__thesis-body">{thesis.body}</p>
-          <ol className="ssc__moves">
-            {thesis.moves.map((m, i) => (
-              <li key={m.label} className="ssc__move">
-                <p className="mono ssc__move-label">
-                  <span className="ssc__move-index" aria-hidden="true">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  {m.label}
-                </p>
-                <p className="ssc__move-body">{m.body}</p>
-              </li>
-            ))}
-          </ol>
-          <p className="ssc__thesis-note">{thesis.note}</p>
-        </section>
-      )}
-
-      {!deep && showPattern && (
-        <section className="ssc__pattern" aria-labelledby="ssc-pattern-title">
-          <h4 className="ssc__pattern-title" id="ssc-pattern-title">
-            {puzzlePattern.meta.title}
-          </h4>
-          <p className="ssc__pattern-standfirst">{puzzlePattern.meta.standfirst}</p>
-          <ol className="ssc__pattern-steps">
-            {puzzlePattern.steps.map((st) => (
-              <li key={st.id} className="ssc__pattern-step">
-                <span className="mono ssc__pattern-ord" aria-hidden="true">
-                  {st.order}
+    <div className="ssc" data-variant="main">
+      <section className="ssc__thesis" aria-labelledby="ssc-thesis-title">
+        <p className="mono ssc__thesis-tag" id="ssc-thesis-title">
+          {thesis.tag}
+        </p>
+        <p className="ssc__thesis-body">{thesis.body}</p>
+        <ol className="ssc__moves">
+          {thesis.moves.map((m, i) => (
+            <li key={m.label} className="ssc__move">
+              <p className="mono ssc__move-label">
+                <span className="ssc__move-index" aria-hidden="true">
+                  {String(i + 1).padStart(2, "0")}
                 </span>
-                <span className="ssc__pattern-label">{st.label}</span>
+                {m.label}
+              </p>
+              <p className="ssc__move-body">{m.body}</p>
+            </li>
+          ))}
+        </ol>
+        <p className="ssc__thesis-note">{thesis.note}</p>
+      </section>
+
+      {/* ================= 01 · the puzzle pattern, in full ================= */}
+      <article className="ssc__block ssc__block--compact" aria-labelledby="ssc-pattern-title">
+        <h3 className="ssc__pattern-title" id="ssc-pattern-title">
+          {puzzlePattern.meta.title}
+        </h3>
+        <p className="ssc__pattern-standfirst">{puzzlePattern.meta.standfirst}</p>
+
+        <section className="ssc__aside" aria-labelledby="ssc-loop-title">
+          <h4 className="mono ssc__aside-title" id="ssc-loop-title">
+            {puzzlePattern.stepsLabel}
+          </h4>
+          <ol className="ssc__steps">
+            {puzzlePattern.steps.map((st) => (
+              <li key={st.id} className="ssc__step">
+                <p className="mono ssc__step-order" aria-hidden="true">
+                  {st.order}
+                </p>
+                <div className="ssc__step-copy">
+                  <p className="ssc__step-label">{st.label}</p>
+                  <p className="ssc__step-body">{st.body}</p>
+                </div>
               </li>
             ))}
           </ol>
-          <p className="ssc__pattern-point">{puzzlePattern.designPoint}</p>
         </section>
-      )}
 
-      {/* ================= 01 · the three minigames ================= */}
-      {showRepairs && (
-        <article className="ssc__block" aria-labelledby="ssc-minigames-title">
-          {!deep && <BlockHeader {...minigames.meta} titleId="ssc-minigames-title" />}
-          {deep && (
-            <h3 className="ssc__deep-title" id="ssc-minigames-title">
-              {minigames.meta.title}
-            </h3>
-          )}
+        <section className="ssc__highlight" aria-labelledby="ssc-symbiochord-title">
+          <h4 className="ssc__highlight-title" id="ssc-symbiochord-title">
+            {puzzlePattern.symbiochord.label}
+          </h4>
+          <p className="ssc__highlight-body">{puzzlePattern.symbiochord.body}</p>
+        </section>
 
-          {deep && <p className="ssc__lead">{minigames.lead}</p>}
+        <p className="ssc__pattern-point">{puzzlePattern.designPoint}</p>
+      </article>
 
-          {!deep && (
-            <InteractiveHint
-              what="seat"
-              does="the diagram drops to just that seat's half, and the other goes dark"
-            />
-          )}
+      {/* ================= 02 · the three minigames ================= */}
+      <article className="ssc__block" aria-labelledby="ssc-minigames-title">
+        <BlockHeader {...minigames.meta} titleId="ssc-minigames-title" />
 
-          <ol className="ssc__games" data-mode={deep ? "prose" : "figures"}>
-            {minigames.games.map((g) => (
-              <li key={g.id} className="ssc__game">
-                <header className="ssc__game-head">
-                  <p className="mono ssc__game-order" aria-hidden="true">
-                    {g.order}
-                  </p>
-                  <div className="ssc__game-titles">
-                    <h4 className="ssc__game-name" id={`ssc-game-${g.id}`}>
-                      {g.name}
-                    </h4>
-                    <p className="mono ssc__game-tag">{g.tag}</p>
-                    {!deep && <p className="ssc__game-standfirst">{g.standfirst}</p>}
-                  </div>
-                </header>
+        <p className="ssc__lead">{minigames.lead}</p>
 
-                {deep && <p className="ssc__game-premise">{g.premise}</p>}
+        <InteractiveHint
+          what="seat"
+          does="the diagram drops to just that seat's half, and the other goes dark"
+        />
 
-                {!deep && <Schematic game={g} />}
+        <ol className="ssc__games" data-mode="figures">
+          {minigames.games.map((g) => (
+            <li key={g.id} className="ssc__game">
+              <header className="ssc__game-head">
+                <p className="mono ssc__game-order" aria-hidden="true">
+                  {g.order}
+                </p>
+                <div className="ssc__game-titles">
+                  <h4 className="ssc__game-name" id={`ssc-game-${g.id}`}>
+                    {g.name}
+                  </h4>
+                  <p className="mono ssc__game-tag">{g.tag}</p>
+                </div>
+              </header>
 
-                {deep && (
-                  <>
-                    <BeatRail beats={[g.split, g.barrierTwist, g.failure]} />
-                    <DesignPoint body={g.designPoint} />
-                  </>
-                )}
-              </li>
-            ))}
-          </ol>
+              <p className="ssc__game-premise">{g.premise}</p>
 
-          {!deep && (
-            <blockquote className="ssc__payoff">
-              <p className="ssc__payoff-body">{waveformPayoff}</p>
-              <p className="mono ssc__payoff-src">Calibrating Sensors Puzzle</p>
-            </blockquote>
-          )}
-        </article>
-      )}
+              <Schematic game={g} />
 
-      {/* ================= 02 · the puzzle pattern, in full — DEEP ================= */}
-      {deep && showPattern && (
-        <article className="ssc__block ssc__block--compact" aria-labelledby="ssc-pattern-full">
-          <h3 className="ssc__deep-title" id="ssc-pattern-full">
-            {puzzlePattern.meta.title}
-          </h3>
-          <p className="ssc__lead">{puzzlePattern.lead}</p>
+              <BeatRail beats={[g.split, g.barrierTwist, g.failure]} />
+              <DesignPoint body={g.designPoint} />
+            </li>
+          ))}
+        </ol>
+      </article>
 
-          <section className="ssc__aside" aria-labelledby="ssc-loop-title">
-            <h4 className="mono ssc__aside-title" id="ssc-loop-title">
-              {puzzlePattern.stepsLabel}
-            </h4>
-            <ol className="ssc__steps">
-              {puzzlePattern.steps.map((st) => (
-                <li key={st.id} className="ssc__step">
-                  <p className="mono ssc__step-order" aria-hidden="true">
-                    {st.order}
-                  </p>
-                  <div className="ssc__step-copy">
-                    <p className="ssc__step-label">{st.label}</p>
-                    <p className="ssc__step-body">{st.body}</p>
-                  </div>
-                </li>
-              ))}
-            </ol>
-          </section>
-
-          <section className="ssc__highlight" aria-labelledby="ssc-symbiochord-title">
-            <h4 className="ssc__highlight-title" id="ssc-symbiochord-title">
-              {puzzlePattern.symbiochord.label}
-            </h4>
-            <p className="ssc__highlight-body">{puzzlePattern.symbiochord.body}</p>
-          </section>
-        </article>
-      )}
-
-      {showRepairs && !deep && (
-        <aside className="ssc__pointer" aria-label={gatingPointer.label}>
-          <p className="ssc__pointer-tag">{gatingPointer.label}</p>
-          <p className="ssc__pointer-body">
-            {gatingPointer.body}{" "}
-            <Link className="ssc__pointer-link" href={mainHref("worlds", variant)}>
-              Click here for {gatingPointer.linkLabel}
-            </Link>
-          </p>
-        </aside>
-      )}
+      <aside className="ssc__pointer" aria-label={gatingPointer.label}>
+        <p className="ssc__pointer-tag">{gatingPointer.label}</p>
+        <p className="ssc__pointer-body">
+          {gatingPointer.body}{" "}
+          <Link className="ssc__pointer-link" href={mainHref("worlds")}>
+            Click here for {gatingPointer.linkLabel}
+          </Link>
+        </p>
+      </aside>
 
       <style>{`
         .ssc__pointer {
@@ -732,33 +675,6 @@ export default function ShatteredSkiesCoop({
         .ssc__pointer-link:hover,
         .ssc__pointer-link:focus-visible { text-decoration-color: currentColor; }
 
-        /* ---- the deep dive's own headings ----
-           The subpage puts a numbered SectionHeading above each block, so the
-           full BlockHeader would be two title systems arguing. One line, h3. */
-        .ssc__deep-title {
-          margin: 0;
-          font-family: var(--font-hero);
-          font-size: 1.35rem;
-          font-weight: 600;
-          letter-spacing: 0.01em;
-          line-height: 1.25;
-          color: var(--color-moonlight);
-        }
-
-        /* ---- THE PATTERN, AS A PRE-INTRO ------------------------------------
-           Five labels on one strip, before the three descriptions rather than
-           after them. It has to read as a RULE the examples below obey, so it
-           is a bordered band rather than a list: compact enough that nobody
-           mistakes it for a section, emphatic enough that nobody skims past
-           the thing that explains the next three blocks. */
-        .ssc__pattern {
-          display: grid;
-          gap: 0.9rem;
-          padding: 1.35rem 1.5rem 1.45rem;
-          border: 1px solid var(--ssc-edge);
-          border-left: 2px solid var(--ssc-warm);
-          background: var(--ssc-panel);
-        }
         .ssc__pattern-title {
           margin: 0;
           font-family: var(--font-hero);
@@ -773,34 +689,6 @@ export default function ShatteredSkiesCoop({
           line-height: 1.7;
           color: var(--color-moonlight);
         }
-        .ssc__pattern-steps {
-          list-style: none;
-          margin: 0;
-          padding: 0;
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(12.5rem, 1fr));
-          gap: 0.55rem 1.25rem;
-        }
-        .ssc__pattern-step {
-          display: flex;
-          align-items: baseline;
-          gap: 0.55rem;
-          min-width: 0;
-          padding-top: 0.5rem;
-          border-top: 1px solid var(--ssc-line);
-        }
-        .ssc__pattern-ord {
-          flex: 0 0 auto;
-          font-family: var(--font-mono);
-          font-size: 0.68rem;
-          letter-spacing: 0.12em;
-          color: var(--ssc-warm);
-        }
-        .ssc__pattern-label {
-          font-size: 0.86rem;
-          line-height: 1.45;
-          color: var(--color-moonlight);
-        }
         .ssc__pattern-point {
           margin: 0;
           max-width: 46rem;
@@ -808,36 +696,6 @@ export default function ShatteredSkiesCoop({
           line-height: 1.65;
           color: var(--ssc-quiet);
         }
-
-        /* ---- the waveform payoff -------------------------------------------
-           The best sentence in the section, pulled where a first-pass reader
-           reaches it. Warm rather than cyan: it is the one moment the section
-           stops describing a barrier and describes what got across it. */
-        .ssc__payoff {
-          margin: 0;
-          padding: 1.15rem 1.4rem 1.2rem;
-          border-left: 2px solid var(--ssc-warm);
-          background: color-mix(in srgb, var(--color-gold) 6%, transparent);
-        }
-        .ssc__payoff-body {
-          margin: 0;
-          max-width: 44rem;
-          font-family: var(--font-hero);
-          font-size: 1.15rem;
-          line-height: 1.55;
-          color: var(--color-moonlight);
-        }
-        .ssc__payoff-src {
-          margin: 0.6rem 0 0;
-          font-size: 0.7rem;
-          letter-spacing: 0.14em;
-          text-transform: uppercase;
-          color: var(--ssc-warm);
-        }
-
-        /* Prose mode on the deep dive: no schematic between the head and the
-           reasoning rail, so the games want less air than the figure version. */
-        .ssc__games[data-mode="prose"] { gap: 2.75rem; }
 
         .ssc {
           /* Same palette as the mechanics section directly above, so the two
@@ -1046,13 +904,6 @@ export default function ShatteredSkiesCoop({
           letter-spacing: 0.16em;
           text-transform: uppercase;
           color: var(--ssc-cyan);
-        }
-        .ssc__game-standfirst {
-          margin: 0.25rem 0 0;
-          max-width: 44rem;
-          font-size: 0.95rem;
-          line-height: 1.7;
-          color: var(--ssc-quiet);
         }
         .ssc__game-premise {
           margin: 0;

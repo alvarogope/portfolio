@@ -75,7 +75,6 @@ export interface Minigame {
   order: string;
   name: string;
   tag: string;
-  standfirst: string;
   premise: string;
   sides: readonly [MinigameSide, MinigameSide];
   split: Beat;
@@ -120,9 +119,6 @@ export const minigames: MinigameSection = {
       order: "1a",
       name: "Circuit Realignment",
       tag: "Power · 8x8 grid maze · knowledge division",
-      standfirst:
-        "One of the players has to drive a power node through an invisible maze for them. The other player can " +
-        "see it, but nothing else.",
       premise:
         "A dead system comes back on line when its power node is walked across an eight-by-eight " +
         "grid and reconnected to the source. The grid is a maze — walls between cells, one route " +
@@ -192,8 +188,6 @@ export const minigames: MinigameSection = {
       order: "2",
       name: "Seal The Breach",
       tag: "Hull repair · control split",
-      standfirst:
-        "Neither of the players can move to weld where it needs.",
       premise:
         "A crack opens in the hull and has to be welded shut in zero-g, following the shape of the " +
         "break from one end to the other. There is a single welder, and its two axes of movement " +
@@ -266,8 +260,6 @@ export const minigames: MinigameSection = {
       order: "3",
       name: "Calibratig Sensors",
       tag: "Navigation · waveform · knowledge and control division",
-      standfirst:
-        "One player is shown a wave to match. The other holds the only two controllers.",
       premise:
         "Navigation comes back when the sensor output is matched to a target waveform. Two " +
         "properties have to line up: amplitude and frequency. There is one readout of the target " +

@@ -394,20 +394,21 @@ export default function NarrativeMap({ variant = "main" }: { variant?: SsVariant
 
       {!deep && <p className="nm__premise">{premise}</p>}
 
-      {!deep && (
-        <ul className="nm__hosts">
-          {hosts.map((host) => (
-            <li key={host.id} className="nm__host" data-host={host.id}>
-              <p className="mono nm__host-tag">
-                <span className="nm__host-dot" aria-hidden="true" />
-                {host.tag}
-              </p>
-              <h3 className="nm__host-name">{host.name}</h3>
-              <p className="nm__host-body">{host.backstory}</p>
-            </li>
-          ))}
-        </ul>
-      )}
+      {/* The two host cards are the diagram's legend and its narrow-screen
+          fallback, so the NAMES stay on both pages. The backstories are story,
+          and story lives on the deep dive. */}
+      <ul className="nm__hosts">
+        {hosts.map((host) => (
+          <li key={host.id} className="nm__host" data-host={host.id}>
+            <p className="mono nm__host-tag">
+              <span className="nm__host-dot" aria-hidden="true" />
+              {host.tag}
+            </p>
+            <h3 className="nm__host-name">{host.name}</h3>
+            {deep && <p className="nm__host-body">{host.backstory}</p>}
+          </li>
+        ))}
+      </ul>
 
       {/* ---- the world — DEEP DIVE ---- */}
       {deep && (

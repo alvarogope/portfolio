@@ -6,6 +6,7 @@ import {
   textures,
   whoRemains,
 } from "@/content/shattered-skies-world";
+import { shatteredSkiesPlanets } from "@/content/shattered-skies-planets";
 import type { SsVariant } from "@/content/shattered-skies-deep-dive";
 
 const FR_W = 1200;
@@ -136,9 +137,78 @@ export default function ShatterstormWorld({ variant = "main" }: { variant?: SsVa
         </section>
       )}
 
+      {/* ---- 6 · what each world is made of — DEEP DIVE ----
+          Pure description, moved off the dossier cards on the main page: the
+          cards there carry the stats and the access design, this carries what
+          the place is like. Read from `shatteredSkiesPlanets`, never retyped. */}
+      {deep && (
+        <section className="sw__band">
+          <dl className="sw__worlds">
+            {shatteredSkiesPlanets.map((p) => (
+              <div key={p.id} className="sw__world">
+                <dt className="sw__world-name" style={{ color: p.accent }}>
+                  {p.name}
+                </dt>
+                <dd className="sw__world-copy">
+                  <span className="mono sw__world-eco">{p.ecosystem}</span>
+                  {p.note && <span className="sw__world-note">{p.note}</span>}
+                </dd>
+              </div>
+            ))}
+          </dl>
+        </section>
+      )}
+
       <FractureRule id="b" />
 
       <style>{`
+        /* ---- the five worlds, described ---- */
+        .sw__worlds {
+          margin: 0;
+          display: grid;
+          gap: 1px;
+          background: var(--sw-edge);
+          border: 1px solid var(--sw-edge);
+        }
+        .sw__world {
+          display: grid;
+          gap: 0.3rem;
+          padding: 0.9rem 1.1rem;
+          background: var(--sw-panel);
+        }
+        @media (min-width: 40rem) {
+          .sw__world {
+            grid-template-columns: 9rem minmax(0, 1fr);
+            align-items: baseline;
+            gap: 0.3rem 1.25rem;
+          }
+        }
+        .sw__world-name {
+          margin: 0;
+          font-family: var(--font-display);
+          font-size: 0.95rem;
+          font-weight: 700;
+          letter-spacing: 0.08em;
+          text-transform: uppercase;
+        }
+        .sw__world-copy {
+          margin: 0;
+          display: grid;
+          gap: 0.3rem;
+          min-width: 0;
+        }
+        .sw__world-eco {
+          font-size: 0.74rem;
+          letter-spacing: 0.12em;
+          text-transform: uppercase;
+          color: var(--sw-quiet);
+        }
+        .sw__world-note {
+          font-size: 0.95rem;
+          line-height: 1.6;
+          color: var(--color-moonlight);
+        }
+
         .sw {
           /* Same palette discipline as the narrative map: the layout scopes
              the theme, so these are tokens rather than hexes. */

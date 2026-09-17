@@ -165,9 +165,6 @@ export default function ShatteredSkiesPage() {
         <Reveal>
           <div style={GAP} id={mainAnchors.levels}>
             <SectionHeading kicker="Level Design" title={ch.levels.title} />
-            <p style={LEAD}>
-              The planets and what the players learn in them. The level, the puzzles and the music in each.
-            </p>
             <PlanetLevels />
           </div>
         </Reveal>
@@ -180,7 +177,7 @@ export default function ShatteredSkiesPage() {
               These systems were designed with the team. The purpose of them was to make the players
               cooperate and rely on each other without any kind of communication.
             </p>
-            <ShatteredSkiesMechanics variant="main" />
+            <ShatteredSkiesMechanics />
 
             <div style={{ marginTop: "2.5rem", maxWidth: "54rem" }}>
               <PlateGrid
@@ -197,12 +194,6 @@ export default function ShatteredSkiesPage() {
                 ]}
               />
             </div>
-
-            <div style={{ marginTop: "2rem" }}>
-              <RampLink href={deepDiveHref("language")}>
-                Why each channel is broken the way it is
-              </RampLink>
-            </div>
           </div>
         </Reveal>
 
@@ -214,7 +205,7 @@ export default function ShatteredSkiesPage() {
               How the main mechanics work. How each player interact with the minigame
               and the way the were designed to enhance cooperation.
             </p>
-            <ShatteredSkiesCoop variant="main" />
+            <ShatteredSkiesCoop />
 
             <div style={{ marginTop: "3rem" }}>
               <PlateGrid
@@ -230,12 +221,6 @@ export default function ShatteredSkiesPage() {
                   },
                 ]}
               />
-            </div>
-
-            <div style={{ marginTop: "2rem" }}>
-              <RampLink href={deepDiveHref("repairs")}>
-                The repairs and the five-step pattern the puzzle follows
-              </RampLink>
             </div>
           </div>
         </Reveal>

@@ -9,8 +9,6 @@ import CtaPanel from "@/components/project/CtaPanel";
 import PlateGrid from "@/components/project/PlateGrid";
 import NarrativeMap from "@/components/project/NarrativeMap";
 import ShatterstormWorld from "@/components/project/ShatterstormWorld";
-import ShatteredSkiesMechanics from "@/components/project/ShatteredSkiesMechanics";
-import ShatteredSkiesCoop from "@/components/project/ShatteredSkiesCoop";
 import { deepDiveAnchors, mainHref, mainPath } from "@/content/shattered-skies-deep-dive";
 
 export const metadata: Metadata = {
@@ -88,64 +86,10 @@ export default function ShatteredSkiesWorldPage() {
         </div>
       </Reveal>
 
-      {/* ═══ 03 · THE LANGUAGE ═══ */}
-      <Reveal>
-        <div style={{ marginTop: "5rem" }} id={deepDiveAnchors.language}>
-          <SectionHeading kicker="Core Mechanics" title="The Communication Mechanics" />
-          <p
-            style={{
-              color: "var(--color-mist)",
-              maxWidth: "35rem",
-              marginTop: "1.5rem",
-              marginBottom: "2rem",
-            }}
-          >
-            The design decisions for the communication mechanics. The four main elements that makes
-            it work, why taking out the voice chat and how it worked with players.
-          </p>
-          <ShatteredSkiesMechanics variant="deep" block="language" />
-        </div>
-      </Reveal>
-
-      {/* ═══ 04 · THE SHIP ═══ */}
-      <Reveal>
-        <div style={{ marginTop: "5rem" }} id={deepDiveAnchors.ship}>
-          <SectionHeading kicker="The Core Mechanics" title="Creating Cooperation" />
-          <p
-            style={{
-              color: "var(--color-mist)",
-              maxWidth: "35rem",
-              marginTop: "1.5rem",
-              marginBottom: "2rem",
-            }}
-          >
-            The reasoning behind the design decisions of the spaceship controls and how an assymetric system like
-            the traversal mechanics, works within the players as cooperation.
-          </p>
-          <ShatteredSkiesMechanics variant="deep" block="ship" />
-        </div>
-      </Reveal>
-
-      {/* ═══ 05 · THE THREE REPAIRS ═══ */}
-      <Reveal>
-        <div style={{ marginTop: "5rem" }} id={deepDiveAnchors.repairs}>
-          <SectionHeading kicker="05 · Co-op Design" title="The Three Repairs, In Full" />
-          <ShatteredSkiesCoop variant="deep" block="repairs" />
-        </div>
-      </Reveal>
-
-      {/* ═══ 06 · THE PLANETSIDE PATTERN ═══ */}
-      <Reveal>
-        <div style={{ marginTop: "5rem" }} id={deepDiveAnchors.pattern}>
-          <SectionHeading kicker="Co-op Design" title="The Puzzles" />
-          <ShatteredSkiesCoop variant="deep" block="pattern" />
-        </div>
-      </Reveal>
-
-      {/* ═══ 07 · THE DESIGN DOCUMENT ═══ */}
+      {/* ═══ 03 · THE DESIGN DOCUMENT ═══ */}
       <Reveal>
         <div style={{ marginTop: "5rem" }} id={deepDiveAnchors.document}>
-          <SectionHeading kicker="07 · From the Desk" title="The Design Document" />
+          <SectionHeading kicker="03 · From the Desk" title="The Design Document" />
           <div style={{ marginTop: "2rem", maxWidth: "50rem" }}>
             <PlateGrid
               minWidth="100%"

@@ -3,10 +3,11 @@
  *
  * WHY THIS FILE EXISTS. The main page ran to ~8,100 rendered words across nine
  * blocks — ten times the reading-load audit's benchmark — with the first frame
- * of actual gameplay at 58% depth. It was split the same way Moon-Knight was:
- * the built, working game stays on `/shattered-skies`, and the enthusiast depth
- * — the full story, the world's soul, and the design reasoning behind every
- * system — moved to `/shattered-skies/world`.
+ * of actual gameplay at 58% depth. It was split the same way Moon-Knight was.
+ * The line is DISCIPLINE, not depth: every word of game design, mechanics,
+ * development and the reasoning behind them lives on `/shattered-skies`, where
+ * a recruiter finds it, and the fiction — the full story, the world's soul and
+ * what each world is made of — lives on `/shattered-skies/world`.
  *
  * That move turns same-page pointers into CROSS-PAGE links, and a wrong
  * cross-page fragment fails SILENTLY: the browser navigates, finds no such id,
@@ -18,13 +19,12 @@
  * renders its section ids from the same object, which means a rename moves the
  * link and the target together or fails to compile.
  *
- * THE SAME PROBLEM RUNS THE OTHER WAY. Two pointers on the subpage refer back
- * to sections that stayed on the main page — the knowledge-gating rule, which
- * belongs to the orrery, and the three repair minigames' condensed home. Those
- * are `mainAnchors` / `mainHref` below, and they exist for exactly the same
- * reason: on the main page they are same-page fragments, on the subpage they
- * are cross-page links, and the component that renders both must not have to
- * know which page it is on. It asks for an href and gets a correct one.
+ * THE SAME PROBLEM RUNS THE OTHER WAY. The subpage's header points back at the
+ * team/role note on the main page. That is `mainAnchors` / `mainHref` below,
+ * and it exists for exactly the same reason: on the main page such a target is
+ * a same-page fragment, from the subpage it is a cross-page link, and a
+ * component that renders on both must not have to know which page it is on.
+ * It asks for an href and gets a correct one.
  *
  * THIS FILE OWNS NO COPY. It is addresses only — no titles, no prose. The
  * sections it points at are still the only places their ideas are explained,
@@ -44,10 +44,6 @@ export const deepDivePath = "/shattered-skies/world";
 export const deepDiveAnchors = {
   story: "the-story",
   world: "the-world-of-shatterstorm",
-  language: "a-language-that-will-not-carry",
-  ship: "the-ship-and-the-body",
-  repairs: "the-three-repairs",
-  pattern: "the-planetside-pattern",
   document: "the-design-document",
 } as const;
 
@@ -87,10 +83,10 @@ export const mainHref = (anchor: MainAnchor, from: "main" | "deep" = "main") =>
 /**
  * Which page a shared component is rendering on.
  *
- * The four Shattered Skies components that appear on both pages take this as a
- * prop. `main` renders the owner's exported KEYS — the labels, the diagrams,
- * one line each — and `deep` renders the full copy. Keys, not copy: there is
- * exactly one literal for every sentence, and the variant decides whether it is
- * shown, never what it says.
+ * The two Shattered Skies components that still appear on both pages take this
+ * as a prop. `main` renders the owner's exported KEYS — the names, the
+ * diagrams — and `deep` renders the story and the description. Keys, not copy:
+ * there is exactly one literal for every sentence, and the variant decides
+ * whether it is shown, never what it says.
  */
 export type SsVariant = "main" | "deep";

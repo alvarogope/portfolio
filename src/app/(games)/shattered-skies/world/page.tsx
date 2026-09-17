@@ -14,7 +14,7 @@ import { deepDiveAnchors, mainHref, mainPath } from "@/content/shattered-skies-d
 export const metadata: Metadata = {
   title: "The World & the Story | Shattered Skies",
   description:
-    "The deep dive: Shattered Skies' full narrative and its three endings, the world of Shatterstorm, and the design reasoning behind every system that keeps two players from understanding each other.",
+    "The deep dive: Shattered Skies' full narrative and its three endings, the world of Shatterstorm.",
 };
 
 export default function ShatteredSkiesWorldPage() {

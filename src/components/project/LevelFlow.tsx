@@ -569,13 +569,14 @@ export default function LevelFlow() {
 
         /* Same breakout as the role graph: the section column caps at 68rem,
            which is narrower than a nine-column floor plan wants. The parent is
-           centred, so 50% minus half the target width lands this back on the
-           viewport centre. */
+           centred, so 50% is the page's centre line; the lead/tail pair is in
+           globals.css under THE RIGHT GUTTER, and keeps the plan clear of the
+           project rail. */
         @media (min-width: 900px) {
           .lf {
-            width: min(92vw, 82rem);
-            margin-left: calc(50% - min(46vw, 41rem));
-            margin-right: calc(50% - min(46vw, 41rem));
+            width: var(--breakout-w);
+            margin-left: calc(50% - var(--breakout-lead));
+            margin-right: calc(50% - var(--breakout-tail));
           }
         }
 

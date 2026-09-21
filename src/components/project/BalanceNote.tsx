@@ -343,7 +343,12 @@ export default function BalanceNote() {
                   <Chart id={pillar.id} />
                 </div>
                 <ChartFoot id={pillar.id} />
-                <figcaption className="bn-caption">{pillar.caption}</figcaption>
+                {/* Only rendered where there is one. The adaptive and reward
+                    captions were deleted as restatement of their own legends,
+                    and an empty <figcaption> would leave their padding behind. */}
+                {pillar.caption && (
+                  <figcaption className="bn-caption">{pillar.caption}</figcaption>
+                )}
               </figure>
             </li>
           ))}
@@ -360,11 +365,13 @@ export default function BalanceNote() {
           --bn-screen: var(--color-void);
         }
 
+        /* The same breakout the other consoles on this route use. Tokens in
+           globals.css, under THE RIGHT GUTTER. */
         @media (min-width: 900px) {
           .bn {
-            width: min(92vw, 82rem);
-            margin-left: calc(50% - min(46vw, 41rem));
-            margin-right: calc(50% - min(46vw, 41rem));
+            width: var(--breakout-w);
+            margin-left: calc(50% - var(--breakout-lead));
+            margin-right: calc(50% - var(--breakout-tail));
           }
         }
 

@@ -154,7 +154,7 @@ export default function BreakInPage() {
           <div id={ch.theRun.id} style={GAP}>
             <SectionHeading kicker="03 · The Run" title={ch.theRun.title} />
             <p style={LEAD}>
-              <RoleTerms text="One run is eight minutes long and reads in four phases: get in, take the vault, take the servers, and get out separately. Two of those phases happen at the same time. Below is the run drawn on its own clock — where the pressure sits, what each player is doing in each window, and the two ways it ends." />
+              <RoleTerms text="One run is eight minutes long and reads in four phases: get in, take the vault, take the servers, and get out separately. Two of those phases happen at the same time." />
             </p>
             <HeistLoop />
           </div>
@@ -197,7 +197,7 @@ export default function BreakInPage() {
           <div id={ch.systems.id} style={GAP}>
             <SectionHeading kicker="05 · Signature Systems" title={ch.systems.title} />
             <p style={LEAD}>
-              <RoleTerms text="Four cameras, four roles, and nine dependencies wired between them — and they are two webs, not one. Six lines are what a player switches on for a teammate: an ability turned on, a window opened, patrol positions handed over. Three run the other way round. Those are the traps one role takes off another's board, and a teammate you need for the laser you cannot see is as load-bearing as one who hands you a key. Cut any one wire and the run ends. The Distraction clip at the top of the page is one of them firing." />
+              <RoleTerms text="Those are the traps one role takes off another's board, and a teammate you need for the laser you cannot see is as load-bearing as one who hands you a key. Cut any one wire and the run ends. The Distraction clip at the top of the page is one of them firing." />
             </p>
             <RoleGraph />
           </div>
@@ -212,7 +212,7 @@ export default function BreakInPage() {
           <div id={ch.levels.id} style={GAP}>
             <SectionHeading kicker="06 · Level Design" title={ch.levels.title} />
             <p style={LEAD}>
-              <RoleTerms text="The phase clock above was the run in time. This is the same run in space: the bank is one level with two places the team has to split up and two places it has to be back together. Below: the route through it, the tension curve the five stages are tuned to, and why each stage sits where it does on that curve." />
+              <RoleTerms text="The phase clock above was the run in time. This is the same run in space: the bank is one level with two places the team has to split up and two places it has to be back together." />
             </p>
             <LevelFlow />
 
@@ -345,7 +345,7 @@ export default function BreakInPage() {
           <div id={ch.stealth.id} style={GAP}>
             <SectionHeading kicker="07 · Stealth" title={ch.stealth.title} />
             <p style={LEAD}>
-              <RoleTerms text="Detection is four states and four transitions, and the design is in how loudly it announces itself. From the moment an enemy starts investigating, the player is being told three separate ways at once — because nobody else on the team can tell them." />
+              <RoleTerms text="the design is in how loudly it announces itself. From the moment an enemy starts investigating, the player is being told three separate ways at once." />
             </p>
             <DetectionStates />
 
@@ -366,8 +366,7 @@ export default function BreakInPage() {
                   lineHeight: 1.6,
                 }}
               >
-                Hacker Vision. Five seconds of seeing enemies through walls, then thirty of not
-                &mdash; the shared danger sense that had to exist once the voice channel did not.
+                Hacker Vision. Five seconds of seeing enemies through walls, then thirty of not.
               </figcaption>
             </figure>
           </div>
@@ -383,9 +382,6 @@ export default function BreakInPage() {
         <Reveal>
           <div id={ch.audio.id} style={GAP}>
             <SectionHeading kicker="08 · Audio" title={ch.audio.title} />
-            <p style={LEAD}>
-              <RoleTerms text="Four players, four rooms, and nothing any of them can say to each other. Everything below is what I asked the sound to carry instead." />
-            </p>
             <BreakInAudio />
           </div>
         </Reveal>
@@ -396,9 +392,6 @@ export default function BreakInPage() {
         <Reveal>
           <div id={ch.balance.id} style={GAP}>
             <SectionHeading kicker="09 · Balance" title={ch.balance.title} />
-            <p style={LEAD}>
-              <RoleTerms text="Four asymmetric roles only stay interesting if all four stay necessary. Three rules held that line: no role can reach past its quarter of the run, difficulty answers the team's performance instead of sitting still, and the payout is shared before it is individual." />
-            </p>
             <BalanceNote />
           </div>
         </Reveal>

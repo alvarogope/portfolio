@@ -234,13 +234,25 @@ export default function MoonKnightPage() {
           </div>
         </Reveal>
 
+        {/* The joust was briefly §06b here and went back to
+            `/moon-knight/world`, where Álvaro wants it: it is a diversion, and
+            a diversion is material a reader chooses. Nothing of it stayed — a
+            summary here would be the second home the deep dive's own rule
+            forbids. */}
+
         {/* 7 — THE WORLD AND THE LEVELS. */}
         <Reveal>
           <div id={ch.world.id} style={{ marginTop: "5rem" }}>
             <SectionHeading kicker="The World & Level Design" title={ch.world.title} />
+            {/* Two sentences were DELETED here, not reworded. "There are three
+                main areas and an island in the world of Kaelum" is said by the
+                map's own key (`markerTypeMeta.area.gloss`) and again by
+                `beatChartThesis`; "It shows where each place is and which NPCs
+                will the player encounter" is the world map's `InteractiveHint`
+                in different words. The sentence that survives is the one
+                neither figure makes: which of the two answers what. */}
             <p style={{ color: "var(--color-mist)", maxWidth: "38rem", marginTop: "1.5rem", marginBottom: "2.5rem" }}>
-              There are three main areas and an island in the world of Kaelum.
-              This is the drawn map. It shows where each place is and which NPCs will the player encounter.
+              This is the drawn map.
               The chart answers what it is like to play and every place on the map opens
               its level on the chart.
             </p>
@@ -252,10 +264,11 @@ export default function MoonKnightPage() {
             {/* Band B */}
             <div id="the-plan" style={{ marginTop: "4.5rem" }}>
               <h3 className="mono mk-band-title">The plan</h3>
-              <p style={{ color: "var(--color-mist)", maxWidth: "38rem", marginTop: 0, marginBottom: "1.75rem" }}>
-                The Beatchart of shows the tutorial and the three main areas which represent one act per area. 
-                Pick a level to open its design.
-              </p>
+              {/* The standfirst that stood here was DELETED whole. Sentence one
+                  was `beatChartThesis` + `beatStructureNote`, both of which the
+                  chart prints under its own moon rail; sentence two ("Pick a
+                  level to open its design") was the chart's `InteractiveHint`
+                  said twice. The figure makes every point it made. */}
               <BeatChart />
             </div>
 
@@ -314,10 +327,11 @@ export default function MoonKnightPage() {
         <Reveal>
           <div id={ch.diegetic.id} style={{ marginTop: "5rem" }}>
             <SectionHeading kicker="Main Design" title={ch.diegetic.title} />
-            <p style={{ color: "var(--color-mist)", maxWidth: "35rem", marginTop: "1.5rem", marginBottom: "1.75rem" }}>
-              The Health Bar is the moon on the knight&apos;s back. The Experience is a white rose stained in
-              the boss&apos;s blood. The map player knows where to go by raising the sword and reflecting the moonlight.
-            </p>
+            {/* The standfirst that stood here was DELETED whole: its three
+                sentences were the moon HUD, the White-Rose XP and the moonlight
+                wayfinding — three of the four cards `<DiegeticDesign />` renders
+                a few inches below, plus `diegeticThesis.line` above them. A
+                summary of a figure that is already on screen. */}
 
             {/* The willow tree */}
             <figure style={{ margin: "0 0 2.5rem", maxWidth: "52rem" }}>
@@ -500,9 +514,10 @@ export default function MoonKnightPage() {
         <Reveal>
           <div id={ch.audio.id} style={{ marginTop: "5rem" }}>
             <SectionHeading kicker="Audio Design" title={ch.audio.title} />
-            <p style={{ color: "var(--color-mist)", maxWidth: "35rem", marginTop: "1.5rem", marginBottom: "1.75rem" }}>
-              The two main compositions of the game. Press either to play.
-            </p>
+            {/* DELETED, not reworded. "The two main compositions of the game"
+                is `composerCredit.body` and the band title "The recordings",
+                both rendered by `<AudioDesign>` below; "Press either to play"
+                is what the two ▶ buttons and their `aria-label`s already say. */}
             <AudioDesign variant="short">
               <MoonKnightAudio />
             </AudioDesign>

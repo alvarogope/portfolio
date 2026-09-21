@@ -262,12 +262,13 @@ export default function SeedsLevelDesign() {
           --sl-screen: var(--color-void);
         }
 
-        /* The same breakout the other project consoles use. */
+        /* The same breakout the other project consoles use. Tokens in
+           globals.css, under THE RIGHT GUTTER. */
         @media (min-width: 900px) {
           .sl {
-            width: min(92vw, 82rem);
-            margin-left: calc(50% - min(46vw, 41rem));
-            margin-right: calc(50% - min(46vw, 41rem));
+            width: var(--breakout-w);
+            margin-left: calc(50% - var(--breakout-lead));
+            margin-right: calc(50% - var(--breakout-tail));
           }
         }
 

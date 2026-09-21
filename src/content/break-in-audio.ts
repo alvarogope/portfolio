@@ -141,9 +141,7 @@ export const scoreNote =
 export const clockAudio = {
   label: "Audio as the timer",
   body:
-    "The eight-minute clock ticks out loud. It runs under everything at a low level for the first " +
-    `${SCORE_SHIFT_AT} minutes, marks the moment the score changes gear, and gets louder for the ` +
-    `last ${SCORE_SHIFT_REMAINING}. There is a timer on the HUD as well, but the HUD is a thing ` +
+    "There is a timer on the HUD as well, but the HUD is a thing " +
     "you have to choose to look at, and three of the four roles spend most of the run looking at " +
     "something else.",
   why:
@@ -250,8 +248,7 @@ export const cuesNote =
   "Every cue is specified by what it lets somebody else work out. That is the difference between " +
   "sound design and audio direction on this project. The question was never whether an action " +
   "sounded good; it was whether a player in another room could tell what had just happened and " +
-  "act on it. Four players end up tracking each other by ear, which is the coordination the " +
-  "voice channel would have handled if there had been one.";
+  "act on it. Four players end up tracking each other by ear.";
 
 /* ---- the crossing -------------------------------------------------------
    Names the detection model's audio channel and stops. The crescendo, the eye

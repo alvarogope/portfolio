@@ -675,7 +675,6 @@ export default function RoleGraph({
               )}
             </h3>
             <p className="mono rg-discipline">{r.discipline}</p>
-            <p className="rg-card-summary">{r.summary}</p>
             <p className="mono rg-list-title">Ability kit</p>
             <AbilityKit kit={r.kit} />
             <p className="mono rg-list-title">Mini-game</p>
@@ -755,7 +754,6 @@ export default function RoleGraph({
           </p>
           <h3 className="rg-panel-name">{role.name}</h3>
           <p className="mono rg-discipline">{role.discipline}</p>
-          <p className="rg-panel-summary">{role.summary}</p>
 
           <p className="mono rg-list-title">Ability kit</p>
           <AbilityKit kit={role.kit} />
@@ -806,16 +804,21 @@ export default function RoleGraph({
 
         /* The diagram is the page's centrepiece and the section column caps at
            68rem, which left the stage ~696px — near 1:1 against the viewBox,
-           i.e. 8.5px type on screen. This breaks .rg out of that column (the
-           parent is centred, so 50% - half the target width lands it back on
-           the viewport centre) and buys the stage the width the type needs.
-           Capped at 82rem: past that the stage grows taller than a desktop
-           screen without the labels getting usefully bigger. */
+           i.e. 8.5px type on screen. This breaks .rg out of that column and
+           buys the stage the width the type needs. Capped at 82rem: past that
+           the stage grows taller than a desktop screen without the labels
+           getting usefully bigger.
+
+           The lead/tail pair is defined in globals.css under THE RIGHT
+           GUTTER. The parent is centred, so 50% is the page's centre line:
+           the lead puts the left edge where it has always been, and the tail
+           stops the right edge short of the project rail when the rail is on
+           screen rather than letting the readout run underneath it. */
         @media (min-width: 900px) {
           .rg {
-            width: min(92vw, 82rem);
-            margin-left: calc(50% - min(46vw, 41rem));
-            margin-right: calc(50% - min(46vw, 41rem));
+            width: var(--breakout-w);
+            margin-left: calc(50% - var(--breakout-lead));
+            margin-right: calc(50% - var(--breakout-tail));
           }
 
           /* Second guard, for short viewports rather than narrow ones: the
@@ -1054,15 +1057,6 @@ export default function RoleGraph({
           margin: 0.3rem 0 0;
           color: var(--color-silver);
         }
-        .rg-panel-summary,
-        .rg-card-summary {
-          font-family: var(--font-body);
-          margin: 0.5rem 0 0;
-          font-size: 0.92rem;
-          line-height: 1.5;
-          color: var(--color-moonlight);
-        }
-
         /* The seat's job, sitting directly under the role name in both the
            panel and the roster card. */
         .rg-discipline {

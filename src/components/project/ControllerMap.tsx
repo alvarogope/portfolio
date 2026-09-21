@@ -284,12 +284,16 @@ export default function ControllerMap() {
         }
 
         /* The pairing needs more width than the page column gives it, so the
-           section breaks out — same move the Break-In consoles make. */
+           section breaks out — same move the Break-In consoles make, and the
+           same rule about the right edge: it stops short of the project rail
+           rather than running under it. This one is capped at 78rem rather
+           than 82, so it reads --free-right from globals.css (see THE RIGHT
+           GUTTER) instead of the shared --breakout-* trio. */
         @media (min-width: 1000px) {
           .cm {
-            width: min(94vw, 78rem);
+            width: calc(min(47vw, 39rem) + min(47vw, 39rem, var(--free-right)));
             margin-left: calc(50% - min(47vw, 39rem));
-            margin-right: calc(50% - min(47vw, 39rem));
+            margin-right: calc(50% - min(47vw, 39rem, var(--free-right)));
           }
         }
 

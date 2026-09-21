@@ -609,13 +609,13 @@ export default function HeistLoop() {
 
         /* Same breakout as the role graph and the level console: the section
            column caps at 68rem, which is narrower than an eight-minute ruler
-           wants. The parent is centred, so 50% minus half the target width puts
-           this back on the viewport centre. */
+           wants. The parent is centred, so 50% is the page's centre line; the
+           lead/tail pair is in globals.css, under THE RIGHT GUTTER. */
         @media (min-width: 900px) {
           .hl {
-            width: min(92vw, 82rem);
-            margin-left: calc(50% - min(46vw, 41rem));
-            margin-right: calc(50% - min(46vw, 41rem));
+            width: var(--breakout-w);
+            margin-left: calc(50% - var(--breakout-lead));
+            margin-right: calc(50% - var(--breakout-tail));
           }
         }
 

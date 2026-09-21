@@ -235,11 +235,6 @@ export const feedbackChannels: readonly FeedbackChannel[] = [
 export const feedbackThesis =
   "Three channels fire at once, and none of them is optional.";
 
-export const feedbackNote =
-  "Redundant on purpose. Any one of the three would technically tell a player they had been " +
-  "seen. All three together mean nobody is ever surprised by their own detection state, whatever " +
-  "they happen to be looking at or listening to when it changes.";
-
 /* ---- the constraint underneath everything ------------------------------- */
 
 /* ---- the traps ----------------------------------------------------------
@@ -362,9 +357,7 @@ export const trapsCounterPointer =
   "takes which trap off the board is the role web's to show, in §05 · Nobody wins alone.";
 
 export const trapsNote =
-  "Every trap lands on Chasing, which means every trap skips Investigating. There is no filling " +
-  "bar to outrun, no line of sight to break, and no channel gets a chance to warn anyone: the " +
-  "first signal is the chase song. That asymmetry is deliberate. Ordinary detection is generous " +
+  "That asymmetry is deliberate. Ordinary detection is generous " +
   "so that players will move; the traps are where it stops being generous. They sit on exactly " +
   "the three actions worth planning around — crossing the basement, stripping the rack, and " +
   "opening a door in a hurry.";

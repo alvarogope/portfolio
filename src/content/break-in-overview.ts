@@ -287,9 +287,7 @@ export const loopSummary =
 
 /** How the phase view relates to the route view, said once, on the page. */
 export const phaseLevelNote =
-  "This is the run in time, not in space. The floor plan further down answers where the team goes " +
-  "and in what order the rooms arrive; this answers what they are trying to achieve and when the " +
-  "clock says they should be doing it. The two do not line up one-to-one on purpose: the digital " +
+  "The two do not line up one-to-one on purpose: the digital " +
   "heist runs parallel to the vault, so two players can be in the same room on two different " +
   "phases.";
 
@@ -333,7 +331,7 @@ export const loseConditions: readonly OutcomeCondition[] = [
 export const outcomeThesis = "One caught, everyone fails.";
 
 export const outcomeNote =
-  "Winning is a single AND: every condition, or no win. Losing is an OR — either one is enough on " +
+  "Losing is an OR — either one is enough on " +
   "its own. That asymmetry is deliberate, and it is what makes the dependency web above matter at " +
   "the table.";
 
@@ -409,8 +407,14 @@ export interface BalancePillar {
   title: string;
   /** The principle. */
   body: string;
-  /** What the chart beside it is showing. */
-  caption: string;
+  /**
+   * What the chart beside it is showing — only where the chart does NOT
+   * already say it. Two of the three captions were deleted rather than
+   * rewritten: they were the legend and the bar labels read aloud. Optional
+   * now, so a chart that speaks for itself gets no caption at all rather than
+   * an empty one.
+   */
+  caption?: string;
 }
 
 export const balancingIntro =
@@ -435,33 +439,26 @@ export const balancingPillars: readonly BalancePillar[] = [
       "carry seat and no passenger seat, which is the core balancing principle everything else " +
       "serves.",
     caption:
-      "How far each role gets unaided, against the run it has to finish. The gap is the design, not a shortfall.",
+      "The gap is the design, not a shortfall.",
   },
   {
     id: "adaptive",
     index: "02",
     title: "Difficulty that answers back",
     body:
-      "The game reads how the team is performing and pushes back. Play well and patrols thicken, " +
-      "cameras multiply and puzzles lengthen; struggle and it eases, slightly. The target is not " +
+      "The game reads how the team is performing and pushes back. The target is not " +
       "a fixed difficulty but a fixed feeling. Pressure rises to meet competence, so a strong " +
       "team and a shaky one both spend the last two minutes on the edge, and no role goes quiet " +
       "because the run got easy.",
-    caption:
-      "Pressure applied rises with team performance so that felt tension stays inside the target band.",
   },
   {
     id: "rewards",
     index: "03",
     title: "Paid as a team, bonused as a role",
     body:
-      "XP and currency are distributed by team effort, with a bonus on top for playing your role " +
-      "well. The shared base is the larger share on purpose: it makes the optimal play making your " +
-      "teammates faster rather than out-earning them. The bonus exists so the unglamorous seat — " +
+      "The bonus exists so the unglamorous seat — " +
       "the Hacker who never touches gold, the Insider who spends the run opening doors — is still " +
       "the most profitable thing that player can be doing.",
-    caption:
-      "The payout split: the shared base is the bigger half, and the bonus pays for role play rather than loot carried.",
   },
 ];
 

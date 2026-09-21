@@ -15,7 +15,22 @@ import { HOME_NAV_ITEM, type ProjectNavItem } from "@/content/games";
 
 const REDUCED_QUERY = "(prefers-reduced-motion: reduce)";
 
-const RAIL_QUERY = "(min-width: 1560px)";
+/* WHERE THE GUTTER IS ACTUALLY BIG ENOUGH, which is the whole argument for
+   this number. It was 1560px, and at 1560px a 207px rail does not fit beside
+   a centred 68rem column: the column's right edge lands at 1365 and the rail
+   starts at 1331, so the rail was not in the gutter at all — it was standing
+   on the last 34px of the column, over the plate bands and any panel that
+   spans it. The column clears the rail, with the 2rem of air the gutter
+   tokens ask for, from 1782px up; 1800 is that with a round number's worth
+   of slack.
+
+   What it costs: between 1560 and 1800 the nav is the in-flow list at the
+   foot of the page, which is the fallback this component already ships and
+   the only honest answer at a width where the rail has nowhere to stand.
+
+   KEEP IN STEP WITH `--rail-claim`'s QUERY IN globals.css: below this width
+   the rail claims no gutter and the wide consoles spend the whole of it. */
+const RAIL_QUERY = "(min-width: 1800px)";
 
 function subscribeMedia(query: string) {
   return (onChange: () => void) => {
@@ -493,11 +508,16 @@ function NavContent({
           top: 50%;
           /* Centred within the right gutter: half the gutter, less half
              the rail's own width. It therefore tracks the viewport
-             rather than hugging either the content or the edge. */
-          right: max(1.25rem, calc((100vw - 68rem) / 4 - 5.75rem));
+             rather than hugging either the content or the edge.
+
+             BOTH NUMBERS LIVE IN globals.css, under THE RIGHT GUTTER, and
+             so does the breakpoint below. The wide consoles measure their
+             right edge against the same three tokens, which is what keeps
+             the rail off them — edit the geometry there, not here. */
+          right: var(--rail-inset);
           z-index: 41;
           box-sizing: border-box;
-          width: 11.5rem;
+          width: var(--rail-w);
           margin: 0;
           padding: 1.15rem 0.9rem;
           border: 1px solid color-mix(in srgb, var(--color-mist) 26%, transparent);

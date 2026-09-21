@@ -67,7 +67,7 @@ export const inMotionItems: readonly MotionItem[] = [
     label: "Distraction",
     alt: "The Hacker's Distraction ability overloading a bank light, and a patrolling guard leaving his route to deal with it.",
     caption:
-      "A light overloads and the guard walks off his patrol to deal with it. Rerouting a guard is the only thing in the game that moves one off a programmed path.",
+      "A light overloads and the guard walks off his patrol to deal with it.",
   },
   {
     src: "/images/break-in/Reception_Lobby_2.png",

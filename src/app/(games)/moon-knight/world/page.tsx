@@ -104,18 +104,11 @@ export default function MoonKnightWorldPage() {
           style={{ marginTop: "5rem" }}
         >
           <SectionHeading kicker="Art Direction" title="The Sublime" />
-          <p
-            style={{
-              color: "var(--color-mist)",
-              maxWidth: "35rem",
-              marginTop: "1.5rem",
-              marginBottom: "1.75rem",
-            }}
-          >
-            The Sublime and their way of romanticise the medieval ages is what inspired the artstyle direction.
-            This art philosophy adapted to games, exposes the player to solitude, open spaces and big challenges
-            whether internal or external.
-          </p>
+          {/* The intro paragraph that stood here was word-for-word the one on
+              `/moon-knight`, and `artThesis.body` — which only the `full`
+              variant below renders — makes the same argument at length. Two
+              copies of one paragraph, so the one on the page that also renders
+              the long form was deleted. Nothing was reworded. */}
           <ArtDirection />
         </div>
       </Reveal>
@@ -144,7 +137,13 @@ export default function MoonKnightWorldPage() {
         </div>
       </Reveal>
 
-      {/* 05 — THE JOUSTING minigame */}
+      {/* 05 — THE JOUSTING minigame.
+          It spent one pass on `/moon-knight` — a risk matrix and a `Why` note
+          read as mechanics — and Álvaro called it back. The joust is a
+          DIVERSION: material a reader chooses, introduced by a character this
+          page owns, and the test this page applies is that choice. It is back
+          exactly as it left, word for word, and `deepDiveAnchors.jousting` came
+          back with it. */}
       <Reveal>
         <div
           id={deepDiveAnchors.jousting}

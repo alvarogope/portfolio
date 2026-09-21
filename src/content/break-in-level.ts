@@ -296,10 +296,7 @@ export const tensionPeak: TensionPoint = byTension[byTension.length - 1];
 
 /** The shape of the curve in words — the chart's text equivalent, shown as its caption. */
 export const pacingSummary =
-  "Tension opens moderate in the Lobby and falls to its lowest in the Offices — the one " +
-  "deliberate breather, where the team hides up and plans. From there it climbs without a break: " +
-  "the Server Room's USB plant, the Vault Corridor's precision stealth, and the spike at the " +
-  "Vault. The dip is what makes the last third read as pressure rather than noise.";
+  "The dip is what makes the last third read as pressure rather than noise.";
 
 /** Tension as a word, for the readouts that carry the numbers in text. */
 export function tensionBand(tension: number): string {

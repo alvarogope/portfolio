@@ -648,8 +648,13 @@ export default function NarrativeMap({ variant = "main" }: { variant?: SsVariant
         /* ---- the map ----
            Breakout to the same width the other diagrams on the site use: the
            section column caps at 68rem and a five-band map wants more. The
-           parent is centred, so 50% minus half the target lands it back on the
-           viewport centre. Prose stays in the column. */
+           parent is centred, so 50% is the page's centre line. Prose stays in
+           the column.
+
+           The right edge stops short of the project rail rather than running
+           under it. This map is the widest thing in the portfolio at 84rem,
+           so it reads --free-right from globals.css (see THE RIGHT GUTTER)
+           rather than the shared --breakout-* trio. */
         .nm__figure {
           margin: 0;
           display: grid;
@@ -657,9 +662,9 @@ export default function NarrativeMap({ variant = "main" }: { variant?: SsVariant
         }
         @media (min-width: 900px) {
           .nm__figure {
-            width: min(94vw, 84rem);
+            width: calc(min(47vw, 42rem) + min(47vw, 42rem, var(--free-right)));
             margin-left: calc(50% - min(47vw, 42rem));
-            margin-right: calc(50% - min(47vw, 42rem));
+            margin-right: calc(50% - min(47vw, 42rem, var(--free-right)));
           }
         }
         .nm__figcap {

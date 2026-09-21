@@ -30,7 +30,10 @@ export const deepDivePath = "/moon-knight/world";
 export const deepDiveAnchors = {
   narrative: "narrative-design",
   cast: "the-cast",
-  motifs: "symbolism-and-motifs",
+  /* `motifs` ("symbolism-and-motifs") was here and had NO render site: the
+     themes band lives inside `<NarrativeDesign />`, under the narrative
+     section's own id. An anchor with nothing to land on is the silent failure
+     this file exists to prevent, so it is gone rather than aspirational. */
   /* `diegetic` was here. The diegetic UI design moved back to `/moon-knight`
      in full, so the anchor was removed rather than left pointing at a section
      that no longer exists — a stale entry here is exactly the silent failure
@@ -38,6 +41,10 @@ export const deepDiveAnchors = {
      `project-chapters.ts`. */
   art: "art-direction",
   score: "score-and-audio",
+  /* `jousting` left for `/moon-knight` for one pass and came straight back:
+     the joust is a diversion, and a diversion is material a reader CHOOSES,
+     which is the test this page applies. The anchor is live again and the
+     section renders from it. */
   jousting: "the-jousting-minigame",
   expansions: "where-the-world-goes-next",
 } as const;

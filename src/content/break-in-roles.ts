@@ -115,8 +115,6 @@ export interface BreakInRole {
   location: string;
   /** The seat's job in one phrase — what this player is FOR. */
   discipline: string;
-  /** One-paragraph "what they do", for the readout panel. */
-  summary: string;
   /** The full ability kit, rendered as labelled items in the readout. */
   kit: readonly RoleAbility[];
   /** The role's mini-game, or `null` for the one role deliberately without one. */
@@ -149,8 +147,6 @@ export const breakInRoles: readonly BreakInRole[] = [
     cam: "CAM-01",
     location: "Lobby / Staff Door",
     discipline: "Access · opens the paths nobody else can walk",
-    summary:
-      "Opens the way: disguise as staff, security card, USB in the server room, escape route.",
     kit: [
       {
         name: "Disguise",
@@ -185,8 +181,6 @@ export const breakInRoles: readonly BreakInRole[] = [
     cam: "CAM-02",
     location: "Security Office",
     discipline: "Assistance / support · the team's eyes",
-    summary:
-      "The team's shared sight. Marks enemies in red through walls and moves them with a hack. Powerless below until the Insider acts. No voice channel.",
     kit: [
       {
         name: "CCTV Control",
@@ -234,8 +228,6 @@ export const breakInRoles: readonly BreakInRole[] = [
     cam: "CAM-03",
     location: "Basement / Laser Grid",
     discipline: "Entry · the digital money",
-    summary:
-      "Steals the digital money. Picks the doors to the PCs; smoke bombs reveal and kill the basement lasers.",
     kit: [
       {
         name: "Lock Picking",
@@ -272,8 +264,6 @@ export const breakInRoles: readonly BreakInRole[] = [
     cam: "CAM-04",
     location: "Vault / Ingot Rack",
     discipline: "Extraction · the physical gold",
-    summary:
-      "Solves the vault, takes the gold, replaces the ingots before the alarm hits everyone.",
     kit: [
       {
         name: "Find the Manager's Password",

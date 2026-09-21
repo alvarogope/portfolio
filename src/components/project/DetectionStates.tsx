@@ -4,7 +4,6 @@ import {
   detectionStates,
   detectionTransitions,
   feedbackChannels,
-  feedbackNote,
   feedbackThesis,
   machineSummary,
   trapsCounterPointer,
@@ -594,7 +593,10 @@ export default function DetectionStates() {
               </li>
             ))}
           </ul>
-          <p className="ds-note">{feedbackNote}</p>
+          {/* `feedbackNote` was rendered here and is deleted. `feedbackThesis`
+              above the list already says the three fire at once and none is
+              optional, and each channel's own `catches` field proves it case by
+              case — the note was the third statement on one screen. */}
         </section>
 
         {/* 5 — the constraint underneath it, and whose call it was */}
@@ -643,12 +645,13 @@ export default function DetectionStates() {
         }
 
         /* Same breakout the role graph and the two other consoles use: the
-           section column caps at 68rem, narrower than a four-state row wants. */
+           section column caps at 68rem, narrower than a four-state row wants.
+           Tokens in globals.css, under THE RIGHT GUTTER. */
         @media (min-width: 900px) {
           .ds {
-            width: min(92vw, 82rem);
-            margin-left: calc(50% - min(46vw, 41rem));
-            margin-right: calc(50% - min(46vw, 41rem));
+            width: var(--breakout-w);
+            margin-left: calc(50% - var(--breakout-lead));
+            margin-right: calc(50% - var(--breakout-tail));
           }
         }
 

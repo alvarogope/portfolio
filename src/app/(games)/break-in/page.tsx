@@ -31,44 +31,8 @@ export const metadata: Metadata = {
   description: p.systemsHook,
 };
 
-/* ═══════════════════════════════════════════════════════════════════════════
-   BREAK-IN · THE PAGE
-
-   THE SHAPE, AND WHY IT CHANGED. The reading-load audit called this the
-   best-structured page in the portfolio and said the sequencing should not be
-   undone — so it was not. What changed is the two things Moon-Knight and
-   Shattered Skies fixed and this page had not: the first frame of the game
-   running sat at §03, about 1,300 words deep, and the contributions sat last,
-   where five bullets after 5,000 words read as a recap.
-
-   NO SUBPAGE, DELIBERATELY. Moon-Knight and Shattered Skies were split because
-   they ran to 6,000 and 8,100 words. This page is the tightest of the three and
-   there is no half of it that is a different KIND of material — the fiction and
-   the reasoning live inside the systems here rather than beside them. It was
-   tightened in place instead: long sentences broken, sections that restated
-   each other cut back to one owner, and the level stages given the one thing
-   they were missing rather than a second page to spread onto.
-
-   THE ORDER IS EVIDENCE-FIRST, AND IT KEEPS THE ATTRIBUTION ORDER.
-
-     01 Overview → 02 In Motion → 03 The Run → 04 My Role → the systems.
-
-   Same departure Shattered Skies makes from Moon-Knight, for the same reason:
-   footage IS the team's game, so it can sit before the team note. §03's
-   `teamNote` inside `HeistLoop` is this page's canonical attribution — team of
-   four, Lead Designer — and My Role follows it rather than pre-empting it.
-
-   NOTHING SHOWS TWICE. Every section below owns what it says, per
-   docs/section-ownership-map.md: the role web owns the roles and the trap
-   counters, the detection machine owns the traps themselves, and §03 (time)
-   and §06 (space) are the same run on two axes that cannot be merged, because
-   one phase runs parallel to another rather than after it.
-   ═══════════════════════════════════════════════════════════════════════════ */
-
-/** Shared spacing between top-level sections, so the rhythm is stated once. */
 const GAP = { marginTop: "5rem" } as const;
 
-/** The standfirst under a section heading. Same measure everywhere. */
 const LEAD = {
   color: "var(--color-mist)",
   maxWidth: "35rem",
@@ -104,16 +68,9 @@ export default function BreakInPage() {
         </div>
       </div>
 
-      {/* `tight`: this Section follows the hero, so its 4rem top padding
-          would be the second of three stacked gaps. See Section.tsx. */}
       <Section tight>
-        {/* The way back up. This project has no subpage, so there is no trail
-            to descend — but the page still needs an exit that is not the
-            browser's back button, and the homepage IS the project index. The
-            foot of the page carries the sideways moves; this is the up. */}
         <Breadcrumb items={[{ label: "Projects", href: "/" }, { label: p.title }]} />
 
-        {/* The contents of the page, before the page starts arguing. */}
         <ChapterNav chapters={breakInChapterList} />
 
         {/* ═══ 01 · OVERVIEW ═══ */}
@@ -122,21 +79,14 @@ export default function BreakInPage() {
             id={ch.overview.id}
             style={{ maxWidth: "35rem", marginTop: "1.5rem" }}
           >
-            <SectionHeading kicker="01 · Overview" title={ch.overview.title} />
+            <SectionHeading kicker="The Overview" title={ch.overview.title} />
             <p style={{ marginTop: "1rem" }}>
               <RoleTerms text={p.vision} />
             </p>
           </div>
         </Reveal>
 
-        {/* ═══ 02 · IN MOTION ═══
-            Proof before prose. The Distraction clip used to live inside the
-            role-graph section, about 1,300 words down, as an illustration of
-            the dependency web — and
-            the web is a nine-wire diagram that argues itself. A reader who
-            gives this page a minute now meets the game running instead of a
-            paragraph about it. `hacker_vision.mp4` deliberately stayed in §07,
-            where the five-on/thirty-off duty cycle is the evidence. */}
+        {/* ═══ 02 · IN MOTION ═══ */}
         <Reveal>
           <div id={ch.inMotion.id} style={GAP}>
             <SectionHeading kicker={inMotionIntro.kicker} title={inMotionIntro.title} />
@@ -145,31 +95,10 @@ export default function BreakInPage() {
           </div>
         </Reveal>
 
-        {/* ═══ 03 · THE RUN ═══
-            The run in TIME. Placed before the role graph and the floor plan
-            because both of those assume the reader already knows what a run is
-            trying to do. `teamNote` inside `HeistLoop` is the page's canonical
-            attribution, which is why My Role can only come after it. */}
-        <Reveal>
-          <div id={ch.theRun.id} style={GAP}>
-            <SectionHeading kicker="03 · The Run" title={ch.theRun.title} />
-            <p style={LEAD}>
-              <RoleTerms text="One run is eight minutes long and reads in four phases: get in, take the vault, take the servers, and get out separately. Two of those phases happen at the same time." />
-            </p>
-            <HeistLoop />
-          </div>
-        </Reveal>
-
-        {/* ═══ 04 · MY ROLE ═══
-            Moved up from last, and cut to one line each in the same change. At
-            the foot of the page these five bullets were a recap of sections the
-            reader had already been through; here, straight after the team note,
-            each one is a promise of a section below that shows the work. The
-            enumerations went with the move — see the note in the content file,
-            which records exactly which ones and why. */}
+        {/* ═══ 03 · MY ROLE ═══ */}
         <Reveal>
           <div id={ch.role.id} style={GAP}>
-            <SectionHeading kicker="04 · My Role" title={ch.role.title} />
+            <SectionHeading kicker="My Role" title={ch.role.title} />
             <div style={{ display: "grid", gap: "1.25rem", marginTop: "1.5rem" }}>
               {p.contributions.map((c) => (
                 <div key={c.label}>
@@ -185,14 +114,20 @@ export default function BreakInPage() {
           </div>
         </Reveal>
 
-        {/* ═══ 05 · SIGNATURE SYSTEMS ═══
-            The page's centrepiece: the canonical home for all four roles, the
-            six enabling wires, and the three counter-wires absorbed from the
-            trap list in §07. There is no second role section — "Four Roles, One
-            Web" used to sit under this one and every fact in it was already
-            here, with the dependencies drawn as wires rather than restated as
-            prose. `p.roles` still feeds RoleTerms, which lights the four names
-            wherever they appear in prose. */}
+
+        {/* ═══ 04 · THE RUN ═══ */}
+        <Reveal>
+          <div id={ch.theRun.id} style={GAP}>
+            <SectionHeading kicker="The Gameplay Design" title={ch.theRun.title} />
+            <p style={LEAD}>
+              <RoleTerms text="One gameplay run is eight minutes long and divided in four phases: get in, open the vault, access the servers and get out. Two of these phases happen at the same time." />
+            </p>
+            <HeistLoop />
+          </div>
+        </Reveal>
+
+
+        {/* ═══ 05 · SIGNATURE SYSTEMS ═══ */}
         <Reveal>
           <div id={ch.systems.id} style={GAP}>
             <SectionHeading kicker="05 · Signature Systems" title={ch.systems.title} />
@@ -203,11 +138,7 @@ export default function BreakInPage() {
           </div>
         </Reveal>
 
-        {/* ═══ 06 · LEVEL DESIGN ═══
-            The same run in SPACE. Kept separate from §03 rather than merged:
-            the digital heist runs parallel to the vault, so two players can be
-            in the same room on two different phases, and neither view can draw
-            the other's shape. */}
+        {/* ═══ 06 · LEVEL DESIGN ═══ */}
         <Reveal>
           <div id={ch.levels.id} style={GAP}>
             <SectionHeading kicker="06 · Level Design" title={ch.levels.title} />
@@ -216,27 +147,6 @@ export default function BreakInPage() {
             </p>
             <LevelFlow />
 
-            {/* THE BAND IS CHRONOLOGICAL, IN THREE PHASES, AND THE ORDER IS
-                ÁLVARO'S: drawn first, blocked out second, built last.
-
-                  01–03  DRAWN     — the hand sketch, then both floors cleaned
-                                     up into one plan language.
-                  04–05  BLOCKED   — the two working block-outs, where the rooms
-                                     are still being argued about.
-                  06–09  BUILT     — the level standing up, then the two rooms
-                                     the run turns on.
-
-                Each step is evidence for the one before it, which only works if
-                they stay in this order. PlateGrid fits every plate whole and
-                opens it full size, which a floor plan needs and a crop would
-                ruin.
-
-                The last two plates are rooms rather than floors, and they are
-                here rather than beside the sections they belong to on purpose:
-                a room is evidence for the LEVEL, and putting the vault next to
-                the Vaultsnatcher's kit or the PC room next to the digital phase
-                would make each of those sections argue with a picture instead
-                of with its own diagram. */}
             <div style={{ marginTop: "3rem" }}>
               <h3
                 className="mono"
@@ -336,11 +246,7 @@ export default function BreakInPage() {
           </div>
         </Reveal>
 
-        {/* ═══ 07 · STEALTH ═══
-            Right after the level, because the route above is the thing this
-            machine is watching. The three feedback channels are named by the
-            component two inches below, so the standfirst counts them and stops
-            rather than listing them twice on one screen. */}
+        {/* ═══ 07 · STEALTH ═══*/}
         <Reveal>
           <div id={ch.stealth.id} style={GAP}>
             <SectionHeading kicker="07 · Stealth" title={ch.stealth.title} />
@@ -349,10 +255,6 @@ export default function BreakInPage() {
             </p>
             <DetectionStates />
 
-            {/* The section's claim — "nobody can warn you but the game" — is a
-                five-second ability on a thirty-second cooldown. A still cannot
-                show a duration, which is why this clip stayed here when the
-                other one was promoted to §02. */}
             <figure style={{ margin: "2.5rem 0 0", maxWidth: "54rem" }}>
               <LoopingVideo
                 src="/images/break-in/hacker_vision.mp4"
@@ -372,13 +274,7 @@ export default function BreakInPage() {
           </div>
         </Reveal>
 
-        {/* ═══ 08 · AUDIO ═══
-            Straight after the detection machine because the two share a
-            channel: the crescendo that resolves into the chase theme is
-            designed up there as one of three feedback channels, and this
-            section is the rest of what audio is doing on a page whose whole
-            premise is that nobody can talk. Direction credit, so it is sized as
-            one console rather than a pillar. */}
+        {/* ═══ 08 · AUDIO ═══ */}
         <Reveal>
           <div id={ch.audio.id} style={GAP}>
             <SectionHeading kicker="08 · Audio" title={ch.audio.title} />
@@ -386,9 +282,7 @@ export default function BreakInPage() {
           </div>
         </Reveal>
 
-        {/* ═══ 09 · BALANCE ═══
-            The only place in the portfolio that shows tuning intent as data
-            rather than assertion. Three rules, three charts. */}
+        {/* ═══ 09 · BALANCE ═══ */}
         <Reveal>
           <div id={ch.balance.id} style={GAP}>
             <SectionHeading kicker="09 · Balance" title={ch.balance.title} />
@@ -396,11 +290,7 @@ export default function BreakInPage() {
           </div>
         </Reveal>
 
-        {/* ═══ 10 · THE HARD PART ═══
-            The authorship claim, in my own voice, and the page closes on it.
-            Unlike Shattered Skies' challenge quote this one is not a thesis
-            stranded away from its diagram — it is the decision every section
-            above is a consequence of. */}
+        {/* ═══ 10 · THE HARD PART ═══ */}
         {p.designChallenge && (
           <Reveal>
             <div id={ch.challenge.id} style={GAP}>
@@ -415,9 +305,6 @@ export default function BreakInPage() {
           </Reveal>
         )}
 
-        {/* The exits, both of them. Up to the index, and sideways to the other
-            three projects. No CtaPanel: that control offers a second half of
-            the same project, and this page does not have one. */}
         <Reveal>
           <div style={GAP}>
             <RampLink href="/">Back to all four projects</RampLink>

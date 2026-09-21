@@ -7,7 +7,6 @@ import {
   gradeTiers,
   gradingNote,
   loseConditions,
-  outcomeNote,
   outcomeThesis,
   phaseLevelNote,
   teamNote,
@@ -15,37 +14,6 @@ import {
   type HeistPhase,
 } from "@/content/break-in-overview";
 import { getRole } from "@/content/break-in-roles";
-
-/**
- * Break-In — the run console: eight minutes, four phases, one outcome.
- *
- * This is the TEMPORAL view of the heist, and it is deliberately not the level
- * flowchart further down the page. That one is a floor plan: which spaces, in
- * which order, with which route splits. This one has no rooms in it at all —
- * it is a clock with objectives laid on it, and its whole argument is a shape
- * the floor plan cannot draw: phase 03 runs *underneath* phase 02 rather than
- * after it, so the team is solving two loot paths with four players at the same
- * time. `phaseLevelNote` says that relationship out loud on the page, so the
- * reader is never left to work out why there are four phases and five stages.
- *
- * Three bands in one bezel, the same instrument language as the level console:
- *
- *   1. THE CLOCK — a ruler from 00:00 to 08:00 with the phases drawn as blocks
- *      at their real windows, on two lanes. Widths are minutes; nothing is
- *      spaced for looks, which is why phase 02 is the widest thing on screen.
- *   2. THE PHASE PANELS — four columns expanding each block into who is doing
- *      what, the tasks, and the risk/reward decision the phase is built around.
- *   3. THE OUTCOME — the win AND, the lose OR, and the convergence diagram that
- *      makes "one caught, everyone fails" a picture rather than a claim.
- *
- * Static: no state, no client JS. GEOMETRY lives here, the run lives in
- * `break-in-overview`.
- */
-
-/* ---- clock geometry -----------------------------------------------------
-   One scale for the whole diagram: x is minutes, always. Sized so the phase
-   names sit at 15px and the small mono at 10px on a desktop band; below about
-   980px it scrolls rather than shrinks, the same bargain the floor plan makes. */
 
 const VB_W = 1160;
 const VB_H = 316;
@@ -67,7 +35,6 @@ const PAD_IN = 14;
 const MAIN_MID = MAIN_Y + BLOCK_H / 2;
 const PAR_MID = PAR_Y + BLOCK_H / 2;
 
-/** Minutes to user units. The only conversion in the file. */
 function x(minutes: number): number {
   return PAD_X + (minutes / RUN_MINUTES) * TRACK_W;
 }
@@ -79,7 +46,6 @@ function phaseBox(phase: HeistPhase) {
   return { x: left, y, w: right - left, h: BLOCK_H, right, cx: (left + right) / 2, cy: y + BLOCK_H / 2 };
 }
 
-/** Greedy wrap to a character budget. The budget is derived from the box width. */
 function wrap(text: string, max: number): string[] {
   const lines: string[] = [];
   let current = "";
@@ -101,15 +67,10 @@ const pct = (n: number) => `${(n * 100).toFixed(2)}%`;
 const mainPhases = heistPhases.filter((p) => p.lane === "main");
 const parallelPhase = heistPhases.find((p) => p.lane === "parallel");
 
-/* ---- 1 · the clock ------------------------------------------------------ */
 
 function PhaseBlock({ phase }: { phase: HeistPhase }) {
   const box = phaseBox(phase);
   const inner = box.w - PAD_IN * 2;
-  /* ~5.9 user units per character at 10.5px in the body face — a deliberately
-     pessimistic budget, so a line of caps or long words still clears the right
-     padding. Two lines is the cap: the panels below carry the phase in full, so
-     a third line here would be duplication set in worse type. */
   const lines = wrap(phase.objective, Math.max(18, Math.floor(inner / 5.9))).slice(0, 2);
 
   return (
@@ -122,11 +83,10 @@ function PhaseBlock({ phase }: { phase: HeistPhase }) {
         width={box.w - 1}
         height={box.h - 1}
       />
-      {/* The accent spine on the left edge: where the phase starts, to the minute. */}
       <rect className="hl-block-edge" x={box.x} y={box.y} width={2.5} height={box.h} />
 
       <text className="hl-block-index" x={box.x + PAD_IN} y={box.y + 21}>
-        PHASE {String(phase.order).padStart(2, "0")}
+        PHASE {String(phase.order).padStart(2)}
       </text>
       <text
         className="hl-block-window"
@@ -147,7 +107,6 @@ function PhaseBlock({ phase }: { phase: HeistPhase }) {
         </text>
       ))}
 
-      {/* Pressure, as the width of the bar. Same 0–1 scale the panels read. */}
       <rect className="hl-block-rail" x={box.x + PAD_IN} y={box.y + 85} width={inner} height={3} />
       <rect
         className="hl-block-fill"
@@ -198,8 +157,6 @@ function ClockTrack() {
         </marker>
       </defs>
 
-      {/* ---- the ruler: green through amber to red, the same scale the page's
-              alarm rail runs on, so the clock and the alarm read as one idea. */}
       <line className="hl-ruler" x1={PAD_X} y1={RULER_Y} x2={x(RUN_MINUTES)} y2={RULER_Y} />
       {minutes.map((m) => (
         <line
@@ -226,11 +183,8 @@ function ClockTrack() {
         );
       })}
 
-      {/* The wall at 08:00, drawn the full height of the diagram because it
-          applies to every lane at once. */}
       <line className="hl-deadline" x1={x(RUN_MINUTES)} y1={RULER_Y} x2={x(RUN_MINUTES)} y2={VB_H - 8} />
 
-      {/* ---- the spine: phase to phase, straight through the gap ---- */}
       {mainPhases.slice(0, -1).map((phase, i) => {
         const a = phaseBox(phase);
         const b = phaseBox(mainPhases[i + 1]);
@@ -244,9 +198,6 @@ function ClockTrack() {
         );
       })}
 
-      {/* ---- the parallel path: opened out of phase 01, closing into phase 04.
-              Dashed and right-angled, so it reads as a branch off the spine
-              rather than a step in it. */}
       {par && (
         <>
           <path
@@ -260,10 +211,10 @@ function ClockTrack() {
             markerEnd="url(#hl-arrow)"
           />
           <text className="hl-lane-note" x={PAD_X + 2} y={PAR_MID - 4}>
-            SECOND LOOT PATH
+            ANOTHER LOOT PATH
           </text>
           <text className="hl-lane-sub" x={PAD_X + 2} y={PAR_MID + 10}>
-            runs alongside phase 02
+            runs at the sime time as phase 2
           </text>
         </>
       )}
@@ -274,8 +225,6 @@ function ClockTrack() {
     </svg>
   );
 }
-
-/* ---- 2 · the phase panels ---------------------------------------------- */
 
 function PhaseField({ label, children }: { label: string; children: React.ReactNode }) {
   return (
@@ -292,7 +241,7 @@ function PhasePanels() {
       {heistPhases.map((phase) => (
         <li key={phase.id} className={`hl-phase is-${phase.lane}`}>
           <p className="mono hl-phase-kicker">
-            <span>Phase {String(phase.order).padStart(2, "0")}</span>
+            <span>Phase {String(phase.order).padStart(2)}</span>
             <span className="hl-phase-mech">{phase.mechanic}</span>
           </p>
           <h4 className="hl-phase-name">{phase.name}</h4>
@@ -309,7 +258,7 @@ function PhasePanels() {
             <p className="hl-objective">{phase.objective}</p>
           </PhaseField>
 
-          <PhaseField label="On the clock">
+          <PhaseField label="">
             <ul className="hl-beats">
               {phase.beats.map((beat) => (
                 <li key={beat.text} className="hl-beat">
@@ -347,11 +296,6 @@ function PhasePanels() {
     </ol>
   );
 }
-
-/* ---- 3 · the outcome ----------------------------------------------------
-   Four rows onto one bus onto one node. Right-angle conduit, the same drawing
-   language the role graph's wires use — this is the same claim those wires
-   make, resolved into a single result. */
 
 const G_W = 500;
 const G_H = 196;
@@ -424,8 +368,6 @@ function ExtractionGate() {
             height={30}
           />
           <text className="hl-gate-chip-label" x={G_LABEL_X + 12} y={G_ROW_Y[i] + 4}>
-            {/* "The " is dropped so the four names and the OUT state never
-                collide inside a 172-unit chip. */}
             {getRole(entry.id).name.replace(/^The /, "")}
           </text>
           <text
@@ -444,7 +386,7 @@ function ExtractionGate() {
         ALL FOUR CLEAR
       </text>
       <text className="hl-gate-out-sub" x={G_OUT_X + G_OUT_W / 2} y={G_MID + 15} textAnchor="middle">
-        RUN BANKED · INSIDE 08:00
+        HEIST DONE AND INSIDE 08:00
       </text>
     </svg>
   );
@@ -462,7 +404,7 @@ function OutcomeBand() {
         <section className="hl-state is-win">
           <p className="mono hl-state-tag">
             <span className="hl-state-dot" aria-hidden="true" />
-            Win · all of
+            Win
           </p>
           <ul className="hl-conditions">
             {winConditions.map((c) => (
@@ -477,7 +419,7 @@ function OutcomeBand() {
         <section className="hl-state is-lose">
           <p className="mono hl-state-tag">
             <span className="hl-state-dot" aria-hidden="true" />
-            Lose · either of
+            Lose
           </p>
           <ul className="hl-conditions">
             {loseConditions.map((c) => (
@@ -490,11 +432,6 @@ function OutcomeBand() {
         </section>
       </div>
 
-      <p className="hl-outcome-note">{outcomeNote}</p>
-
-      {/* The grade. It belongs here rather than in a section of its own: it is
-          the second half of the same question the two cards above answer, and
-          it only applies once they have been answered yes. */}
       <section className="hl-grades">
         <div className="hl-grades-head">
           <h4 className="hl-grades-title">Then it is graded</h4>
@@ -508,7 +445,6 @@ function OutcomeBand() {
               <div className="hl-grade-bar" aria-hidden="true">
                 <span className="hl-grade-fill" style={{ width: pct(tier.weight) }} />
               </div>
-              <p className="hl-grade-body">{tier.body}</p>
             </li>
           ))}
         </ol>
@@ -518,12 +454,9 @@ function OutcomeBand() {
   );
 }
 
-/* ---- the console ------------------------------------------------------- */
-
 export default function HeistLoop() {
   return (
     <div className="hl">
-      {/* Attribution first, before anything it could be mistaken for. */}
       <aside className="hl-credit" aria-label="Attribution">
         <p className="mono hl-credit-tag">{teamNote.headline}</p>
         <p className="hl-credit-role">
@@ -534,17 +467,16 @@ export default function HeistLoop() {
 
       <div className="panel hl-console">
         <div className="hl-console-head">
-          <p className="mono hl-console-tag">Run structure · 08:00 on the clock</p>
+          <p className="mono hl-console-tag">The Gameplay structure</p>
           <p className="mono hl-console-meta">
-            {heistPhases.length} phases · 2 loot paths · 1 collective outcome
+            {heistPhases.length} phases · 2 loot paths
           </p>
         </div>
 
         {/* 1 — the clock */}
         <section className="hl-band">
           <div className="hl-band-head">
-            <h3 className="hl-band-title">The core loop, in time</h3>
-            <p className="mono hl-band-meta">Blocks are drawn at their real minute windows</p>
+            <h3 className="hl-band-title">The Gameplay Loop</h3>
           </div>
           <div
             className="hl-screen hl-track-scroll"
@@ -554,33 +486,20 @@ export default function HeistLoop() {
           >
             <ClockTrack />
           </div>
-          {/* RESTORED, and deliberately narrow-only. This frame has no drag
-              handler and no key handler — it is a plain `overflow-x: auto` box —
-              so it does NOT qualify for the site's InteractiveHint, in either
-              mode: `select` would be a lie (nothing in it is pickable) and
-              `pan` was also a lie (it promises dragging and arrow keys that do
-              not exist). A chip that over-promises teaches a reader to distrust
-              the chips on the figures where the targets are real. This note
-              appears only at the widths where the drawing genuinely overflows,
-              which is the one true thing there is to say. */}
           <p className="mono mono-note hl-scroll-note">Scroll the clock sideways to follow the run →</p>
           <p className="hl-band-note">{phaseLevelNote}</p>
         </section>
 
-        {/* 2 — the phases in full */}
         <section className="hl-band">
           <div className="hl-band-head">
             <h3 className="hl-band-title">Phase breakdown</h3>
-            <p className="mono hl-band-meta">Four phases · who does what, and what it costs</p>
           </div>
           <PhasePanels />
         </section>
 
-        {/* 3 — how a run ends */}
         <section className="hl-band">
           <div className="hl-band-head">
-            <h3 className="hl-band-title">How a run ends</h3>
-            <p className="mono hl-band-meta">Win is an AND · lose is an OR</p>
+            <h3 className="hl-band-title">How the gameplay</h3>
           </div>
           <OutcomeBand />
         </section>

@@ -119,7 +119,7 @@ export const shatteredSkiesChapterList: readonly Chapter[] = [
 export const breakInChapters = {
   overview: { id: "overview", title: "The Vision", note: "What the game is" },
   inMotion: { id: "in-motion", title: biInMotion.title, note: "A clip and two rooms" },
-  theRun: { id: "the-run", title: "Eight minutes, four phases", note: "The shape of one heist" },
+  theRun: { id: "the-run", title: "Eight minutes of tension", note: "The shape of one heist" },
   role: { id: "my-role", title: "My Contribution", note: "What I designed and built" },
   systems: {
     id: "signature-systems",

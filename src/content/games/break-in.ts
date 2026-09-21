@@ -18,7 +18,10 @@ export const breakIn: Project = {
   posterAlt: "Break-In key art placeholder",
 
   vision:
-    "Break-In is a four-player co-op bank heist with a deliberate cruelty at its centre: the players cannot talk to each other. There is no voice channel by design. Instead, four asymmetric roles (Hacker, Insider, Vaultsnatcher, and Lockpicker) each hold one piece of a puzzle none of them can finish alone, and the only way to coordinate is through the tools the game gives them. Steal as much as you can in eight minutes, and escape together, undetected. If one player is caught, everyone loses.",
+    "Break-In is a four-player co-op sealthy bank heist game which main mechanic is that players cannot talk with each other. " +
+    "Intead, players can choose between four assymetric roles (Hacker, Insider, Vaultsnatcher and the Lockpicker) to solve one " +
+    "piece of the big puzzle that is the heist. The only way to coordinate is throught some tools they are given in the " +
+    "game. Steal as much as you can in eight minutes and escape together undetected. If one player gets caught, is game over.",
 
   roles: [
     {
@@ -63,50 +66,31 @@ export const breakIn: Project = {
     resolution: "Replaced voice chat with three diegetic coordination channels.",
   },
 
-  /* Every bullet below maps to a section that shows the work. "The game modes,
-     and the monetisation model" used to close the first one and no longer does:
-     the game was never shipped, so there was no monetisation — that chapter was
-     a GDD-completeness requirement rather than a designed deliverable — and the
-     extra modes were an idea that was never built. Neither is a contribution to
-     claim, so both were removed rather than given a section. Do not re-add them. */
-  /* MOVED, AND CUT IN THE SAME CHANGE. This block used to close the page.
-     After ~5,000 words it read as a recap of five sections the reader had
-     already been through; at the §04 position, directly after the team note in
-     §03, it reads as a promise of the six that follow. The ownership map's
-     Merge #6.
-
-     Moving an untrimmed recap only relocates it, so every enumeration went
-     with the move. "Detection & feedback" used to name all three channels,
-     which §07 draws; "Pressure loop" recapped §09's three balancing rules;
-     "Role & interdependency" recapped §05's nine wires; "Audio direction"
-     listed the three cues §08 now owns. Each bullet is one line and names the
-     section that shows the work, so nothing here is the sole claim for
-     anything. */
   contributions: [
     {
       label: "Lead design & direction",
       description:
-        "Led the design across a team of four and authored most of the design document — the roles, the mechanics, the puzzle styles and the balancing.",
+        "Led the design team and communicated with the engineering team. Designed most of the design documents, like the roles, the mechanics, the puzzle and the balancing.",
     },
     {
       label: "Role & interdependency design",
       description:
-        "Designed the four asymmetric roles and tuned them so no seat can carry a run and none is dead weight. §05 draws the web.",
+        "Designed the four asymmetric roles and tuned them so cooperation truly worked and they needed each other to complete the game.",
     },
     {
       label: "Detection & feedback systems",
       description:
-        "Designed the detection state machine and the redundant danger signal that runs alongside it. §07 is the machine itself.",
+        "Designed the detection state machine and the danger signal.",
     },
     {
       label: "Pressure loop & difficulty",
       description:
-        "Built the eight-minute pressure loop, the adaptive difficulty under it, and a reward model that pays out on a failed run. §03 and §09.",
+        "Built the eight-minute pressure loop, the difficulty and the risk/reward design.",
     },
     {
       label: "Audio direction & level design support",
       description:
-        "Directed the audio — score, clock and action cues — and co-authored the bank layout with the team's level designer. §06 and §08.",
+        "Directed the audio, clock and action cues. Co-designed the bank layout with the team's level designer.",
     },
   ],
 };

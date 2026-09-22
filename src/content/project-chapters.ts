@@ -123,11 +123,11 @@ export const breakInChapters = {
   role: { id: "my-role", title: "My Contribution", note: "What I designed and built" },
   systems: {
     id: "signature-systems",
-    title: "Nobody wins alone",
+    title: "Winning by Cooperating",
     note: "The four roles and their wiring",
   },
   levels: { id: "level-design", title: "The Route", note: "The level design and the map" },
-  stealth: { id: "stealth", title: "Being Seen", note: "The detection states" },
+  stealth: { id: "stealth", title: "The Detection System", note: "The detection states" },
   audio: { id: "audio", title: "What the heist sounds like", note: "The audio direction" },
   balance: { id: "balance", title: "Tuned so nobody can carry", note: "The balance data" },
   challenge: {

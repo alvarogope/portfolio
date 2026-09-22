@@ -14,39 +14,6 @@ import {
 } from "@/content/break-in-level";
 import { getRole } from "@/content/break-in-roles";
 
-/**
- * Break-In — the level console: how the bank is routed, and how it is paced.
- *
- * One bezel holding three screens, read top to bottom:
- *
- *   1. THE ROUTE — the floor plan as a blueprint ribbon. Left to right, with
- *      the two places the team splits drawn as two parallel lanes that rejoin.
- *   2. THE PACING CURVE — the five stages' intended tension as a line. This is
- *      the headline: the shape argues that the quiet stage is load-bearing.
- *   3. THE STAGE BREAKDOWN — five columns, one per stage, with the objective,
- *      the mechanic, the role it is tuned around, the hazards and the feeling.
- *
- * The curve's five points sit at the centres of five equal slots, and the stage
- * panels are the same five-column grid, so every point stands directly over the
- * stage it belongs to. That alignment is the whole reason the three screens
- * read as one instrument rather than three pictures.
- *
- * GEOMETRY lives here, not in the data file — same split as `RoleGraph`. The
- * ribbon's columns are derived from the links rather than authored: rank by
- * longest path, lane by `track`. Add a space to the route and it lays itself
- * out.
- *
- * STAGE 1 is static: no state, no client JS. `tensionGeometry` and
- * `tensionPathD` are exported alongside `TensionCurve`, so a Stage 2 "tension
- * spine" can draw the same five points somewhere else without re-deriving the
- * curve or re-reading the data.
- */
-
-/* ---- route ribbon geometry ---------------------------------------------
-   Sized so the ribbon renders about 1:1 at the widest desktop band — node
-   labels at 12px, the tags under them at 9px, which is where `RoleGraph` puts
-   its own camera captions. Narrower than that it scrolls rather than shrinks:
-   a floor plan whose labels have gone to 7px has stopped being a floor plan. */
 const R_PAD_X = 18;
 const R_NODE_W = 112;
 const R_NODE_H = 46;
@@ -59,11 +26,6 @@ const R_LABEL = 12;
 const R_LINE_H = 15;
 const R_WRAP = 12;
 
-/**
- * Column per node: the longest path from the entry. The route is
- * series-parallel, so every link joins adjacent columns and the rank is also
- * the drawing order. Twelve nodes, so the naive relaxation is free.
- */
 const routeColumn: Map<RouteNodeId, number> = (() => {
   const col = new Map<RouteNodeId, number>(routeNodes.map((n) => [n.id, 0]));
   for (let pass = 0; pass < routeNodes.length; pass += 1) {
@@ -83,7 +45,6 @@ const routeColumn: Map<RouteNodeId, number> = (() => {
 const R_COLS = routeNodes.reduce((n, node) => Math.max(n, routeColumn.get(node.id) ?? 0), 0);
 const R_VB_W = R_PAD_X * 2 + R_COLS * R_COL_PITCH + R_NODE_W;
 
-/** Track `a` takes the upper lane, `b` the lower, everything else the spine. */
 function laneOf(id: RouteNodeId): number {
   const track = getRouteNode(id).track;
   return track === "a" ? -1 : track === "b" ? 1 : 0;
@@ -95,9 +56,6 @@ function nodeBox(id: RouteNodeId) {
   return { x, y: cy - R_NODE_H / 2, cx: x + R_NODE_W / 2, cy, right: x + R_NODE_W };
 }
 
-/** An L or a straight run through the gap between two columns. Right angles
-    only, so the ribbon reads as conduit — the same drawing language the role
-    graph's wires use. */
 function linkPath(from: RouteNodeId, to: RouteNodeId): string {
   const a = nodeBox(from);
   const b = nodeBox(to);
@@ -106,15 +64,12 @@ function linkPath(from: RouteNodeId, to: RouteNodeId): string {
   return `M ${a.right} ${a.cy} H ${mid} V ${b.cy} H ${b.x}`;
 }
 
-/** The tag under a node. Beats carry none: two parallel lanes between a split
-    and a rejoin already say what they are, and a label on each would be four
-    ways of writing "still split". */
 const KIND_TAG: Record<RouteNodeKind, string | null> = {
   entry: "Entry",
-  split: "Split",
+  split: "",
   beat: null,
-  merge: "Rejoin",
-  goal: "Objective",
+  merge: "",
+  goal: "",
 };
 
 function wrap(text: string, max = R_WRAP): string[] {
@@ -219,19 +174,9 @@ function RouteRibbon() {
   );
 }
 
-/* ---- pacing curve ------------------------------------------------------
-   The plot is drawn with `preserveAspectRatio="none"` and a CSS height, so it
-   fills whatever box it is given at any width. Every stroke carries
-   `vector-effect="non-scaling-stroke"`, which is what makes that safe: the
-   line stays 2px and the markers stay 9px on a 360px phone and on a 1300px
-   desktop alike, instead of thinning to a hair at one end and bloating at the
-   other. The markers are zero-length round-capped strokes for the same reason
-   — a circle's radius would scale, a round cap does not. */
 const C_VB_W = 1000;
 const C_VB_H = 280;
-/** y for tension 1. The headroom above it is where the peak's label goes. */
 const C_TOP = 54;
-/** y for tension 0, and the baseline the area fill closes on. */
 const C_BOTTOM = 250;
 
 export interface TensionPlotPoint {
@@ -240,12 +185,6 @@ export interface TensionPlotPoint {
   point: (typeof tensionPoints)[number];
 }
 
-/**
- * Maps the unitless curve onto a box, one slot per stage with the point at the
- * slot's centre — the same five slots the stage panels below are laid out in.
- * Exported for a Stage 2 treatment that wants the same five points at another
- * size.
- */
 export function tensionGeometry({
   width = C_VB_W,
   top = C_TOP,
@@ -260,12 +199,6 @@ export function tensionGeometry({
   }));
 }
 
-/**
- * The curve through those points: one cubic per segment with horizontal
- * tangents. Each stage reads as a level the run holds and the sweep between
- * them as the change — and because the control points are level with their
- * endpoints, the line can never overshoot a value the design did not set.
- */
 export function tensionPathD(points: { x: number; y: number }[]): string {
   if (points.length === 0) return "";
   let d = `M ${points[0].x} ${points[0].y}`;
@@ -278,9 +211,6 @@ export function tensionPathD(points: { x: number; y: number }[]): string {
   return d;
 }
 
-/** A fraction as a percentage string. Rounded: 0.55 * 100 is
-    55.00000000000001 in binary floating point, and that should not end up in
-    the markup. Two decimals is a tenth of a pixel at this width. */
 const pct = (n: number) => `${Math.round(n * 10000) / 100}%`;
 
 export function TensionCurve() {
@@ -290,9 +220,6 @@ export function TensionCurve() {
   const last = points[points.length - 1];
   const area = `${line} L ${last.x} ${C_BOTTOM} L ${first.x} ${C_BOTTOM} Z`;
 
-  /* The two points the curve is about get a label; the other three are named
-     on the axis. A number over every marker would bury the shape, which is the
-     only thing the chart is for. */
   const marked = new Map([
     [tensionLow.stage, "Release"],
     [tensionPeak.stage, "Climax"],
@@ -309,8 +236,6 @@ export function TensionCurve() {
           aria-labelledby="lf-curve-title lf-curve-desc"
         >
           <title id="lf-curve-title">Intended tension across the five stages</title>
-          {/* The shape is argued in the visible caption below; this carries
-              the five values, which the plot itself never prints. */}
           <desc id="lf-curve-desc">
             {`Intended tension, calm to peak, across the five stages in run order. ${tensionPoints
               .map((p) => `${p.name}: ${tensionBand(p.y)}, ${Math.round(p.y * 100)} percent`)
@@ -360,8 +285,6 @@ export function TensionCurve() {
             vectorEffect="non-scaling-stroke"
           />
 
-          {/* Ring first, dot over it: a 9px marker inside a 2px collar of the
-              screen colour, so it stays legible where it sits on the line. */}
           {points.map((p) => (
             <path
               key={`ring-${p.point.stage}`}
@@ -380,9 +303,6 @@ export function TensionCurve() {
           ))}
         </svg>
 
-        {/* Axis and annotations are HTML over the plot rather than text inside
-            it: the plot stretches to its box, and text that stretched with it
-            would be 4px on a phone and 23px on a desktop. */}
         <span className="mono lf-y-label" style={{ top: pct(C_TOP / C_VB_H) }}>
           Peak
         </span>
@@ -425,8 +345,6 @@ export function TensionCurve() {
   );
 }
 
-/* ---- stage panels ------------------------------------------------------ */
-
 function StageField({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <div className="lf-field">
@@ -444,7 +362,7 @@ function StagePanels() {
         return (
           <li key={stage.id} className="lf-stage">
             <p className="mono lf-stage-kicker">
-              <span>Stage {String(stage.order).padStart(2, "0")}</span>
+              <span>Stage {String(stage.order).padStart(2)}</span>
               <span className="lf-stage-mech">{stage.mechanic}</span>
             </p>
             <h4 className="lf-stage-name">{stage.name}</h4>
@@ -477,10 +395,6 @@ function StagePanels() {
               <p className="mono lf-meter-read">
                 Tension · {tensionBand(stage.tension)} · {Math.round(stage.tension * 100)}%
               </p>
-              {/* Why that number. Five bare percentages read as a spreadsheet
-                  export; this is the line that turns each one into a decision.
-                  It sits under the meter it explains rather than above it,
-                  because the number is the claim and this is the reason. */}
               <p className="lf-why">{stage.why}</p>
             </div>
           </li>
@@ -490,8 +404,6 @@ function StagePanels() {
   );
 }
 
-/* ---- the console ------------------------------------------------------- */
-
 const SPLIT_COUNT = routeNodes.filter((n) => n.kind === "split").length;
 
 export default function LevelFlow() {
@@ -499,18 +411,13 @@ export default function LevelFlow() {
     <div className="lf">
       <div className="panel lf-console">
         <div className="lf-console-head">
-          <p className="mono lf-console-tag">Level 01 · Central Bank</p>
-          <p className="mono lf-console-meta">
-            Plan view · {routeNodes.length} spaces · {SPLIT_COUNT} route splits ·{" "}
-            {levelStages.length} stages
-          </p>
+          <p className="mono lf-console-tag">Level 1 · Central Bank</p>
         </div>
 
         {/* 1 — the route */}
         <section className="lf-band">
           <div className="lf-band-head">
-            <h3 className="lf-band-title">Floor plan</h3>
-            <p className="mono lf-band-meta">Branching · splits and rejoins twice</p>
+            <h3 className="lf-band-title">The Floor Plan</h3>
           </div>
           <div
             className="lf-screen lf-ribbon-scroll"
@@ -520,23 +427,13 @@ export default function LevelFlow() {
           >
             <RouteRibbon />
           </div>
-          {/* RESTORED, and deliberately narrow-only. This frame has no drag
-              handler and no key handler — it is a plain `overflow-x: auto` box —
-              so it does NOT qualify for the site's InteractiveHint, in either
-              mode: `select` would be a lie (nothing in it is pickable) and
-              `pan` was also a lie (it promises dragging and arrow keys that do
-              not exist). A chip that over-promises teaches a reader to distrust
-              the chips on the figures where the targets are real. This note
-              appears only at the widths where the drawing genuinely overflows,
-              which is the one true thing there is to say. */}
           <p className="mono mono-note lf-scroll-note">Scroll the plan sideways to follow the route →</p>
         </section>
 
         {/* 2 — the pacing curve */}
         <section className="lf-band">
           <div className="lf-band-head">
-            <h3 className="lf-band-title">Intended pacing curve</h3>
-            <p className="mono lf-band-meta">Tension · calm to peak</p>
+            <h3 className="lf-band-title">The Pacing Curve</h3>
           </div>
           <div className="lf-screen">
             <TensionCurve />
@@ -546,8 +443,7 @@ export default function LevelFlow() {
         {/* 3 — the stage breakdown */}
         <section className="lf-band">
           <div className="lf-band-head">
-            <h3 className="lf-band-title">Stage breakdown</h3>
-            <p className="mono lf-band-meta">Five stages · in run order</p>
+            <h3 className="lf-band-title">The Stage Breakdown</h3>
           </div>
           <StagePanels />
         </section>

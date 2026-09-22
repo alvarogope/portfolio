@@ -499,7 +499,7 @@ export default function HeistLoop() {
 
         <section className="hl-band">
           <div className="hl-band-head">
-            <h3 className="hl-band-title">How the gameplay</h3>
+            <h3 className="hl-band-title">How the gameplay works</h3>
           </div>
           <OutcomeBand />
         </section>

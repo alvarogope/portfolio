@@ -130,9 +130,9 @@ export default function BreakInPage() {
         {/* ═══ 05 · SIGNATURE SYSTEMS ═══ */}
         <Reveal>
           <div id={ch.systems.id} style={GAP}>
-            <SectionHeading kicker="05 · Signature Systems" title={ch.systems.title} />
+            <SectionHeading kicker="Main Systems" title={ch.systems.title} />
             <p style={LEAD}>
-              <RoleTerms text="Those are the traps one role takes off another's board, and a teammate you need for the laser you cannot see is as load-bearing as one who hands you a key. Cut any one wire and the run ends. The Distraction clip at the top of the page is one of them firing." />
+              <RoleTerms text=  "Every element of the gameplay was designed so players had to cooperate and help each other succeed. The Distraction clip shows how these work in-game." />
             </p>
             <RoleGraph />
           </div>
@@ -141,9 +141,9 @@ export default function BreakInPage() {
         {/* ═══ 06 · LEVEL DESIGN ═══ */}
         <Reveal>
           <div id={ch.levels.id} style={GAP}>
-            <SectionHeading kicker="06 · Level Design" title={ch.levels.title} />
+            <SectionHeading kicker="Level Design" title={ch.levels.title} />
             <p style={LEAD}>
-              <RoleTerms text="The phase clock above was the run in time. This is the same run in space: the bank is one level with two places the team has to split up and two places it has to be back together." />
+              <RoleTerms text="The bank is one level divided in two places where the team has to split up so they could operate." />
             </p>
             <LevelFlow />
 
@@ -158,7 +158,7 @@ export default function BreakInPage() {
                   margin: "0 0 0.75rem",
                 }}
               >
-                From sketch to built
+                The level evolution
               </h3>
               <p
                 style={{
@@ -168,77 +168,69 @@ export default function BreakInPage() {
                   marginBottom: "1.75rem",
                 }}
               >
-                The bank as it was actually designed, in the order it happened: sketched on paper
-                with the team&rsquo;s level designer, cleaned up into two floors in one plan
-                language, blocked out while the rooms were still being argued about, then built and
-                dressed in Unity. I led the design and co-authored the layout; the build was the
-                team&rsquo;s.
+                The bank layout. Firstly, it was sketched on paper by me and the level designer, focused
+                on the two floors. We had to think where the players had to operate and always give them 
+                a solution to a potential problem depending on where they were in the map.
               </p>
               <PlateGrid
                 minWidth="29rem"
                 items={[
                   {
                     src: "/images/break-in/basement-plan-sketch.jpeg",
-                    label: "01 · Sketch — basement",
+                    label: "Phase 1 · Basement sketch",
                     alt: "Hand-drawn pen sketch of the bank basement, marking the security walk path, the laser trap, the digital-money loot room, the changing room and the hideout.",
                     caption:
-                      "The first pass, on paper. The security walk path along the top, the laser trap on the left, and the changing room already labelled for the Insider's disguise.",
+                      "The security walk path along the top, the laser trap on the left, and the changing room for the Insider's disguise.",
                   },
                   {
                     src: "/images/break-in/Basement_plan.png",
-                    label: "02 · Plan — basement",
+                    label: "Phase 2 · Basement plan",
                     alt: "Clean floor plan of the bank basement: laser trap, security walk path, digital money room, hideout, changing room for disguises, vault, and the basement entrance.",
                     caption:
-                      "The same drawing, cleaned up. This is the floor where the team splits: the Lockpicker takes the lasers, the Vaultsnatcher takes the vault, and neither can start without the other.",
+                      "The clean version of the sketch. Lasers placed and the final position of the vault.",
                   },
                   {
                     src: "/images/break-in/ground-floor-plan.png",
-                    label: "03 · Plan — ground floor",
+                    label: "Phase 3 · ground floor plam",
                     alt: "Clean floor plan of the bank ground floor: entry and waiting areas, reception desk, ATMs, manager's cabin, meeting room, back office, store room, server and security room, hideout spot, security gate, and the stairs to the basement.",
                     caption:
-                      "The starting floor, in the same language. The server room the Insider has to reach and the hideout spot the run keeps returning to are both named here.",
+                      "The ground floor plan. The server room where the Insider has to reach and the hideout spot.",
                   },
-                  {
-                    src: "/images/break-in/basement-blockout.jpeg",
-                    label: "04 · Block-out — basement",
-                    alt: "Early block-out diagram of the bank basement drawn as flat rectangles: a management area, a PC area labelled as the hack point, and the vault, with one edge marked in red and a small room outlined in blue.",
-                    caption:
-                      "The basement while the rooms were still being argued about. The vault is already fixed, but the loot room is a generic “PC area” rather than the digital-money room it became, and the changing room does not exist yet.",
-                  },
+
                   {
                     src: "/images/break-in/ground-floor-blockout-cameras.jpeg",
-                    label: "05 · Block-out — ground floor, cameras marked",
+                    label: "Phase 4 · Cameras placement",
                     alt: "Early block-out diagram of the bank ground floor: the stairs outlined in red, a hideout in blue, a cash area in green, the reception desk, and three purple triangles marking camera positions against a printed key reading Cameras.",
                     caption:
-                      "The same pass on the ground floor, and the only sheet anywhere that places the cameras — the three purple triangles, against a printed key. Deciding where they point is what makes the Hacker a role rather than a helper: the CCTV coverage drawn here is the whole of what that seat can see.",
+                      "The placement of where the cameras should eventually go. Every triangle is a camera. Their pacement had a lot of reasoning and specially related to what The Hacker can see and also what their now allow to see to nt give him too much power.",
                   },
                   {
                     src: "/images/break-in/ground-floor-greybox.jpeg",
-                    label: "06 · Built — ground floor",
+                    label: "Phase 5 · The game ground floor",
                     alt: "Cut-away view of the built bank ground floor from above: the lobby with its ATMs and seating, reception, the back offices and the store room, matching the ground-floor plan.",
                     caption:
-                      "The ground floor, room for room against the plan above — the lobby, the back offices, the store room. Standing it up early is what let us walk patrol timings before anything was final.",
+                      "The ground floor: the lobby, the back offices, the store room. Standing it up early is what let us test the patrol timings before anything else was built.",
                   },
                   {
                     src: "/images/break-in/basement-greybox.jpeg",
-                    label: "07 · Built — basement",
+                    label: "Phase 6 · The game basement",
                     alt: "Cut-away view of the built bank basement from above with the laser grid switched on, showing the stairs down and the rooms from the basement plan.",
                     caption:
-                      "The basement, with the lasers live. The trap that is arrows on paper at the top of this band is a real volume here, which is where its timing got tuned.",
+                      "The basement, with the lasers in the game and the rest of the rooms.",
                   },
                   {
                     src: "/images/break-in/Vault.png",
-                    label: "08 · Built — the vault",
+                    label: "Phase 7 · the vault",
                     alt: "The vault door in the built basement, the object the Vaultsnatcher's role is built around.",
                     caption:
-                      "The vault door. The one object the Vaultsnatcher's whole role turns on, and the reason the decoy-swap timer is measured in single seconds.",
+                      "The vault door.",
                   },
                   {
                     src: "/images/break-in/Digital_Money_Room.png",
-                    label: "09 · Built — digital money",
+                    label: "Phase 8 · The Pc room",
                     alt: "The digital-money room in the built basement: banks of monitors on desks around three walls, a lit server rack on a plinth in the centre, and the door out.",
                     caption:
-                      "The digital-money room. These are the hidden PCs the Lockpicker strips, one room away from the vault the Vaultsnatcher is working.",
+                      "Where the Lockpicker has to place the USB, also next to the vault, making them escape together.",
                   },
                 ]}
               />
@@ -249,9 +241,9 @@ export default function BreakInPage() {
         {/* ═══ 07 · STEALTH ═══*/}
         <Reveal>
           <div id={ch.stealth.id} style={GAP}>
-            <SectionHeading kicker="07 · Stealth" title={ch.stealth.title} />
+            <SectionHeading kicker="Stealth" title={ch.stealth.title} />
             <p style={LEAD}>
-              <RoleTerms text="the design is in how loudly it announces itself. From the moment an enemy starts investigating, the player is being told three separate ways at once." />
+              <RoleTerms text="From the moment an enemy starts investigating, the player knows. These are the ways I decided to communicate it." />
             </p>
             <DetectionStates />
 
@@ -268,7 +260,7 @@ export default function BreakInPage() {
                   lineHeight: 1.6,
                 }}
               >
-                Hacker Vision. Five seconds of seeing enemies through walls, then thirty of not.
+                Hacker Vision: Five seconds of seeing enemies through walls.
               </figcaption>
             </figure>
           </div>

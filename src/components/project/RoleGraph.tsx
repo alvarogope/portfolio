@@ -24,98 +24,17 @@ import {
 } from "@/content/break-in-roles";
 import InteractiveHint from "./InteractiveHint";
 
-/**
- * The traps, by id. The ONLY thing this component takes from the detection
- * file: a T-number and a name, so a counter-link can cite the hazard it
- * answers. Nothing here knows what a trap does, what it costs, or that all
- * three skip the Investigating state — that is the state machine's to say,
- * and saying it twice is how two sections start disagreeing.
- */
 const trapById = new Map<string, AlarmTrigger>(alarmTriggers.map((t) => [t.id, t]));
 
-/**
- * Break-In — "Nobody wins alone": the role interdependency diagram.
- *
- * The four roles sit in a diamond and the dependencies between them are drawn
- * as right-angle conduit, the way wiring is drawn on a security panel. Each
- * node is dressed as a camera feed (CAM tag, REC light, scanlines), and a
- * readout panel beside the diamond expands whichever role is selected into its
- * discipline, its summary, its FULL ABILITY KIT, and the two lists that carry
- * the thesis: what it NEEDS, and what it gives.
- *
- * TWO WEBS ON ONE DIAGRAM. The wires answer two different questions and the
- * line styles keep them apart: what a role ENABLES for a teammate (`unlocks`,
- * `enables`) and what it TAKES OFF THAT TEAMMATE'S BOARD (`counters` — one
- * wire per trap, in gold). Both are the same argument. A role you need because
- * it hands you a window and a role you need because it kills the laser you
- * cannot see are equally load-bearing, and a diagram that drew only the first
- * was showing half the reason nobody wins alone.
- *
- * THE TRAPS ARE CITED, NOT EXPLAINED. A counter wire prints the trap's
- * T-number and the counter, and that is the whole of it: what each trap does,
- * what it costs and why it skips Investigating belong to the detection state
- * machine in §07, which is what the pointer under the line key says. This
- * diagram owns who saves you; that one owns what from.
- *
- * THE KIT LIVES IN THIS READOUT, not in a section of its own. The diagram
- * already sends a reader here to find out what a role does, so the detailed
- * answer belongs in the panel they are already looking at; a separate abilities
- * list further down the page would repeat the same four names with none of the
- * dependency context that makes them mean anything. `AbilityKit` below renders
- * it as labelled items rather than pills for the same reason — an ability with
- * a cost attached ("within one second", "three per run") stops being a tag.
- *
- * TUNING NUMBERS sit in their own chip beside the ability name rather than
- * buried in its sentence, so the four kits can be compared as budgets: the
- * Hacker's Vision is five seconds in every thirty-five, the Insider's Disguise
- * ten in every seventy. Only abilities that are actually tuned carry a chip.
- *
- * THE PUZZLE BLOCK closes each readout, and the Insider's says there is no
- * puzzle — which is the point of having it. An empty slot rendered as an empty
- * slot reads as an oversight; rendered as a stated decision it reads as design,
- * so `puzzleAsymmetryNote` is printed under the graph once, for all four.
- *
- * STAGE 2 makes the selection live. It is one piece of state, and click, tap,
- * hover and focus all do the same thing to it — so the ring on the node, the
- * lit conduit and the readout can never disagree. The highlight itself did not
- * change: it was already a pure function of `selected` (`linkTouches` /
- * `connectedRoles`), and every node and wire already carried its own
- * `is-selected` / `is-active` / `is-dim` class.
- *
- * The controls are HTML buttons laid over the drawing rather than the `<g>`
- * groups themselves. The SVG stays decorative and `aria-hidden`, and a real
- * `<button>` brings the tab stop, Enter/Space, the focus ring and a finger-sized
- * target with it — none of which an SVG group gives you the same way across
- * browsers.
- *
- * GEOMETRY lives here, not in the data file. The wires are hand-routed rather
- * than solved: with seven links, four nodes and a label on every one, an
- * automatic router costs more than it saves, and the lanes below are chosen so
- * that no two conduits cross and no label plate lands on a wire it does not
- * belong to.
- */
-
-/* ---- stage geometry ----------------------------------------------------
-   Two numbers set everything. Rendered type = unit size * (stage_px / VB_W),
-   and rendered height = stage_px * (VB_H / VB_W).
-
-   A near-square viewBox ties those together: any width that made the labels
-   readable also made the stage over 1000px tall. So the box is landscape
-   (1.49:1) instead. The diamond is wide and shallow — the vertical gaps hold
-   exactly one label plate each, the horizontal ones have room to spare — which
-   buys a ~630px-tall stage at a scale of ~1.1, i.e. the section fits a desktop
-   screen with the type still comfortably above 12px. */
 const VB_W = 860;
 const VB_H = 576;
 
-/** VB_W / VB_H. The stage's max-width is derived from this so a short viewport shrinks it. */
 const STAGE_ASPECT = (VB_W / VB_H).toFixed(4);
 
 const NODE_W = 200;
 const NODE_H = 92;
 const HEADER_H = 20;
 
-/** Diamond: Insider top, Hacker right, Vaultsnatcher bottom, Lockpicker left. */
 const NODE_POS: Record<RoleId, { x: number; y: number }> = {
   insider: { x: 430, y: 80 },
   hacker: { x: 710, y: 275 },
@@ -123,39 +42,18 @@ const NODE_POS: Record<RoleId, { x: number; y: number }> = {
   vaultsnatcher: { x: 430, y: 466 },
 };
 
-/** The escape-route bus: a perimeter conduit outside the diamond, plus one spur into each node. */
 const RING_D = "M 14 12 H 846 V 536 H 14 Z";
 
 interface WireRun {
   d: string;
-  /** False for the perimeter bus itself, which terminates at its spurs rather than at a node. */
   arrow: boolean;
 }
 
 interface WireGeo {
   runs: WireRun[];
-  /** Centre of the label plate. Sits on one of the run segments it belongs to. */
   label: { x: number; y: number };
 }
 
-/* Every route is an L or a Z between two node edges. Lanes were picked so no
-   wire crosses another or the perimeter bus: the two Insider/Hacker wires nest
-   in the top-right quadrant, the two Lockpicker/Vaultsnatcher wires nest
-   bottom-left, and Hacker to Lockpicker runs straight through the middle as
-   the spine.
-
-   THE TWO COUNTER WIRES TOOK THE LAST TWO EMPTY LANES, which is why they are
-   where they are rather than anywhere prettier. The stage was full: seven
-   labelled wires on an 860x576 box leaves two gaps a 122-unit label plate
-   fits in. The Hacker's second wire to the Lockpicker runs BELOW the spine at
-   y=352 — the band between the spine's plate (which ends at y=301) and the
-   Vaultsnatcher's roof (y=420) — so the pair's two wires read as a pair
-   without either sitting on the other. The Vaultsnatcher's team-wide counter
-   terminates on the escape bus in the bottom-right pocket, the one region
-   below y=466 that no wire crosses; landing an arrow on the perimeter rather
-   than on three separate nodes is the diagram's own vocabulary for "all", and
-   a second full ring 18 units inside the first would have read as a drawing
-   error rather than as a second bus. */
 const WIRES: Record<string, WireGeo> = {
   "insider-hacker": {
     runs: [{ d: "M 530 100 H 660 V 229", arrow: true }],
@@ -177,17 +75,10 @@ const WIRES: Record<string, WireGeo> = {
     runs: [{ d: "M 150 321 V 444 H 330", arrow: true }],
     label: { x: 166, y: 383 },
   },
-  /* Down out of the Hacker, west under the spine, up into the Lockpicker. The
-     lane at y=352 clears the spine plate above it and the Vaultsnatcher below,
-     and stops short of x=710 and x=150 so it crosses neither of the verticals
-     dropping past it. */
   "hacker-lockpicker-vision": {
     runs: [{ d: "M 660 321 V 352 H 200 V 321", arrow: true }],
     label: { x: 430, y: 352 },
   },
-  /* East out of the vault and down onto the escape bus: the trap this counters
-     puts the whole team on a clock, so the wire lands on the line the whole
-     team is on. */
   "vaultsnatcher-all": {
     runs: [{ d: "M 530 496 H 764 V 536", arrow: true }],
     label: { x: 647, y: 496 },
@@ -208,12 +99,6 @@ const WIRES: Record<string, WireGeo> = {
   },
 };
 
-/* ---- wire label typography ----
-   Plate width is measured from the longest wrapped line. JetBrains Mono
-   advances at 0.6em, so 11px type is 6.6 units per character. Dropping the
-   wrap from 22 characters to 16 buys the larger type for free: every plate
-   still comes in under 122 units wide — the clearance the lanes above were
-   laid out against — and pays for it in height, which the stage has to spare. */
 const LABEL_FONT = 11;
 const LABEL_CHAR_W = LABEL_FONT * 0.6;
 const LABEL_LINE_H = 14;
@@ -235,7 +120,6 @@ function wrapLabel(text: string, max = LABEL_WRAP): string[] {
   return lines;
 }
 
-/** Camera-framing brackets, drawn at the four corners of a node. */
 const CORNERS = [
   "M 3 12 V 3 H 12",
   `M ${NODE_W - 12} 3 H ${NODE_W - 3} V 12`,
@@ -245,16 +129,8 @@ const CORNERS = [
 
 type NodeState = "selected" | "linked" | "dim";
 
-/** The escape bus is a `protects` link, but it takes its own colour: it is the one line all four share. */
 const wireKind = (id: string, type: LinkType) => (id === "insider-all" ? "escape" : type);
 
-/* ---- interaction -------------------------------------------------------
-   The roster is the diagram's text equivalent on desktop, where it is clipped
-   off-screen. Rendering its cards as buttons at that width would put four
-   invisible focus stops in the tab order, so the card control only exists in
-   the compact band — where the roster *is* the diagram and the stage is
-   `display: none`. Exactly one set of role controls is focusable at any width,
-   and neither set is ever focusable while it cannot be seen. */
 const COMPACT_QUERY = "(max-width: 899px)";
 
 function subscribeCompact(onChange: () => void) {
@@ -265,11 +141,6 @@ function subscribeCompact(onChange: () => void) {
 
 const getCompact = () => window.matchMedia(COMPACT_QUERY).matches;
 
-/**
- * A node's box as stage percentages. The SVG meets its box exactly — width
- * 100%, height auto, one fixed aspect — so viewBox units map linearly onto the
- * overlay and a hit box stays on its feed at every stage size.
- */
 function hitBox(id: RoleId) {
   const pos = NODE_POS[id];
   return {
@@ -351,14 +222,6 @@ function WireTag({ x, y, text }: { x: number; y: number; text: string }) {
   );
 }
 
-/**
- * One dependency, as it reads in the readout panel and in the roster.
- *
- * A counter-link also prints WHICH trap, as the detection section's own
- * T-number and name. It is a citation and it is deliberately the shortest one
- * that works: "T1 · Lasers" is enough to find the trap in §07, and anything
- * longer would be this component restating a mechanic it does not own.
- */
 function LinkRow({
   type,
   who,
@@ -386,8 +249,6 @@ function LinkRow({
   );
 }
 
-/** Everything pointing AT this role — both webs, since being covered is a
-    dependency exactly like being switched on. */
 function NeedsList({ id }: { id: RoleId }) {
   const rows = incomingLinks(id);
   if (rows.length === 0) return <p className="rg-row-empty">Needs nothing to start.</p>;
@@ -397,7 +258,7 @@ function NeedsList({ id }: { id: RoleId }) {
         <LinkRow
           key={link.id}
           type={wireKind(link.id, link.type)}
-          who={`From · ${source.name}`}
+          who={`From ${source.name}`}
           label={link.label}
           trap={link.trap ? trapById.get(link.trap) : undefined}
         />
@@ -406,13 +267,6 @@ function NeedsList({ id }: { id: RoleId }) {
   );
 }
 
-/**
- * The outgoing links, split by web rather than listed together — which is the
- * text half of what the two line styles do on the diagram. A reader (or a
- * screen reader, which never sees the diagram at all) gets the same two
- * questions answered separately: what does this role switch on, and what does
- * it take off the board.
- */
 function GivesList({ id }: { id: RoleId }) {
   const rows = outgoingLinks(id).filter(({ link }) => link.type !== "counters");
   if (rows.length === 0) return <p className="rg-row-empty">Gives nothing on its own.</p>;
@@ -422,7 +276,7 @@ function GivesList({ id }: { id: RoleId }) {
         <LinkRow
           key={link.id}
           type={wireKind(link.id, link.type)}
-          who={targets.length > 1 ? "To · Every role" : `To · ${targets[0].name}`}
+          who={targets.length > 1 ? "To Every role" : `To ${targets[0].name}`}
           label={link.label}
         />
       ))}
@@ -430,12 +284,6 @@ function GivesList({ id }: { id: RoleId }) {
   );
 }
 
-/**
- * The counter web for one role. The empty case is stated rather than skipped,
- * for the same reason the Insider's missing mini-game is: three of the four
- * roles hold a trap counter, and a role that holds none is a fact about the
- * design, not a gap in the list.
- */
 function CountersList({ id }: { id: RoleId }) {
   const rows = outgoingLinks(id).filter(({ link }) => link.type === "counters");
   if (rows.length === 0) {
@@ -447,7 +295,7 @@ function CountersList({ id }: { id: RoleId }) {
         <LinkRow
           key={link.id}
           type="counters"
-          who={targets.length > 1 ? "For · Every role" : `For · ${targets[0].name}`}
+          who={targets.length > 1 ? "For Every role" : `For ${targets[0].name}`}
           label={link.label}
           trap={link.trap ? trapById.get(link.trap) : undefined}
         />
@@ -456,21 +304,11 @@ function CountersList({ id }: { id: RoleId }) {
   );
 }
 
-/**
- * The role's mini-game, or the fact that it has none. The absent case is
- * rendered rather than skipped: three of four roles having a puzzle is a
- * decision, and a blank where the fourth would be would read as a gap.
- */
 function PuzzleBlock({ puzzle }: { puzzle: RolePuzzle | null }) {
   if (!puzzle) {
-    /* Headline only. The full note is printed once under the graph, in the
-       design-rules band, because it is an argument about all four roles
-       rather than about this one — and rendering both put the same
-       paragraph on screen twice whenever the Insider was selected. */
     return (
       <div className="rg-puzzle is-none">
-        <p className="mono rg-puzzle-name">No mini-game &mdash; by design</p>
-        <p className="rg-puzzle-body">{puzzleAsymmetryNote.headline}, and the reason is under the graph.</p>
+        <p className="mono rg-puzzle-name">No mini-game</p>
       </div>
     );
   }
@@ -481,7 +319,7 @@ function PuzzleBlock({ puzzle }: { puzzle: RolePuzzle | null }) {
       <p className="rg-puzzle-body">{puzzle.body}</p>
       {puzzle.fail && (
         <p className="rg-puzzle-fail">
-          <span className="mono rg-puzzle-fail-label">On a failure</span>
+          <span className="mono rg-puzzle-fail-label">If failed</span>
           {puzzle.fail}
         </p>
       )}
@@ -489,11 +327,6 @@ function PuzzleBlock({ puzzle }: { puzzle: RolePuzzle | null }) {
   );
 }
 
-/**
- * A role's full kit. Labelled items, not pills: every one of these abilities
- * carries a cost or a dependency ("three per run", "within one second", "only
- * once the USB lands") and a pill has nowhere to put that.
- */
 function AbilityKit({ kit }: { kit: readonly RoleAbility[] }) {
   return (
     <ul className="rg-kit">
@@ -501,7 +334,6 @@ function AbilityKit({ kit }: { kit: readonly RoleAbility[] }) {
         <li key={ability.name} className="rg-kit-item">
           <p className="mono rg-kit-head">
             <span className="rg-kit-name">{ability.name}</span>
-            {/* The tuned numbers, set apart so the kits read as budgets. */}
             {ability.tuning && <span className="rg-kit-tuning">{ability.tuning}</span>}
           </p>
           <p className="rg-kit-body">{ability.body}</p>
@@ -522,10 +354,6 @@ function AbilityKit({ kit }: { kit: readonly RoleAbility[] }) {
 export default function RoleGraph({
   initialRole = DEFAULT_ROLE,
 }: {
-  /**
-   * The role the readout opens on, before anyone has touched the diagram.
-   * The page passes nothing and gets the Hacker, the hub of the web.
-   */
   initialRole?: RoleId;
 }) {
   const [selected, setSelected] = useState<RoleId>(initialRole);
@@ -537,30 +365,17 @@ export default function RoleGraph({
   const nodeState = (id: RoleId): NodeState =>
     id === selected ? "selected" : linked.has(id) ? "linked" : "dim";
 
-  /* Hover is sticky: it does not revert on leave, so the picture holds still
-     when the pointer wanders off the diamond and there is no flicker crossing
-     the gap between two nodes. Touch is left to the click that follows — a
-     synthetic pointerenter selecting first would only pick the same role. */
   const hover = (id: RoleId) => (event: React.PointerEvent) => {
     if (event.pointerType !== "touch") setSelected(id);
   };
 
   return (
     <>
-      {/* The site's shared chip, in SELECT mode — this figure genuinely has
-          targets, at every width. Above 900px they are the four camera feeds
-          in the diamond; below it the diamond is gone and the four roster
-          cards take the taps, so "role" is the word that is true in both
-          layouts. It sits outside `.rg` because `.rg` breaks out of the text
-          column on wide screens, and an instruction belongs in the column the
-          reader is reading, above the thing it explains. */}
       <InteractiveHint
         what="role"
         does="its ability kit, mini-game and every wire it sits on light up"
       />
       <div className="rg">
-      {/* The diagram is decorative: everything in it is spelled out in the
-          roster below, which is the text equivalent screen readers get. */}
       <div className="rg-stage">
         <svg
           viewBox={`0 0 ${VB_W} ${VB_H}`}
@@ -622,10 +437,6 @@ export default function RoleGraph({
           ))}
         </svg>
 
-        {/* The buttons are transparent and exactly the size of the feed they
-            cover; the lit state is drawn by the node underneath. Focus selects
-            as well as click, so tabbing through the diamond traces the web the
-            same way a pointer does. */}
         <div className="rg-hits" role="group" aria-label="Break-In roles">
           {breakInRoles.map((r) => (
             <button
@@ -643,10 +454,6 @@ export default function RoleGraph({
         </div>
       </div>
 
-      {/* The roster. Visually hidden beside the diagram on desktop, where it is
-          the diagram text equivalent; below 900px it *replaces* the diagram as
-          four stacked feed cards, because a diamond graph does not survive a
-          360px viewport. Same data, same links, no SVG. */}
       <ol className="rg-roster">
         {breakInRoles.map((r) => (
           <li key={r.id} className={`panel rg-card ${r.id === selected ? "is-selected" : ""}`}>
@@ -691,10 +498,6 @@ export default function RoleGraph({
         ))}
       </ol>
 
-      {/* The line key belongs to the graph, not to the selected role, so it
-          sits under the stage as a strip rather than stacked in the panel —
-          which is also what stops the panel from being the tallest thing on
-          screen. */}
       <div className="rg-key">
         <p className="mono rg-list-title rg-key-title">Line key</p>
         <ul className="rg-legend">
@@ -705,78 +508,58 @@ export default function RoleGraph({
               <span className="rg-legend-gloss">{linkTypeMeta[type].gloss}</span>
             </li>
           ))}
-          {/* The escape bus. It is a `protects` link in the data and the only
-              one, so it takes its gloss from that type rather than repeating
-              it — and its own style, because it is the one line all four are
-              on rather than a wire between two of them. */}
           <li className="rg-legend-row">
             <span className="rg-row-rule rg-row-rule--escape" aria-hidden="true" />
             <span className="mono rg-legend-term">Escape</span>
             <span className="rg-legend-gloss">{linkTypeMeta.protects.gloss}</span>
           </li>
         </ul>
-        {/* The pointer, and the whole of what this diagram says about trap
-            mechanics. One line, on purpose: the moment it explains what a
-            laser costs, there are two sections to keep in step instead of
-            one. */}
         <p className="rg-key-pointer">
-          What each trap does — and what tripping it costs the run — belongs to the detection
-          state machine in §07 · Being Seen. The counter wires only say who holds the answer.
+          The explanation of each trap is explained in the Detection State Machine
         </p>
       </div>
 
-      {/* The lobby rule. It belongs beside the graph rather than in a section
-          of its own because it is what makes the graph binding: every wire
-          above is a dependency you cannot opt out of by picking a second
-          Hacker. */}
       <div className="rg-notes">
         <aside className="rg-note">
-          <p className="mono rg-note-tag">Design rule · {selectionRule.headline}</p>
+          <p className="mono rg-note-tag">Design Decision - {selectionRule.headline}</p>
           <p className="rg-note-body">{selectionRule.body}</p>
           <p className="rg-note-credit">{selectionRule.credit}</p>
         </aside>
 
-        {/* The other half of the same argument: the roles are not variants of
-            each other, so they do not all get the same furniture. */}
         <aside className="rg-note">
-          <p className="mono rg-note-tag">Design rule · {puzzleAsymmetryNote.headline}</p>
+          <p className="mono rg-note-tag">Design decision - {puzzleAsymmetryNote.headline}</p>
           <p className="rg-note-body">{puzzleAsymmetryNote.body}</p>
           <p className="rg-note-credit">{puzzleAsymmetryNote.credit}</p>
         </aside>
       </div>
 
       <aside className="panel rg-panel">
-        {/* Keyed on the role so a change replays the swap rather than editing
-            the text in place under the reader's eye. */}
         <div className="rg-panel-detail" key={selected}>
           <p className="mono rg-panel-kicker">
-            Readout · {role.orbitLabel} · {role.cam} · {role.location}
+            Full Description · {role.orbitLabel} · {role.cam} · {role.location}
           </p>
           <h3 className="rg-panel-name">{role.name}</h3>
           <p className="mono rg-discipline">{role.discipline}</p>
 
-          <p className="mono rg-list-title">Ability kit</p>
+          <p className="mono rg-list-title">Abilities</p>
           <AbilityKit kit={role.kit} />
 
           <p className="mono rg-list-title">Mini-game</p>
           <PuzzleBlock puzzle={role.puzzle} />
 
-          <p className="mono rg-list-title">Needs (incoming)</p>
+          <p className="mono rg-list-title">Needs</p>
           <NeedsList id={selected} />
 
-          <p className="mono rg-list-title">Gives (outgoing)</p>
+          <p className="mono rg-list-title">Gives</p>
           <GivesList id={selected} />
 
-          <p className="mono rg-list-title">Counters (traps)</p>
+          <p className="mono rg-list-title">Traps</p>
           <CountersList id={selected} />
         </div>
 
-        <p className="rg-thesis">Nobody wins alone</p>
+        <p className="rg-thesis">Cooperate to win</p>
       </aside>
 
-      {/* The readout is display:none in the compact band and the roster carries
-          the detail there, so this one line is what reports a change of
-          selection at every width. */}
       <p className="rg-sr-live" role="status">
         {role.name} selected · {role.location}
       </p>

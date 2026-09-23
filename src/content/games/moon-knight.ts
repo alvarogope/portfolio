@@ -50,7 +50,7 @@ export const moonKnight: Project = {
       label: "Quantum abilities design",
       description:
         "Extrapolated quantum computing principles and translated them into video games. " + 
-        "Each of them has their own risks and rewards, making the player learn how to use them",
+        "Each of them has their own risks and rewards, making the player learn how to use them.",
     },
     {
       label: "Anti-farming Skill Points",
@@ -77,7 +77,7 @@ export const moonKnight: Project = {
       name: "Master of Matters",
       body: "Embed the sword with different elements: Fire, Lightning and Water. This applies more damage and is very effective against enemies " +
             "made out of a certain material or whose defences are very useful against normal melee attacks. " +
-            "The ability rewards players who learn the enemies defences and penalises players by wasting an equipped slot.",
+            "The ability rewards players who learn the enemies' defences and penalises players by wasting an equipped slot.",
       annotation: "Quantum basis · Majorana states · topologically protected qubits",
       availableTo: ["Player", "Enemy"],
     },

@@ -112,7 +112,7 @@ export const castMirror: readonly [MirrorMember, MirrorMember] = [
       "She follows you from The Woods to the Misty Lands to the Frozen Mountains so the player can upgrade every time they need.",
     answer: "Kill the gods. Begin the Age of Humankind.",
     designPurpose:
-      "She embraces the mysteries of the world and faces the gods. If you follow her quest she opens up one ending",
+      "She embraces the mysteries of the world and faces the gods. If you follow her quest she opens up one ending.",
   },
   {
     id: "druid",
@@ -122,7 +122,7 @@ export const castMirror: readonly [MirrorMember, MirrorMember] = [
     stance: "Faith",
     accent: "#C9A961",
     role:
-      "In a Misty Lands village, he asks for help with defeating banshees. If you agree, he reveals a hidden fortress. He comes back in the Frozen Mountains",
+      "In a Misty Lands village, he asks for help with defeating banshees. If you agree, he reveals a hidden fortress. He comes back in the Frozen Mountains.",
     answer: "Keep it buried. The world is not ready to know.",
     designPurpose:
       "He discovers the fallacy, but asks you to hide it for keeping the state of the world. It is your call if you want to hide the information or expose it.",

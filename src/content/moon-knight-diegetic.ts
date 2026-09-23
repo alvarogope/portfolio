@@ -6,7 +6,7 @@ export const diegeticThesis = {
     "These could have been a bar or an overlay, but instead they are an action in the world. " +
     "By making the systems like this, I prioritise the player's on screen view and make the game have more amplitude. " +
     "Health is always in the centre and can be seen easily. The progression doesn't tell where to go exactly, just to which direction. " +
-    "Making the healing process play an instrument creates a bond with the melody and the player, eespecially if it's done in the safe space.",
+    "Making the healing process play an instrument creates a bond with the melody and the player, especially if it's done in the safe space.",
   scope:
     "The equipment system is still a conventional menu. I thought it was the better way to represent the items and the system " +
     "since this is a system that players can take more time to feel comfortable since it is interactable and not information that is just read " +
@@ -118,7 +118,7 @@ export interface SkillBranch {
 
 export const skillTree = {
   kicker: "The Other XP",
-  line: "By defeating the main bosses, the player get XP for upgrading their combat skills.",
+  line: "By defeating the main bosses, the player gets XP for upgrading their combat skills.",
   body:
     "",
   currency: { label: "The White-Rose XP System", id: "white-rose-xp" },

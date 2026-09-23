@@ -82,7 +82,7 @@ export const beatLevels: readonly BeatLevel[] = [
     phaseLabel: "First quarter, waxing",
     cells: {
       space: "Moving woods and a cemetery",
-      objective: "Get the Crescent Fragment",
+      objective: "Get the Crescent Moon Fragment",
       quest: null,
       boss: "The Wizard-Knight",
       visuals: "Green scenarios in the rain, colourful flowers next to swamps",

@@ -132,7 +132,7 @@ export const breakInRoles: readonly BreakInRole[] = [
       {
         name: "Stealing Digital Money",
         body:
-          "Transfers money out of hidden PCs around the bank. they sit behind locked doors only they can open.",
+          "Transfers money out of hidden PCs around the bank. They sit behind locked doors only they can open.",
         note: "Needs the manager's password and has to find it.",
       },
       {
@@ -175,7 +175,7 @@ export const breakInRoles: readonly BreakInRole[] = [
         body:
           "A similar weight decoy has to be placed in place of the ingot within one second of it coming off of it.",
         tuning: "1s window per ingot",
-        note: "Failed to do so and the alarm trips, leaving the whole team thirty seconds to get out.",
+        note: "Fail to do so and the alarm trips, leaving the whole team thirty seconds to get out.",
       },
     ],
     puzzle: {
@@ -192,8 +192,8 @@ export const breakInRoles: readonly BreakInRole[] = [
 export const puzzleAsymmetryNote = {
   headline: "Three puzzles",
   body:
-    "Each character has their own minigame but one. The Insider's own task is its ability to disguise, " +
-    "their route reading to find paths. So, adding a minigame would have put so much weight on this character. ",
+    "Each character has their own minigame but one. The Insider's own task is their ability to disguise, " +
+    "their route reading to find paths. So, adding a minigame would have put too much weight on this character. ",
   credit: "A Lead Designer call on balance.",
 };
 

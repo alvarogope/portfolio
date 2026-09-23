@@ -162,7 +162,7 @@ export default function MoonKnightPage() {
                     alt: "The AI sight-detection graph: a Sight Detection event breaks the AI stimulus, branches on Successfully Sensed, and on the true path writes the player into the Target Actor Blackboard key and calls Activate Mini Boss Combat — while the false path clears the key and calls Deactivate Miniboss Combat.",
                     caption:
                       "The detection system that the majority of the enemies share. The sensed stimulus writes you into the Target Actor key that the Behaviour Tree reads. " +
-                      "This system lets the player to deactivate the stimulus, leaving the fight whenever needed."
+                      "This system lets the player deactivate the stimulus, leaving the fight whenever needed."
                   },
                   {
                     src: "/images/moon-knight/MiniBoss_Combat.png",
@@ -274,9 +274,9 @@ export default function MoonKnightPage() {
                     label: "Centralis · overview of the level",
                     alt: "Annotated overhead of the Centralis level: callouts marking the PCG forest used as natural blocking, the spawn view holding the moon, the NPC and the sword in one frame, the sword lit beside the willow tree, and the layout withheld until the sword is picked up.",
                     caption:
-                      "The main four decisions: The forest functions as a natural barrier reducing the light of the main area of level and hiding enemies. " + 
+                      "The main four decisions: The forest functions as a natural barrier reducing the light of the main area of the level and hiding enemies. " + 
                       "From here, the player has the three guides in front of them. The Moon, The Willow Tree and The Sword. " +
-                      "The sword is also intentionally placed under at the brightest spot the player can see at spawn." + 
+                      "The sword is also intentionally placed under the brightest spot the player can see at spawn." + 
                       "The layout of the level is hidden from the player until they get to the sword pickup spot and then the layout is fully revealed. " +
                       "With these decisions I try to communicate with the player through the level",
                   },
@@ -347,7 +347,7 @@ export default function MoonKnightPage() {
                     alt: "The player-stats Blueprint graph: the component casts to the player, dummy or AI character, sets a Character Type enum, and feeds Set Percent into whichever health and stamina bar belongs to that owner.",
                     caption:
                       "I tied the health and its representation to the HUD and wired them properly so the enemies could also inherit from this system. " +
-                      "Due to lack of time, I could not make the diegetic health bar as a moon, but the systems was built for making it work with any kind of UI.",
+                      "Due to lack of time, I could not make the diegetic health bar as a moon, but the system was built for making it work with any kind of UI.",
                   },
                   {
                     src: "/images/moon-knight/BP_DieMechanic.png",
@@ -355,7 +355,7 @@ export default function MoonKnightPage() {
                     alt: "The Die Blueprint sequence: disable input, set the mesh to simulate physics, start a camera fade through the player camera manager, delay, then open the current level again by name.",
                     caption:
                       "For the death sequence I decided to make all the characters go to ragdoll and if the player dies, have a fade to black screen. " +
-                      "When I reworked in C++ codebase, I wired the respawn at the last willow tree the player rested at, making them checkpoints rather than forcing the main spawn. ",
+                      "When I reworked it in the C++ codebase, I wired the respawn at the last willow tree the player rested at, making them checkpoints rather than forcing the main spawn. ",
                   },
                   {
                     src: "/images/moon-knight/Pickup Trace - Moon-Knight.png",

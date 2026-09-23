@@ -386,7 +386,7 @@ export const puzzlePattern: PuzzleSection = {
       order: "3",
       label: "The Symbiochord limiting the distance",
       body:
-        "The parasite lets the character distance from each other in a limited way. If they are too " +
+        "The parasite lets the characters distance from each other in a limited way. If they are too " +
         "far apart, they die. Some puzzles' solutions put this into risk and positioning is key.",
     },
     {
@@ -409,7 +409,7 @@ export const puzzlePattern: PuzzleSection = {
   symbiochord: {
     label: "Why the Symbiochord is in the puzzle design at all",
     body:
-      "Connects the story to the narrative directly. This way players stop thinking just about " +
+      "Connects the mechanics to the narrative directly. This way players stop thinking just about " +
       "how to solve a puzzle by themselves, and think as a team that cannot separate. This also wires " +
       "them together in a way that they know, all the time, that they cannot survive without the other.",
   },

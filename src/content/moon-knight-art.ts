@@ -56,7 +56,7 @@ export const sublimeTranslations: readonly SublimeTranslation[] = [
     why:
       "The same colour palette appears in the Romantic paintings that inspired the art approach. " +
       "These colours relate to the topics explored in the sublime, like death and feeling small against a big force. " +
-      "It also makes contrast easier, like the piano, if warmth appears is fully intentional and noticeable by the player.",
+      "It also makes contrast easier, like the piano, if warmth appears it is fully intentional and noticeable by the player.",
   },
   {
     id: "darkness",

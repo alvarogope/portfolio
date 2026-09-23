@@ -151,7 +151,7 @@ export const mapMarkers: readonly MapMarker[] = [
     type: "fortress",
     xPct: 92.8,
     yPct: 7,
-    lore: "The second fortress, at the far north-east reach of the map. The Waxing Gibbous Moon Fragment guarded by The Centaur.",
+    lore: "The second fortress, at the far north-east reach of the map. The Half-Moon Fragment guarded by The Centaur.",
     profile: {
       enemies: ["soldiers"],
       boss: "centaur-knight",

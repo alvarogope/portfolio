@@ -97,7 +97,7 @@ export const communication: CommunicationSection = {
       tag: "",
       emphasis: "meta",
       body:
-        "Players have to agree not to talk during the game while they are playing. This restriction has to " +
+        "Players have to agree not to talk during the game. This restriction has to " +
         "exists outside the game to keep the intention of the whole design.",
       reasoning: {
         decision:
@@ -105,7 +105,7 @@ export const communication: CommunicationSection = {
         why:
           "The game design decisions were focused on miscommunication and this is also part of the story. " +
           "We expect the players to respect these rules. Shattered Skies could have had a voice chat like " +
-          "most of co-op game do, but the ambiguity is what this game was built from and every decision was taken " +
+          "most co-op game do, but the ambiguity is what this game was built from and every decision was taken " +
           "towards that direction. Players can break it, but they will not experience the game properly.",
         impact:
           "Players become part of the barrier the games require. This is the first cooperative mechanic. " +
@@ -128,7 +128,7 @@ export const communication: CommunicationSection = {
           "part of the miscommunication system. This doesn't work in all gestures since sometimes players need " +
           "to know the minimum to understand each other.",
         impact:
-          "Players ended up sharing a gestures language for themselves and communicate without talking. " +
+          "Players ended up sharing a gesture language for themselves and communicating without talking. " +
           "Through trial and error they were able to relate actions to gestures.",
       },
     },
@@ -141,7 +141,7 @@ export const communication: CommunicationSection = {
       body:
         "This resource grants five seconds with the filter off and voice chat perfectly clear. It is a rare one. " + 
         "It is not too long for building a proper phrase, but gives the opportunity to communicate through a voice. " +
-        "Players can use this for lying too. Linking this to the Lie ending.",
+        "Players can use this for lying too. Linking this to the Mutual Destruction ending.",
       reasoning: {
         decision:
           "We wanted to give the players at least one chance to talk with each other before the ending " +
@@ -153,7 +153,7 @@ export const communication: CommunicationSection = {
           "can also lie to each other, which was impossible during the game.",
         impact:
           "These five seconds of communication becomes a prisoner's dilemma. Players used this window " +
-          "for warning, planning, confession or lying, getting the to the ending they wanted.",
+          "for warning, planning, confession or lying, getting to the ending they wanted.",
       },
     },
   ],
@@ -248,7 +248,7 @@ export const telepathyFlow: TelepathyFlow = {
   ],
   note:
     "This window does not pick the ending by itself, only the final decision does. This moment " +
-    "can be used to express what players know and believe or the complete opposite",
+    "can be used to express what players know and believe or the complete opposite.",
 };
 
 /* ==========================================================================
@@ -397,7 +397,7 @@ export const traversal: TraversalSection = {
   lead:
     "Both characters have different traversal mechanics. Aevi is small, quick and doesn't jump far. " +
     "Drayk is big, slow and jumps high. Both their bodies show how their moves work and how they could " +
-    "help each other with. Many puzzles are designed around this: one reaches a ledge and the other one helps to reach it. " +
+    "help each other. Many puzzles are designed around this: one reaches a ledge and the other one helps to reach it. " +
     "This makes both characters well-balanced.",
 
   bodiesLabel: "The two bodies",

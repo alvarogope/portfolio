@@ -69,8 +69,8 @@ export const gameEngineering = {
     kicker: "The division",
     title: "What is in a Blueprint. What is in C++",
     intro:"I followed this rule for translating part of the code into C++: " +
-          "If something needed to exist, be tuned or feel right on a specific frame, I managed it in the Blueprints." +
-          "If the level needed to load the system, it will go to C++." +
+          "If something needed to exist, be tuned or feel right on a specific frame, I managed it in the Blueprints. " +
+          "If the level needed to load the system, it went go to C++. " +
           "This is how the code architecture was distributed:",
     rows: [
       {
@@ -692,7 +692,7 @@ void AMKPlayerCharacter::Respawn()
     title: "The Quantum Research for Building this Game",
     body:
       "The programming in this page is the foundation of the game. Making it shippable and playable. However, there is a second " +
-      "piece of engineering: The Quantum Abilities using actual quantum programming, using a C++17 library called Quantum++ " +
+      "piece of engineering: The Quantum Abilities using actual quantum programming, using a C++17 toolkit that wraps up Quantum++ and Eigen " +
       "and validating it statistically. This work has its own deep-dive.",
     href: "/moon-knight/engineering/quantum",
     linkLabel: "Read the quantum toolkit deep-dive",

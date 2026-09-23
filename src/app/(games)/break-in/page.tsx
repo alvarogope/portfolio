@@ -191,7 +191,7 @@ export default function BreakInPage() {
                   },
                   {
                     src: "/images/break-in/ground-floor-plan.png",
-                    label: "Phase 3 · ground floor plan",
+                    label: "Phase 3 · Ground floor plan",
                     alt: "Clean floor plan of the bank ground floor: entry and waiting areas, reception desk, ATMs, manager's cabin, meeting room, back office, store room, server and security room, hideout spot, security gate, and the stairs to the basement.",
                     caption:
                       "The ground floor plan. The server room that the Insider has to reach and the hideout spot.",
@@ -202,7 +202,7 @@ export default function BreakInPage() {
                     label: "Phase 4 · Cameras placement",
                     alt: "Early block-out diagram of the bank ground floor: the stairs outlined in red, a hideout in blue, a cash area in green, the reception desk, and three purple triangles marking camera positions against a printed key reading Cameras.",
                     caption:
-                      "The placement of where the cameras should eventually go. Every triangle is a camera. Their placement was intentional and especially related to what we wanted to allow The Hacker to see for not giving them too much power.",
+                      "The placement of where the cameras should eventually go. Every triangle is a camera. Their placement was intentional and especially related to what we wanted to allow The Hacker to see, so as not to give them too much power.",
                   },
                   {
                     src: "/images/break-in/ground-floor-greybox.jpeg",
@@ -220,17 +220,17 @@ export default function BreakInPage() {
                   },
                   {
                     src: "/images/break-in/Vault.png",
-                    label: "Phase 7 · the vault",
+                    label: "Phase 7 · The vault",
                     alt: "The vault door in the built basement, the object the Vaultsnatcher's role is built around.",
                     caption:
                       "The vault door.",
                   },
                   {
                     src: "/images/break-in/Digital_Money_Room.png",
-                    label: "Phase 8 · The PC room",
+                    label: "Phase 8 · The server room",
                     alt: "The digital-money room in the built basement: banks of monitors on desks around three walls, a lit server rack on a plinth in the centre, and the door out.",
                     caption:
-                      "Where the Insider has to place the USB, also next to the vault, making them escape together.",
+                      "Where the Insider has to place the USB.",
                   },
                 ]}
               />

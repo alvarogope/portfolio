@@ -83,7 +83,7 @@ export const reversal = {
     "The Sun-Knight is no dark lord. He was the Moon-Knight's comrade, from when the Sun and the Moon " +
     "worked as one and the first in Kaelum to discover the Gods of the Gaps fallacy. What " +
     "he then saw in the moon frightened him into breaking it apart and hiding the pieces. When the " +
-    "Moon-Knight found out, they fought. The Moon-Knight lost and eventually, woke with no memory of it.",
+    "Moon-Knight found out, they fought. The Moon-Knight lost and, eventually, woke with no memory of it.",
   payoff:
     "Which means the errand the player has been running for three acts, to try to put the Moon Goddess back " +
     "together, was the exact thing the villain broke the world to prevent. Death's revivals were " +

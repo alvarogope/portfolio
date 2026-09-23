@@ -64,7 +64,7 @@ export default function MoonKnightWorldPage() {
           id={deepDiveAnchors.narrative}
           style={{ marginTop: "4rem" }}
         >
-          <SectionHeading kicker="Narrative Design" title="The Three Acts" />
+          <SectionHeading kicker="The Three Acts" title="The Narrative Design" />
           <p
             style={{
               color: "var(--color-mist)",
@@ -91,24 +91,13 @@ export default function MoonKnightWorldPage() {
         </div>
       </Reveal>
 
-      {/* The diegetic UI design used to be §04 here. It MOVED to the main
-          project page, whole — it is the design of the game, and a reader
-          should meet it on the page about the game rather than one click
-          further in. Nothing was summarised on the way: `/moon-knight` now
-          renders the same `<DiegeticDesign />` full write-up this page did. */}
-
       {/* 03 — art direction */}
       <Reveal>
         <div
           id={deepDiveAnchors.art}
           style={{ marginTop: "5rem" }}
         >
-          <SectionHeading kicker="Art Direction" title="The Sublime" />
-          {/* The intro paragraph that stood here was word-for-word the one on
-              `/moon-knight`, and `artThesis.body` — which only the `full`
-              variant below renders — makes the same argument at length. Two
-              copies of one paragraph, so the one on the page that also renders
-              the long form was deleted. Nothing was reworded. */}
+          <SectionHeading kicker="The Sublime" title="Art Direction" />
           <ArtDirection />
         </div>
       </Reveal>
@@ -119,7 +108,7 @@ export default function MoonKnightWorldPage() {
           id={deepDiveAnchors.score}
           style={{ marginTop: "5rem" }}
         >
-          <SectionHeading kicker="Music & Audio Design" title="The Music of Kaelum" />
+          <SectionHeading kicker="The Soundtrack" title="The Music of Kaelum" />
           <p
             style={{
               color: "var(--color-mist)",
@@ -137,19 +126,13 @@ export default function MoonKnightWorldPage() {
         </div>
       </Reveal>
 
-      {/* 05 — THE JOUSTING minigame.
-          It spent one pass on `/moon-knight` — a risk matrix and a `Why` note
-          read as mechanics — and Álvaro called it back. The joust is a
-          DIVERSION: material a reader chooses, introduced by a character this
-          page owns, and the test this page applies is that choice. It is back
-          exactly as it left, word for word, and `deepDiveAnchors.jousting` came
-          back with it. */}
+      {/* 05 — THE JOUSTING minigame */}
       <Reveal>
         <div
           id={deepDiveAnchors.jousting}
           style={{ marginTop: "5rem" }}
         >
-          <SectionHeading kicker="A MiniGame" title="The Jousting Minigame" />
+          <SectionHeading kicker="MiniGame" title="Medieval Jousting" />
           <p
             style={{
               color: "var(--color-mist)",

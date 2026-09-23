@@ -118,7 +118,7 @@ export default function BreakInPage() {
         {/* ═══ 04 · THE RUN ═══ */}
         <Reveal>
           <div id={ch.theRun.id} style={GAP}>
-            <SectionHeading kicker="The Gameplay Design" title={ch.theRun.title} />
+            <SectionHeading kicker="Eight minutes of tension" title={ch.theRun.title} />
             <p style={LEAD}>
               <RoleTerms text="One gameplay run is eight minutes long and divided into four phases: get in, open the vault, access the servers and get out. Two of these phases happen at the same time." />
             </p>
@@ -130,7 +130,7 @@ export default function BreakInPage() {
         {/* ═══ 05 · SIGNATURE SYSTEMS ═══ */}
         <Reveal>
           <div id={ch.systems.id} style={GAP}>
-            <SectionHeading kicker="Main Systems" title={ch.systems.title} />
+            <SectionHeading kicker="Cooperation" title={ch.systems.title} />
             <p style={LEAD}>
               <RoleTerms text=  "Every element of the gameplay was designed so players had to cooperate and help each other succeed. The Distraction clip shows how these work in-game." />
             </p>
@@ -141,7 +141,7 @@ export default function BreakInPage() {
         {/* ═══ 06 · LEVEL DESIGN ═══ */}
         <Reveal>
           <div id={ch.levels.id} style={GAP}>
-            <SectionHeading kicker="Level Design" title={ch.levels.title} />
+            <SectionHeading kicker="The Routes" title={ch.levels.title} />
             <p style={LEAD}>
               <RoleTerms text="The bank is one level divided into two places where the team has to split up so they could operate." />
             </p>
@@ -269,7 +269,7 @@ export default function BreakInPage() {
         {/* ═══ 08 · AUDIO ═══ */}
         <Reveal>
           <div id={ch.audio.id} style={GAP}>
-            <SectionHeading kicker="Audio Design" title={ch.audio.title} />
+            <SectionHeading kicker="The Sound of the Heist" title={ch.audio.title} />
             <BreakInAudio />
           </div>
         </Reveal>
@@ -277,7 +277,7 @@ export default function BreakInPage() {
         {/* ═══ 09 · BALANCE ═══ */}
         <Reveal>
           <div id={ch.balance.id} style={GAP}>
-            <SectionHeading kicker="Balancing the Game" title={ch.balance.title} />
+            <SectionHeading kicker="Tuning" title={ch.balance.title} />
             <BalanceNote />
           </div>
         </Reveal>
@@ -286,7 +286,7 @@ export default function BreakInPage() {
         {p.designChallenge && (
           <Reveal>
             <div id={ch.challenge.id} style={GAP}>
-              <SectionHeading kicker="Design Challenges" title={ch.challenge.title} />
+              <SectionHeading kicker="Challenge During the Development" title={ch.challenge.title} />
               <div style={{ marginTop: "1.5rem" }}>
                 <ChallengeQuote
                   challenge={p.designChallenge}

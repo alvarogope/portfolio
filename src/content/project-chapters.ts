@@ -22,37 +22,45 @@ export const moonKnightChapters = {
   inMotion: { id: "in-motion", title: mkInMotion.title, note: "Video clips from the build" },
   abilities: {
     id: "signature-systems",
-    title: "The Power of the Gods",
-    note: "The five quantum abilities",
+    title: "The Quantum Abilities",
+    note: "The Power of the Gods",
   },
-  bestiary: { id: "the-creatures", title: "Bestiary", note: "Enemies, bosses and their AI" },
+  bestiary: { id: "the-creatures", title: "Bestiary", note: "The Enemies and Bosses" },
   controls: {
     id: "the-controls",
-    title: "The Input Map in a Controller",
+    title: "The Controls",
     note: "The control scheme and the combo",
-  },
+  },/* */
   world: {
     id: "world-and-levels",
-    title: "Kaelum and How It Was Planned",
+    title: "The World and Level Design",
     note: "The map, the beat chart, the levels",
   },
   diegetic: {
     id: "diegetic-design",
-    title: "The Main Design Decisions",
-    note: "The interface dissolved into the world",
+    title: "The UI and Systems Design",
+    note: "My design philosophy",
   },
   invisible: {
     id: "invisible-design",
-    title: "The Decisions With No Interface",
-    note: "What the player never sees",
+    title: "The Combat and RPG Design",
+    note: "The invisible design",
   },
-  art: { id: "art-direction", title: "The Sublime", note: "The art direction and screenshots" },
+  art: { 
+    id: "art-direction", 
+    title: "The Art Direction", 
+    note: "The art direction and screenshots" 
+  },
   development: {
     id: "the-development",
     title: "The Quantum and Engineering Design",
     note: "The hard part of building it",
   },
-  audio: { id: "audio-design", title: "The Soundtrack", note: "The music I composed" },
+  audio: { 
+    id: "audio-design", 
+    title: "The Audio and Music Design", 
+    note: "The music I composed" 
+  },
 } as const satisfies Record<string, Chapter>;
 
 export const moonKnightChapterList: readonly Chapter[] = [
@@ -77,26 +85,26 @@ export const moonKnightChapterList: readonly Chapter[] = [
 export const shatteredSkiesChapters = {
   overview: { id: "overview", title: "The Vision", note: "What the game is" },
   inMotion: { id: ssMain.inMotion, title: ssInMotion.title, note: "Captures from the build" },
-  theGame: { id: ssMain.theGame, title: "The Game We Worked On", note: "The loop, start to end" },
+  theGame: { id: ssMain.theGame, title: "The Game", note: "The loop, start to end" },
   role: { id: "my-role", title: "My Contribution", note: "What I designed and built" },
   worlds: {
     id: ssMain.worlds,
-    title: "The World & the Five Planets",
+    title: "The World and Planet Design",
     note: "Shatterstorm and its five planets",
   },
   levels: {
     id: ssMain.levels,
-    title: "Each Planet Shows a Skill",
+    title: "Level Design",
     note: "The level design, planet by planet",
   },
   mechanics: {
     id: ssMain.mechanics,
-    title: "Creating Cooperation",
+    title: "Mechanics Design",
     note: "The core co-op mechanics",
   },
   coop: {
     id: ssMain.coop,
-    title: "Division, Distortion and Improvisation",
+    title: "The Cooperative Design",
     note: "The two seats and their mini-games",
   },
 } as const satisfies Record<string, Chapter>;
@@ -119,20 +127,20 @@ export const shatteredSkiesChapterList: readonly Chapter[] = [
 export const breakInChapters = {
   overview: { id: "overview", title: "The Vision", note: "What the game is" },
   inMotion: { id: "in-motion", title: biInMotion.title, note: "A clip and two rooms" },
-  theRun: { id: "the-run", title: "Eight minutes of tension", note: "The shape of one heist" },
+  theRun: { id: "the-run", title: "The Gameplay Design", note: "The shape of the heist" },
   role: { id: "my-role", title: "My Contribution", note: "What I designed and built" },
   systems: {
     id: "signature-systems",
-    title: "Winning by Cooperating",
+    title: "Cooperative System Design",
     note: "The four roles and their wiring",
   },
-  levels: { id: "level-design", title: "The Route", note: "The level design and the map" },
-  stealth: { id: "stealth", title: "The Detection System", note: "The detection states" },
-  audio: { id: "audio", title: "The Sound of the Heist", note: "The audio direction" },
-  balance: { id: "balance", title: "Designed for cooperation", note: "The balance data" },
+  levels: { id: "level-design", title: "The Level Design", note: "The level design and the map" },
+  stealth: { id: "stealth", title: "The Detection System Design", note: "The detection states" },
+  audio: { id: "audio", title: "The Audio Design", note: "The audio direction" },
+  balance: { id: "balance", title: "Balancing the Game", note: "The balance data" },
   challenge: {
     id: "the-hard-part",
-    title: "Challenge During the Development",
+    title: "Design Challenge",
     note: "The hard part of building it",
   },
 } as const satisfies Record<string, Chapter>;
@@ -158,9 +166,9 @@ export const seedsChapters = {
   overview: { id: "overview", title: "The Vision", note: "What the game is" },
   inMotion: { id: "in-motion", title: sotInMotion.title, note: "Captures from the build" },
   role: { id: "my-role", title: "My Contribution", note: "What I designed and built" },
-  score: { id: "score", title: "Music and Audio Design", note: "The music I composed" },
-  levels: { id: "level-design", title: "Combat and Puzzle", note: "The level and puzzle design" },
-  weather: { id: "weather", title: "Dynamic Weather", note: "The weather system" },
+  score: { id: "score", title: "The Music and Audio Design", note: "The music I composed" },
+  levels: { id: "level-design", title: "The Level and Puzzle Design", note: "The level and puzzle design" },
+  weather: { id: "weather", title: "The Dynamic Weather Design", note: "The weather system" },
 } as const satisfies Record<string, Chapter>;
 
 export type SeedsChapterKey = keyof typeof seedsChapters;

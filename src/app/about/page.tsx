@@ -70,9 +70,6 @@ export default function AboutPage() {
           {about.sections.map((section, index) => (
             <Reveal key={section.title} delay={index * 50}>
               <article className="about-lore__entry">
-                <span className="about-lore__number" aria-hidden>
-                  {String(index + 1).padStart(2)}
-                </span>
                 <div>
                   <p className="mono about-lore__kicker">{section.kicker}</p>
                   <h2>{section.title}</h2>

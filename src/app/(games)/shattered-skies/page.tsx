@@ -83,7 +83,7 @@ export default function ShatteredSkiesPage() {
         {/* ═══ 03 · THE GAME ═══ */}
         <Reveal>
           <div style={GAP} id={mainAnchors.theGame}>
-            <SectionHeading kicker="The Game" title={ch.theGame.title} />
+            <SectionHeading kicker="The game we worked on" title={ch.theGame.title} />
             <NarrativeMap variant="main" />
 
             <div style={{ marginTop: "3rem" }}>
@@ -130,7 +130,7 @@ export default function ShatteredSkiesPage() {
         {/* ═══ 05 · THE WORLD & THE FIVE WORLDS ═══ */}
         <Reveal>
           <div style={GAP} id={mainAnchors.worlds}>
-            <SectionHeading kicker="World Design" title={ch.worlds.title} />
+            <SectionHeading kicker="World and the five planets" title={ch.worlds.title} />
             <div style={{ marginTop: "1.5rem", marginBottom: "2rem" }}>
               <ShatterstormWorld variant="main" />
             </div>
@@ -150,7 +150,7 @@ export default function ShatteredSkiesPage() {
         {/* ═══ 06 · LEVEL DESIGN ═══*/}
         <Reveal>
           <div style={GAP} id={mainAnchors.levels}>
-            <SectionHeading kicker="Level Design" title={ch.levels.title} />
+            <SectionHeading kicker="Each planet shows a skill" title={ch.levels.title} />
             <PlanetLevels />
           </div>
         </Reveal>
@@ -158,7 +158,7 @@ export default function ShatteredSkiesPage() {
         {/* ═══ 07 · CORE MECHANICS ═══ */}
         <Reveal>
           <div style={GAP} id={mainAnchors.mechanics}>
-            <SectionHeading kicker="The Core Mechanics" title={ch.mechanics.title} />
+            <SectionHeading kicker="Core Mechanics" title={ch.mechanics.title} />
             <p style={LEAD}>
               These systems were designed with the team. The purpose of them was to make the players
               cooperate and rely on each other without any kind of communication.
@@ -186,7 +186,7 @@ export default function ShatteredSkiesPage() {
         {/* ═══ 08 · CO-OP DESIGN ═══ */}
         <Reveal>
           <div style={GAP} id={mainAnchors.coop}>
-            <SectionHeading kicker="Co-op Design" title={ch.coop.title} />
+            <SectionHeading kicker="Division, Distortion and Improvisation" title={ch.coop.title} />
             <p style={LEAD}>
               How the main mechanics work. How each player interacts with the minigame
               and the way they were designed to enhance cooperation.

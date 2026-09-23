@@ -153,7 +153,7 @@ export default function SeedsOfTomorrowPage() {
         {/* ═══ 05 · LEVEL DESIGN ═══ */}
         <Reveal>
           <div id={ch.levels.id} style={GAP}>
-            <SectionHeading kicker="Level Design" title={ch.levels.title} />
+            <SectionHeading kicker="Combats and puzzles" title={ch.levels.title} />
             <p style={LEAD}>
               I co-designed the levels and the puzzles with members of the team. I designed the pace
               the gameplay runs.

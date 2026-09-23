@@ -180,7 +180,7 @@ export default function MoonKnightPage() {
         {/* 6 — Controls */}
         <Reveal>
           <div id={ch.controls.id} style={{ marginTop: "5rem" }}>
-            <SectionHeading kicker="The Controls" title={ch.controls.title} />
+            <SectionHeading kicker="The Input Map in a Controller" title={ch.controls.title} />
             <div style={{ marginTop: "1.75rem" }}>
               <ControllerMap />
             </div>
@@ -234,7 +234,7 @@ export default function MoonKnightPage() {
         {/* 7 — THE WORLD AND THE LEVELS. */}
         <Reveal>
           <div id={ch.world.id} style={{ marginTop: "5rem" }}>
-            <SectionHeading kicker="The World & Level Design" title={ch.world.title} />
+            <SectionHeading kicker="Kaelum and How It Was Planned" title={ch.world.title} />
             <p style={{ color: "var(--color-mist)", maxWidth: "38rem", marginTop: "1.5rem", marginBottom: "2.5rem" }}>
               This is the drawn map.
               The chart answers what it is like to play and every place on the map opens
@@ -305,7 +305,7 @@ export default function MoonKnightPage() {
         {/* 8 — UI DESIGN */}
         <Reveal>
           <div id={ch.diegetic.id} style={{ marginTop: "5rem" }}>
-            <SectionHeading kicker="Main Design" title={ch.diegetic.title} />
+            <SectionHeading kicker="My design philosophy" title={ch.diegetic.title} />
             {/* The willow tree */}
             <figure style={{ margin: "0 0 2.5rem", maxWidth: "52rem" }}>
               <PlateGrid
@@ -382,7 +382,7 @@ export default function MoonKnightPage() {
         {/* 10 — Art Direction */}
         <Reveal>
           <div id={ch.art.id} style={{ marginTop: "5rem" }}>
-            <SectionHeading kicker="Art Direction" title={ch.art.title} />
+            <SectionHeading kicker="The Sublime" title={ch.art.title} />
             <p style={{ color: "var(--color-mist)", maxWidth: "35rem", marginTop: "1.5rem", marginBottom: "1.75rem" }}>
               The Sublime and their way of romanticising the medieval ages is what inspired the artstyle direction.
               This art philosophy adapted to games, exposes the player to solitude, open spaces and big challenges whether internal or external.
@@ -477,7 +477,7 @@ export default function MoonKnightPage() {
         {/* 12 — The Audio and Music Design. */}
         <Reveal>
           <div id={ch.audio.id} style={{ marginTop: "5rem" }}>
-            <SectionHeading kicker="Audio Design" title={ch.audio.title} />
+            <SectionHeading kicker="The Soundtrack" title={ch.audio.title} />
             <AudioDesign variant="short">
               <MoonKnightAudio />
             </AudioDesign>

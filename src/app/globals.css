@@ -353,19 +353,9 @@ img { max-width: 100%; display: block; }
   background: linear-gradient(90deg, color-mix(in srgb, var(--color-gold) 65%, transparent), transparent);
 }
 .about-lore__entry {
-  display: grid;
-  grid-template-columns: 3rem minmax(0, 1fr);
-  gap: clamp(0.75rem, 2vw, 1.75rem);
   max-width: 57rem;
   padding: clamp(1.75rem, 4vw, 2.75rem) 0;
   border-bottom: 1px solid color-mix(in srgb, var(--color-mist) 22%, transparent);
-}
-.about-lore__number {
-  color: var(--color-gold);
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  letter-spacing: 0.1em;
-  padding-top: 0.35rem;
 }
 .about-lore__kicker { margin: 0; color: var(--color-silver); font-size: 0.71rem; }
 .about-lore__entry h2 {
@@ -392,7 +382,6 @@ img { max-width: 100%; display: block; }
   .about-inspect { margin-inline: -0.25rem; }
   .about-inspect__header { padding-inline: 1.25rem; }
   .about-inspect__title { max-width: 12ch; }
-  .about-lore__entry { grid-template-columns: 2.2rem minmax(0, 1fr); }
 }
 /* ============================================
    SCROLL INDICATORS

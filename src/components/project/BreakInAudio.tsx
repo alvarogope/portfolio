@@ -12,49 +12,12 @@ import {
 } from "@/content/break-in-audio";
 import { getRole } from "@/content/break-in-roles";
 
-/**
- * Break-In — the audio console: what the game sounds like, and why that is
- * the coordination system.
- *
- * DELIBERATELY COMPACT. This is a DIRECTION credit, not a composer showcase —
- * there is no player, no waveform and no track list, because there are no
- * tracks of mine to play. One bezel, three bands, and the credit first:
- *
- *   1. THE CREDIT, at the top rather than the bottom. The distinction between
- *      directing audio and writing it has to be made before the reader forms
- *      an impression, not corrected afterwards.
- *   2. THE SCORE — three gears as three cards, each stating the game state
- *      that triggers it, then the tick rail underneath. The rail is the one
- *      drawing in the section and it earns its place: "audio is the timer" is
- *      a claim about a shape over eight minutes, which is exactly what a rail
- *      draws and a paragraph does not.
- *   3. THE CUES — the action roster as a real table, because "action → sound →
- *      what it tells the team" is tabular data and the third column is the
- *      whole argument.
- *
- * THE RAIL IS DERIVED, NOT DRAWN. Its mark sits at `clockAudio.markAt / runMinutes`
- * of the width, both read from `break-in-overview`'s constants, so changing
- * the run length or the shift point moves the mark, the tick density and the
- * labels together. Nothing in the geometry below is a magic number tied to
- * "eight minutes" or "three".
- *
- * COLOUR IS NEVER THE ONLY SIGNAL. Each score state prints its trigger as
- * text, the loud half of the rail is labelled in words as well as drawn taller
- * and denser, and the warning cues carry a "Warning" tag rather than only an
- * accent. A server component — no state, and the only transition is a hover
- * hairline that reduced-motion turns off.
- */
-
-/* ---- the tick rail ------------------------------------------------------
-   viewBox units. The rail is a fixed 1000-unit box scaled to its container,
-   so ticks stay hairline-crisp at any width. */
 const VB_W = 1000;
 const VB_H = 120;
 const PAD_X = 8;
 const BASE_Y = 84;
 const RAIL_W = VB_W - PAD_X * 2;
 
-/** Ticks per minute before and after the mark. Density is part of the claim. */
 const QUIET_PER_MIN = 2;
 const LOUD_PER_MIN = 4;
 const QUIET_H = 9;
@@ -128,7 +91,7 @@ function ClockRail() {
       {/* the shift mark */}
       <line className="ba-rail-mark" x1={markX} y1={BASE_Y - 34} x2={markX} y2={BASE_Y + 10} />
       <text className="ba-rail-marktext" x={markX} y={BASE_Y - 40} textAnchor="middle">
-        {markLabel} · score shifts
+        {markLabel}
       </text>
 
       {/* the ends */}
@@ -136,15 +99,12 @@ function ClockRail() {
         00:00
       </text>
       <text className="ba-rail-end is-fail" x={VB_W - PAD_X} y={BASE_Y + 26} textAnchor="end">
-        {endLabel} · hard fail
+        {endLabel}
       </text>
     </svg>
   );
 }
 
-/* ---- the cue table ------------------------------------------------------ */
-
-/** The seat a cue belongs to, named. `any` is not a role, so it is not looked up. */
 function cueOwner(cue: AudioCue): string {
   return cue.role === "any" ? "Any role" : getRole(cue.role).name;
 }
@@ -153,24 +113,17 @@ export default function BreakInAudio() {
   return (
     <div className="ba">
       <div className="ba-console">
-        <div className="ba-console-head">
-          <p className="mono ba-console-tag">Audio console</p>
-          <p className="mono ba-console-meta">
-            {scoreStates.length} score states · {cues.length} action cues
-          </p>
-        </div>
 
         {/* ---- 1 · the credit, first ---- */}
         <aside className="ba-credit">
           <p className="mono ba-credit-tag">
-            {audioCredit.role} · {audioCredit.team} · {audioCredit.headline}
+            {audioCredit.role} · {audioCredit.team}
           </p>
           <p className="ba-credit-body">{audioCredit.body}</p>
         </aside>
 
         {/* ---- the thesis ---- */}
         <section className="ba-band" aria-labelledby="ba-thesis-title">
-          <p className="mono ba-band-meta">{thesis.tag}</p>
           <h3 id="ba-thesis-title" className="ba-thesis-line">
             {thesis.line}
           </h3>
@@ -181,9 +134,8 @@ export default function BreakInAudio() {
         <section className="ba-band" aria-labelledby="ba-score-title">
           <div className="ba-band-head">
             <h3 id="ba-score-title" className="ba-band-title">
-              A score wired to game state
+              The music representing the game state
             </h3>
-            <p className="mono ba-band-meta">Three gears</p>
           </div>
 
           <ol className="ba-states">
@@ -192,12 +144,11 @@ export default function BreakInAudio() {
                 <p className="mono ba-state-index">{s.index}</p>
                 <h4 className="ba-state-name">{s.name}</h4>
                 <p className="ba-state-trigger">
-                  <span className="mono ba-key">Trigger</span>
+                  <span className="mono ba-key">When:</span>
                   {s.trigger}
                 </p>
                 <p className="ba-state-sound">{s.sound}</p>
                 <p className="ba-state-reads">
-                  <span className="mono ba-key is-read">Reads as</span>
                   {s.reads}
                 </p>
               </li>
@@ -209,7 +160,6 @@ export default function BreakInAudio() {
           <div className="ba-clock">
             <div className="ba-band-head">
               <h4 className="ba-clock-title">{clockAudio.label}</h4>
-              <p className="mono ba-band-meta">Diegetic time pressure</p>
             </div>
             <p className="ba-prose">{clockAudio.body}</p>
             <div className="ba-rail-screen">
@@ -226,34 +176,33 @@ export default function BreakInAudio() {
         <section className="ba-band" aria-labelledby="ba-cues-title">
           <div className="ba-band-head">
             <h3 id="ba-cues-title" className="ba-band-title">
-              Every action announces itself
+              Action Sounds
             </h3>
-            <p className="mono ba-band-meta">The communication layer</p>
           </div>
 
           <div className="ba-table-scroll" tabIndex={0} role="region" aria-label="Action audio cues">
             <table className="ba-table">
               <caption className="sr-only">
-                Each audio cue in Break-In: the action, the role it belongs to, what it sounds
-                like, and what a teammate who did not perform it learns from hearing it.
+                Each audio cue in Break-In: the action, the role it belongs to, and what it sounds
+                like.
               </caption>
               <thead>
                 <tr>
                   <th scope="col">Action</th>
                   <th scope="col">Sound</th>
-                  <th scope="col">What it tells the team</th>
                 </tr>
               </thead>
               <tbody>
                 {cues.map((c) => (
                   <tr key={c.id} className={c.warning ? "is-warning" : undefined}>
                     <th scope="row">
-                      <span className="ba-cue-action">{c.action}</span>
-                      <span className="mono ba-cue-role">{cueOwner(c)}</span>
-                      {c.warning && <span className="mono ba-cue-warn">Warning</span>}
+                      <span className="ba-cue-head">
+                        <span className="ba-cue-action">{c.action}</span>
+                        <span className="mono ba-cue-role">{cueOwner(c)}</span>
+                        {c.warning && <span className="mono ba-cue-warn">Warning</span>}
+                      </span>
                     </th>
                     <td className="ba-cue-sound">{c.sound}</td>
-                    <td className="ba-cue-tells">{c.tells}</td>
                   </tr>
                 ))}
               </tbody>
@@ -262,12 +211,6 @@ export default function BreakInAudio() {
 
           <p className="ba-prose">{cuesNote}</p>
         </section>
-
-        {/* ---- the crossing back to the detection model ---- */}
-        <aside className="ba-pointer">
-          <p className="mono ba-pointer-tag">{detectionPointer.label}</p>
-          <p className="ba-pointer-body">{detectionPointer.body}</p>
-        </aside>
       </div>
 
       <style>{`
@@ -484,7 +427,7 @@ export default function BreakInAudio() {
         }
         .ba-table {
           width: 100%;
-          min-width: 44rem;
+          min-width: 32rem;
           border-collapse: collapse;
           text-align: left;
         }
@@ -508,7 +451,10 @@ export default function BreakInAudio() {
           line-height: 1.6;
           font-weight: 400;
         }
-        .ba-table tbody th { display: grid; gap: 0.25rem; align-content: start; }
+        /* The th stays a table cell so its bottom rule lines up with the row's;
+           the stacked layout lives on an inner wrapper. */
+        .ba-table tbody th { width: 34%; }
+        .ba-cue-head { display: grid; gap: 0.25rem; }
         .ba-cue-action { color: var(--color-moonlight); }
         .ba-cue-role {
           font-size: 0.70rem;
@@ -526,7 +472,6 @@ export default function BreakInAudio() {
           color: var(--ba-alert);
         }
         .ba-cue-sound { color: var(--ba-quiet); }
-        .ba-cue-tells { color: var(--color-moonlight); }
         .ba-table tbody tr.is-warning th { border-left: 2px solid var(--ba-alert); padding-left: 0.75rem; }
 
         /* ---- the crossing ---- */

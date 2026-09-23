@@ -128,11 +128,11 @@ export const breakInChapters = {
   },
   levels: { id: "level-design", title: "The Route", note: "The level design and the map" },
   stealth: { id: "stealth", title: "The Detection System", note: "The detection states" },
-  audio: { id: "audio", title: "What the heist sounds like", note: "The audio direction" },
-  balance: { id: "balance", title: "Tuned so nobody can carry", note: "The balance data" },
+  audio: { id: "audio", title: "The Sound of the Heist", note: "The audio direction" },
+  balance: { id: "balance", title: "Designed for cooperation", note: "The balance data" },
   challenge: {
     id: "the-hard-part",
-    title: "Design Challenge",
+    title: "Challenge During the Development",
     note: "The hard part of building it",
   },
 } as const satisfies Record<string, Chapter>;

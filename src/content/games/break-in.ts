@@ -60,10 +60,13 @@ export const breakIn: Project = {
 
   designChallenge: {
     quote:
-      "The obvious way to build a co-op heist is to give players a voice channel and let them sort it out. I removed it on purpose. Without speech, coordination had to become a mechanic, so I built the tools to carry it. The Hacker's vision became a shared danger sense, camera signs marked where the Hacker was looking, and on-screen prompts became a shared language. The result is that communication is something players achieve through the systems, not something the systems assume.",
+      "When we started designing the game, we thought to remove the voice channel from the very start. Therefore, coordination " +
+      "had to become a mechanic itself and then I designed tools so this could be translated in-game. The Hacker's Vision became " +
+      "a shared danger, for example. I wanted players to achieve communication through the systems that they were given, and my " +
+      "job was to provide those systems.",
     engine: "Unity",
     system: "Co-op / detection / feedback",
-    resolution: "Replaced voice chat with three diegetic coordination channels.",
+    resolution: "Replaced voice chat with three systems coordination channels.",
   },
 
   contributions: [

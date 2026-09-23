@@ -290,42 +290,38 @@ export interface BalancePillar {
 }
 
 export const balancingIntro =
-  "The hard part of a four-player heist is not making it difficult; it is making all four seats " +
-  "worth sitting in. As Lead Designer I tuned Break-In against one rule: the game must be " +
-  "unwinnable alone, and it must never be one player's job to carry the other three. The three " +
-  "principles below are what that rule turned into.";
+  "The hardest part of balancing a four-player online heist game was tuning all the roles in a way " +
+  "that all roles are important, relevant and crucial to complete the game. As Lead Designer I tried to " +
+  "follow this rule: All four must cooperate and all the abilities and accountability rely on all of the team " +
+  "and not on one player. These are the design principles I consider:";
 
 export const balancingPillars: readonly BalancePillar[] = [
   {
     id: "solo-ceiling",
-    index: "01",
-    title: "Interdependent, and equally so",
+    index: "1",
+    title: "Interdependency",
     body:
-      "Every role's abilities are unique, and every role's abilities are equally critical. Each " +
-      "one owns roughly a quarter of the critical path and cannot reach past it. There is no " +
-      "carry seat and no passenger seat, which is the core balancing principle everything else " +
-      "serves.",
+      "Every role's abilities are unique and equally important for beating the game. Each role owns a quarter " +
+      "of accountability for progressing in the game.",
     caption:
-      "The gap is the design, not a shortfall.",
+      "",
   },
   {
     id: "adaptive",
-    index: "02",
-    title: "Difficulty that answers back",
+    index: "2",
+    title: "The Difficulty",
     body:
-      "The game reads how the team is performing and pushes back. The target is not " +
-      "a fixed difficulty but a fixed feeling. Pressure rises to meet competence, so a strong " +
-      "team and a shaky one both spend the last two minutes on the edge, and no role goes quiet " +
-      "because the run got easy.",
+      "The target when balancing the difficulty was more about the players' feeling during " +
+      "the heist. The pressure rises by the end so every team have pressure at the end, whether " +
+      "they struggled or not. And that is how I wanted to design the difficulty in Break-In.",
   },
   {
     id: "rewards",
-    index: "03",
-    title: "Paid as a team, bonused as a role",
+    index: "3",
+    title: "Teamwork",
     body:
-      "The bonus exists so the unglamorous seat — " +
-      "the Hacker who never touches gold, the Insider who spends the run opening doors — is still " +
-      "the most profitable thing that player can be doing.",
+      "Every ability enhances cooperation and they are made for players that want to work in a team " +
+      "with no main role at all. All of them have a crucial part in the heist.",
   },
 ];
 
@@ -377,12 +373,12 @@ export const rewardSplit: readonly RewardSlice[] = [
   {
     label: "Team share",
     share: 0.7,
-    gloss: "Split evenly across all four, on the run's total take.",
+    gloss: "Split evenly across all four.",
   },
   {
     label: "Role bonus",
     share: 0.3,
-    gloss: "Earned individually, for playing your own role well.",
+    gloss: "For playing each role well.",
   },
 ];
 

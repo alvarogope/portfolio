@@ -12,29 +12,6 @@ import {
 } from "@/content/break-in-overview";
 import { getRole } from "@/content/break-in-roles";
 
-/**
- * Break-In — the balancing note: the three rules the heist is tuned against,
- * each with the one small chart that turns it from a claim into an argument.
- *
- *   01 SOLO CEILING — four bars against the run they have to finish. All four
- *      are the same height and all four fall the same distance short, which is
- *      the whole point: the gap is designed, not a shortfall.
- *   02 ADAPTIVE RESPONSE — two lines. Pressure applied climbs with team
- *      performance; felt tension, the value actually being held, stays flat
- *      inside a target band. The flat line is the design goal; the rising one
- *      is what it costs.
- *   03 REWARD SPLIT — one bar, two segments. The shared base is deliberately
- *      the bigger half.
- *
- * This is a design note in my own voice — I was Lead Designer on a team of
- * four — so the console carries that credit in its header rather than leaving
- * the reader to infer whose reasoning this is.
- *
- * Static: no state, no client JS. Geometry here, data in `break-in-overview`.
- */
-
-/* ---- 01 · solo ceiling -------------------------------------------------- */
-
 const S_W = 440;
 const S_H = 206;
 const S_L = 48;
@@ -94,7 +71,6 @@ function SoloCeilingChart() {
         const cx = bx + S_BAR_W / 2;
         return (
           <g key={entry.role} className="bn-bar-group">
-            {/* The unreachable remainder, drawn faintly so the gap has a shape. */}
             <rect className="bn-bar-ghost" x={bx} y={S_TOP} width={S_BAR_W} height={by - S_TOP} />
             <rect className="bn-bar" x={bx} y={by} width={S_BAR_W} height={h} />
             <text className="bn-bar-value" x={cx} y={by - 7} textAnchor="middle">
@@ -120,8 +96,6 @@ function SoloCeilingChart() {
     </svg>
   );
 }
-
-/* ---- 02 · adaptive response --------------------------------------------- */
 
 const A_W = 440;
 const A_H = 196;
@@ -163,7 +137,7 @@ function AdaptiveChart() {
         height={bandBottom - bandTop}
       />
       <text className="bn-band-label" x={A_L + 6} y={A_TOP + 16}>
-        TARGET TENSION BAND
+        TARGETTED TENSION
       </text>
 
       <line className="bn-baseline" x1={A_L} y1={A_BASE} x2={A_R} y2={A_BASE} />
@@ -196,8 +170,6 @@ function AdaptiveChart() {
   );
 }
 
-/* ---- 03 · reward split -------------------------------------------------- */
-
 const R_W = 440;
 const R_H = 104;
 const R_L = 20;
@@ -205,7 +177,6 @@ const R_TRACK = 400;
 const R_BAR_Y = 42;
 const R_BAR_H = 44;
 
-/** Prefix sum over the shares: each slice starts where the ones before it end. */
 const rewardSegments = rewardSplit.map((slice, i) => ({
   ...slice,
   x: R_L + rewardSplit.slice(0, i).reduce((sum, s) => sum + s.share, 0) * R_TRACK,
@@ -251,16 +222,12 @@ function RewardChart() {
   );
 }
 
-/* ---- pillars ------------------------------------------------------------ */
-
 function Chart({ id }: { id: BalanceChart }) {
   if (id === "solo-ceiling") return <SoloCeilingChart />;
   if (id === "adaptive") return <AdaptiveChart />;
   return <RewardChart />;
 }
 
-/** The small print under a chart: legends and criteria, as HTML so the type
-    never inherits the plot's scale. */
 function ChartFoot({ id }: { id: BalanceChart }) {
   if (id === "adaptive") {
     return (
@@ -268,11 +235,11 @@ function ChartFoot({ id }: { id: BalanceChart }) {
         <ul className="bn-legend">
           <li className="mono bn-legend-item">
             <span className="bn-swatch is-pressure" aria-hidden="true" />
-            Pressure applied
+            Pressure
           </li>
           <li className="mono bn-legend-item">
             <span className="bn-swatch is-felt" aria-hidden="true" />
-            Felt tension
+            Tension
           </li>
         </ul>
         <ul className="bn-pills" aria-label="What the game turns up">
@@ -311,18 +278,12 @@ function ChartFoot({ id }: { id: BalanceChart }) {
   return null;
 }
 
-/* ---- the console -------------------------------------------------------- */
-
 export default function BalanceNote() {
   return (
     <div className="bn">
       <div className="panel bn-console">
         <div className="bn-console-head">
           <p className="mono bn-console-tag">Design note · balancing</p>
-          {/* No credit line. The attribution is §03s, on the phase clock,
-              and printing it again here was the second render of the same
-              block rather than a second fact. */}
-          <p className="mono bn-console-meta">{balancingPillars.length} tuning rules</p>
         </div>
 
         <p className="bn-intro">{balancingIntro}</p>
@@ -332,8 +293,6 @@ export default function BalanceNote() {
             <li key={pillar.id} className="bn-pillar">
               <div className="bn-pillar-text">
                 <p className="mono bn-pillar-index">{pillar.index}</p>
-                {/* h3, not h4: this console has no band headings above it, so
-                    the pillars sit directly under the section's h2. */}
                 <h3 className="bn-pillar-title">{pillar.title}</h3>
                 <p className="bn-pillar-body">{pillar.body}</p>
               </div>
@@ -343,9 +302,6 @@ export default function BalanceNote() {
                   <Chart id={pillar.id} />
                 </div>
                 <ChartFoot id={pillar.id} />
-                {/* Only rendered where there is one. The adaptive and reward
-                    captions were deleted as restatement of their own legends,
-                    and an empty <figcaption> would leave their padding behind. */}
                 {pillar.caption && (
                   <figcaption className="bn-caption">{pillar.caption}</figcaption>
                 )}

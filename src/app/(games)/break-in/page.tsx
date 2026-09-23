@@ -269,7 +269,7 @@ export default function BreakInPage() {
         {/* ═══ 08 · AUDIO ═══ */}
         <Reveal>
           <div id={ch.audio.id} style={GAP}>
-            <SectionHeading kicker="08 · Audio" title={ch.audio.title} />
+            <SectionHeading kicker="Audio Design" title={ch.audio.title} />
             <BreakInAudio />
           </div>
         </Reveal>
@@ -277,7 +277,7 @@ export default function BreakInPage() {
         {/* ═══ 09 · BALANCE ═══ */}
         <Reveal>
           <div id={ch.balance.id} style={GAP}>
-            <SectionHeading kicker="09 · Balance" title={ch.balance.title} />
+            <SectionHeading kicker="Balancing the Game" title={ch.balance.title} />
             <BalanceNote />
           </div>
         </Reveal>
@@ -286,7 +286,7 @@ export default function BreakInPage() {
         {p.designChallenge && (
           <Reveal>
             <div id={ch.challenge.id} style={GAP}>
-              <SectionHeading kicker="10 · The Hard Part" title={ch.challenge.title} />
+              <SectionHeading kicker="Design Challenges" title={ch.challenge.title} />
               <div style={{ marginTop: "1.5rem" }}>
                 <ChallengeQuote
                   challenge={p.designChallenge}

@@ -12,51 +12,6 @@ import {
   type Zone,
 } from "@/content/seeds-weather";
 
-/**
- * Seeds of Tomorrow — the weather system drawn rather than described.
- *
- * Four bands in one frame, in the same instrument language the other project
- * routes use, dressed for this one: warm, rounded, growing.
- *
- *   1. THE FLIP — the whole diagram is one world in two states, side by side.
- *      Left: a poisoned place under acid rain, bare ground. Right: the same
- *      place after its puzzle is solved, the same rain running clean, shoots
- *      coming up. On the seam between them, the only trigger the design
- *      asserts, dropping onto a one-way crossing. Under the two skies, drawn
- *      small and struck through, the HUD progress bar the system exists
- *      instead of — the design argument stated as a rejected option, because
- *      that is how the write-up states it.
- *   2. THE ROSTER — all five weathers with a glyph each. Every card carries the
- *      same line — what solving the place does to that sky — because that is
- *      the rule the flip is one instance of: the acid rain stops being acid,
- *      the hard weather stops. Two of them also carry the score line I wrote
- *      for their level, which is the "see AND hear" half of the same system.
- *   3. THE CREDIT — a team of five, and which part of it is mine, with one
- *      pointer up to the level-design section that owns the pacing loop this
- *      sky change is the last beat of. The loop used to be a third band in
- *      here; it is the credited level-design work and now has its own section,
- *      so what is left of it here is a link. See the ownership map, Gap G1.
- *
- * COLOUR IS NEVER LOAD-BEARING. Each zone prints its state as a word
- * ("Poisoned", "Healed") beside its sky, each weather prints its job as a word
- * ("Progress signal", "Hazard & mood"), and every panel is repeated in full as
- * prose beneath the drawing. The two accents are the route's own: the amber it
- * scopes for warning, the green it scopes for growth.
- *
- * MOTION. The rain falls, on a lattice with the same period as the animation,
- * so any single frame of it is a correct picture of the diagram — which is what
- * makes it safe to stop dead under `prefers-reduced-motion`, as it does.
- *
- * Static: no state, no client JS. Geometry here, the system in `seeds-weather`.
- */
-
-/* ---- flip geometry -------------------------------------------------------
-   One world, two panels, a gate between them. The panels are sized so a 490-
-   unit sky holds four lines of 10px mono with air around them, and the gate is
-   left at 100 so the crossing has room to read as a crossing rather than as a
-   join. The trigger plate does not live in the gate — it is wider than 100 —
-   so it sits above the seam and drops a line onto the crossing. */
-
 const VB_W = 1120;
 const VB_H = 404;
 
@@ -72,19 +27,15 @@ const SOIL_BOTTOM = 290;
 const FOOT_BOTTOM = 332;
 const PANEL_H = FOOT_BOTTOM - PANEL_Y;
 
-/** The crossing runs at the sky's middle. */
 const CROSS_Y = Math.round((SKY_TOP + GROUND_Y) / 2);
 
-/** Trigger plate, above the seam, with a line dropping onto the crossing. */
 const TRIGGER_Y = 6;
 const TRIGGER_H = 26;
 
-/** The rejected readout sits under both panels, on its own rule. */
 const REJECT_Y = 366;
 const BAR_W = 232;
 const BAR_H = 11;
 
-/** JetBrains Mono advances at 0.6em, so a 10px plate is 6 units per character. */
 const PLATE_FONT = 10;
 const PLATE_CHAR_W = PLATE_FONT * 0.6;
 
@@ -94,13 +45,6 @@ function panelBox(i: number) {
 }
 
 const SEAM_X = PAD_X + PANEL_W + GATE_W / 2;
-
-/* ---- rain ----------------------------------------------------------------
-   The strokes are laid on a lattice whose vertical period is exactly the
-   distance the animation travels, so the loop closes on itself and every frame
-   — including the frozen one a reduced-motion reader gets — is the same
-   correct picture. Jitter is a modulo of the column index, never a random, so
-   the server and the client draw the identical sky. */
 
 const RAIN_COLUMNS = 22;
 const RAIN_PERIOD = 54;
@@ -118,7 +62,6 @@ function rainDrops(panelX: number, slant: number, len: number): Drop[] {
   const rows = Math.ceil((GROUND_Y - SKY_TOP) / RAIN_PERIOD) + 2;
 
   for (let c = 0; c < RAIN_COLUMNS; c++) {
-    /* Two coprime moduli so the columns never fall into a visible diagonal. */
     const xJitter = ((c * 17) % 13) - 6;
     const yJitter = ((c * 29) % RAIN_PERIOD) - RAIN_PERIOD / 2;
     const lenJitter = ((c * 11) % 7) - 3;
@@ -137,8 +80,6 @@ function rainDrops(panelX: number, slant: number, len: number): Drop[] {
 
 function Rain({ zone, panelX }: { zone: Zone; panelX: number }) {
   const acid = zone.id === "poisoned";
-  /* Acid rain is driven sideways and drawn heavy; clean rain falls straight and
-     light. The difference is legible with the colour taken away. */
   const drops = rainDrops(panelX, acid ? -7 : -1.5, acid ? 22 : 15);
 
   return (
@@ -158,12 +99,6 @@ function Rain({ zone, panelX }: { zone: Zone; panelX: number }) {
     </g>
   );
 }
-
-/* ---- ground --------------------------------------------------------------
-   The poisoned ground carries bare snapped stems; the healed ground carries
-   the same stems with leaves and a seedling row coming up through them. Same
-   positions on both sides, so the eye reads one place twice rather than two
-   places. */
 
 const STEM_XS = [0.1, 0.21, 0.34, 0.46, 0.58, 0.7, 0.79, 0.9];
 
@@ -192,7 +127,6 @@ function Ground({ zone, panelX }: { zone: Zone; panelX: number }) {
         const h = 16 + ((i * 13) % 9);
 
         if (!healed) {
-          /* Snapped off: a short stem with a broken head, nothing on it. */
           return (
             <g key={t}>
               <path className="sw-stem" d={`M ${x} ${GROUND_Y} v ${-h}`} />
@@ -201,7 +135,6 @@ function Ground({ zone, panelX }: { zone: Zone; panelX: number }) {
           );
         }
 
-        /* Grown back: the same stem, taller, with a pair of leaves. */
         const g = h + 9;
         return (
           <g key={t}>
@@ -220,9 +153,6 @@ function Ground({ zone, panelX }: { zone: Zone; panelX: number }) {
     </g>
   );
 }
-
-/* ---- a plate -------------------------------------------------------------
-   The house label: a box sized off the string, so nothing ever clips. */
 
 function Plate({
   text,
@@ -248,15 +178,12 @@ function Plate({
   );
 }
 
-/* ---- 1 · the flip -------------------------------------------------------- */
-
 function ZonePanel({ zone, i }: { zone: Zone; i: number }) {
   const box = panelBox(i);
   const sky = weathers.find((w) => w.id === zone.sky);
 
   return (
     <g className={`sw-zone is-${zone.id}`}>
-      {/* The sky, and everything that happens in it. */}
       <rect
         className="sw-sky"
         x={box.x}
@@ -267,16 +194,8 @@ function ZonePanel({ zone, i }: { zone: Zone; i: number }) {
       <Rain zone={zone} panelX={box.x} />
       <Ground zone={zone} panelX={box.x} />
 
-      {/* Header: the zone number and its state, as words. */}
       <rect className="sw-panel-head" x={box.x} y={PANEL_Y} width={PANEL_W} height={HEAD_H} />
-      <text className="sw-panel-index" x={box.x + 16} y={PANEL_Y + 22}>
-        {zone.index} · {zone.stateLabel.toUpperCase()}
-      </text>
-      <text className="sw-panel-sky" x={box.right - 16} y={PANEL_Y + 22} textAnchor="end">
-        SKY · {sky ? sky.name.toUpperCase() : ""}
-      </text>
 
-      {/* Footer: what the player reads off the place. */}
       <rect
         className="sw-panel-foot"
         x={box.x}
@@ -284,14 +203,10 @@ function ZonePanel({ zone, i }: { zone: Zone; i: number }) {
         width={PANEL_W}
         height={FOOT_BOTTOM - SOIL_BOTTOM}
       />
-      <text className="sw-panel-reads-label" x={box.x + 16} y={SOIL_BOTTOM + 25}>
-        READS
-      </text>
       <text className="sw-panel-reads" x={box.x + 74} y={SOIL_BOTTOM + 25}>
         {zone.readout}
       </text>
 
-      {/* The sky line and the ground line, in the drawing itself. */}
       <text className="sw-panel-caption" x={box.x + 16} y={SKY_TOP + 24}>
         {zone.skyLine}
       </text>
@@ -311,7 +226,6 @@ function ZonePanel({ zone, i }: { zone: Zone; i: number }) {
   );
 }
 
-/** The sprout on the crossing: the puzzle solve, drawn as the thing it plants. */
 function SolveNode() {
   return (
     <g className="sw-solve">
@@ -372,9 +286,6 @@ function Flip() {
         <ZonePanel key={zone.id} zone={zone} i={i} />
       ))}
 
-      {/* The trigger, and the one-way crossing it fires. Drawn as two segments
-          through the sprout so the solve sits ON the edge rather than beside
-          it: the crossing does not exist without it. */}
       <Plate text={flip.trigger} x={SEAM_X} y={TRIGGER_Y} />
       <path className="sw-drop-line" d={`M ${SEAM_X} ${TRIGGER_Y + TRIGGER_H} V ${CROSS_Y - 16}`} />
       <path
@@ -388,8 +299,6 @@ function Flip() {
         markerEnd="url(#sw-arrow)"
       />
       <SolveNode />
-      {/* The direction, on two lines so it stays inside the gate rather than
-          spilling over either sky. */}
       {flip.direction.split(" · ").map((line, i) => (
         <text
           key={line}
@@ -402,50 +311,12 @@ function Flip() {
         </text>
       ))}
 
-      {/* The readout this one replaced. Struck through, in the margin, quiet. */}
-      <line className="sw-reject-rule" x1={PAD_X} y1={REJECT_Y - 16} x2={VB_W - PAD_X} y2={REJECT_Y - 16} />
-      <g className="sw-reject">
-        <rect className="sw-reject-rail" x={PAD_X} y={REJECT_Y} width={BAR_W} height={BAR_H} rx={5.5} />
-        <rect
-          className="sw-reject-fill"
-          x={PAD_X}
-          y={REJECT_Y}
-          width={BAR_W * 0.45}
-          height={BAR_H}
-          rx={5.5}
-        />
-        <line
-          className="sw-reject-strike"
-          x1={PAD_X - 6}
-          y1={REJECT_Y + BAR_H + 6}
-          x2={PAD_X + BAR_W + 6}
-          y2={REJECT_Y - 6}
-        />
-        <text className="sw-reject-label" x={PAD_X + BAR_W + 22} y={REJECT_Y + 9}>
-          {rejectedReadout.label.toUpperCase()}
-        </text>
-      </g>
-      <text className="sw-lane-label" x={VB_W - PAD_X} y={REJECT_Y + 9} textAnchor="end">
-        THE SKY ABOVE IS THE READOUT INSTEAD
-      </text>
-
-      {/* The rule the drawn pair is one instance of: the trigger reaches every
-          sky, and the roster below carries the other three. Set on the trigger's
-          own row, in the clear air to the left of its plate. */}
-      <text className="sw-rule-label" x={PAD_X} y={TRIGGER_Y + 18}>
-        {flip.rule.toUpperCase()}
-      </text>
     </svg>
   );
 }
 
-/* ---- 2 · the weather glyphs ---------------------------------------------
-   Five small drawings at a shared 72x44 box so the cards line up. Decorative:
-   every one is named and described in the text beside it. */
-
 function WeatherGlyph({ id }: { id: WeatherId }) {
   if (id === "acid-rain") {
-    /* Driven sideways, heavy, with the drops breaking on nothing. */
     return (
       <svg className="sw-glyph" viewBox="0 0 72 44" aria-hidden="true" focusable="false">
         <path className="sw-glyph-cloud" d="M 14 15 c 0 -7 6 -11 12 -9 c 3 -6 13 -6 15 1 c 6 -1 9 3 8 8 Z" />
@@ -464,7 +335,6 @@ function WeatherGlyph({ id }: { id: WeatherId }) {
   }
 
   if (id === "clean-rain") {
-    /* Straight down, light, onto something that is growing. */
     return (
       <svg className="sw-glyph" viewBox="0 0 72 44" aria-hidden="true" focusable="false">
         <path className="sw-glyph-cloud" d="M 14 13 c 0 -7 6 -11 12 -9 c 3 -6 13 -6 15 1 c 6 -1 9 3 8 8 Z" />
@@ -479,7 +349,6 @@ function WeatherGlyph({ id }: { id: WeatherId }) {
   }
 
   if (id === "snow") {
-    /* A six-armed crystal, still. */
     const arms = [0, 60, 120];
     return (
       <svg className="sw-glyph" viewBox="0 0 72 44" aria-hidden="true" focusable="false">
@@ -499,7 +368,6 @@ function WeatherGlyph({ id }: { id: WeatherId }) {
   }
 
   if (id === "wind") {
-    /* Three streaks, curling at the end of the run. */
     return (
       <svg className="sw-glyph" viewBox="0 0 72 44" aria-hidden="true" focusable="false">
         <path className="sw-glyph-stroke" d="M 8 13 h 38 a 6 6 0 1 0 -6 -6" />
@@ -509,7 +377,6 @@ function WeatherGlyph({ id }: { id: WeatherId }) {
     );
   }
 
-  /* Sandstorm: a dune with the grains torn off the top of it. */
   return (
     <svg className="sw-glyph" viewBox="0 0 72 44" aria-hidden="true" focusable="false">
       <path className="sw-glyph-dune" d="M 4 40 c 12 -2 16 -12 30 -12 c 12 0 18 10 34 12 Z" />
@@ -527,8 +394,6 @@ function WeatherGlyph({ id }: { id: WeatherId }) {
   );
 }
 
-/* ---- the frame ----------------------------------------------------------- */
-
 const ROLE_ORDER: Weather["role"][] = ["signal", "hazard"];
 
 export default function WeatherSystem() {
@@ -540,17 +405,13 @@ export default function WeatherSystem() {
     <div className="sw">
       <div className="panel sw-frame">
         <div className="sw-frame-head">
-          <p className="mono sw-frame-tag">Weather · the world as the readout</p>
-          <p className="mono sw-frame-meta">
-            {zones.length} zone states · 1 trigger · {weathers.length} weathers · Unity
-          </p>
+          <p className="mono sw-frame-tag">The Weather Design</p>
         </div>
 
         {/* 1 — the flip */}
         <section className="sw-band">
           <div className="sw-band-head">
-            <h3 className="sw-band-title">One place, twice</h3>
-            <p className="mono sw-band-meta">Poisoned to healed · the only transition</p>
+            <h3 className="sw-band-title">The Acid Rain</h3>
           </div>
           <div
             className="sw-screen sw-flip-scroll"
@@ -567,41 +428,20 @@ export default function WeatherSystem() {
               <li key={zone.id} className={`sw-zone-card is-${zone.id}`}>
                 <p className="mono sw-zone-kicker">
                   <span className="sw-zone-dot" aria-hidden="true" />
-                  {zone.index} · {zone.stateLabel}
+                  {zone.index} {zone.stateLabel}
                 </p>
                 <h4 className="sw-zone-name">{zone.name}</h4>
                 <p className="sw-zone-detail">{zone.detail}</p>
-                <p className="sw-zone-reads">
-                  <span className="mono sw-zone-reads-label">The player reads</span>
-                  {zone.readout}
-                </p>
               </li>
             ))}
           </ol>
 
-          <div className="sw-splits">
-            <aside className="sw-split is-trigger">
-              <p className="mono sw-split-tag">
-                Trigger · {flip.direction}
-              </p>
-              <h4 className="sw-split-name">{flip.trigger}</h4>
-              <p className="sw-split-body">{flip.body}</p>
-            </aside>
-            {/* The rejected readout is not restated here. The diagram above
-                draws it struck through under the trigger lane, and the design
-                quote at the top of the section rejects it in Alvaros own
-                words — a third telling in prose was the one that added
-                nothing. */}
-          </div>
         </section>
 
         {/* 2 — every weather, and the job it holds */}
         <section className="sw-band">
           <div className="sw-band-head">
-            <h3 className="sw-band-title">The weathers</h3>
-            <p className="mono sw-band-meta">
-              {weathers.length} skies · all of them answer the same trigger
-            </p>
+            <h3 className="sw-band-title">The Types of Weather</h3>
           </div>
           <p className="sw-thesis">{rosterThesis}</p>
           <ul className="sw-weathers">
@@ -616,32 +456,14 @@ export default function WeatherSystem() {
                 </p>
                 <h4 className="sw-weather-name">{w.name}</h4>
                 {w.where && <p className="mono sw-weather-where">Falls on · {w.where}</p>}
-                <p className="sw-weather-body">{w.body}</p>
-                {w.afterSolve && (
-                  <p className="sw-weather-after">
-                    <span className="mono sw-weather-after-label">When the place is solved</span>
-                    {w.afterSolve}
-                  </p>
-                )}
-                {w.scored && (
-                  <p className="sw-weather-scored">
-                    <span className="mono sw-weather-scored-label">Scored · {w.scored.track}</span>
-                    &ldquo;{w.scored.line}&rdquo;
-                  </p>
-                )}
               </li>
             ))}
           </ul>
         </section>
 
-        {/* 3 — whose design this is, and where the loop went */}
         <section className="sw-band">
           <aside className="sw-credit">
-            {/* No role/team tag. §05's `levelCredit` is this page's canonical
-                attribution and it is one section above; a second copy here was
-                the third statement of "Composer & Level Designer · Team of 5"
-                on one page. This band is the design argument only. */}
-            <p className="mono sw-credit-tag">Design note · The weather</p>
+            <p className="mono sw-credit-tag">Designer note · The weather</p>
             <p className="sw-credit-body">{weatherCredit.body}</p>
             <p className="sw-credit-pointer">
               <a href={loopPointer.href}>Click here for {loopPointer.label} &uarr;</a>

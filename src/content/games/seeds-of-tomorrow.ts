@@ -3,7 +3,7 @@ import type { Project } from "../schema";
 export const seedsOfTomorrow: Project = {
   slug: "seeds-of-tomorrow",
   title: "Seeds of Tomorrow",
-  tagline: "A traveller from a poisoned future returns to heal the Earth before it is too late.",
+  tagline: "A time traveller from a polluted Earth returns to heal it before it is too late.",
   pillar: false,
 
   facts: { engine: "Unity", role: "Composer & Level Designer", team: "Team of 5", year: "2025" },
@@ -19,13 +19,18 @@ export const seedsOfTomorrow: Project = {
   posterAlt: "Seeds of Tomorrow key art placeholder",
 
   vision:
-    "In a future where the Earth has been poisoned beyond saving, a traveller journeys back to our time to change its fate. He finds a child to protect from the pollution and the nature-twisted monsters it has spawned, and he searches for the Seeds of Tomorrow: the means to bring life back to a dying world. The player fights the monsters, recovers the seeds, and plants them to restore the Earth, one healed place at a time. It is a hopeful story told through a world that visibly mends as you play.",
+    "In a future where Earth has been completely destroyed by pollution, a time traveller comes back to " +
+    "change this fate before is too late. When he arrives, he finds a child that needs protection " +
+    "from polluted monsters. To bring life back, he searches the Seeds of Tomorrow, guarded by monsters. " +
+    "He has to recover the seeds and plant them to restore life on Earth",
 
   designChallenge: {
     quote:
-      "I wanted the world itself to be the feedback for the player's progress, not a HUD bar. So I tied the weather to the fiction: acid rain falls on the poisoned areas, and when the player solves the puzzle that heals a place, the rain turns clean. Snow, wind, and sandstorms each carry their own hazard and mood. The environment stops being a backdrop and becomes the clearest signal of whether you are winning, so restoring the Earth is something the player feels in the sky, not reads on a meter.",
+      "I wanted the world to reflect the world as realistic as possible. For that, as weather designer, I wanted to make " +
+      "the weather dynamic. I tied the weather to the story: acid rain falls in the rain level and when the player solves " +
+      "the level it changes to normal rain. Each of the weather levels had their own hazard and mood, adding to the level design.",
     engine: "Unity",
-    system: "Weather / environmental feedback",
+    system: "Weather and Level Design",
     resolution: "Made the weather the diegetic signal of the world healing.",
   },
 

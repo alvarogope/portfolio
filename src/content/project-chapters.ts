@@ -158,9 +158,9 @@ export const seedsChapters = {
   overview: { id: "overview", title: "The Vision", note: "What the game is" },
   inMotion: { id: "in-motion", title: sotInMotion.title, note: "Captures from the build" },
   role: { id: "my-role", title: "My Contribution", note: "What I designed and built" },
-  score: { id: "score", title: "Plant a Sound", note: "The music I composed" },
-  levels: { id: "level-design", title: "Fight, Then Mend", note: "The level and puzzle design" },
-  weather: { id: "weather", title: "A World That Heals", note: "The weather system" },
+  score: { id: "score", title: "Music and Audio Design", note: "The music I composed" },
+  levels: { id: "level-design", title: "Combat and Puzzle", note: "The level and puzzle design" },
+  weather: { id: "weather", title: "Dynamic Weather", note: "The weather system" },
 } as const satisfies Record<string, Chapter>;
 
 export const seedsChapterList: readonly Chapter[] = [

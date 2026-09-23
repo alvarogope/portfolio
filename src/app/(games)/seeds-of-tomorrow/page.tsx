@@ -26,46 +26,8 @@ export const metadata: Metadata = {
   description: p.systemsHook,
 };
 
-/* ═══════════════════════════════════════════════════════════════════════════
-   SEEDS OF TOMORROW · THE PAGE
-
-   THE FOURTH AND LAST APPLICATION of the template Moon-Knight, Shattered Skies
-   and Break-In carry. This page needed the least work of any of them — the
-   reading-load audit called it "the cleanest-written page on the site" — so
-   what changed is the shape, not the substance.
-
-   TWO THINGS WERE WRONG WITH THE SHAPE.
-
-     1. Two pieces of NON-GAME artwork stood between the reader and any evidence
-        the game exists: a charcoal concept sketch under the overview, and a
-        painted key-art seed under the score. A reader giving this page a minute
-        met a drawing, a painting and eleven track titles before one frame of
-        Unity. The sketch moved down to the weather section, where it is the
-        premise that system exists to undo; the key art stayed with the score,
-        which is what it was painted for, but now sits behind the footage.
-
-     2. The before/after diptych — the strongest single argument on the page —
-        sat at roughly 60% depth as an illustration of a system the reader had
-        no reason yet to care about. It now leads §02, full width.
-
-   NO SUBPAGE. Seeds is ~1,400 rendered words. Moon-Knight and Shattered Skies
-   were split at 6,000 and 8,100. There is nothing here to move.
-
-   ATTRIBUTION. A team of five. Álvaro composed the score and designed the
-   levels, the puzzles and the weather. `weatherCredit` inside `WeatherSystem`
-   is this page's canonical statement of that, and §03 · My Role routes to the
-   section that shows each credited discipline rather than restating it.
-
-   ONE IDEA, ONE OWNER. The idea this page repeats most — solve a place and its
-   sky lets go — is stated canonically ONCE, in `rosterThesis` inside the
-   weather roster. Everything else that used to restate it has been cut back to
-   a pointer. See docs/section-ownership-map.md.
-   ═══════════════════════════════════════════════════════════════════════════ */
-
-/** Shared spacing between top-level sections, so the rhythm is stated once. */
 const GAP = { marginTop: "5rem" } as const;
 
-/** The standfirst under a section heading. Same measure everywhere. */
 const LEAD = {
   color: "var(--color-mist)",
   maxWidth: "35rem",
@@ -103,38 +65,24 @@ export default function SeedsOfTomorrowPage() {
         </div>
       </div>
 
-      {/* `tight`: this Section follows the hero, so its 4rem top padding
-          would be the second of three stacked gaps. See Section.tsx. */}
       <Section tight>
-        {/* The way back up. No subpage, so there is no trail to descend — but
-            the homepage IS the project index, and the page needs an exit that
-            is not the browser's back button. */}
-        <Breadcrumb items={[{ label: "Projects", href: "/" }, { label: p.title }]} />
-
-        {/* The contents of the page, before the page starts arguing. */}
         <ChapterNav chapters={seedsChapterList} />
 
-        {/* ═══ 01 · OVERVIEW ═══
-            Prose only now. The charcoal sketch that used to sit under this
-            moved to §06, where it is the premise the weather system undoes. */}
+        {/* ═══ 01 · OVERVIEW ═══ */}
         <Reveal>
           <div
             id={ch.overview.id}
             style={{ maxWidth: "35rem", marginTop: "1.5rem" }}
           >
-            <SectionHeading kicker="01 · Overview" title={ch.overview.title} />
+            <SectionHeading kicker="The Overview" title={ch.overview.title} />
             <p style={{ marginTop: "1rem" }}>{p.vision}</p>
           </div>
         </Reveal>
 
-        {/* ═══ 02 · IN MOTION ═══
-            Proof before prose. The diptych runs at full width and on its own,
-            above the clips, because it is a comparison: two frames of one plot
-            of ground, and it only reads if they are big enough to compare. */}
+        {/* ═══ 02 · IN MOTION ═══ */}
         <Reveal>
           <div id={ch.inMotion.id} style={GAP}>
             <SectionHeading kicker={inMotionIntro.kicker} title={inMotionIntro.title} />
-            <p style={LEAD}>{inMotionIntro.body}</p>
 
             <PlateGrid minWidth="26rem" aspect="1440 / 610" items={[...beforeAfter]} />
 
@@ -144,18 +92,12 @@ export default function SeedsOfTomorrowPage() {
           </div>
         </Reveal>
 
-        {/* ═══ 03 · MY ROLE ═══
-            Moved up from last, matching the other three pages: after the game,
-            before the disciplines. Every credited contribution has a section
-            that shows it, so this routes to the owner rather than restating it
-            — keys, not copy. A contribution with no entry in
-            `contributionHomes` still prints its description, so adding one can
-            never silently lose it. */}
+        {/* ═══ 03 · MY ROLE ═══ */}
         <Reveal>
           <div id={ch.role.id} style={GAP}>
-            <SectionHeading kicker="03 · My Role" title={ch.role.title} />
+            <SectionHeading kicker="My Role" title={ch.role.title} />
             <p className="mono" style={{ fontSize: "0.72rem", color: "var(--color-silver)", marginBottom: "1.5rem" }}>
-              {p.facts.role} · {p.facts.team} · each one shown below, not just claimed
+              {p.facts.role} · {p.facts.team}
             </p>
             <ul className="sot-roles">
               {p.contributions.map((c) => {
@@ -183,17 +125,13 @@ export default function SeedsOfTomorrowPage() {
         {/* ═══ 04 · ORIGINAL SCORE ═══ */}
         <Reveal>
           <div id={ch.score.id} style={GAP}>
-            <SectionHeading kicker="04 · Original Score" title={ch.score.title} />
+            <SectionHeading kicker="Original Music" title={ch.score.title} />
             <p style={LEAD}>
-              I composed and recorded eleven original tracks for the game. The main theme plays as
-              you explore this page; the seeds below are moments from the score. Plant one to hear
-              it.
+              I composed and recorded original tracks for the game. The main theme can be listened 
+              to while exploring this page down below. The rest can be found in this section.
             </p>
             <SeedsAudio />
 
-            {/* The seeds in the component above are abstract UI. This gives the
-                metaphor the section is named for a face. Painted key art,
-                captioned as such so it cannot read as a screenshot. */}
             <div style={{ marginTop: "2.5rem", maxWidth: "46rem" }}>
               <PlateGrid
                 minWidth="100%"
@@ -201,10 +139,10 @@ export default function SeedsOfTomorrowPage() {
                 items={[
                   {
                     src: "/images/seeds-of-tomorrow/Seed.jpg",
-                    label: "Key art · painted",
+                    label: "Key art",
                     alt: "Painted key art of a single glowing seed sprouting through cracked earth, roots running light into the ground and flowers opening around it.",
                     caption:
-                      "Key art, not a screenshot. One seed in dead ground, and the light running out from its roots — the image the score was written to.",
+                      "Concept art of a planted seed.",
                   },
                 ]}
               />
@@ -212,48 +150,40 @@ export default function SeedsOfTomorrowPage() {
           </div>
         </Reveal>
 
-        {/* ═══ 05 · LEVEL DESIGN ═══
-            The credited "Level Designer" half of the role, which had no section
-            until the G1 gap-fix: the pacing loop used to live inside the weather
-            component as its third band. It owns the loop; §06 owns what the sky
-            does. See docs/section-ownership-map.md G1. */}
+        {/* ═══ 05 · LEVEL DESIGN ═══ */}
         <Reveal>
           <div id={ch.levels.id} style={GAP}>
-            <SectionHeading kicker="05 · Level Design" title={ch.levels.title} />
+            <SectionHeading kicker="Level Design" title={ch.levels.title} />
             <p style={LEAD}>
-              I designed the levels and the puzzles, and the rhythm they run on. Every place in the
-              game is paced the same way: a burst of tension, then the quieter work of putting it
-              back.
+              I co-designed the levels and the puzzles with members of the team. I designed the pace
+              the gameplay runs.
             </p>
             <SeedsLevelDesign />
 
-            {/* Where the arenas are drawn, and what one looks like from inside
-                it. The clip of the fight itself is up in §02 — this is the
-                layout evidence the clip cannot carry. */}
             <div style={{ marginTop: "3rem" }}>
               <PlateGrid
                 minWidth="26rem"
                 items={[
                   {
                     src: "/images/seeds-of-tomorrow/city-level.jpg",
-                    label: "The place · in the Unity scene",
+                    label: "The Snow Level",
                     alt: "Overhead view of the ruined-town level, with the combat arenas marked out in red across the streets and around the wrecked buildings.",
                     caption:
-                      "The ruined town from above, with its arenas marked in red. The fights are placed around the buildings that have to be cleared before the mending can start.",
+                      "The fights are placed around the buildings that have to be cleared before the puzzle can be started.",
                   },
                   {
                     src: "/images/seeds-of-tomorrow/Gameplay_Screenshot_2.png",
-                    label: "An arena, from inside it",
+                    label: "Fight in-game",
                     alt: "Top-down gameplay in the valley level: the player firing an energy beam at corrupted enemies, each with a health bar, with the red arena boundary curving across the ground.",
                     caption:
-                      "One of those red rectangles in play. The boundary is drawn on the ground during the fight, so the space the level designer marked out is the space the player is held inside.",
+                      "The combat in the game. The origin of the pollution and the enemies appear on screen.",
                   },
                   {
                     src: "/images/seeds-of-tomorrow/Gameplay_Screenshot.png",
-                    label: "A second level, in engine",
+                    label: "The snow level",
                     alt: "The snow-town level in play: the player firing on a corrupted enemy in a street between wrecked houses, with a hazard bloom marking the contested ground.",
                     caption:
-                      "The same pacing rule in a different place. Snow town, built from the same kit and laid out the same way — a contested pocket to clear, then ground to put back.",
+                      "The snow level in combat.",
                   },
                 ]}
               />
@@ -261,22 +191,11 @@ export default function SeedsOfTomorrowPage() {
           </div>
         </Reveal>
 
-        {/* ═══ 06 · THE HARD PART ═══
-            THE MERGE. The design-challenge quote used to sit in its own bordered
-            panel directly above this diagram, saying in prose exactly what the
-            diagram says in picture — including the rejected HUD bar, which the
-            diagram also draws struck through. They were one section pretending
-            to be two. The quote is now the section's standfirst, in the author's
-            voice, and the component that follows is the evidence for it.
-            Ownership map, Absorb #10.
-
-            The charcoal sketch closes the section rather than opening the page:
-            it is the world the system exists to undo, and it belongs beside the
-            machinery that undoes it. */}
+        {/* ═══ 06 · THE HARD PART ═══ */}
         {p.designChallenge && (
           <Reveal>
             <div id={ch.weather.id} style={GAP}>
-              <SectionHeading kicker="06 · The Hard Part" title={ch.weather.title} />
+              <SectionHeading kicker="The Development" title={ch.weather.title} />
               <blockquote className="sot-quote">
                 <p className="sot-quote-body">{p.designChallenge.quote}</p>
                 <footer className="mono sot-quote-foot">
@@ -293,10 +212,10 @@ export default function SeedsOfTomorrowPage() {
                   items={[
                     {
                       src: "/images/seeds-of-tomorrow/dying-earth-sketch.jpg",
-                      label: "Concept · charcoal",
+                      label: "Sketch",
                       alt: "Hand-drawn charcoal sketch of a poisoned Earth: cooling towers venting smoke, wrecked pylons, scattered oil drums, a ringed planet and a saucer in the sky.",
                       caption:
-                        "The premise, drawn before any of it was built: cooling towers still venting, pylons down, drums in the dirt, and something watching from orbit. Everything the system above exists to undo is in this drawing.",
+                        "Another concept art that represent the cover of the game.",
                     },
                   ]}
                 />
@@ -305,8 +224,6 @@ export default function SeedsOfTomorrowPage() {
           </Reveal>
         )}
 
-        {/* The exits. Up to the index, and sideways to the other three
-            projects. No CtaPanel: this project has no second half. */}
         <Reveal>
           <div style={GAP}>
             <RampLink href="/">Back to all four projects</RampLink>
@@ -318,7 +235,6 @@ export default function SeedsOfTomorrowPage() {
         </Reveal>
       </Section>
 
-      {/* Two layers: the rays and the hero on top. */}
       <style>{`
         .sot-hero {
           position: relative;

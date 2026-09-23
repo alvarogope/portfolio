@@ -9,9 +9,9 @@ type Seed = { id: string; name: string; mood: string; src: string; tint: string 
 const AMBIENT_SRC = "/audio/seeds/main-theme.mp3";
 
 const SEEDS: Seed[] = [
-  { id: "snow", name: "Snow Level", mood: "Still, crystalline cold", src: "/audio/seeds/snow.mp3", tint: "#6FB2C4" },
-  { id: "rain", name: "Rain Level", mood: "The world weeping, then washed clean", src: "/audio/seeds/rain.mp3", tint: "#5F9B6B" },
-  { id: "boss", name: "Final Boss", mood: "The last stand for the Earth", src: "/audio/seeds/final-boss.mp3", tint: "#E0A845" },
+  { id: "snow", name: "Snow Level", mood: "Still and cold", src: "/audio/seeds/snow.mp3", tint: "#6FB2C4" },
+  { id: "rain", name: "Rain Level", mood: "Washes the world.", src: "/audio/seeds/rain.mp3", tint: "#5F9B6B" },
+  { id: "boss", name: "Final Boss", mood: "The last fight for the Earth", src: "/audio/seeds/final-boss.mp3", tint: "#E0A845" },
 ];
 
 const THEMED_VARS = ["--color-nightfall", "--color-silver", "--color-moonlight", "--font-mono"];

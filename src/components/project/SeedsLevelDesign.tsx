@@ -9,43 +9,10 @@ import {
   type LoopHalf,
 } from "@/content/seeds-levels";
 
-/**
- * Seeds of Tomorrow — the level design drawn rather than claimed.
- *
- * The "Level Designer" half of the credited role had no section: the four-beat
- * loop that IS the credited pacing work was buried inside `WeatherSystem` as
- * its third band. This component is that band promoted to a section of its own,
- * with the half each beat belongs to made visible — which is what turns four
- * boxes into a pacing argument.
- *
- *   1. THE LOOP — fight, recover, solve, and then the sky turns, with the
- *      return arc under the row. A rail across the top marks where the arc
- *      turns over from tension into restoration, so the rhythm is drawn and
- *      not only asserted. The payoff node keeps its emphasis, because the
- *      whole design claim is that the reward lands at the end of the arc.
- *   2. THE BEATS — the four steps in prose, tagged by half, with one pointer
- *      out of the payoff beat to the weather section that owns what the sky
- *      actually does. No sky is described here.
- *   3. THE PUZZLES & THE CREDIT — the level/puzzle bullet re-homed out of the
- *      contributions recap, and which part of a team of five this is.
- *
- * OWNERSHIP. The weather is not this section's. The payoff beat names the sky
- * turning and links down; the flip, the trigger and the five weathers stay in
- * the weather section. See docs/section-ownership-map.md, Gap G1.
- *
- * COLOUR IS NEVER LOAD-BEARING. Every beat prints its half as a word, and the
- * payoff prints "THE PAYOFF BEAT" rather than relying on its accent.
- */
-
 const HALF_LABEL: Record<LoopHalf, string> = {
   tension: "Tension",
   restoration: "Restoration",
 };
-
-/* ---- the loop ------------------------------------------------------------
-   Four beats and a return, drawn on one line. The return arc runs under the
-   row rather than through it so the payoff node keeps a clean right edge — it
-   is the beat everything else is arranged around. */
 
 const LOOP_W = 1000;
 const LOOP_H = 236;
@@ -63,7 +30,6 @@ function loopBox(i: number) {
   return { x, w: LOOP_NODE_W, right: x + LOOP_NODE_W, cx: x + LOOP_NODE_W / 2 };
 }
 
-/** Where the arc turns over: the first index whose half differs from the first. */
 const TURN_INDEX = loopSteps.findIndex((s) => s.half !== loopSteps[0].half);
 
 function Loop() {
@@ -97,7 +63,6 @@ function Loop() {
         </marker>
       </defs>
 
-      {/* The rail: which half of the rhythm each stretch of the row is. */}
       <g className="sl-rail" aria-hidden="true">
         <path className="sl-rail-line" d={`M ${first.x} ${RAIL_Y} H ${seam - 6}`} />
         <path className="sl-rail-line is-restoration" d={`M ${seam + 6} ${RAIL_Y} H ${last.right}`} />
@@ -130,10 +95,6 @@ function Loop() {
               height={LOOP_NODE_H - 1}
               rx={10}
             />
-            <text className="sl-loop-index" x={box.cx} y={LOOP_Y + 28} textAnchor="middle">
-              {step.index}
-              {step.isPayoff ? " · THE SKY TURNS" : ""}
-            </text>
             <text className="sl-loop-name" x={box.cx} y={LOOP_Y + 56} textAnchor="middle">
               {step.name}
             </text>
@@ -153,37 +114,27 @@ function Loop() {
         />
       ))}
 
-      {/* The return: out of the payoff, under the row, back to the fight. */}
       <path
         className="sl-loop-edge is-return"
         d={`M ${last.cx} ${LOOP_Y + LOOP_NODE_H} V ${RETURN_Y} H ${first.cx} V ${LOOP_Y + LOOP_NODE_H + 8}`}
         markerEnd="url(#sl-loop-arrow)"
       />
-      <text className="sl-lane-label" x={LOOP_W - LOOP_PAD} y={RETURN_Y + 24} textAnchor="end">
-        THEN THE NEXT PLACE
-      </text>
     </svg>
   );
 }
-
-/* ---- the frame ----------------------------------------------------------- */
 
 export default function SeedsLevelDesign() {
   return (
     <div className="sl">
       <div className="panel sl-frame">
         <div className="sl-frame-head">
-          <p className="mono sl-frame-tag">Level design · the rhythm of a place</p>
-          <p className="mono sl-frame-meta">
-            {loopSteps.length} beats · {halves.length} halves · 1 return · Unity
-          </p>
+          <p className="mono sl-frame-tag">Level design</p>
         </div>
 
         {/* 1 — the loop */}
         <section className="sl-band">
           <div className="sl-band-head">
-            <h3 className="sl-band-title">The loop every place is built around</h3>
-            <p className="mono sl-band-meta">Fight · recover · solve · the sky turns</p>
+            <h3 className="sl-band-title">The Gameplay Loop</h3>
           </div>
           <p className="sl-thesis">{loopNote}</p>
           <div
@@ -210,7 +161,6 @@ export default function SeedsLevelDesign() {
         <section className="sl-band">
           <div className="sl-band-head">
             <h3 className="sl-band-title">The beats</h3>
-            <p className="mono sl-band-meta">Each one tagged with the half it sits in</p>
           </div>
           <ol className="sl-steps">
             {loopSteps.map((step) => (
@@ -234,13 +184,9 @@ export default function SeedsLevelDesign() {
 
         {/* 3 — the puzzles, and whose design this is */}
         <section className="sl-band sl-close">
-          <aside className="sl-puzzle">
-            <p className="mono sl-puzzle-tag">{puzzleNote.tag}</p>
-            <p className="sl-puzzle-body">{puzzleNote.body}</p>
-          </aside>
           <aside className="sl-credit">
             <p className="mono sl-credit-tag">
-              Design note · {levelCredit.role} · {levelCredit.team}
+              Designer note · {levelCredit.role} · {levelCredit.team}
             </p>
             <p className="sl-credit-body">{levelCredit.body}</p>
           </aside>

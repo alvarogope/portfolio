@@ -54,17 +54,6 @@ export default function DialogueTree({ lines }: { lines: Line[] }) {
                 fontSize: "0.98rem",
               }}
             >
-              <span
-                aria-hidden
-                style={{
-                  fontFamily: "var(--font-mono)",
-                  fontSize: "0.7rem",
-                  color: selected ? "var(--color-gold)" : "var(--color-mist)",
-                  minWidth: "1.5rem",
-                }}
-              >
-                {String(i + 1).padStart(2, "0")}
-              </span>
               <span style={{ flex: 1 }}>{line.prompt}</span>
               <span
                 aria-hidden

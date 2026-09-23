@@ -4,7 +4,6 @@ export const breakIn: Project = {
   slug: "break-in",
   title: "Break-In",
   tagline: "A four-player stealth heist where no role can win alone, and nobody can speak.",
-  pillar: true,
 
   facts: { engine: "Unity", role: "Lead Designer", team: "Team of 4", year: "2025" },
   links: [],
@@ -23,39 +22,12 @@ export const breakIn: Project = {
     "piece of the big puzzle that is the heist. The only way to coordinate is through some tools they are given in the " +
     "game. Steal as much as you can in eight minutes and escape together undetected. If one player gets caught, it is game over.",
 
+  // Names only: RoleTerms reads them to highlight roles in prose. Each role's kit lives in break-in-roles.ts.
   roles: [
-    {
-      name: "The Hacker",
-      brief: "The eyes. Watches the whole bank through CCTV and guides the team that cannot hear each other.",
-      tools: "Hacker Vision highlights enemies through walls (5s, 30s cooldown). Distraction overloads lights and PCs to pull guards off their routes (7s, 10s cooldown). Reveals environmental clues that lower puzzle difficulty.",
-      dependsOn: "The Insider, whose USB in the server room is what wakes the downstairs cameras.",
-      neededBy: "Everyone. The Hacker is how a voiceless team sees danger.",
-      accent: "silver",
-    },
-    {
-      name: "The Insider",
-      brief: "The key. Opens paths the Hacker cannot reach, and plants the hack that starts the digital heist.",
-      tools: "Disguise as staff to pass through restricted rooms (10s, 60s cooldown). Finds the security card to reach the server room, where planting a USB grants the Hacker the digital-money hack. Scouts one of three random escape routes and lights the path for the team.",
-      dependsOn: "The Hacker's vision to move unseen between disguises.",
-      neededBy: "The Hacker, who cannot start the digital money hack until the Insider plants the USB.",
-      accent: "silver",
-    },
-    {
-      name: "The Vaultsnatcher",
-      brief: "The hands. Cracks the vault and lifts the gold, one second from setting off the alarm.",
-      tools: "Finds the manager's password to open the vault. Swaps real gold ingots for weight-matched decoys; leaving one unreplaced for more than a second triggers the alarm and a 30-second escape window. Carries decoys two at a time, so the trip has to be made more than once.",
-      dependsOn: "The Lockpicker, whose smoke kills the basement lasers on the way in.",
-      neededBy: "The Lockpicker, who cannot start the digital transfer without the manager's password.",
-      accent: "gold",
-    },
-    {
-      name: "The Lockpicker",
-      brief: "The way through. Opens locked doors, strips the digital money, and kills the lasers.",
-      tools: "Picks locks through a timing puzzle; a failed attempt amplifies the noise, alerting guards within six metres instead of three. Steals digital money from hidden PCs. Carries three smoke bombs that reveal and disable the basement laser traps.",
-      dependsOn: "The Hacker's vision to pick locks without a guard turning the corner.",
-      neededBy: "The Vaultsnatcher, who cannot reach the gold until the lasers are down.",
-      accent: "silver",
-    },
+    { name: "The Hacker" },
+    { name: "The Insider" },
+    { name: "The Vaultsnatcher" },
+    { name: "The Lockpicker" },
   ],
 
   designChallenge: {

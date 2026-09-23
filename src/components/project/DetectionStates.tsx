@@ -6,9 +6,7 @@ import {
   feedbackChannels,
   feedbackThesis,
   machineSummary,
-  trapsCounterPointer,
   trapsCredit,
-  trapsNote,
   trapsThesis,
   voiceConstraint,
   type AlarmTrigger,
@@ -965,21 +963,6 @@ export default function DetectionStates() {
           font-size: 0.82rem;
           line-height: 1.55;
           color: var(--ds-quiet);
-        }
-        .ds-channel-catches {
-          margin: 0.35rem 0 0;
-          padding-top: 0.6rem;
-          border-top: 1px solid var(--ds-edge);
-          font-size: 0.78rem;
-          line-height: 1.5;
-          color: var(--color-moonlight);
-        }
-        .ds-channel-catches-label {
-          display: block;
-          font-size: 0.68rem;
-          letter-spacing: 0.16em;
-          color: var(--ds-amber);
-          margin-bottom: 0.15rem;
         }
 
         .ds-note {

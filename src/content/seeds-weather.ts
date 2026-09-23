@@ -10,8 +10,6 @@ export interface Weather {
   roleLabel: string;
   where: string;
   body: string;
-  afterSolve?: string;
-  scored?: { track: string; line: string };
 }
 
 export const weathers: readonly Weather[] = [
@@ -24,7 +22,6 @@ export const weathers: readonly Weather[] = [
     where: "Every polluted rainy area",
     body:
       "It falls on everything the player has not solved yet.",
-    afterSolve: "The same rain, running clean.",
   },
   {
     id: "clean-rain",
@@ -35,8 +32,6 @@ export const weathers: readonly Weather[] = [
     where: "solved rainy area",
     body:
       "The acid rain transforms to this once the level is completed.",
-    afterSolve: "This is the after. It is what the solve leaves behind.",
-    scored: { track: "Rain Level", line: "The world weeping, then washed clean" },
   },
   {
     id: "snow",
@@ -48,7 +43,6 @@ export const weathers: readonly Weather[] = [
     body:
       "Hard weather with its own mood: a condition to survive as much as an atmosphere to feel, " +
       "and the level is built around what its sky is doing to the player.",
-    scored: { track: "Snow Level", line: "Still, crystalline cold" },
   },
   {
     id: "wind",

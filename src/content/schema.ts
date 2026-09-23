@@ -1,7 +1,6 @@
 export interface Contribution {
     label: string;        
     description: string;
-    accent?: "gold" | "scarlet" | "emerald"; 
   }
   
   export interface Ability {
@@ -11,28 +10,12 @@ export interface Contribution {
     availableTo: ("Player" | "Enemy")[];
   }
   
-  export interface TableRow {
-    cells: string[];      
-  }
-  
-  export interface SystemTable {
-    caption?: string;
-    headers: string[];
-    rows: TableRow[];
-  }
-  
   {/* Design Challenge */}
   export interface DesignChallenge {
     quote: string;
     engine?: string;
     system?: string;
     resolution?: string;
-  }
-  
-  {/** Design Decision. */}
-  export interface DesignDecision {
-    title: string;
-    body: string;
   }
   
   {/** Project Links */}
@@ -53,31 +36,12 @@ export interface Contribution {
   {/* Role */}
   export interface Role {
     name: string;
-    brief: string;          
-    tools: string;          
-    dependsOn: string;      
-    neededBy: string;       
-    accent?: "silver" | "gold" | "scarlet" | "emerald";
   }
 
-  {/** Ending */}
-  export interface Ending {
-    name: string;
-    outcome: string;
-  }
-
-  { /* World */}
-  export interface World {
-    name: string;
-    descriptor: string;
-  }
-  
   export interface Project {
     slug: string;
     title: string;
     tagline: string;
-    pillar: boolean;
-    gallery?: { src: string; alt: string; caption: string; video?: string }[];
   
     facts: ProjectFacts;
   
@@ -97,8 +61,6 @@ export interface Contribution {
     contributions: Contribution[];
   
     abilities?: Ability[];
-    designDecisions?: DesignDecision[];
-    systemTable?: SystemTable;
     designChallenge?: DesignChallenge;
   
     engineeringNote?: {
@@ -109,5 +71,4 @@ export interface Contribution {
     };
 
     roles?: Role[];
-    worlds?: World[];
   }

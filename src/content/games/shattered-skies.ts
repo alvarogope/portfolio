@@ -4,7 +4,6 @@ export const shatteredSkies: Project = {
   slug: "shattered-skies",
   title: "Shattered Skies",
   tagline: "A fractured world with a united purpose. Two enemies, one life they must preserve.",
-  pillar: true,
 
   facts: { engine: "Unity", role: "Game Designer", team: "Team of 5", year: "2025" },
   links: [],

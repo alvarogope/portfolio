@@ -157,7 +157,7 @@ export default function MoonKnightPage() {
                 minWidth="26rem"
                 items={[
                   {
-                    src: "/images/moon-knight/AI Detection - Moon-Knight.png",
+                    src: "/images/moon-knight/BP_AIController_SightDetection.png",
                     label: "Blueprint · Triggering enemies through sight detection",
                     alt: "The AI sight-detection graph: a Sight Detection event breaks the AI stimulus, branches on Successfully Sensed, and on the true path writes the player into the Target Actor Blackboard key and calls Activate Mini Boss Combat — while the false path clears the key and calls Deactivate Miniboss Combat.",
                     caption:
@@ -209,7 +209,7 @@ export default function MoonKnightPage() {
                 minWidth="100%"
                 items={[
                   {
-                    src: "/images/moon-knight/BPC_ComboContinuiationGate.png",
+                    src: "/images/moon-knight/BPC_ComboContinuationGate.png",
                     label: "Blueprint · the combo continuation",
                     alt: "The BPC_AttackSystem Blueprint graph: a Sword Attack event branching on Is Attacking?, a Combo continue event branching on Save Attack?, a Switch on Int firing Attack 1 through Attack 4, and a Stop Combo node on the failing branch.",
                     caption:
@@ -358,7 +358,7 @@ export default function MoonKnightPage() {
                       "When I reworked it in the C++ codebase, I wired the respawn at the last willow tree the player rested at, making them checkpoints rather than forcing the main spawn. ",
                   },
                   {
-                    src: "/images/moon-knight/Pickup Trace - Moon-Knight.png",
+                    src: "/images/moon-knight/BPC_EquipmentSystem_PickupTrace.png",
                     label: "Pickup mechanic",
                     alt: "The pickup trace graph: the Interact input runs a sphere trace forward from the follow camera, and if the hit actor casts to BP_Weapon it is added to the equipment component and the world actor is destroyed.",
                     caption:

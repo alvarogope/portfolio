@@ -29,7 +29,7 @@ export const inMotionItems: readonly MotionItem[] = [
       "This is the main traversal mechanics between the planets, carrying real in-game mass",
   },
   {
-    src: "/images/shattered-skies/shattered-skies-spaceship-interior.png.png",
+    src: "/images/shattered-skies/ship-interior.png",
     label: "First Level",
     alt: "In-engine view of the ship's interior: the hub floor with its lit consoles spread around the walls and a player character standing among them.",
     caption:

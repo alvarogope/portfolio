@@ -53,12 +53,6 @@ export const hosts: readonly Host[] = [
   },
 ];
 
-export const getHost = (id: HostId): Host => {
-  const host = hosts.find((h) => h.id === id);
-  if (!host) throw new Error(`Unknown host: ${id}`);
-  return host;
-};
-
 
 export interface WorldNote {
   id: string;

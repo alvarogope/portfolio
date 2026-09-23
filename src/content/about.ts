@@ -22,7 +22,7 @@
         label: "Languages",
         items: [
           { name: "C++", icon: "cpp" },
-          { name: "C#", icon: "c#" },
+          { name: "C#", icon: "csharp" },
           { name: "Python", icon: "python" },
           { name: "JavaScript", icon: "javascript" },
         ],

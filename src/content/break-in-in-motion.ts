@@ -22,7 +22,7 @@ export const inMotionItems: readonly MotionItem[] = [
       "This is the test for the distraction mechanic. The guard will go to wherever the trigger is.",
   },
   {
-    src: "/images/break-in/Reception_Lobby_2.png",
+    src: "/images/break-in/Reception_Lobby.png",
     label: "The Main Lobby",
     alt: "In-engine view of the bank lobby: three ATMs along the back wall, waiting seating, low tables, and the walk-through security gate that leads to the rest of the building.",
     caption:

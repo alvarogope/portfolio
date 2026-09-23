@@ -46,7 +46,7 @@ export const inMotionItems: readonly MotionItem[] = [
       "The moment when the seed blossoms.",
   },
   {
-    src: "/images/seeds-of-tomorrow/Gameplay_Screenshot_3.png",
+    src: "/images/seeds-of-tomorrow/restored-world.png",
     label: "Restoring life",
     alt: "The restored world in play: deer, a dog, a raccoon and other animals grazing on green ground among autumn trees and mushrooms, with the traveller's saucer parked on the road.",
     caption:

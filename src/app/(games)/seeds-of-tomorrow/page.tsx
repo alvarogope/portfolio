@@ -108,8 +108,8 @@ export default function SeedsOfTomorrowPage() {
                     {home ? (
                       <>
                         <p className="sot-role-shown">{home.shown}</p>
-                        <a className="mono sot-role-link" href={home.href}>
-                          {home.section} &darr;
+                        <a className="mono sot-role-link" href={`#${ch[home.chapter].id}`}>
+                          {ch[home.chapter].title} &darr;
                         </a>
                       </>
                     ) : (
@@ -172,14 +172,14 @@ export default function SeedsOfTomorrowPage() {
                       "The fights are placed around the buildings that have to be cleared before the puzzle can be started.",
                   },
                   {
-                    src: "/images/seeds-of-tomorrow/Gameplay_Screenshot_2.png",
+                    src: "/images/seeds-of-tomorrow/valley-level-combat.png",
                     label: "Fight in-game",
                     alt: "Top-down gameplay in the valley level: the player firing an energy beam at corrupted enemies, each with a health bar, with the red arena boundary curving across the ground.",
                     caption:
                       "The combat in the game. The origin of the pollution and the enemies appear on screen.",
                   },
                   {
-                    src: "/images/seeds-of-tomorrow/Gameplay_Screenshot.png",
+                    src: "/images/seeds-of-tomorrow/snow-level-combat.png",
                     label: "The snow level",
                     alt: "The snow-town level in play: the player firing on a corrupted enemy in a street between wrecked houses, with a hazard bloom marking the contested ground.",
                     caption:

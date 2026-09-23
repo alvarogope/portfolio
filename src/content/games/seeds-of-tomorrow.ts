@@ -4,7 +4,6 @@ export const seedsOfTomorrow: Project = {
   slug: "seeds-of-tomorrow",
   title: "Seeds of Tomorrow",
   tagline: "A time traveller from a polluted Earth returns to heal it before it is too late.",
-  pillar: false,
 
   facts: { engine: "Unity", role: "Composer & Level Designer", team: "Team of 5", year: "2025" },
   links: [],
@@ -36,7 +35,7 @@ export const seedsOfTomorrow: Project = {
 
   contributions: [
     {
-      label: "Original score (11 tracks)",
+      label: "Original soundtrack",
       description:
         "Composed and recorded the game's entire soundtrack: eleven original tracks scoring the journey from a poisoned world to a restored one, matching the tone of each area and the emotional arc of the story.",
     },

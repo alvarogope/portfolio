@@ -951,39 +951,6 @@ export default function WeatherSystem() {
         }
         /* Every card carries this line, because every sky answers the trigger.
            It is the roster's whole argument, so it is set at full strength. */
-        .sw-weather-after {
-          margin: 0.4rem 0 0;
-          padding-top: 0.6rem;
-          border-top: 1px solid var(--sw-edge);
-          font-size: 0.82rem;
-          line-height: 1.5;
-          color: var(--color-moonlight);
-        }
-        .sw-weather-after-label {
-          display: block;
-          font-size: 0.68rem;
-          letter-spacing: 0.16em;
-          margin-bottom: 0.15rem;
-          color: var(--sw-leaf-text);
-        }
-
-        .sw-weather-scored {
-          margin: 0.35rem 0 0;
-          padding-top: 0.6rem;
-          border-top: 1px solid var(--sw-edge);
-          font-size: 0.8rem;
-          font-style: italic;
-          line-height: 1.5;
-          color: var(--color-moonlight);
-        }
-        .sw-weather-scored-label {
-          display: block;
-          font-size: 0.68rem;
-          letter-spacing: 0.16em;
-          font-style: normal;
-          margin-bottom: 0.15rem;
-          color: var(--sw-leaf-text);
-        }
 
         /* ---- 3 · the credit ---- */
         .sw-credit {

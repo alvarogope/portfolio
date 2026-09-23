@@ -98,7 +98,7 @@ export default function ShatteredSkiesPage() {
                       "The narrative structure that all designers had access to in the GDD. The beats, the character backstories and the three endings possibilities.",
                   },
                   {
-                    src: "/images/shattered-skies/shattered-skies-spaceship.png",
+                    src: "/images/shattered-skies/hub-planet-wall.png",
                     label: "The planets in game",
                     alt: "In-engine view of the ship on the hub floor with a wall of planets behind it. The planet textures are placeholders from a stock solar-system set, not the five designed worlds.",
                     caption:
@@ -198,7 +198,7 @@ export default function ShatteredSkiesPage() {
                 minWidth="26rem"
                 items={[
                   {
-                    src: "/images/shattered-skies/spaceship.png",
+                    src: "/images/shattered-skies/ship-schematic-sketch.png",
                     label: "The ship sketch",
                     alt: "Hand-annotated schematic of the ship from above, marking the weapons, defence, radar, steering, landing gear, resource collection and the two entry points.",
                     caption:

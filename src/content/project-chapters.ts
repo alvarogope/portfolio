@@ -163,6 +163,8 @@ export const seedsChapters = {
   weather: { id: "weather", title: "Dynamic Weather", note: "The weather system" },
 } as const satisfies Record<string, Chapter>;
 
+export type SeedsChapterKey = keyof typeof seedsChapters;
+
 export const seedsChapterList: readonly Chapter[] = [
   seedsChapters.overview,
   seedsChapters.inMotion,

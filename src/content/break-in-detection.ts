@@ -1,5 +1,3 @@
-import type { RoleId } from "./break-in-roles";
-
 export type DetectionStateId = "idle" | "investigating" | "chasing" | "caught";
 
 export type DetectionBand = "calm" | "warn" | "alert" | "fail";
@@ -139,7 +137,6 @@ export interface FeedbackChannel {
   channel: string;
   name: string;
   body: string;
-  catches: string;
 }
 
 export const feedbackChannels: readonly FeedbackChannel[] = [
@@ -150,7 +147,6 @@ export const feedbackChannels: readonly FeedbackChannel[] = [
     body:
       "A band of white noise rises while the bar is filling, built to resolve into the " +
       "chase song. Making the tension present in the game.",
-    catches: "",
   },
   {
     id: "hud",
@@ -158,7 +154,6 @@ export const feedbackChannels: readonly FeedbackChannel[] = [
     name: "An eye icon",
     body:
       "An eye appears on the HUD when an investigation starts. Giving real-time information about the enemy.",
-    catches: "The player who is running and cannot pick a guard out of the room.",
   },
   {
     id: "world",
@@ -167,7 +162,6 @@ export const feedbackChannels: readonly FeedbackChannel[] = [
     body:
       "A bar above the enemy's head, filling in real time. States WHICH " +
       "enemy and HOW LONG is left deciding whether to escape or keep hiding.",
-    catches: "The player who knows they are seen but not by whom, or how urgently.",
   },
 ];
 
@@ -186,8 +180,6 @@ export interface AlarmTrigger {
   consequenceTag: string;
   consequence: string;
   detail: string;
-  counter: string;
-  counterRole: RoleId;
 }
 
 export const alarmTriggers: readonly AlarmTrigger[] = [
@@ -203,8 +195,6 @@ export const alarmTriggers: readonly AlarmTrigger[] = [
     detail:
       "If any of the players is reached by any laser, the alarm will go off. They will have 15 seconds " +
       "to get out, leaving the unfinished tasks.",
-    counter: "Smoke reveals the beams and disables them — three bombs for the whole run.",
-    counterRole: "lockpicker",
   },
   {
     id: "unreplaced-gold",
@@ -219,8 +209,6 @@ export const alarmTriggers: readonly AlarmTrigger[] = [
       "If the player fails to replace the ingot with a similar weight object an alarm will set off. " +
       "This is per ingot and the players know about this, making this trap even a deliberate option to get out. " +
       "However, the more gold the player has stolen, the slower he gets and they only have 30 seconds to get out.",
-    counter: "Decoys matched by shape and weight, swapped in within the second.",
-    counterRole: "vaultsnatcher",
   },
   {
     id: "failed-lockpick",
@@ -236,18 +224,10 @@ export const alarmTriggers: readonly AlarmTrigger[] = [
       "six metres and triggers the investigation immediately. It is the only trap a player can walk into " +
       "by rushing, which is why it is also the one most often tripped in the last two " +
       "minutes.",
-    counter: "Vision reads the room first, so the pick is never attempted blind.",
-    counterRole: "hacker",
   },
 ];
 
 export const trapsThesis = "Skips S2";
-
-export const trapsCounterPointer =
-  "";
-
-export const trapsNote =
-  "";
 
 export const trapsCredit =
   "I wanted the punishment to be legible, so each trap has a cause and a consequence but can be avoided. This " +

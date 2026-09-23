@@ -4,7 +4,6 @@ export const moonKnight: Project = {
   slug: "moon-knight",
   title: "Moon-Knight",
   tagline: "Dark Fantasy Action RPG. Solo project, Full Authorship.",
-  pillar: true,
 
   facts: {
     engine: "Unreal Engine 5",
@@ -56,7 +55,6 @@ export const moonKnight: Project = {
       label: "Anti-farming Skill Points",
       description:
         "Built the White Rose XP and its progression. The players have to earn the XP by playing and defeating enemies.",
-      accent: "scarlet",
     },
     {
       label: "Design Decisions",

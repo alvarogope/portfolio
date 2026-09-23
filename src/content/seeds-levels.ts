@@ -1,3 +1,5 @@
+import type { SeedsChapterKey } from "./project-chapters";
+
 export type LoopHalf = "tension" | "restoration";
 
 export interface Half {
@@ -96,30 +98,26 @@ export const levelCredit = {
 };
 
 export interface ContributionHome {
-  section: string;
-  href: string;
+  /** The owning section, by key: the page reads its title and anchor from `seedsChapters`. */
+  chapter: SeedsChapterKey;
   shown: string;
 }
 
 export const contributionHomes: Readonly<Record<string, ContributionHome>> = {
-  "Original score (11 tracks)": {
-    section: "Original Score",
-    href: "#score",
+  "Original soundtrack": {
+    chapter: "score",
     shown: "Three of the songs.",
   },
   "Level & puzzle design": {
-    section: "Level Design",
-    href: "#level-design",
+    chapter: "levels",
     shown: "The weather in the levels.",
   },
   "Progression & pacing": {
-    section: "05 · Level Design",
-    href: "#level-design",
+    chapter: "levels",
     shown: "The game beats",
   },
   "Weather & environmental feedback": {
-    section: "06 · The Hard Part",
-    href: "#weather",
+    chapter: "weather",
     shown: "Weather relating to story.",
   },
 };

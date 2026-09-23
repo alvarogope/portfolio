@@ -4,10 +4,10 @@
   
   
     intro:
-      "In my game Moon-knight, I designed combat mechanics that were built in quantum computing principles trying to demostrate " +
-      "how this technology could change this media. At the beginning I only designed them and couldn't code it, but I started " +
+      "In my game Moon-Knight, I designed combat mechanics that were built on quantum computing principles trying to demonstrate " +
+      "how this technology could change this media. At the beginning I only designed them and couldn't code them, but I started " +
       "programming this combat system using a C++17 library that wraps Quantum++ and Eigen that models qubits, gates, measurements, " +
-      "and noise. Then exposes an API so designers could tune them without knowing what quantum computing is." +
+      "and noise. It then exposes an API so designers could tune them without knowing what quantum computing is." +
       "This page is the engineering behind the design.",
   
     architecture: {
@@ -26,7 +26,7 @@
           "As a designer, when I developed the abilities I wanted to say 'this sphere is 70% likely to amplify.' However, when I started " +
           "this work, I needed a Ry rotation angle. The connection between these two is to give a probability p that returns the angle that " +
           "measures the outcome and matches it to p. The design works in the sense that the projectile is undecided between four effects " +
-          "while its casted and the environmental noise is a flat 25/25/25/25 as long as is casted.",
+          "while it is cast and the environmental noise is a flat 25/25/25/25 as long as it is cast.",
         code: {
           filename: "src/InstabilitySphere.cpp",
           language: "cpp",
@@ -75,7 +75,7 @@
         kicker: "The physics",
         title: "Simulating Decoherence by Hand",
         body:
-          "The sphere decays through real quantum noise that were coded from actual physics. When it's measured the outcome is a genuine collapse. " +
+          "The sphere decays through real quantum noise that was coded from actual physics. When it's measured the outcome is a genuine collapse. " +
           "It locks the outcome on purpose instead of creating randomness, without breaking video game rules.",
         code: {
           filename: "src/QuantumRegister.cpp",
@@ -111,7 +111,7 @@
         kicker: "The proof",
         title: "Quantum-Correct",
         body:
-          "What differentiates my designed quantum inspired mechanics with these work is that it is measurable. " +
+          "What differentiates my designed quantum inspired mechanics from this work is that it is measurable. " +
           "Each ability is validated by a Monte Carlo control. It runs a thousand times and checks the frequency and compares it to the " +
           "analytic prediction. The parry mechanic, Inversion, rotates an attack Damage parameter with a Heal, using a NOT gate at the right time, " +
           "so it follows the Born rule. The endpoints are deterministic and the interior points land within one or two standard errors of sin squared.",
@@ -144,7 +144,7 @@
       body:
         "The toolkit is about the Moon-Knight's five designed mechanics. The core library and two of the five are complete and statistically " + 
         "verified. The third one is in progress still. Two are designed but not yet built. Every finished mechanic is a recombination of the same " + 
-        "verified mechanics, so the remaining work is just composition",
+        "verified mechanics, so the remaining work is just composition.",
       rows: [
         { component: "QuantumRegister (core library)", ability: "—", state: "Complete · verified" },
         { component: "InstabilitySphere", ability: "Instability", state: "Complete · verified" },

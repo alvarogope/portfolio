@@ -86,7 +86,7 @@ export const shatteredSkiesPlanets: readonly Planet[] = [
       rule:
         "The high gravity makes it easy to access but difficult to leave.",
       knowledge:
-        "That the spaceship can be upgradedd to leave.",
+        "That the spaceship can be upgraded to leave.",
     },
     accent: "#E39A45",
     orbitRadius: 0.34,
@@ -107,7 +107,7 @@ export const shatteredSkiesPlanets: readonly Planet[] = [
     temperature: "18 °C",
     temperatureC: 18,
     ecosystem: "Plants & water",
-    note: "Aftermath ruins are resouces.",
+    note: "Aftermath ruins are resources.",
     access: {
       gate: "open",
       label: "Open",
@@ -171,7 +171,7 @@ export const shatteredSkiesPlanets: readonly Planet[] = [
       rule:
         "Nothing is locked, which is what makes it mysterious.",
       knowledge:
-        "The Zyrium under the ice as it is known way to remove the parasite. At least one player needs to understands this.",
+        "The Zyrium under the ice as it is the known way to remove the parasite. At least one player needs to understand this.",
     },
     accent: "#A8DCEC",
     orbitRadius: 1,
@@ -186,15 +186,15 @@ export const knowledgeGate = {
     "All the levels are accessible from the beginning, however, to get to some places players need to understand " + 
     "how the system moves.",
   lead:
-    "There are no keys or hidden traversal upgrades in Shattered Skies. What limitates the players' movement is based in what the world functions: " +
+    "There are no keys or hidden traversal upgrades in Shattered Skies. What limits the players' movement is based on how the world functions: " +
     "the orbits of the planets, how they align and how the environment works. This is the key for progression.",
 
   example: {
-    label: "How this looks like in gameplay",
+    label: "What this looks like in gameplay",
     body:
       "There are notes in the world hinting the player how to progress, helping them progress. " +
-      "One of them describes a cave that can be entered while the planet's orbit is in a particular lotation. " +
-      "The cave, is closed most of the time, but during that time in particular, the door is open.",
+      "One of them describes a cave that can be entered while the planet's orbit is in a particular rotation. " +
+      "The cave is closed most of the time, but during that time in particular, the door is open.",
     figureSummary:
       "A star at the centre with one orbit drawn around it. A planet sits on one side of the " +
       "orbit and the location it must align with sits directly opposite, with a dashed line " +
@@ -205,15 +205,15 @@ export const knowledgeGate = {
   },
 
   designPoint:
-    "This progression cannot be lost, give or skipped. The players unlocks the world by understanding it." + 
-    "Carrying this information is curcial for other sessions.",
+    "This progression cannot be lost, given or skipped. The players unlock the world by understanding it." + 
+    "Carrying this information is crucial for other sessions.",
 
 } as const;
 
 export const accessGateMeta: Record<AccessGate, { term: string; gloss: string }> = {
   open: { term: "Open", gloss: "easy access" },
   orbital: { term: "Orbital window", gloss: "route opens as the planet orbits" },
-  gravity: { term: "Gravity", gloss: "addapt to surface" },
+  gravity: { term: "Gravity", gloss: "adapt to surface" },
 };
 
 export const tidalorHost = {

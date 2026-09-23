@@ -58,10 +58,7 @@ export default function MoonKnightPage() {
         </div>
       </div>
 
-      {/* `tight`: this Section follows the hero, so its 4rem top padding
-          would be the second of three stacked gaps. See Section.tsx. */}
       <Section tight>
-        {/* The contents of the page, before the page starts arguing. */}
         <ChapterNav chapters={moonKnightChapterList} />
 
         {/* 1 — OVERVIEW */}
@@ -165,14 +162,14 @@ export default function MoonKnightPage() {
                     alt: "The AI sight-detection graph: a Sight Detection event breaks the AI stimulus, branches on Successfully Sensed, and on the true path writes the player into the Target Actor Blackboard key and calls Activate Mini Boss Combat — while the false path clears the key and calls Deactivate Miniboss Combat.",
                     caption:
                       "The detection system that the majority of the enemies share. The sensed stimulus writes you into the Target Actor key that the Behaviour Tree reads. " +
-                      "This system lets the player to Deactivate the stimulus, leaving the fight whenever is needed."
+                      "This system lets the player to deactivate the stimulus, leaving the fight whenever needed."
                   },
                   {
                     src: "/images/moon-knight/MiniBoss_Combat.png",
                     label: "Blueprint · Boss bar only appearing during the bossfight",
                     alt: "The mini-boss combat graph: Activate MiniBoss Combat creates the WB Boss Health bar widget and adds it to the viewport, a tick divides current health by max health into Set Percent, and Deactivate Miniboss Combat removes the widget from its parent.",
                     caption:
-                      "With this Blueprint, the boss' health bar only appears when they are triggered. This HUD dissapears when the boss is defeated or when they lose sight of the player." 
+                      "With this Blueprint, the boss' health bar only appears when they are triggered. This HUD disappears when the boss is defeated or when they lose sight of the player." 
                   },
                 ]}
               />
@@ -225,7 +222,7 @@ export default function MoonKnightPage() {
                     label: "Blueprint · how the sword applies damage",
                     alt: "The BP_Notify_SwordTraceLoop anim notify state: Received Notify Begin gets the owner, casts to the player character or to BP_AI, and calls Start Sword Trace on whichever attack component it found.",
                     caption:
-                      "This is the Blueprint logic that was attach to all the swords in the prototype. A Notify opens the trace when the swing should cause damage and the another Notify closes it. " +
+                      "This is the Blueprint logic that was attached to all the swords in the prototype. A Notify opens the trace when the swing should cause damage and another Notify closes it. " +
                       "The graph also casts to the BP_AI, making the enemies' attacks follow the same rules and applying damage only during certain parts of the animations.",
                   },
                 ]}
@@ -234,23 +231,10 @@ export default function MoonKnightPage() {
           </div>
         </Reveal>
 
-        {/* The joust was briefly §06b here and went back to
-            `/moon-knight/world`, where Álvaro wants it: it is a diversion, and
-            a diversion is material a reader chooses. Nothing of it stayed — a
-            summary here would be the second home the deep dive's own rule
-            forbids. */}
-
         {/* 7 — THE WORLD AND THE LEVELS. */}
         <Reveal>
           <div id={ch.world.id} style={{ marginTop: "5rem" }}>
             <SectionHeading kicker="The World & Level Design" title={ch.world.title} />
-            {/* Two sentences were DELETED here, not reworded. "There are three
-                main areas and an island in the world of Kaelum" is said by the
-                map's own key (`markerTypeMeta.area.gloss`) and again by
-                `beatChartThesis`; "It shows where each place is and which NPCs
-                will the player encounter" is the world map's `InteractiveHint`
-                in different words. The sentence that survives is the one
-                neither figure makes: which of the two answers what. */}
             <p style={{ color: "var(--color-mist)", maxWidth: "38rem", marginTop: "1.5rem", marginBottom: "2.5rem" }}>
               This is the drawn map.
               The chart answers what it is like to play and every place on the map opens
@@ -264,11 +248,6 @@ export default function MoonKnightPage() {
             {/* Band B */}
             <div id="the-plan" style={{ marginTop: "4.5rem" }}>
               <h3 className="mono mk-band-title">The plan</h3>
-              {/* The standfirst that stood here was DELETED whole. Sentence one
-                  was `beatChartThesis` + `beatStructureNote`, both of which the
-                  chart prints under its own moon rail; sentence two ("Pick a
-                  level to open its design") was the chart's `InteractiveHint`
-                  said twice. The figure makes every point it made. */}
               <BeatChart />
             </div>
 
@@ -295,9 +274,9 @@ export default function MoonKnightPage() {
                     label: "Centralis · overview of the level",
                     alt: "Annotated overhead of the Centralis level: callouts marking the PCG forest used as natural blocking, the spawn view holding the moon, the NPC and the sword in one frame, the sword lit beside the willow tree, and the layout withheld until the sword is picked up.",
                     caption:
-                      "The main four decisions: The forest functions as a natural reducing the light of the main area of level and hiding enemies. " + 
+                      "The main four decisions: The forest functions as a natural barrier reducing the light of the main area of level and hiding enemies. " + 
                       "From here, the player has the three guides in front of them. The Moon, The Willow Tree and The Sword. " +
-                      "Being the last one under the brightest point of the map. " + 
+                      "The sword is also intentionally placed under at the brightest spot the player can see at spawn." + 
                       "The layout of the level is hidden from the player until they get to the sword pickup spot and then the layout is fully revealed. " +
                       "With these decisions I try to communicate with the player through the level",
                   },
@@ -314,7 +293,7 @@ export default function MoonKnightPage() {
                     label: "The werewolf boss arena",
                     alt: "Annotated boss arena: the werewolf placed on a raised mound so it stays readable from anywhere in the arena, with the arena sized for dodging room.",
                     caption:
-                      "The boss stands on a hill so it seen from anywhere in the arena, and the arena gives space so the player has space to dodge.",
+                      "The boss stands on a hill so it is seen from anywhere in the arena, and the arena gives space so the player has space to dodge.",
                   },
                 ]}
               />
@@ -327,12 +306,6 @@ export default function MoonKnightPage() {
         <Reveal>
           <div id={ch.diegetic.id} style={{ marginTop: "5rem" }}>
             <SectionHeading kicker="Main Design" title={ch.diegetic.title} />
-            {/* The standfirst that stood here was DELETED whole: its three
-                sentences were the moon HUD, the White-Rose XP and the moonlight
-                wayfinding — three of the four cards `<DiegeticDesign />` renders
-                a few inches below, plus `diegeticThesis.line` above them. A
-                summary of a figure that is already on screen. */}
-
             {/* The willow tree */}
             <figure style={{ margin: "0 0 2.5rem", maxWidth: "52rem" }}>
               <PlateGrid
@@ -343,18 +316,12 @@ export default function MoonKnightPage() {
                     label: "willow trees",
                     alt: "A white willow tree on a rise under a full night sky, a fallen winged statue below it, the knight small in the distance.",
                     caption:
-                      "These trees are the player's checkpoint and safe space. Is the only place the player can heal fully.",
+                      "These trees are the player's checkpoint and safe space. It is the only place the player can heal fully.",
                   },
                 ]}
               />
             </figure>
 
-            {/* The WHOLE argument, not the key strip it used to be. This was
-                the deep dive's §04 and it is back here, because the decisions
-                it describes are the design of the game and a reader should not
-                have to leave the project page to meet them. `withInvisible` is
-                off: the four no-interface decisions are the section directly
-                below, with a heading of their own. */}
             <DiegeticDesign withInvisible={false} />
 
             {/* Blueprint Screenshots */}
@@ -379,8 +346,8 @@ export default function MoonKnightPage() {
                     label: "The Health in the HUD",
                     alt: "The player-stats Blueprint graph: the component casts to the player, dummy or AI character, sets a Character Type enum, and feeds Set Percent into whichever health and stamina bar belongs to that owner.",
                     caption:
-                      "I tied the health and its representation to the HUD and wired them properly so the enemies could also inheret from this system. " +
-                      "Due to lack of time, I could not made the diegectic health bar as a moon, but the systems was build for making it work with any kind of UI.",
+                      "I tied the health and its representation to the HUD and wired them properly so the enemies could also inherit from this system. " +
+                      "Due to lack of time, I could not make the diegetic health bar as a moon, but the systems was built for making it work with any kind of UI.",
                   },
                   {
                     src: "/images/moon-knight/BP_DieMechanic.png",
@@ -388,14 +355,14 @@ export default function MoonKnightPage() {
                     alt: "The Die Blueprint sequence: disable input, set the mesh to simulate physics, start a camera fade through the player camera manager, delay, then open the current level again by name.",
                     caption:
                       "For the death sequence I decided to make all the characters go to ragdoll and if the player dies, have a fade to black screen. " +
-                      "When I reworked in the C++ codebase, I wired the respawn at the last willow tree the player rested, making them checkpoints rather than force the main spawn. ",
+                      "When I reworked in C++ codebase, I wired the respawn at the last willow tree the player rested at, making them checkpoints rather than forcing the main spawn. ",
                   },
                   {
                     src: "/images/moon-knight/Pickup Trace - Moon-Knight.png",
                     label: "Pickup mechanic",
                     alt: "The pickup trace graph: the Interact input runs a sphere trace forward from the follow camera, and if the hit actor casts to BP_Weapon it is added to the equipment component and the world actor is destroyed.",
                     caption:
-                      "The trace runs forward from the camera towards a pickable object in front. I chose this instead of a HUD. Player's are hinted to pickup an item through context. " + 
+                      "The trace runs forward from the camera towards a pickable object in front. I chose this instead of a HUD. Players are hinted to pick up an item through context. " + 
                       "The weapon goes into the equipment system and the mesh in the world is destroyed.",
                   },
                 ]}
@@ -404,10 +371,7 @@ export default function MoonKnightPage() {
           </div>
         </Reveal>
 
-        {/* 9 — INVISIBLE DESIGN
-            A sibling of the section above, not a child of it — it was nested
-            inside §08's <div> by accident, which put its heading inside
-            another section's body. */}
+        {/* 9 — INVISIBLE DESIGN */}
         <Reveal>
           <div id={ch.invisible.id} style={{ marginTop: "5rem" }}>
             <SectionHeading kicker="Invisible Design" title={ch.invisible.title} />
@@ -420,7 +384,7 @@ export default function MoonKnightPage() {
           <div id={ch.art.id} style={{ marginTop: "5rem" }}>
             <SectionHeading kicker="Art Direction" title={ch.art.title} />
             <p style={{ color: "var(--color-mist)", maxWidth: "35rem", marginTop: "1.5rem", marginBottom: "1.75rem" }}>
-              The Sublime and their way of romanticise the medieval ages is what inspired the artstyle direction.
+              The Sublime and their way of romanticising the medieval ages is what inspired the artstyle direction.
               This art philosophy adapted to games, exposes the player to solitude, open spaces and big challenges whether internal or external.
             </p>
 
@@ -434,7 +398,7 @@ export default function MoonKnightPage() {
                     label: "Landscapes",
                     alt: "The knight seen from behind, alone in a moonlit meadow of foxgloves, ruined statues either side, a full moon low on the horizon under a dense starfield.",
                     caption:
-                      "This screenshot shows a miniboss next to ruins and under the moonlight. Big landscapes, big landscapes and big challenges turned epic.",
+                      "This screenshot shows a miniboss next to ruins and under the moonlight. Big landscapes and big challenges turned epic.",
                   },
                   {
                     src: "/images/moon-knight/environment.png",
@@ -442,7 +406,7 @@ export default function MoonKnightPage() {
                     alt: "Night interior of the forest: a statue half-swallowed by heavy foliage, stars visible through the canopy.",
                     caption:
                       "Ruins are a big part of the game's setting. They show how the society that built them functioned, their religion, their aspirations or their fears. " +
-                      "By making them ruins, it creates the sensation in the player that everything has an end and eventually forgotten and buried by nature.",
+                      "By making them ruins, it creates the sensation in the player that everything has an end and is eventually forgotten and buried by nature.",
                   },
                 ]}
               />
@@ -514,17 +478,13 @@ export default function MoonKnightPage() {
         <Reveal>
           <div id={ch.audio.id} style={{ marginTop: "5rem" }}>
             <SectionHeading kicker="Audio Design" title={ch.audio.title} />
-            {/* DELETED, not reworded. "The two main compositions of the game"
-                is `composerCredit.body` and the band title "The recordings",
-                both rendered by `<AudioDesign>` below; "Press either to play"
-                is what the two ▶ buttons and their `aria-label`s already say. */}
             <AudioDesign variant="short">
               <MoonKnightAudio />
             </AudioDesign>
 
             <div style={{ marginTop: "2rem" }}>
               <RampLink href={deepDiveHref("score")}>
-                How the soundtrack and the audio design was done and its reasoning.
+                How the soundtrack and the audio design were done and its reasoning.
               </RampLink>
             </div>
           </div>
@@ -551,7 +511,7 @@ export default function MoonKnightPage() {
             <CtaPanel
               kicker="The codebase"
               title="Programming Moon-Knight"
-              body= "The engineering side of the projet. The limitations of Blueprints translated in C++ and the main code choices. The combat state machine, the data-driven layer and the quantum C++ engine limits."
+              body= "The engineering side of the project. The limitations of Blueprints translated into C++ and the main code choices. The combat state machine, the data-driven layer and the quantum C++ engine limits."
               href="/moon-knight/engineering"
               linkLabel="Read the engineering side"
               accent="silver"

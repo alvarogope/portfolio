@@ -15,7 +15,7 @@ export const thesis = {
   tag: "",
   line: "No voice channel made the coordination rely on the sound.",
   body:
-    "The music and sound is what tells the player the state they are in, the state the enemies are " +
+    "The music and sound are what tells the player the state they are in, the state the enemies are in " +
     "and the clock ticking reminding the players to consider it the whole time.",
 } as const;
 
@@ -73,7 +73,7 @@ export const clockAudio = {
     "This helps the players to know how much time is left.",
   why:
     "The time pressure only worked if it was constantly reminded. I found that " +
-    "this worked better for players, especially when he time got to 3 minutes.",
+    "this worked better for players, especially when the time got to 3 minutes.",
   runMinutes: RUN_MINUTES,
   markAt: SCORE_SHIFT_AT,
   markLabel: clockLabel(SCORE_SHIFT_AT),
@@ -122,7 +122,7 @@ export const cues: readonly AudioCue[] = [
     id: "vision",
     action: "Hacker Vision going up",
     role: "hacker",
-    sound: "A low sweep when it activates and a softer fall when the five passes.",
+    sound: "A low sweep when it activates and a softer fall when the five seconds pass.",
   },
   {
     id: "distraction",

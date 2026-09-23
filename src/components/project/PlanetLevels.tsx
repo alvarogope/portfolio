@@ -101,7 +101,7 @@ export default function PlanetLevels() {
       {/* 3 — the rail */}
       <div className="pl-railwrap">
         <p className="mono pl-rail-caption">
-          The play order and each skills.
+          The play order and each skill.
         </p>
         <InteractiveHint
           what="world"

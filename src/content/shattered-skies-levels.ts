@@ -84,10 +84,10 @@ export const levelPlanets: readonly LevelPlanet[] = [
     },
     teaches:
       "The first world that teaches three core mechanics: how the puzzles work, " +
-      "how the jumps are timed and why resources are important. These are repeated througout the game.",
+      "how the jumps are timed and why resources are important. These are repeated throughout the game.",
     signature:
       "Lava redirection. The lava rivers that kill the player are used to open the " +
-      "vaults to progress. This is for the player to understand that anything can bea tool " + 
+      "vaults to progress. This is for the player to understand that anything can be a tool " + 
       "and that the world can interact with itself.",
     unlocks: {
       tool: "Fire-resistant shields",
@@ -117,8 +117,8 @@ export const levelPlanets: readonly LevelPlanet[] = [
     },
     cohesion:
       "Forces the players to learn quick to survive. The environment tries to kill constantly, " +
-      "through lava rivers and eruptions, but these are dodgebale since the come in patterns. " +
-      "The audio sets the tone: human lines in a world that nothing human is left.",
+      "through lava rivers and eruptions, but these are dodgeable since they come in patterns. " +
+      "The audio sets the tone: human lines in a world in which nothing human is left.",
     arc: "lava · choir · timing",
   },
   {
@@ -131,12 +131,12 @@ export const levelPlanets: readonly LevelPlanet[] = [
       teaches: "Navigation and decryption. Adapt to a dynamic terrain",
       signature: "Solve ancient symbols to decrypt secrets",
       unlocks: "Dust repellers, old inscriptions, upgrade resources",
-      hazards: "Sandstorms, dunes, buried traps inn the sand",
+      hazards: "Sandstorms, dunes, buried traps in the sand",
       visuals: "Golden dunes, weathered ruins, mirages",
       audio: "Heavy and ambient. Strings as leading instruments",
     },
     teaches:
-      "Orientation is key, in a hostile ground with no landmarks. They can amrk the areas for better movement. " +
+      "Orientation is key, in a hostile ground with no landmarks. They can mark the areas for better movement. " +
       "Read symbols that were left behind.",
     signature:
       "An old language found in the ruins. The players have to decode it to find where they guide to and what they mean. " +
@@ -144,7 +144,7 @@ export const levelPlanets: readonly LevelPlanet[] = [
     unlocks: {
       tool: "Dust repellers",
       toolNote:
-        "Create a path through a sandstorm, survive to the environment.",
+        "Create a path through a sandstorm, survive the environment.",
       rewards: "Inscriptions with the world's history and upgrade resources.",
     },
     hazards: [
@@ -163,7 +163,7 @@ export const levelPlanets: readonly LevelPlanet[] = [
       "The players must feel confused as the planet is designed to feel like that.",
     audio: {
       character: "Heavy and ambient",
-      instruments: "String instruments. Long, sustainedand with no rhythm",
+      instruments: "String instruments. Long, sustained and with no rhythm",
       texture:
         "",
     },
@@ -184,14 +184,14 @@ export const levelPlanets: readonly LevelPlanet[] = [
       signature: "Jetpack traversal underwater. Recovering relics cooperatively",
       unlocks: "Oxygen harvesters · jetpack upgrades",
       hazards: "Oxygen management, aquatic predators, currents and water pressure",
-      visuals: "Bioluminescent underwater, ruins, and pitch balck for the depths",
+      visuals: "Bioluminescent underwater, ruins, and pitch black for the depths",
       audio: "A calm 3/4 tempo. Tides in the soundtrack",
     },
     teaches:
       "Movement in this world could cost the life of the characters. Players need the oxygen underwater, " +
       "so a mistake could be fatal. Now, pausing for thinking costs time.",
     signature:
-      "The main movement are the use of jetpacks underwater. Now the players have to cooperate in a new " +
+      "The main movement is the use of jetpacks underwater. Now the players have to cooperate in a new " +
       "state for gathering the relics.",
     unlocks: {
       tool: "Oxygen harvesters",
@@ -223,8 +223,7 @@ export const levelPlanets: readonly LevelPlanet[] = [
     audioGem: {
       label: "Audio as worldbuilding",
       body:
-        "Making Tidalor's music to 3/4 makes the world a moving and non-stop place, reseambling waves. " +
-        "This enhances the feeeling of ocean bigger for the players.",
+        "Writing Tidalor's music in 3/4 makes the world a moving and non-stop place, resembling waves.",
     },
     cohesion:
       "This world seems calm at the beginning. The music, the waves and the light are designed to relax the players. " +
@@ -256,7 +255,7 @@ export const levelPlanets: readonly LevelPlanet[] = [
     unlocks: {
       tool: "Crystal augmenters",
       toolNote:
-        "Light manipulation. Amplifying the solution space and make it more difficult.",
+        "Light manipulation. Amplifying the solution space and making it more difficult.",
       rewards:
         "Heat-resistant gear. Setting up the next level.",
     },
@@ -303,7 +302,7 @@ export const levelPlanets: readonly LevelPlanet[] = [
       audio: "Calm, melodic, familiar, sounds like home",
     },
     teaches:
-      "Stealth or combat, player have to choose. It is the last thing taught and what the last challenge is based of.",
+      "Stealth or combat, players have to choose. It is the last thing taught and what the last challenge is based on.",
     signature:
       "Ruins of a civilisation. All the resources that are left were used by them.",
     unlocks: {
@@ -325,7 +324,7 @@ export const levelPlanets: readonly LevelPlanet[] = [
       },
     ],
     visuals:
-      "Vibrant greens, towering trees and ruiny environment. The most beautiful " +
+      "Vibrant greens, towering trees and ruined environment. The most beautiful " +
       "world in the system as a graveyard.",
     audio: {
       character: "Calm, melodic and deliberately familiar",
@@ -345,7 +344,7 @@ export const spaceAudio = {
   kicker: "Between worlds · the ship",
   headline: "Minimalist ship music",
   body:
-    "The ship's music is almost non-existant. It has a chorus whose " +
+    "The ship's music is almost non-existent. It has a chorus whose " +
     "contrast is the point: two people in a ship against a system that does not notice " +
     "them.",
   gem: {
@@ -353,7 +352,7 @@ export const spaceAudio = {
     body:
       "Since no sound can travel through void, when the players are in the space, there is no sound. " +
       "This also creates the sensation of being in front of everything and nothing at the same time. " +
-      "When there are collisions with the spaceship, it sounds, make them seem massive when it impacts.",
+      "When there are collisions with the spaceship, it sounds, making them seem massive when it impacts.",
   },
 } as const;
 

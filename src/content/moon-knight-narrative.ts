@@ -39,8 +39,8 @@ export const narrativeActs: readonly NarrativeAct[] = [
     fragment: "Half-Moon Fragment",
     guardian: "The Centaur-Knight",
     beat:
-      "The Moon-Knight reads from the environemnt how was their life before the coma and what made them go " +
-      "into it. They discover that a Sun-Knight exists and how important it was. At the fortress after retaking the " +
+      "The Moon-Knight reads from the environment how their life was before the coma and what made them go " +
+      "into it. They discover that a Sun-Knight exists and how important he was. At the fortress after retaking the " +
       "half-moon fragment, a siege occurs and they are sent north, in chains.",
   },
   {
@@ -54,7 +54,7 @@ export const narrativeActs: readonly NarrativeAct[] = [
     guardian: "The Sun-Knight",
     beat:
       "After escaping, the Moon-Knight climbs to the last fortress and their comrade waiting inside of it. " +
-      "Once defeated, the player has two option: let the God of the Gaps stand or end the world.",
+      "Once defeated, the player has two options: let the God of the Gaps stand or end the world.",
   },
 ];
 
@@ -83,15 +83,15 @@ export const reversal = {
     "The Sun-Knight is no dark lord. He was the Moon-Knight's comrade, from when the Sun and the Moon " +
     "worked as one and the first in Kaelum to discover the Gods of the Gaps fallacy. What " +
     "he then saw in the moon frightened him into breaking it apart and hiding the pieces. When the " +
-    "Moon-Knight found out. They fought. The Moon-Knight lost and eventually, woke with no memory of it.",
+    "Moon-Knight found out, they fought. The Moon-Knight lost and eventually, woke with no memory of it.",
   payoff:
     "Which means the errand the player has been running for three acts, to try to put the Moon Goddess back " +
-    "together,being the exact thing the villain broke the world to prevent. Death's revivals were " +
-    "never out of mercy, but they were a loan against unfinished business. Fulfill it and you go back. The " +
+    "together, was the exact thing the villain broke the world to prevent. Death's revivals were " +
+    "never out of mercy, but they were a loan against unfinished business. Fulfil it and you go back. The " +
     "Moon-Knight does, and finally embraces Death when it comes.",
   note:
     "The reversal sits in the last act by design. It costs nothing to hold, and it re-reads every " +
-    "fragment the player has already carried up until the last part. It turnes a collect-three quest into a " +
+    "fragment the player has already carried up until the last part. It turns a collect-three quest into a " +
     "question about whether it should have been run at all.",
 };
 
@@ -145,10 +145,10 @@ export interface MechanicPair {
 
 export const storyThroughMechanics = {
   thesis:
-    "The story is not telled through cutscenes. It is in who attacks and from where, in what the ruins " +
+    "The story is not told through cutscenes. It is in who attacks and from where, in what the ruins " +
     "were before they were ruins, and in the few words the NPCs will say. Kaelum is built to be " +
     "scanned archaeologically. The player who looks finds the events before the waking, and the player " +
-    "who does not will still feels them through gameplay.",
+    "who does not will still feel them through gameplay.",
   pairs: [
     {
       id: "death",
@@ -163,7 +163,7 @@ export const storyThroughMechanics = {
       id: "gods",
       mechanic: "The Power of the Gods → the fallacy",
       meaning:
-        "The magic is a manipulation of quantum states that the people Kaelum could have interpreted as divinity. The player " +
+        "The magic is a manipulation of quantum states that the people of Kaelum could have interpreted as divinity. The player " +
         " has to earn them by taking Ancient Gods' Blood from a dungeon, staining the Witch's white roses with " +
         "it, and running the alchemical magic by performing the superstition the story is about.",
     },
@@ -203,7 +203,7 @@ export const fullStory: readonly string[] = [
     "dark enough that he broke it apart and hid the pieces. When the Moon-Knight discovered it, they " +
     "faced each other and the Moon-Knight got sent into a coma.",
 
-  "Along this game the player learns why Death was so generous. The Moon-Knight was returned because of " +
+  "Throughout the game the player learns why Death was so generous. The Moon-Knight was returned because of " +
     "unfinished business and when it is finished they go back. On the highest mountain of Kaelum the " +
     "player decides whether the Gods of the Gaps fallacy ends there or stands. Either way the " +
     "Moon-Knight dies, this time hugging Death, and welcoming it at last.",

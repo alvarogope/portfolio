@@ -18,10 +18,10 @@ export const breakIn: Project = {
   posterAlt: "Break-In key art placeholder",
 
   vision:
-    "Break-In is a four-player co-op sealthy bank heist game which main mechanic is that players cannot talk with each other. " +
-    "Intead, players can choose between four assymetric roles (Hacker, Insider, Vaultsnatcher and the Lockpicker) to solve one " +
-    "piece of the big puzzle that is the heist. The only way to coordinate is throught some tools they are given in the " +
-    "game. Steal as much as you can in eight minutes and escape together undetected. If one player gets caught, is game over.",
+    "Break-In is a four-player co-op stealthy bank heist game whose main mechanic is that players cannot talk with each other. " +
+    "Instead, players can choose between four asymmetric roles (Hacker, Insider, Vaultsnatcher and the Lockpicker) to solve one " +
+    "piece of the big puzzle that is the heist. The only way to coordinate is through some tools they are given in the " +
+    "game. Steal as much as you can in eight minutes and escape together undetected. If one player gets caught, it is game over.",
 
   roles: [
     {
@@ -37,7 +37,7 @@ export const breakIn: Project = {
       brief: "The key. Opens paths the Hacker cannot reach, and plants the hack that starts the digital heist.",
       tools: "Disguise as staff to pass through restricted rooms (10s, 60s cooldown). Finds the security card to reach the server room, where planting a USB grants the Hacker the digital-money hack. Scouts one of three random escape routes and lights the path for the team.",
       dependsOn: "The Hacker's vision to move unseen between disguises.",
-      neededBy: "The Hacker, who cannot start the CBDC hack until the Insider plants the USB.",
+      neededBy: "The Hacker, who cannot start the digital money hack until the Insider plants the USB.",
       accent: "silver",
     },
     {
@@ -66,7 +66,7 @@ export const breakIn: Project = {
       "job was to provide those systems.",
     engine: "Unity",
     system: "Co-op / detection / feedback",
-    resolution: "Replaced voice chat with three systems coordination channels.",
+    resolution: "Replaced voice chat with three coordination systems.",
   },
 
   contributions: [

@@ -135,7 +135,7 @@ export default function QuantumToolkitPage() {
           <CtaPanel
             kicker="Back one level"
             title="Programming Moon-Knight"
-            body="The engineering side of the projet. The limitations of Blueprints translated in C++ and the main code choices. The combat state machine, the data-driven layer and the quantum C++ engine limits."
+            body="The engineering side of the project. The limitations of Blueprints translated into C++ and the main code choices. The combat state machine, the data-driven layer and the quantum C++ engine limits."
             href="/moon-knight/engineering"
             linkLabel="Back to the engineering write-up"
             accent="silver"
@@ -143,7 +143,7 @@ export default function QuantumToolkitPage() {
           <CtaPanel
             kicker="Back to the design project"
             title="Moon-Knight"
-            body="The design project: video gameplays, the five quantum abilities, the type of enemies, the control scheme, the world of Kaelum and the beat chart the game was planned."
+            body="The design project: video gameplays, the five quantum abilities, the type of enemies, the control scheme, the world of Kaelum and the beat chart the game was planned with."
             href="/moon-knight"
             linkLabel="Back to Moon-Knight"
             accent="silver"

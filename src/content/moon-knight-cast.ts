@@ -50,7 +50,7 @@ export const castPlayer: PlayerMember = {
     {
       label: "Does not speak",
       note:
-        "Not giving them a dialogue or voice makes the player to focus on the feeling and gameplay. Seeming a very hard and tough warrior.",
+        "Not giving them a dialogue or voice makes the player focus on the feeling and gameplay. They seem like a very hard and tough warrior.",
     },
     {
       label: "Heals by playing",
@@ -60,7 +60,7 @@ export const castPlayer: PlayerMember = {
   ],
   designPurpose:
     "The focus is on the contrast between these two. A character that doesn't talk and only expresses themselves through music " +
-    "can create a great empathy in players, trying to forget the armour and focusing on the character. The amnesia serveds the same purpose.",
+    "can create a great empathy in players, trying to forget the armour and focusing on the character. The amnesia serves the same purpose.",
 };
 
 /* --------------------------------------------------------- Death / Orpheus -- */
@@ -86,17 +86,17 @@ export const castEncounters: readonly EncounterMember[] = [
     accent: "#E07A45",
     role:
       "A fallen soldier in The Woods village who gave up being a knight." + 
-      "He introduces the jousting minigame, when you finish jousting, he points you at the enemies in The Woods.",
+      "He introduces the jousting minigame; when you finish jousting, he points you at the enemies in The Woods.",
     designPurpose:
       "If you follow his story, he thanks you for eliminating the enemies in The Woods. But, when you come back to him " +
-      "you find him dead with wounds made by thieves. His villaged is reduced to ashes.",
+      "you find him dead with wounds made by thieves. His village is reduced to ashes.",
   },
 ];
 
 /* ------------------------------------------------------------- The Witch / Druid -- */
 
 export const mirrorTruth = {
-  label: "The God of the gaps",
+  label: "The God of the Gaps",
   line: "Two ways for the player to solve the world",
 } as const;
 
@@ -109,10 +109,10 @@ export const castMirror: readonly [MirrorMember, MirrorMember] = [
     stance: "Inquiry",
     accent: "#57A886",
     role:
-      "She follows you from The Woods to the Misty Lands to the Frozen Mountains so the player can upgrade everytime they need.",
+      "She follows you from The Woods to the Misty Lands to the Frozen Mountains so the player can upgrade every time they need.",
     answer: "Kill the gods. Begin the Age of Humankind.",
     designPurpose:
-      "She mbraces the mysteries of the world and facing against the gods. If you follow her quest she opens up one ending",
+      "She embraces the mysteries of the world and faces the gods. If you follow her quest she opens up one ending",
   },
   {
     id: "druid",
@@ -122,10 +122,10 @@ export const castMirror: readonly [MirrorMember, MirrorMember] = [
     stance: "Faith",
     accent: "#C9A961",
     role:
-      "In a Misty Lands village, he asks for help for defeating banshees. If you agree, he reveals a hidden fortress. He comes back in the Frozen Mountains",
-    answer: "Keep it buried. The wolrd is not ready to know.",
+      "In a Misty Lands village, he asks for help with defeating banshees. If you agree, he reveals a hidden fortress. He comes back in the Frozen Mountains",
+    answer: "Keep it buried. The world is not ready to know.",
     designPurpose:
-      "He discovers the fallacy, but asks you to hide it for keeping the state of the world. Is your call if you want to hide the information or expose it.",
+      "He discovers the fallacy, but asks you to hide it for keeping the state of the world. It is your call if you want to hide the information or expose it.",
   },
 ];
 

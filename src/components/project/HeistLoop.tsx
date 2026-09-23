@@ -214,7 +214,7 @@ function ClockTrack() {
             ANOTHER LOOT PATH
           </text>
           <text className="hl-lane-sub" x={PAD_X + 2} y={PAR_MID + 10}>
-            runs at the sime time as phase 2
+            runs at the same time as phase 2
           </text>
         </>
       )}

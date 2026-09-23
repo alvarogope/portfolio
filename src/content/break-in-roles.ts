@@ -52,7 +52,7 @@ export const breakInRoles: readonly BreakInRole[] = [
         name: "Disguise",
         body:
           "Transforms into Security, a Janitor or Office Staff. The uniform is randomised, so which " +
-          "doors opens changes every gameplay. Enemies will not investigate them while in this state.",
+          "doors open changes every gameplay. Enemies will not investigate them while in this state.",
         tuning: "10s · 60s cooldown",
         note: "It will not be activated in front of an enemy.",
       },
@@ -65,7 +65,7 @@ export const breakInRoles: readonly BreakInRole[] = [
         name: "Find the Escape",
         body:
           "One of three randomised exits: the bathroom vent, the vent beside the vault or the " +
-          "backdoor in the manager's office. It is changes every run.",
+          "backdoor in the manager's office. It changes every run.",
         note: "Once it is found, a red guide line to the exit appears for all players.",
       },
     ],
@@ -132,7 +132,7 @@ export const breakInRoles: readonly BreakInRole[] = [
       {
         name: "Stealing Digital Money",
         body:
-          "Transfers money out of hidden PCs around the bank, they sit behind locked doors only they can open.",
+          "Transfers money out of hidden PCs around the bank. they sit behind locked doors only they can open.",
         note: "Needs the manager's password and has to find it.",
       },
       {
@@ -175,7 +175,7 @@ export const breakInRoles: readonly BreakInRole[] = [
         body:
           "A similar weight decoy has to be placed in place of the ingot within one second of it coming off of it.",
         tuning: "1s window per ingot",
-        note: "Failed to do and the alarm trips, leaving the whole team thirty seconds to get out.",
+        note: "Failed to do so and the alarm trips, leaving the whole team thirty seconds to get out.",
       },
     ],
     puzzle: {
@@ -184,7 +184,7 @@ export const breakInRoles: readonly BreakInRole[] = [
         "Find objects around the bank whose shape and weight match the ingots, and place them " +
         "as decoys. The amount that is needed is randomised, and only two can be " +
         "carried at a time, so the trip has to be made more than once.",
-      fail: "Come up short and limitates how many ingots can be taken without the alarm going off.",
+      fail: "Come up short and limits how many ingots can be taken without the alarm going off.",
     },
   },
 ];
@@ -192,10 +192,8 @@ export const breakInRoles: readonly BreakInRole[] = [
 export const puzzleAsymmetryNote = {
   headline: "Three puzzles",
   body:
-    "Each character has their own minigame but one. The Insider own task is its ability to disguise, " +
-    "route reading to find paths and adding a minigame would have put so much weight on this character than on " +
-    "the rest. Leaving this character have more dynamism than the rest let the teams have an out when the rest " +
-    "are completing puzzles",
+    "Each character has their own minigame but one. The Insider's own task is its ability to disguise, " +
+    "their route reading to find paths. So, adding a minigame would have put so much weight on this character. ",
   credit: "A Lead Designer call on balance.",
 };
 
@@ -282,7 +280,7 @@ export const DEFAULT_ROLE: RoleId = "hacker";
 export const selectionRule = {
   headline: "No ability duplication",
   body:
-    "Each role can only be chose once per play. The abilities were designed to complement each other, " +
+    "Each role can only be chosen once per play. The abilities were designed to complement each other, " +
     "knowing their strengths and weaknesses. Having two of the same role would make a weaker team and even " +
     "not letting the team complete the game at all.",
   credit:

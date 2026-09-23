@@ -116,7 +116,7 @@ export const controlBindings: readonly ControlBinding[] = [
     group: "face",
     action: "Dodge",
     note:
-      "Unlimited, with i-frames, to keep agressiveness in the combat system.",
+      "Unlimited, with i-frames, to keep aggressiveness in the combat system.",
     source: "gdd",
   },
   {
@@ -180,7 +180,7 @@ export const controlBindings: readonly ControlBinding[] = [
     input: "D-pad",
     code: "+",
     group: "dpad",
-    action: "The spell grid. It selects and casts a Quantum Ability",
+    action: "The spell grid. It selects and casts a Quantum Ability.",
     note:
       "Four directions for the abilities the player is ever given: Master of Matters, Instability, Inversion and Elliptical Force.",
     source: "alvaro",
@@ -224,7 +224,7 @@ export const controlsIntro = {
 export const contextNote = {
   label: "Triggers that change in combat",
   body:
-    "LT and RT depend on the player's status to change its actions." +
+    "LT and RT depend on the player's status to change their actions." +
     "The game already knows whether you are fighting.",
 };
 

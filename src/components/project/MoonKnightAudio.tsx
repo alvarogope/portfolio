@@ -25,7 +25,7 @@ const TRACKS: Track[] = [
     id: "rest",
     name: "Rest",
     role: "Willow-tree rest theme",
-    mood: "An arpeggio that the Moon-Knight plays to heal. It's isnpired by medieval synth.",
+    mood: "An arpeggio that the Moon-Knight plays to heal. It's inspired by medieval synth.",
     src: "/audio/moon-knight/rest.mp3",
     tint: "var(--color-gold)",
     art: "willow",

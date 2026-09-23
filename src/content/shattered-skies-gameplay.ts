@@ -23,26 +23,26 @@ export const thesis: Thesis = {
   tag: "The main design",
   body:
     "The minigames in the ship are always divided into two. Knowledge and control, giving one to each player, " +
-    "and expecting them to colaborate without talking with each other.",
+    "and expecting them to collaborate without talking with each other.",
   note:
     "The puzzles are not a skill test, they are a communication test. The difficulty comes from the lack of " +
     "conversation that they could have. The way they communicate is completely up to the players and the way " +
-    "they have to express ideas. The time they take to solve them depend fully on them.",
+    "they have to express ideas. The time they take to solve them depends fully on them.",
   moves: [
     {
       label: "Division",
       body:
-        "One player is given the whole pciture of the puzzle, while the other has to interact with it.",
+        "One player is given the whole picture of the puzzle, while the other has to interact with it.",
     },
     {
       label: "Distortion",
       body:
-        "While this happens, the voice channel is being distorted so the instructions feels like noise.",
+        "While this happens, the voice channel is being distorted so the instructions feel like noise.",
     },
     {
       label: "Improvisation",
       body:
-        "The pair will have to make up their own signals and use common sense to complete the minigames",
+        "The pair will have to make up their own signals and use common sense to complete the minigames.",
     },
   ],
 };
@@ -368,9 +368,9 @@ export const puzzlePattern: PuzzleSection = {
     {
       id: "gap",
       order: "1",
-      label: "An area only one  can get to",
+      label: "An area only one character can get to",
       body:
-        "There is an object, whether is a lever, a socket or a console, and a gap that can only be jumped " +
+        "There is an object, whether it is a lever, a socket or a console, and a gap that can only be jumped " +
         "by one of the characters. The solution is whoever can jump that far.",
     },
     {
@@ -386,13 +386,13 @@ export const puzzlePattern: PuzzleSection = {
       order: "3",
       label: "The Symbiochord limiting the distance",
       body:
-        "The parasite lets th character distance from each other in a limited way. If they are too " +
+        "The parasite lets the character distance from each other in a limited way. If they are too " +
         "far apart, they die. Some puzzles' solutions put this into risk and positioning is key.",
     },
     {
       id: "exposure",
       order: "4",
-      label: "Holding the object is exposes",
+      label: "Holding the object exposes you",
       body:
         "Interacting usually means vulnerability while this is happening. The players have to decide " +
         "how long this goes on so the players don't die.",
@@ -409,19 +409,19 @@ export const puzzlePattern: PuzzleSection = {
   symbiochord: {
     label: "Why the Symbiochord is in the puzzle design at all",
     body:
-      "Connects the story to the narrative direcctly. This way players stop thinking just about " +
+      "Connects the story to the narrative directly. This way players stop thinking just about " +
       "how to solve a puzzle by themselves, and think as a team that cannot separate. This also wires " +
       "them together in a way that they know, all the time, that they cannot survive without the other.",
   },
 
   designPoint:
-    "This is the elements that makes the puzzle design. Players will have to consider every aspect of this " +
+    "These are the elements that make the puzzle design. Players will have to consider every aspect of this " +
     "to solve them.",
 };
 
 export const gatingPointer = {
   label: "Where access is designed",
   body:
-    "The progression in Shattered Skies depend mainly on what the players know about this world. ",
+    "The progression in Shattered Skies depends mainly on what the players know about this world. ",
   linkLabel: "The World",
 } as const;

@@ -16,7 +16,7 @@ import Jousting from "@/components/project/Jousting";
 import { deepDiveAnchors } from "@/content/moon-knight-deep-dive";
 
 export const metadata: Metadata = {
-  title: "The World, the Story and the Score | Moon-Knight",
+  title: "The World | Moon-Knight",
   description:
     "The deep dive: Moon-Knight's three-act arc and its reversal, the cast, the symbolism, the jousting minigame, and the full art-direction and score arguments.",
 };
@@ -50,10 +50,10 @@ export default function MoonKnightWorldPage() {
             The World, the Story and the Music
           </h1>
           <p style={{ fontSize: "var(--text-lg)", color: "var(--color-mist)", marginTop: "1rem" }}>
-            This other half of the project is mainly focus on its narrative, the NPCs and their stories,
+            This other half of the project is mainly focused on its narrative, the NPCs and their stories,
             the pagan symbolism it was built from, the artistic decisions and the music and audio design in depth.
             Finally, it focuses on how to monetise the game after its release with a Jousting minigame that outgrew the game
-            and the potental expansions.
+            and the potential expansions.
           </p>
         </header>
       </Reveal>
@@ -75,7 +75,7 @@ export default function MoonKnightWorldPage() {
           >
             The game tells its story through the gameplay, mechanics, quests and combats and not through
             cutscenes. Centralis is the tutorial and prologue, the following levels are the three acts of the story.
-            Each are represented by three moon phases, three ages of life and an ending to the story at the highest peak of the world.
+            Each is represented by three moon phases, three ages of life and an ending to the story at the highest peak of the world.
           </p>
           <NarrativeDesign />
         </div>
@@ -129,7 +129,7 @@ export default function MoonKnightWorldPage() {
             }}
           >
             I composed the game&apos;s music and also designed the reasons behind it. Where music is
-            played, what each instrument to means and why this audio design.
+            played, what each instrument means and why this audio design.
           </p>
           <AudioDesign>
             <MoonKnightAudio />
@@ -199,7 +199,7 @@ export default function MoonKnightWorldPage() {
           <CtaPanel
             kicker="Back to the Design Project"
             title="Moon-Knight"
-            body="The design project: video gameplays, the five quantum abilities, the type of enemies, the control scheme, the world of Kaelum and the beat chart the game was planned."
+            body="The design project: video gameplays, the five quantum abilities, the type of enemies, the control scheme, the world of Kaelum and the beat chart the game was planned with."
             href="/moon-knight"
             linkLabel="Back to Moon-Knight"
             accent="silver"
@@ -207,7 +207,7 @@ export default function MoonKnightWorldPage() {
           <CtaPanel
             kicker="The Codebase"
             title="Programming Moon-Knight"
-            body="The engineering side of the projet. The limitations of Blueprints translated in C++ and the main code choices. The combat state machine, the data-driven layer and the quantum C++ engine limits."
+            body="The engineering side of the project. The limitations of Blueprints translated into C++ and the main code choices. The combat state machine, the data-driven layer and the quantum C++ engine limits."
             href="/moon-knight/engineering"
             linkLabel="Read the engineering write-up"
             accent="silver"

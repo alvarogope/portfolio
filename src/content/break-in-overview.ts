@@ -11,8 +11,8 @@ export const teamNote: TeamNote = {
   role: "Lead Designer",
   body:
     "Break-In was developed by four people divided in two teams. I was in charge of leading the design team and " +
-    "maintaining the main communication with the engineering team. The phase sructure, the win and lose model, the " +
-    "roles and they way they were balanced, and co-designed the level layout and design.",
+    "maintaining the main communication with the engineering team. I designed the phase structure, the win and lose model, the " +
+    "roles and the way they were balanced, and co-designed the level layout and design.",
 };
 
 export const RUN_MINUTES = 8;
@@ -122,7 +122,7 @@ export const heistPhases: readonly HeistPhase[] = [
       },
       {
         role: "hacker",
-        text:  "Can see where the guards are, through walls, and can distract them so they don't caught the gang.",
+        text:  "Can see where the guards are, through walls, and can distract them so they don't catch the gang.",
       },
       {
         role: "all",
@@ -157,7 +157,7 @@ export const heistPhases: readonly HeistPhase[] = [
       },
       {
         role: "hacker",
-        text:  "Once the USB is in, they get a timed word puzzle. The more puzzles solved, the more money they get. If they run out of time, the windows closes.",
+        text:  "Once the USB is in, they get a timed word puzzle. The more puzzles solved, the more money they get. If they run out of time, the window closes.",
       },
       {
         role: "all",
@@ -165,7 +165,7 @@ export const heistPhases: readonly HeistPhase[] = [
       },
     ],
     tasks: ["USB plant", "Server access", "Timed word puzzle", "Funds transfer"],
-    risk: "The second path doesn't mean that is safer, but allows to get the bigger score, while risking that the hacker will fail.",
+    risk: "The second path doesn't mean that it is safer, but allows the team to get the bigger score, while risking that the hacker will fail.",
     pressure: 0.7,
   },
   {
@@ -188,7 +188,7 @@ export const heistPhases: readonly HeistPhase[] = [
       },
       {
         role: "hacker",
-        text: "The hacker will have to distract the guards so the exits are completely clear of them",
+        text: "The hacker will have to distract the guards so the exits are completely clear of them.",
       },
     ],
     tasks: ["No shared exit", "Four viable routes", "Undetected", "Before 08:00"],
@@ -201,9 +201,9 @@ export const loopSummary =
   "The run is eight minutes long and reads in four phases. Phase 1, Infiltration & Setup, runs " +
   "from 00:00 to about 02:30: four players spawn in four different places and open the routes " +
   "between them. Phase 2, Execution & Loot, runs to about 06:00 — the vault comes down layer by " +
-  "layer and the gold comes out. Phase 03, the Digital Heist, is not after phase 2 but alongside " +
+  "layer and the gold comes out. Phase 3, the Digital Heist, is not after phase 2 but alongside " +
   "it, roughly 03:00 to 06:00: a second loot path opened by a USB and closed by a timed puzzle. " +
-  "Phase 04, Escape, is the last two minutes — no shared exit, four separate routes, everybody out " +
+  "Phase 4, Escape, is the last two minutes — no shared exit, four separate routes, everybody out " +
   "before the clock expires.";
 
 export const phaseLevelNote =
@@ -312,7 +312,7 @@ export const balancingPillars: readonly BalancePillar[] = [
     title: "The Difficulty",
     body:
       "The target when balancing the difficulty was more about the players' feeling during " +
-      "the heist. The pressure rises by the end so every team have pressure at the end, whether " +
+      "the heist. The pressure rises by the end so every team has pressure at the end, whether " +
       "they struggled or not. And that is how I wanted to design the difficulty in Break-In.",
   },
   {

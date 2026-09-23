@@ -30,14 +30,14 @@ export const moonKnight: Project = {
   showcase: "Shown at Develop:Brighton 2025",
 
   vision:
-    "Moon-Knight is an action RPG where I tried to think on how could Quantum Computing principles change RPGs mechanics. " + 
+    "Moon-Knight is an action RPG where I tried to think about how Quantum Computing principles could change RPG mechanics. " + 
     "I designed five combat abilities from these principles and built the systems. " + 
-    "It began as my MA dissertation to research what this cutting edge technology could change the designing side of video games, while " + 
+    "It began as my MA dissertation to research how this cutting-edge technology could change the designing side of video games, while " + 
     "also design every single aspect of it.",
 
   built:
-    "I developed the a prototype. The Tutorial is fully playable where the main mechanics and systems are introduced." +
-    " I built all the systems, the level design, the enemies, the interface, the C++ and the Blurptints that makes the game " +
+    "I developed a prototype. The Tutorial is fully playable where the main mechanics and systems are introduced." +
+    " I built all the systems, the level design, the enemies, the interface, the C++ and the Blueprints that make the game " +
     " and the music and audio design of the game.",
 
   contributions: [
@@ -50,18 +50,18 @@ export const moonKnight: Project = {
       label: "Quantum abilities design",
       description:
         "Extrapolated quantum computing principles and translated them into video games. " + 
-        "Each of them have their own risks and rewards, making the player to learn how to use them",
+        "Each of them has their own risks and rewards, making the player learn how to use them",
     },
     {
       label: "Anti-farming Skill Points",
       description:
-        "Built the White Rose XP and its progression. The player's have to earn the XP by playing and defeating enemies.",
+        "Built the White Rose XP and its progression. The players have to earn the XP by playing and defeating enemies.",
       accent: "scarlet",
     },
     {
       label: "Design Decisions",
       description:
-        "I designed the interfac with a diegetic approach. By making the UI like this, " + 
+        "I designed the interface with a diegetic approach. By making the UI like this, " + 
         "I put what the player can see on screen first without adding HUD and just blend these in the game world.",
     },
     {
@@ -77,15 +77,15 @@ export const moonKnight: Project = {
       name: "Master of Matters",
       body: "Embed the sword with different elements: Fire, Lightning and Water. This applies more damage and is very effective against enemies " +
             "made out of a certain material or whose defences are very useful against normal melee attacks. " +
-            "The ability rewards players wholearn the enemies defences and penalised players by wasting an equipped slot.",
+            "The ability rewards players who learn the enemies defences and penalises players by wasting an equipped slot.",
       annotation: "Quantum basis · Majorana states · topologically protected qubits",
       availableTo: ["Player", "Enemy"],
     },
     {
       name: "Instability",
-      body: "This ability is based in the instability of a qubit when it is exposed to the environment. " +
-            "This ability casts an orb that changes size, speed and path every time is in contact with the environment. " +
-            "Positioning becomes part of the gameplay as well as knowing the environment where your casting these abilities. " +
+      body: "This ability is based on the instability of a qubit when it is exposed to the environment. " +
+            "This ability casts an orb that changes size, speed and path every time it is in contact with the environment. " +
+            "Positioning becomes part of the gameplay as well as knowing the environment where you're casting these abilities. " +
             "The closer to the wall, the more difficult to dodge these attacks. " + 
             "Creating a good balance for enemies that take advantage of narrow environments, where melee attacks are not effective.",
       annotation: "Quantum basis · qubit instability (decoherence) · superposition",
@@ -94,9 +94,9 @@ export const moonKnight: Project = {
     {
       name: "Inversion",
       body: "Some boss attacks are very difficult to dodge, by design. Inversion is very helpful for this. This ability reads the damage that the " +
-            "attacks makes and flips it to negative, becoming a healing mechanic. It is a basic parry, but pushed further where the most dangeorus " +
-            "attacks in the game can safe the player, in a game where healing is limited. It is a high risk, high reward situation where skilled players " +
-            "can take advantage of aggresive bosses. This ability can also be used by bosses and invert the damage you try to apply to them.",
+            "attacks make and flips it to negative, becoming a healing mechanic. It is a basic parry, but pushed further where the most dangerous " +
+            "attacks in the game can save the player, in a game where healing is limited. It is a high risk, high reward situation where skilled players " +
+            "can take advantage of aggressive bosses. This ability can also be used by bosses and invert the damage you try to apply to them.",
       annotation: "Quantum basis · NOT gates · qubit state inversion",
       availableTo: ["Player", "Enemy"],
     },
@@ -110,8 +110,8 @@ export const moonKnight: Project = {
     },
     {
       name: "Double Superposition",
-      body: "This ability is exclusive to enemies. The ability rewinds on the state of the enemy one second. " +
-            "This means that enemies can heal, dodge your attack by reposition themselves and attack in a unexpected way, " +
+      body: "This ability is exclusive to enemies. The ability rewinds the enemy's state by one second. " +
+            "This means that enemies can heal, dodge your attack by repositioning themselves and attack in an unexpected way, " +
             "exposing the player if they are not paying attention to the fight.",
       annotation: "Quantum basis · double superposition · one-second state restoration · enemy-exclusive by design",
       availableTo: ["Enemy"],
@@ -121,10 +121,10 @@ export const moonKnight: Project = {
   designChallenge: {
     quote:
       "The game was designed to have video game mechanics inspired by quantum computing, trying to imagine how this technology could change the media " +
-      "without the breaking the main rules of video games and interactive media. Unreal Engine's Blueprints don't have a way to represent them properly. " +
-      "I documented where this technology could excell in the video game media and where it felt like quantum computing was unnecessary. " +
+      "without breaking the main rules of video games and interactive media. Unreal Engine's Blueprints don't have a way to represent them properly. " +
+      "I documented where this technology could excel in the video game media and where it felt like quantum computing was unnecessary. " +
       "The quantum skill tree was the best way to translate these principles. I am rebuilding the codebase using a C++17 library called QPP that " + 
-      "uses a quantum library, as well as researching how to use this technology to improve the media.",
+      "wraps Quantum++ and Eigen, as well as researching how to use this technology to improve the media.",
     engine: "Unreal Engine 5",
     system: "Blueprints / C++",
     resolution: "Documented the technology limitations and carried it into a C++17 quantum toolkit.",

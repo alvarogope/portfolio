@@ -14,19 +14,19 @@ export const seedsOfTomorrow: Project = {
   disciplines: "Original score · Level & puzzle design · Weather systems · Pacing",
   scope: "Composer & Level Designer · Team of 5",
   routingVerb: "See the design",
-  showcase: "Shown at Developed: Brighton 2025",
+  showcase: "Shown at Develop:Brighton 2025",
 
   posterAlt: "Seeds of Tomorrow key art placeholder",
 
   vision:
     "In a future where Earth has been completely destroyed by pollution, a time traveller comes back to " +
-    "change this fate before is too late. When he arrives, he finds a child that needs protection " +
-    "from polluted monsters. To bring life back, he searches the Seeds of Tomorrow, guarded by monsters. " +
-    "He has to recover the seeds and plant them to restore life on Earth",
+    "change this fate before it is too late. When he arrives, he finds a child that needs protection " +
+    "from polluted monsters. To bring life back, he searches for the Seeds of Tomorrow, guarded by monsters. " +
+    "He has to recover the seeds and plant them to restore life on Earth.",
 
   designChallenge: {
     quote:
-      "I wanted the world to reflect the world as realistic as possible. For that, as weather designer, I wanted to make " +
+      "I wanted the world to reflect the world as realistically as possible. For that, as weather designer, I wanted to make " +
       "the weather dynamic. I tied the weather to the story: acid rain falls in the rain level and when the player solves " +
       "the level it changes to normal rain. Each of the weather levels had their own hazard and mood, adding to the level design.",
     engine: "Unity",

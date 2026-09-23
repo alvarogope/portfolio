@@ -21,7 +21,7 @@ export const shatteredSkies: Project = {
     "Shattered Skies entwines two soldiers from enemy species that hold the same parasite, The Symbiochord. " +
     "These two characters do not share the same language, making communication difficult. The action takes place " +
     "in a dangerous and dynamic planetary system forcing them to cooperate to survive and decide whether to trust " +
-    "the person they wre raised to hate. I mainly designed the world they move through and the systems that force them to " +
+    "the person they were raised to hate. I mainly designed the world they move through and the systems that force them to " +
     "stay together. Planets and their physics, interdependent puzzles, the traversal mechanics and their power-ups and the " +
     "progression based in the learning and understanding of the universe.",
 
@@ -29,13 +29,13 @@ export const shatteredSkies: Project = {
     quote:
       "The main challenge as a designer in the level and world design was to make a planetary system that functions as a puzzle, " +
       "at the same time that it had to be as realistic as possible. The realistic approach made the learning easier for the players " +
-      "when it comes to recognise the same patterns in physics in the game and in the real world. The main decision that connects all of " +
-      "these decisions together is the moon Tidalor, since its path open when the orbit pulls the tides low. Another example is " +
-      "Dunestorm, which gravity locks player until they learn how to upgrade theirjetpacks. That's how progression becomes knowledge " +
+      "when it comes to recognising the same patterns in physics in the game and in the real world. The main decision that connects all of " +
+      "these decisions together is the moon Tidalor, since its path opens when the orbit pulls the tides low. Another example is " +
+      "Dunestorm, whose gravity locks players until they learn how to upgrade their jetpacks. That's how progression becomes knowledge " +
       "advancing through systems observation.",
     engine: "Unity",
     system: "World design / physics / progression",
-    resolution: "Make physics realistic for a better pattern recognision and progression based in knowledge.",
+    resolution: "Make physics realistic for a better pattern recognition and progression based on knowledge.",
   },
 
   contributions: [
@@ -47,17 +47,17 @@ export const shatteredSkies: Project = {
     {
       label: "Interdependent puzzle design",
       description:
-        "Designed the interdependancy of the puzzles, requiring cooperation, simultaneous action and timing within the gameplay's assymetry.",
+        "Designed the interdependency of the puzzles, requiring cooperation, simultaneous action and timing within the gameplay's asymmetry.",
     },
     {
       label: "Traversal & asymmetry mechanics",
       description:
-        "All movement design: the two bodies with opposite strengths, jetpacks sensible to weight and the shared fuel supply, and their own cooperative mechanics like the boost.",
+        "All movement design: the two bodies with opposite strengths, jetpacks sensitive to weight and the shared fuel supply, and their own cooperative mechanics like the boost.",
     },
     {
-      label: "Progression based in knowledge",
+      label: "Progression based on knowledge",
       description:
-        "Inspired by metroidvania's world comprehension instead of systems upgrades. Player need to understand the world for powering-up and progressing.",
+        "Inspired by metroidvania's world comprehension instead of systems upgrades. Players need to understand the world for powering-up and progressing.",
     },
   ],
 };

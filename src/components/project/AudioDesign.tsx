@@ -58,7 +58,7 @@ export default function AudioDesign({
         <section className="mkm-band">
           <h3 className="mono mkm-band-title">The three village themes</h3>
           <p className="mkm-lede">
-            The villages are where the knight stops. Being the music here slow and calm to match the action.
+            The villages are where the knight stops. The music here is slow and calm to match the action.
             The music breathes as well as the player.
           </p>
           <ul className="mkm-villages">
@@ -81,7 +81,7 @@ export default function AudioDesign({
           <h3 className="mono mkm-band-title">Instruments and their meaning</h3>
           <p className="mkm-lede">
             The music is inspired by Romanticism. These four are where the music changes
-            deliberatedly.
+            deliberately.
           </p>
           <ul className="mkm-meanings">
             {instrumentMeanings.map((m) => (

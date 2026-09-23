@@ -46,10 +46,10 @@ export const detectionStates: readonly DetectionState[] = [
     name: "Chasing",
     band: "alert",
     bandLabel: "Alert",
-    body: "A sound clue plays and the enemy start chasing.",
+    body: "A sound clue plays and the enemy starts chasing.",
     footer: "",
     detail:
-      "The bar got filled. The white-noise crescendo resolves into chase audio cue. The enemy starts chasing the player.",
+      "The bar got filled. The white-noise crescendo resolves into the chase cue. The enemy starts chasing the player.",
   },
   {
     id: "caught",
@@ -60,7 +60,7 @@ export const detectionStates: readonly DetectionState[] = [
     body: "The enemy reaches the player. Mission Over.",
     footer: "",
     detail:
-      "The enemy reaches the player and arrests them. Making the team to fail.",
+      "The enemy reaches the player and arrests them. Making the team fail.",
   },
 ];
 
@@ -148,7 +148,7 @@ export const feedbackChannels: readonly FeedbackChannel[] = [
     channel: "Audio",
     name: "White-noise crescendo",
     body:
-      "A band of white noise rises while bar is filling, built to resolve into the " +
+      "A band of white noise rises while the bar is filling, built to resolve into the " +
       "chase song. Making the tension present in the game.",
     catches: "",
   },
@@ -201,7 +201,7 @@ export const alarmTriggers: readonly AlarmTrigger[] = [
     consequenceTag: "15s escape",
     consequence: "Alarm sets off and the escape window cut to 15 seconds",
     detail:
-      "If any of the players is reached by any laser, the alarm will set off. They will have 15 seconds " +
+      "If any of the players is reached by any laser, the alarm will go off. They will have 15 seconds " +
       "to get out, leaving the unfinished tasks.",
     counter: "Smoke reveals the beams and disables them — three bombs for the whole run.",
     counterRole: "lockpicker",
@@ -218,7 +218,7 @@ export const alarmTriggers: readonly AlarmTrigger[] = [
     detail:
       "If the player fails to replace the ingot with a similar weight object an alarm will set off. " +
       "This is per ingot and the players know about this, making this trap even a deliberate option to get out. " +
-      "However, the more gold the player has stole, the slower he gets and they only have 30 seconds to get out.",
+      "However, the more gold the player has stolen, the slower he gets and they only have 30 seconds to get out.",
     counter: "Decoys matched by shape and weight, swapped in within the second.",
     counterRole: "vaultsnatcher",
   },
@@ -233,7 +233,7 @@ export const alarmTriggers: readonly AlarmTrigger[] = [
     consequence: "Noise amplified · enemies escalate directly to Chasing",
     detail:
       "Picking a lock makes noise inside a three-metre radius. Failing one amplifies it to " +
-      "six metres and trriggers the investigation immediately. It is the only trap a player can walk into " +
+      "six metres and triggers the investigation immediately. It is the only trap a player can walk into " +
       "by rushing, which is why it is also the one most often tripped in the last two " +
       "minutes.",
     counter: "Vision reads the room first, so the pick is never attempted blind.",
@@ -250,14 +250,14 @@ export const trapsNote =
   "";
 
 export const trapsCredit =
-  "I wanted the punish to be legible, so each trap has a cause and a consequence but can be avoided. This " +
+  "I wanted the punishment to be legible, so each trap has a cause and a consequence but can be avoided. This " +
   "connects with the level design as I wanted to give the player a way to escape the guards, because " +
   "failing just once and losing would be too much of a punishment.";
 
 export const voiceConstraint = {
   headline: "No voice channel",
   body:
-    "Break-In was designed with no voice chat, impeding players to warn one each other. The state " +
+    "Break-In was designed with no voice chat, preventing players from warning each other. The state " +
     "in which the heist is at the moment appears in the HUD. All the detection states appear in each of " +
     "the players' HUD. This also made me think of a way to make the players communicate with each other " +
     "without words. That's how the Hacker's Vision was born, which highlights enemies in red through the walls. " +
@@ -268,9 +268,9 @@ export const designNote = {
   role: "Lead Designer",
   team: "Team of 4",
   body:
-    "This system and the way I designed it it was to make the players know when they are in danger and " +
-    "allowing them to make decisions in a way that won't be punished hardly. This made the player " +
-    "accountable of their own decisions instead of blaming the game system. Nothing escalates instantly, " +
+    "This system and the way I designed it was to make the players know when they are in danger and " +
+    "allowing them to make decisions in a way that won't be punished harshly. This made the player " +
+    "accountable for their own decisions instead of blaming the game system. Nothing escalates instantly, " +
     "players can hide and see enemies making them the owner of their decisions completely and putting them " +
     "in the centre of the game.",
 };

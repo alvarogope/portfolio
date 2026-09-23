@@ -34,7 +34,7 @@ export const weathers: readonly Weather[] = [
     roleLabel: "The healed sky",
     where: "solved rainy area",
     body:
-      "The acid rains transforms to this once the level is completed.",
+      "The acid rain transforms to this once the level is completed.",
     afterSolve: "This is the after. It is what the solve leaves behind.",
     scored: { track: "Rain Level", line: "The world weeping, then washed clean" },
   },
@@ -77,7 +77,7 @@ export const weathers: readonly Weather[] = [
 
 export const rosterThesis =
   "Every weather forms part of the level design's atmosphere. It belongs to the place and resonates " +
-  "to the story the game is telling. By changing the weather, the world makes sense.";
+  "with the story the game is telling. By changing the weather, the world makes sense.";
 
 export type ZoneId = "poisoned" | "healed";
 
@@ -152,7 +152,7 @@ export const flipSummary =
 
 export const weatherCredit = {
   body:
-    "I designed the weather syste and I also composed the music that it will be played during " +
-    "the puzzle beat of them. I wanted the player to feel the progress in each world and that " +
+    "I designed the weather system and I also composed the music that is played during " +
+    "the puzzle-completion side of the levels. I wanted the player to feel the progress in each world and that " +
     "all of them have their own personality",
 };

@@ -93,16 +93,16 @@ export default function ShatteredSkiesPage() {
                   {
                     src: "/images/shattered-skies/story-beats.jpg",
                     label: "The narrative structure",
-                    alt: "The narrative structure chart: two backstories for Drayk and Aevi converging through four story beats into four endings — Unity, two Betrayal variants, and Extinction.",
+                    alt: "The narrative structure chart: two backstories for Drayk and Aevi converging through four story beats into three endings — Unity, two Betrayal variants, and Extinction.",
                     caption:
-                      "The narrative structure that all designers had access in the GDD. The beats, the character backstories and the three endings posibilities.",
+                      "The narrative structure that all designers had access to in the GDD. The beats, the character backstories and the three endings possibilities.",
                   },
                   {
                     src: "/images/shattered-skies/shattered-skies-spaceship.png",
                     label: "The planets in game",
                     alt: "In-engine view of the ship on the hub floor with a wall of planets behind it. The planet textures are placeholders from a stock solar-system set, not the five designed worlds.",
                     caption:
-                      "The planet layout in-game. The planets are placeholder textures due to lack of time, but the system works for adding the new 3D models. The design of the five planets are below.",
+                      "The planet layout in-game. The planets are placeholder textures due to lack of time, but the system works for adding the new 3D models. The design of the five planets is below.",
                   },
                 ]}
               />
@@ -188,8 +188,8 @@ export default function ShatteredSkiesPage() {
           <div style={GAP} id={mainAnchors.coop}>
             <SectionHeading kicker="Co-op Design" title={ch.coop.title} />
             <p style={LEAD}>
-              How the main mechanics work. How each player interact with the minigame
-              and the way the were designed to enhance cooperation.
+              How the main mechanics work. How each player interacts with the minigame
+              and the way they were designed to enhance cooperation.
             </p>
             <ShatteredSkiesCoop />
 

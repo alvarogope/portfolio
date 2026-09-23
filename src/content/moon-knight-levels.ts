@@ -82,14 +82,14 @@ export const beatLevels: readonly BeatLevel[] = [
     phaseLabel: "First quarter, waxing",
     cells: {
       space: "Moving woods and a cemetery",
-      objective: "Get the Half Moon Fragment",
+      objective: "Get the Crescent Fragment",
       quest: null,
       boss: "The Wizard-Knight",
       visuals: "Green scenarios in the rain, colourful flowers next to swamps",
       audio: "Whispers in the wind that increase tension",
     },
     cohesion:
-      "The forest is dark and swampy place. The enemies are camouflaging with the environment.",
+      "The forest is a dark and swampy place. The enemies are camouflaging with the environment.",
     arc: "Swamps · Whispers · The Forest",
   },
   {
@@ -109,7 +109,7 @@ export const beatLevels: readonly BeatLevel[] = [
       audio: "Voices singing in the fog",
     },
     cohesion:
-      "Fog is not only the weather here, it is the level atmosphere. Banshees and ghosts use it in their advantage.",
+      "Fog is not only the weather here, it is the level atmosphere. Banshees and ghosts use it to their advantage.",
     arc: "Fog · Singing · Banshees and Ghosts",
   },
   {
@@ -142,7 +142,7 @@ export const emptyCellLabel = "Not part of this level";
 
 export const beatChartThesis =
   "Four levels: a prologue on the lake island, then one act per land. Each " +
-  "represents the each moon phase that the game is in. From a silent island to a full moon over the Sun-Knight. " +
+  "represents each moon phase that the game is in. From a silent island to a full moon over the Sun-Knight. " +
   "The world should feel like it is from an epic novel.";
 
 export const beatStructureNote =

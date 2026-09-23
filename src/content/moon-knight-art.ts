@@ -3,10 +3,10 @@ export const artThesis = {
   line:
     "The Sublime: The beauty of experiencing a ruined world in solitude.",
   body: [
-    "Moon-Knight art direction is based from the Romantic idea of the medieval times. " + 
+    "Moon-Knight art direction is based on the Romantic idea of the medieval times. " + 
       "The Sublime is the feeling of standing before something immense and indifferent " + 
       "and being attracted and frightened at once. It is not based on medieval art, but " + 
-      "its romantisation during the 19th Century.",
+      "its romanticisation during the 19th Century.",
     "The game is made for making the player feel small and alone. The world the player experiences " +
       "is in decay, no civilisation remains and everything has been forgotten. Life is not valued " +
       "because nobody remembers. The moon is always present, but being nearly the only light in a " + 
@@ -30,7 +30,7 @@ export const sublimeTranslations: readonly SublimeTranslation[] = [
     tag: "Solitude",
     title: "The player is alone",
     decision:
-      "The knight goes through the whole game by themself. The NPCs could help you momentarily, but they are alone.",
+      "The knight goes through the whole game by themselves. The NPCs could help you momentarily, but they are alone.",
     why:
       "The Sublime is a feeling one person has in front of something enormous. I wanted the player to feel in silence." + 
       "Making this happen makes the scale felt, while silence does the work.",
@@ -41,11 +41,11 @@ export const sublimeTranslations: readonly SublimeTranslation[] = [
     title: "A civilisation long forgotten",
     decision:
       "Buildings in the world, broken fortresses, drowned streets and old-god " +
-      "sanctuaries, are just an echo of what once was and no longer be again.",
+      "sanctuaries, are just an echo of what once was and will never be again.",
     why:
       "The feeling of things ending is what made the Sublime real. Death, decay, oblivion " +
       "and sorrow is what the player finds and making them walk through a world full of this " +
-      "sets the tone perfectly. All things end, wether we like it or not. ",
+      "sets the tone perfectly. All things end, whether we like it or not. ",
   },
   {
     id: "palette",
@@ -56,7 +56,7 @@ export const sublimeTranslations: readonly SublimeTranslation[] = [
     why:
       "The same colour palette appears in the Romantic paintings that inspired the art approach. " +
       "These colours relate to the topics explored in the sublime, like death and feeling small against a big force. " +
-      "It also amkes contrast easier, like the piano, if warmth appears is fully intentioanl and noticeable by the player.",
+      "It also makes contrast easier, like the piano, if warmth appears is fully intentional and noticeable by the player.",
   },
   {
     id: "darkness",
@@ -70,8 +70,7 @@ export const sublimeTranslations: readonly SublimeTranslation[] = [
       "first.",
     why:
       "Darkness aligns with the narrative, the gameplay, but most importantly, the philosophy of the Sublime. " +
-      "Mechanically, it helps to the difficulty design. The player has to stop some times and read the environment so they don't die. " +
-      "Happening in the fog and darker levels.",
+      "Mechanically, it helps the difficulty design. The player has to stop sometimes and read the environment so they don't die.",
   },
 ];
 
@@ -105,9 +104,9 @@ export const visualDecisions: readonly VisualDecision[] = [
     decision: "The main menu is the starting location",
     why:
       "The menu is where the games begin, being also a perfect setting. The moonlight reflecting on the " +
-      "sword, and the sword being placed in a stone, like Excallibur, next to a Willow Tree. " +
+      "sword, and the sword being placed in a stone, like Excalibur, next to a Willow Tree. " +
       "Three of the most important motifs of the game and representing the parts of the game: " +
-      "the mechanics, the checkpoints, the story and the progression.",
+      "the mechanics, the checkpoints and the story and progression.",
     pillars: [
       { subject: "The moon", stands: "Narrative & Progression" },
       { subject: "The moon-sword", stands: "Mechanics & Progression" },
@@ -116,17 +115,17 @@ export const visualDecisions: readonly VisualDecision[] = [
   },
   {
     id: "scale",
-    decision: "The character is smaller most of the enemies",
+    decision: "The character is smaller than most of the enemies",
     why:
-      "This serves a double purpose: the player can crearly see the enemy and making them feel small. " +
+      "This serves a double purpose: the player can clearly see the enemy and feel small. " +
       "The enemies' attacks can be read better and players can decide where to dodge to. " +
-      "It realtes to the Sublime too, making it a David agains Goliath situation.",
+      "It relates to the Sublime too, making it a David against Goliath situation.",
   },
   {
     id: "visibility",
     decision: "Camera and character working towards visibility",
     why: 
       "Both the camera and the character work together to give the player as much view as possible. " +
-      "This also relates to the UI Design, prioritisizing what the players see and can scan in one glance of the screen ",
+      "This also relates to the UI Design, prioritising what the players see and can scan in one glance of the screen ",
   },
 ];

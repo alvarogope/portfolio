@@ -44,10 +44,10 @@ export const gameEngineering = {
     "A solo UE5 dark-fantasy RPG with every core system designed and built from scratch: combat, AI, persistence, and equipment.",
 
   intro:
-    "Moon-Knight is a solo project, meaning I functioned as a designer and as a engineer and I had to code, debug and tune every aspect of the game. " +
+    "Moon-Knight is a solo project, meaning I functioned as a designer and as an engineer and I had to code, debug and tune every aspect of the game. " +
     "My approach for combining C++ and Unreal's Blueprints was a matter of timing and visuals. I used C++ for the states, lifetime, damage, " +
-    "and every logic system, while I used Blueprints for combos animations, trace windows or behaviour trees. " +
-    "The reasoning was the speed in development and what needed to to be delivered. Below this are the decisions.",
+    "and every logic system, while I used Blueprints for combo animations, trace windows or behaviour trees. " +
+    "The reasoning was the speed in development and what needed to be delivered. Below this are the decisions.",
 
   stack: [
     "Unreal Engine 5",
@@ -68,8 +68,9 @@ export const gameEngineering = {
   split: {
     kicker: "The division",
     title: "What is in a Blueprint. What is in C++",
-    intro:"The main reason for deciding which things should go to C++ were what the level loaded, then it needed to be managed in the code. " +
-          "If something needed to exist, tuned or feel right on a specific frame, I managed it in the Blueprints." +
+    intro:"I followed this rule for translating part of the code into C++: " +
+          "If something needed to exist, be tuned or feel right on a specific frame, I managed it in the Blueprints." +
+          "If the level needed to load the system, it will go to C++." +
           "This is how the code architecture was distributed:",
     rows: [
       {
@@ -122,11 +123,11 @@ export const gameEngineering = {
       kicker: "Architecture",
       title: "The Hybrid Architecture",
       decision:
-        "When I prototyped the game for the first time, I useed Blueprints. Then I decided to transition part of the code to C++, so " +
+        "When I prototyped the game for the first time, I used Blueprints. Then I decided to transition part of the code to C++, so " +
         "I had to make the Blueprints call down into C++, through BlueprintCallable; and C++ call up to a Blueprint using BlueprintImplementableEvent.",
       why: [
         "One of the reasons for this was to reduce ambiguity when a bug appeared. If the wrong thing happened it was a C++ issue, " +
-        "however, if the right thing happened but looked weird, it was a Bluprint issue. ",
+        "however, if the right thing happened but looked weird, it was a Blueprint issue. ",
         "I could also tune animations quicker without having to compile the whole code every single time.",
       ],
       code: {
@@ -217,9 +218,9 @@ protected:
       kicker: "Tuning",
       title: "Single Source for Tuning",
       decision:
-        "The design constants were given a const in the MoonKnightConstants namespace. Also, the shared enum, ECombatState and EWeaponType, wre defined once. ",
+        "The design constants were given a const in the MoonKnightConstants namespace. Also, the shared enums, ECombatState and EWeaponType, were defined once. ",
       why: [
-        "Every constat variable is the exact number that was given in the GDD, so there wouldn't be any conflicts between the design and the code.",
+        "Every constant variable is the exact number that was given in the GDD, so there wouldn't be any conflicts between the design and the code.",
         "For a better tuning of values, I moved them to one file so I only had to look in one place.",
         "The enums for the weapon types were defined once and shared, preventing conflicts between the Blueprints and the C++, making edits automatic and quick.",
       ],
@@ -278,9 +279,9 @@ namespace MoonKnightConstants
       kicker: "Damage",
       title: "The Damage Functions Inside the Engine",
       decision:
-        "The health is substracted inside the engine. All the damage is handled in the game, swords or enemies' attacks, just overrides TakeDamage.",
+        "The health is subtracted inside the engine. All the damage is handled in the game, swords or enemies' attacks, just overrides TakeDamage.",
       why: [
-        "This puts all the system in one place. The parry negation and death are inside the TakeDamage, so any new damage source will jus inherit both",
+        "This puts all the system in one place. The parry negation and death are inside the TakeDamage, so any new damage source will just inherit both.",
         "It keeps DamageCauser, EventInstigator and any other damage types available, keeping the code easy to read.",
         "The parry was easy to test as the addition after the migration to C++. I could isolate the mechanic and tune it.",
       ],
@@ -321,11 +322,11 @@ namespace MoonKnightConstants
       kicker: "AI",
       title: "Enemy Perception in C++",
       decision:
-        "The AI controller sets the sight and hearing stimulus in C++, wrting Blackboard keys like TargetActor, InvestigateLocation. I just needed to change from the Behaviour Tree.",
+        "The AI controller sets the sight and hearing stimulus in C++, writing Blackboard keys like TargetActor, InvestigateLocation. I just needed to change from the Behaviour Tree.",
       why: [
-        "The perception had so many things that needed to be tuned and C++ was the right decision. Things like radii, peripheral angle, affiliation or stimulus age are numerical and shared and sometimes needed to be the same for different enemies",
-        "The design side was already decided, so I didn't need to reorder selectors or add investigate branches. That could ust happen in the Behaviour Trees.",
-        "The Blackboard is the perfect connection between these two. The C++ code only stated facts and the Blueprint decided what to do in those moments, so it just meant a matter of handle what to do and the order in those cases.",
+        "The perception had so many things that needed to be tuned and C++ was the right decision. Things like radii, peripheral angle, affiliation or stimulus age are numerical and shared and sometimes needed to be the same for different enemies.",
+        "The design side was already decided, so I didn't need to reorder selectors or add investigate branches. That could just happen in the Behaviour Trees.",
+        "The Blackboard is the perfect connection between these two. The C++ code only stated facts and the Blueprint decided what to do in those moments, so it just meant a matter of handling what to do and the order in those cases.",
       ],
       code: {
         filename: "MKEnemyAIController.cpp",
@@ -414,11 +415,11 @@ void AMKEnemyAIController::OnTargetPerceptionUpdated(AActor* Actor, FAIStimulus 
       kicker: "Persistence",
       title: "The Data Should Last",
       decision:
-        "Anything that had to be longer than the actor was present in the Game Instance. It guaranteed to exist the whole time.",
+        "Anything that had to be longer than the actor was present in the Game Instance. It was guaranteed to exist the whole time.",
       why: [
         "There were some things that needed to be destroyed eventually, like the character or the levels. These things relied on the 3D objects.",
         "The Willow Tree's checkpoint and the inventory had to survive death and respawn, so I placed them in UMKGameInstance.",
-        "This was actually a bug had I couldn't fix for a long time. The equipment system disappeared when the character died. I tried to add this to BeginPLay, but the better option was to ask which object was supposed to own that state.",
+        "This was actually a bug I couldn't fix for a long time. The equipment system disappeared when the character died. I tried to add this to BeginPlay, but the better option was to ask which object was supposed to own that state.",
       ],
       code: {
         filename: "MKGameInstance.h",
@@ -610,7 +611,7 @@ void AMKPlayerCharacter::Respawn()
       "These are the Blueprints that I used for the prototype. Some of them are the old blueprints that were eventually moved to " +
       "the C++, like the combat combo and the sword trace. I built them first in Blueprints to have the build ready firstly and I " +
       "decided to code them in the C++ later. However, what remains as a Blueprint are the Behaviour Trees, the generation and the tuning. " +
-      "Click fto read in full size.",
+      "Click to read in full size.",
     items: [
       {
         id: "bt-standard",
@@ -644,7 +645,7 @@ void AMKPlayerCharacter::Respawn()
         label: "Sword Trace & ApplyDamage",
         caption:
           "The weapon trace during the active frames of the swings, a sphere radius of 12, a base damage of 20 with a Damageable tag that comes into the damage system. " +
-          "The trace stayed as a Blueprint while I translated it into C++ once the numbers stopped changing.",
+          "The trace stayed as a Blueprint before I translated it into C++ once the numbers stopped changing.",
         src: "/images/moon-knight/Sword_Trace.png",
         alt:
           "Blueprint sword trace: a sphere trace along the blade during the active frames, tag-filtered, calling ApplyDamage into Unreal's own damage pipeline.",
@@ -663,8 +664,8 @@ void AMKPlayerCharacter::Respawn()
         id: "wb-equipment",
         label: "WB_Equipment · The Equipment Screen",
         caption:
-          "The conventional menu in the game, as in the end I had to create a menu so the players could interact even though the design " +
-          "document seeks a diegetic design due to the lack of time. This menu needed a grid for understanding the equipment system. " +
+          "The conventional menu in the game, as in the end, due to the lack of time, I had to create a menu so the players could interact even though the design " +
+          "document seeks a diegetic design. This menu needed a grid for understanding the equipment system. " +
           "It was built in UMG against the DB_Items data table, so every new item is a row and not a widget.",
         src: "/images/moon-knight/WB_Equipment.png",
         alt:
@@ -674,8 +675,8 @@ void AMKPlayerCharacter::Respawn()
         id: "pcg-forest",
         label: "PCG Forest · The Level's Ground Cover",
         caption:
-          "The three objects are rocks, trees and gras, molding the terrain and differenciating them so it wouldn't spawn inside anything else. " +
-          "This graph is related to the level design section stating that the forest is handmade and not randomised." +
+          "The three objects are rocks, trees and grass, molding the terrain and differentiating them so it wouldn't spawn inside anything else. " +
+          "This graph is related to the level design section stating that the forest is generated with a purpose but not randomised." +
           "It was made in Blueprints because nobody would want to tune this in code having Blueprints.",
         src: "/images/moon-knight/PCG_Forest.png",
         alt:
@@ -690,9 +691,9 @@ void AMKPlayerCharacter::Respawn()
     kicker: "Researching Quantum Computing",
     title: "The Quantum Research for Building this Game",
     body:
-      "The programming in this page is the foundation of the game. Making it shipped and playable. However, there is a second " +
-      "piece of engineering: The Quantum Abilities using actual quantum programming, using a C++17 library called QPP " +
-      "and validting it statiscally. This work has its own deep-dive.",
+      "The programming in this page is the foundation of the game. Making it shippable and playable. However, there is a second " +
+      "piece of engineering: The Quantum Abilities using actual quantum programming, using a C++17 library called Quantum++ " +
+      "and validating it statistically. This work has its own deep-dive.",
     href: "/moon-knight/engineering/quantum",
     linkLabel: "Read the quantum toolkit deep-dive",
   },

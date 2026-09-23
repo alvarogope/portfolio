@@ -480,7 +480,7 @@ export default function GameEngineeringPage() {
           <CtaPanel
             kicker="Back to the design project"
             title="Moon-Knight"
-            body= "The design project: video gameplays, the five quantum abilities, the type of enemies, the control scheme, the world of Kaelum and the beat chart the game was planned."
+            body= "The design project: video gameplays, the five quantum abilities, the type of enemies, the control scheme, the world of Kaelum and the beat chart the game was planned with."
             href="/moon-knight"
             linkLabel="Back to Moon-Knight"
             accent="silver"

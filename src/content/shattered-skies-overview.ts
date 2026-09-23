@@ -8,15 +8,15 @@ export const teamNote: TeamNote = {
   headline: "Team project · Team of 5",
   role: "Systems & World Designer",
   body:
-    "This section shows how we worked together as a team for the same goal. The premise world and narrative " +
+    "This section shows how we worked together as a team for the same goal. The premise, the world and the narrative " +
     "were designed together, as a team. This section is mainly for context that represents our work as a team.",
 };
 
 
 export const premise =
-  "This two-player narrative exploration adventure is set in a solar system. Two members of enemies species are infected by " +
+  "This two-player narrative exploration adventure is set in a solar system. Two members of enemy species are infected by " +
   "the Symbiochord. Their names: Drayk, a Rynor soldier, and Aevi, a Tethran scientist. This parasite connects their bodies and " +
-  "their fate. If one dies, the other dies too. They have to cooperate althought their species were in war for centuries.";
+  "their fate. If one dies, the other dies too. They have to cooperate although their species have been at war for centuries.";
 
 export type HostId = "drayk" | "aevi";
 
@@ -39,7 +39,7 @@ export const hosts: readonly Host[] = [
     backstory:
       "Raised and trained in war. Prepared to kill Tethrans as they made his world burn. " +
       "From his side, he thinks of the Symbiochord as a weapon and the stranger on the other side of it " +
-      "its his captor.",
+      "as his captor.",
   },
   {
     id: "aevi",
@@ -48,8 +48,8 @@ export const hosts: readonly Host[] = [
     vocation: "Scientist",
     tag: "Tethran · Scientist",
     backstory:
-      "She studied the Symbiochord from the outside and now has to war it. She understands this parasite better than " +
-      "anyone, making her aware of the risks that she's taking and the danger their in.",
+      "She studied the Symbiochord from the outside and now has to wear it. She understands this parasite better than " +
+      "anyone, making her aware of the risks that she's taking and the danger they're in.",
   },
 ];
 
@@ -71,9 +71,9 @@ export const worldNotes: readonly WorldNote[] = [
     id: "veynar",
     label: "The Veynar",
     body:
-      "An ancient civilisation that created the Symbiochord as an peace instrument. It is a parasite " +
+      "An ancient civilisation that created the Symbiochord as a peace instrument. It is a parasite " +
       "that ties two enemies, so they cannot harm each other without harming themselves. The Veynar " +
-      "disappeared befire they even used the Symbiochord.",
+      "disappeared before they even used the Symbiochord.",
   },
   {
     id: "shatterstorm",
@@ -86,7 +86,7 @@ export const worldNotes: readonly WorldNote[] = [
     id: "hosts",
     label: "The hosts",
     body:
-      "Centuries after the Shatterstorm, the parasite finds two hosts on opposite sides a war. " +
+      "Centuries after the Shatterstorm, the parasite finds two hosts on opposite sides of a war. " +
       "It will try to bring the peace that the Veynar did not get.",
   },
 ];

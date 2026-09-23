@@ -119,7 +119,7 @@ export default function Home() {
               color: "var(--color-mist)",
             }}
           >
-            Four Games, four worlds, four systems Scroll to enter them.
+            Four games, four worlds, four systems. Scroll to enter them.
           </p>
         </div>
       </section>

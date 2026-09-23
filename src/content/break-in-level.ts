@@ -163,7 +163,7 @@ export const levelStages: readonly LevelStage[] = [
     tension: 1,
     why:
       "Where everything collapses. The countdown is short, the alarm can go off and the players can " +
-      "be caight looking for the exit.",
+      "be caught looking for the exit.",
   },
 ];
 

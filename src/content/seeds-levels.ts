@@ -64,7 +64,7 @@ export const loopSteps: readonly LoopStep[] = [
 ];
 
 export const loopNote =
-  "I paced the game and divide it into the combat and the puzzle-solving dynamic.";
+  "I paced the game and divided it into the combat and the puzzle-solving dynamic.";
 
 export const payoffPointer = {
   label: "What the sky does",
@@ -91,7 +91,7 @@ export const levelCredit = {
   role: "Composer & Level Designer",
   team: "Team of 5",
   body:
-    "The game was developed by the five of us. Part of the levels, puzzles and rythm is what I co-designed " +
+    "The game was developed by the five of us. Part of the levels, puzzles and rhythm is what I co-designed " +
     "with other members of the team.",
 };
 

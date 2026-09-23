@@ -215,7 +215,7 @@ export default function SeedsOfTomorrowPage() {
                       label: "Sketch",
                       alt: "Hand-drawn charcoal sketch of a poisoned Earth: cooling towers venting smoke, wrecked pylons, scattered oil drums, a ringed planet and a saucer in the sky.",
                       caption:
-                        "Another concept art that represent the cover of the game.",
+                        "Another concept art that represents the cover of the game.",
                     },
                   ]}
                 />

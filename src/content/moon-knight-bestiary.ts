@@ -76,7 +76,7 @@ export const bestiaryBosses: readonly BossEntry[] = [
       diagram: "instability",
     },
     lore:
-      "It was sent by the Sun-Knight, captured and tortured. It turns on the soldiers it came to get you.",
+      "It was sent by the Sun-Knight, captured and tortured. It turns on the soldiers that are coming to get you.",
     plate: {
       src: "/images/moon-knight/boss-werewolf.png",
       alt: "The Werewolf boss encounter at night: the knight facing the werewolf, with the named enemy health bar across the top of the screen.",
@@ -96,10 +96,10 @@ export const bestiaryBosses: readonly BossEntry[] = [
     mechanic: {
       name: "Inversion",
       description:
-        "An undodgeable attack. The player must parry it with the Instability ability. He can counters yours in return.",
+        "An undodgeable attack. The player must parry it with the Inversion ability. He can counter yours in return.",
       diagram: "inversion",
     },
-    lore: "Once a servant of the moon, he turned against her.",
+    lore: "Once a servant of the Moon, he turned against her.",
   },
   {
     id: "centaur-knight",
@@ -134,7 +134,7 @@ export const bestiaryBosses: readonly BossEntry[] = [
       diagram: "elliptical",
     },
     lore:
-      "Once the Moon-Knight's partner, he betrayed the Moon. The last fight in the game: every soldier the player has fight against followed him.",
+      "Once the Moon-Knight's partner, he betrayed the Moon. The last fight in the game: every soldier the player has fought against followed him.",
   },
 ];
 
@@ -154,7 +154,7 @@ export const bestiaryEnemies: readonly EnemyEntry[] = [
     name: "Wooden Humanoids",
     tier: "enemy",
     accent: "#8A6A3B",
-    gameplay: "Camouflage as trees. Spear in melee, thrown splinters at range.",
+    gameplay: "Camouflaged as trees. Spear in melee, thrown splinters at range.",
     weakness: { type: "fire", label: "Fire" },
     lore: "Once soldiers, who rested so long they became tree-like.",
   },
@@ -173,7 +173,7 @@ export const bestiaryEnemies: readonly EnemyEntry[] = [
     tier: "enemy",
     accent: "#C9A961",
     gameplay:
-      "They hide in the fog and sing a beautiful song to attrack you then strike with claws. The fastest enemy in the game.",
+      "They hide in the fog and sing a beautiful song to attract you then strike with claws. The fastest enemy in the game.",
     weakness: { type: "lightning", label: "Lightning" },
     lore: "Cursed royalty, turned into monsters.",
   },

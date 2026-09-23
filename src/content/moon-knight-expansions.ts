@@ -18,10 +18,10 @@ export const expansions: readonly Expansion[] = [
     mechanic: "Double Superposition",
     mechanicNote: "Enemy-exclusive in the main game · one-second state restoration",
     hook:
-      "The Moon-Knight steps back to when the Misty Lands started falling and found the place in its original form: " +
+      "The Moon-Knight steps back to when the Misty Lands started falling and finds the place in its original form: " +
       "no fog, no ghosts and a wealthy society. The prince asks for help " +
-      "to recover his beloved from monsters hidding The Underground, what are the  " +
-      " the Misty Lands in the game. The prince will ride with you and " +
+      "to recover his beloved from monsters hiding in The Underground. The action takes place in what is " +
+      "called The Misty Lands, in the game. The prince will ride with you and " +
       "lose his mind before you get to the princess, confronting you. When you defeat him, the princess " +
       "mentions a curse in her family, and, after losing the one that she loved, " +
       "takes her own life.",
@@ -35,10 +35,10 @@ export const expansions: readonly Expansion[] = [
     mechanic: "Entanglement",
     mechanicNote: "The quantum basis of Elliptical Force · correlated convergence",
     hook:
-      "In the Frozen Lands a masked stranger called The Jesterappears and invites the Moon-Knight to The " +
+      "In the Frozen Mountains a masked stranger called The Jester appears and invites the Moon-Knight to The " +
       "Circus. This event happens somewhere outside of Kaelum. The members of this company finish " +
-      "each other phrases and they speak with the same voice. After arriving to a luxurious castle, " +
-      "the knight has to defeat the novelty that keeps The Circus under their contol for " +
+      "each other's phrases and they speak with the same voice. After arriving at a luxurious castle, " +
+      "the knight has to defeat the nobility that keeps The Circus under their control for " +
       "their own entertainment. Eventually, the knight discovers that this family is an ancient line of vampires, " + 
       "who can only be defeated using the silver of the Moon-sword.",
     designPoint:

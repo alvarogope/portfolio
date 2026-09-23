@@ -22,12 +22,12 @@ export const spine: Spine = {
   tag: "The throughline",
   body:
     "The two characters belong to two different species. They don't share language, so when we built " +
-    "these systems we had to consider this barrier and the way cooperation should work without communiation. " +
+    "these systems we had to consider this barrier and the way cooperation should work without communication. " +
     "So the players could feel comfortable with the system we decided to enhance this cooperation by having it " +
     "through the whole game, like in the ship and the jetpack boost.",
   note:
-    "The design reasoning was more centred about “how do we make trust cost something”. Then the system " +
-    "had to be arround not having a voice chat and design problems they can solve without them.",
+    "The design reasoning was more centred on “how do we make trust cost something”. Then the system " +
+    "had to be around not having a voice chat and design problems they can solve without them.",
 };
 
 /* ==========================================================================
@@ -97,16 +97,16 @@ export const communication: CommunicationSection = {
       tag: "",
       emphasis: "meta",
       body:
-        "Players have to agree to not talk the game while they are playing. This restriction has to " +
+        "Players have to agree not to talk during the game while they are playing. This restriction has to " +
         "exists outside the game to keep the intention of the whole design.",
       reasoning: {
         decision:
           "For experiencing the game as it was designed, we asked the players to not talk outside of the sessions.",
         why:
-          "The game design decisions were focused on miscommunication and this is also part of thhe story. " +
-          "We expect the players to respet these rules. Shattered Skies could have shared a chat and make it as " +
-          "most of every co-op game, but the ambiguity is what this game was build from and every decision was taken " +
-          "towards that direction. Player can break it, but they will not experience the game properly.",
+          "The game design decisions were focused on miscommunication and this is also part of the story. " +
+          "We expect the players to respect these rules. Shattered Skies could have had a voice chat like " +
+          "most of co-op game do, but the ambiguity is what this game was built from and every decision was taken " +
+          "towards that direction. Players can break it, but they will not experience the game properly.",
         impact:
           "Players become part of the barrier the games require. This is the first cooperative mechanic. " +
           "Eventually, this could grow in them as suspicion or trust.",
@@ -122,14 +122,14 @@ export const communication: CommunicationSection = {
         "language is lost in translation.",
       reasoning: {
         decision:
-          "This give the player a non-verbal expression, but for each character means different things.",
+          "This gives the player a non-verbal expression, but for each character means different things.",
         why:
-          "We thought that different cultures could have different meaning for each gestures, this could be " +
+          "We thought that different cultures could have different meaning for each gesture, this could be " +
           "part of the miscommunication system. This doesn't work in all gestures since sometimes players need " +
           "to know the minimum to understand each other.",
         impact:
-          "Players ended up sharing a gestures languge for themsleves and communicate without talking. " +
-          "Through try an error they were able to relate actions to gestures.",
+          "Players ended up sharing a gestures language for themselves and communicate without talking. " +
+          "Through trial and error they were able to relate actions to gestures.",
       },
     },
     {
@@ -140,7 +140,7 @@ export const communication: CommunicationSection = {
       emphasis: "payoff",
       body:
         "This resource grants five seconds with the filter off and voice chat perfectly clear. It is a rare one. " + 
-        "It is not too long for building a proper phrase, but give the opportunity to communicate through a voice. " +
+        "It is not too long for building a proper phrase, but gives the opportunity to communicate through a voice. " +
         "Players can use this for lying too. Linking this to the Lie ending.",
       reasoning: {
         decision:
@@ -149,18 +149,18 @@ export const communication: CommunicationSection = {
         why:
           "If talking is constant, it stops being a design decision that was set at the tutorial. " +
           "This unique opportunity turns it into a great decision for the players: what is worth " +
-          "saying? Connceting it to the ending is what makes it an interesting mechanic since they " +
+          "saying? Connecting it to the ending is what makes it an interesting mechanic since they " +
           "can also lie to each other, which was impossible during the game.",
         impact:
-          "This five seconds of communication becomes a prisoner's dilemma. Players used this window " +
-          "for warning, planning, confession or liying, getting the to the ending they want to get.",
+          "These five seconds of communication becomes a prisoner's dilemma. Players used this window " +
+          "for warning, planning, confession or lying, getting the to the ending they wanted.",
       },
     },
   ],
 
   close:
     "The reason behind this was to let the players decide a single moment of communication. " +
-    "However, every single mechanic embraces the misscommunication, while the telepathy permits what " +
+    "However, every single mechanic embraces the miscommunication, while the telepathy permits what " +
     "players have been missing the whole game.",
 };
 
@@ -248,7 +248,7 @@ export const telepathyFlow: TelepathyFlow = {
   ],
   note:
     "This window does not pick the ending by itself, only the final decision does. This moment " +
-    "can be used to expresss what players know and believes or the complete opposite",
+    "can be used to express what players know and believe or the complete opposite",
 };
 
 /* ==========================================================================
@@ -294,14 +294,14 @@ export const ship: ShipSection = {
     ref: "Combined driving",
     body:
       "The reference we took as a team and what we wanted from it. We wanted the players " + 
-      "to cooperate in a ship where the controls were phisically distributed. This helped to " +
+      "to cooperate in a ship where the controls were physically distributed. This helped to " +
       "understand cooperation without communication.",
   },
 
   lead:
     "The ship is the way players navigate through planets, but it is also the main hub and their safe place. " +
     "To control it, it takes both of them, as steering, shields, cannons and radars are in separate rooms, making " +
-    "the players to physically move and coordinate: one is steering while the other one turns on the sields. " +
+    "the players to physically move and coordinate: one is steering while the other one turns on the shields. " +
     "We gave the ship realistic weight and inertia, making the navigation difficult even through communication.",
 
   dualControl: {
@@ -312,7 +312,7 @@ export const ship: ShipSection = {
       "navigation a kind of communication.",
     impact:
       "Players ended up auto-organising in roles and then when the ship got damaged, they would change them. " +
-      "This kind of cooperation to one of the most important mechanic helped them in future puzzles.",
+      "This kind of cooperation to one of the most important mechanics helped them in future puzzles.",
   },
 
   stationsLabel: "The main ship systems",
@@ -342,16 +342,16 @@ export const ship: ShipSection = {
   repairs: {
     label: "Repair",
     body:
-      "The ateroids and space hazards can damage the ship, which then has to be repaired. The repair becomes " +
+      "The asteroids and space hazards can damage the ship, which then has to be repaired. The repair becomes " +
       "a minigame, so players can still navigate.",
     pointer:
-      "They are three minigames: circuit realignment, seal the breach and calibrate sensors. Each one " +
+      "There are three minigames: Power Maze, Seal the Breach and calibrate sensors (Navigation). Each one " +
       "divides the knowledge and control between the two players.",
     linkLabel: "how the three mini-games work",
   },
 
   designPoint:
-    "We were trying to make cooperation mechanical and intuitive as possible in the spaceship. " +
+    "We were trying to make cooperation as mechanical and intuitive as possible in the spaceship. " +
     "Helpful for future puzzles and forcing it in the most important mechanic.",
 };
 
@@ -391,13 +391,13 @@ export const traversal: TraversalSection = {
     kicker: "Movement",
     title: "Sharing a Fuel Tank",
     standfirst:
-      "The characters move assymetrically, but they share the same tank that makes their jetpacks function.",
+      "The characters move asymmetrically, but they share the same tank that makes their jetpacks function.",
   },
 
   lead:
     "Both characters have different traversal mechanics. Aevi is small, quick and doesn't jump far. " +
-    "Drayk is big, slow and jumps high. Both their bodies show how they moves work and how they could " +
-    "help each other with. Many puzzles are designed around this: one reaches a ledge and the other one helpes to reach it. " +
+    "Drayk is big, slow and jumps high. Both their bodies show how their moves work and how they could " +
+    "help each other with. Many puzzles are designed around this: one reaches a ledge and the other one helps to reach it. " +
     "This makes both characters well-balanced.",
 
   bodiesLabel: "The two bodies",
@@ -408,7 +408,7 @@ export const traversal: TraversalSection = {
       build: "Small · quick · short jump",
       body:
         "Runs fast and can fit where Drayk can't, but needs him for jumping far. The jetpack takes her " +
-        "higher due to her lightweight and consumes less fuel. This makes her strong when the players need to be " + 
+        "higher due to her light weight and consumes less fuel. This makes her strong when the players need to be " + 
         "quick.",       
     },
     {
@@ -447,7 +447,7 @@ export const traversal: TraversalSection = {
   booster: {
     label: "The collision booster",
     body:
-      "When both players jetpack into each other while on use, they create a booster to move them " +
+      "When both players jetpack into each other while in use, they create a booster to move them " +
       "higher. Fuel drains fast while this happens, so the movement has to be intentional at every point.",
     reasoning: {
       decision:

@@ -46,13 +46,13 @@ export const markerTypeMeta: Record<MarkerType, { term: string; gloss: string }>
   area: {
     term: "Land",
     gloss:
-      "Centralis, the lake island the journey begins, and the three great levels. " +
+      "Centralis, the lake island where the journey begins, and the three great levels. " +
       "Each area covers one act in the narrative, they are listed in the order they are played.",
   },
   fortress: {
     term: "Fortress · Moon Fragments",
     gloss:
-      "The Fortresses stand on high ground, visible at all points in the level. Lots of enemies awaits inside. " + 
+      "The Fortresses stand on high ground, visible at all points in the level. Lots of enemies await inside. " + 
       "There is a moon fragment in every single one of them, guarded by a boss that defends it.",
   },
   dungeon: {
@@ -72,7 +72,7 @@ export const mapMarkers: readonly MapMarker[] = [
     xPct: 49.3,
     yPct: 43.3,
     lore:
-      "Where the game starts. The moon-knight wakes up from a coma here. The land is covered in dark trees " +
+      "Where the game starts. The Moon-Knight wakes up from a coma here. The land is covered in dark trees " +
       "and surrounded by water. The NPC Death is waiting here. " + 
       "This section is the tutorial and leads to The Woods when completed.",
     profile: {
@@ -89,8 +89,8 @@ export const mapMarkers: readonly MapMarker[] = [
     xPct: 32,
     yPct: 83.3,
     lore:
-      "Area filled with swamps and ruines covered by nature. There are wooden and amphibian humanoids as potential threats. " +
-      "The player will encounter The Witch and she will tell about the Power of the Old Gods.",
+      "Area filled with swamps and ruins covered by nature. There are wooden and amphibian humanoids as potential threats. " +
+      "The player will encounter The Witch and she will tell you about the Power of the Gods.",
     profile: {
       cast: ["witch", "orpheus"],
       enemies: ["wooden-humanoids", "amphibian-humanoids"],
@@ -142,7 +142,7 @@ export const mapMarkers: readonly MapMarker[] = [
     type: "fortress",
     xPct: 7.6,
     yPct: 83.2,
-    lore: "A fortress on top of a mountain in The Woods. Inside: soldiers, the First Quarter Moon Fragment, and The Wizard waiting for you.",
+    lore: "A fortress on top of a mountain in The Woods. Inside: soldiers, the Crescent Moon Fragment, and The Wizard waiting for you.",
     profile: { enemies: ["soldiers"], boss: "wizard-knight", level: "woods", act: "waking" },
   },
   {
@@ -183,7 +183,7 @@ export const mapMarkers: readonly MapMarker[] = [
     yPct: 38.5,
     lore:
       "These are Dungeons, underground, barely lit, guarded by non-human creatures. Hidden and hard to access. " +
-      "Here the player collects the Ancient Gods' Powers by defeating enemies.",
+      "Here the player collects the Power of the Gods by defeating enemies.",
     profile: { cast: ["witch"] },
   },
 ];

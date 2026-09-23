@@ -209,7 +209,7 @@ export const telepathyFlow: TelepathyFlow = {
     label: "The telepathy window",
     seconds: 5,
   },
-  choicesLabel: "Each player decision",
+  choicesLabel: "players decide",
   choices: [
     {
       id: "truth",
@@ -222,7 +222,7 @@ export const telepathyFlow: TelepathyFlow = {
       label: "Speak false",
     },
   ],
-  endingsLabel: "Link to endings",
+  endingsLabel: "Endings",
   endings: [
     {
       id: "unity",

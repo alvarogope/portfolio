@@ -195,7 +195,6 @@ function Exchange({ text, reduced }: { text: string; reduced: boolean }) {
       {/* Speaking Duration */}
       <div className="dlg-avatar-alcove">
         <DialogueAvatar speaking={!reduced && !done} />
-        <span className="dlg-avatar-alcove__label">THE KNIGHT</span>
       </div>
 
       <div

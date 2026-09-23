@@ -432,9 +432,6 @@ export default function NarrativeMap({ variant = "main" }: { variant?: SsVariant
         <figure className="nm__figure">
           <figcaption className="nm__figcap">
             <h3 className="nm__band-title">Narrative structure</h3>
-            <p className="mono nm__figcap-meta">
-              Two Stories · {storyEndings.length} endings
-            </p>
           </figcaption>
 
           <div

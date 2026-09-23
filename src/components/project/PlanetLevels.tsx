@@ -31,7 +31,7 @@ function toneStyle(id: PlanetId): React.CSSProperties {
 function MineTag({ className }: { className?: string }) {
   return (
     <span className={`mono pl-mine${className ? ` ${className}` : ""}`}>
-      <span className="pl-sr">Audio design credit: </span>Mine
+      <span className="pl-sr">Audio design credit: </span>Fully Mine
     </span>
   );
 }
@@ -188,7 +188,6 @@ export default function PlanetLevels() {
               <tr key={dim.id} className={dim.id === "audio" ? "is-audio" : undefined}>
                 <th scope="row" className="mono pl-rowhead">
                   {dim.label}
-                  {dim.id === "audio" && <MineTag />}
                 </th>
                 {levelPlanets.map((p) => (
                   <td
@@ -233,7 +232,6 @@ export default function PlanetLevels() {
                 >
                   <dt className="mono pl-card-key">
                     {dim.label}
-                    {dim.id === "audio" && <MineTag className="pl-mine--card" />}
                   </dt>
                   <dd className="pl-card-val">{p.cells[dim.id]}</dd>
                 </div>
@@ -1184,7 +1182,6 @@ export default function PlanetLevels() {
             border-top: 1px solid color-mix(in srgb, var(--pl-cyan) 45%, transparent);
           }
           .pl-card-row.is-audio .pl-card-key { color: var(--pl-cyan); }
-          .pl-mine--card { margin-left: 0; margin-top: 0.2rem; display: table; }
 
           .pl-sheet { padding: 1.1rem 1.15rem 1.25rem; }
           .pl-groups { grid-template-columns: minmax(0, 1fr); gap: 1.3rem; }

@@ -139,7 +139,7 @@ function TelepathyFigure() {
   );
 }
 
-function ReasoningRail({ reasoning }: { reasoning: Reasoning }) {
+function ReasoningRail({ reasoning, decode = false }: { reasoning: Reasoning; decode?: boolean }) {
   const rows: readonly [string, string][] = [
     ["Decision", reasoning.decision],
     ["Why", reasoning.why],
@@ -147,10 +147,12 @@ function ReasoningRail({ reasoning }: { reasoning: Reasoning }) {
   ];
   return (
     <dl className="ssm__reasoning">
-      {rows.map(([term, body]) => (
+      {rows.map(([term, body], i) => (
         <div key={term} className="ssm__reason">
           <dt className="mono ssm__reason-term">{term}</dt>
-          <dd className="ssm__reason-body">{body}</dd>
+          <dd className="ssm__reason-body">
+            {decode ? <DecodeOnView text={body} delay={i * 180} /> : body}
+          </dd>
         </div>
       ))}
     </dl>
@@ -234,7 +236,7 @@ export default function ShatteredSkiesMechanics() {
                 <DecodeOnView text={c.body} delay={i * 260} />
               </p>
 
-              <ReasoningRail reasoning={c.reasoning} />
+              <ReasoningRail reasoning={c.reasoning} decode />
             </li>
           ))}
         </ol>
@@ -622,7 +624,8 @@ export default function ShatteredSkiesMechanics() {
 
            4.9:1 on this ground, and it is transient decoration over text that
            is also present, unscrambled, in the accessibility tree. */
-        .ssm__channel-body [data-decoding="true"] {
+        .ssm__channel-body [data-decoding="true"],
+        .ssm__reason-body [data-decoding="true"] {
           color: var(--color-emerald);
           /* Stops a half-decoded word being read as a spelling mistake. */
           opacity: 0.92;

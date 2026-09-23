@@ -22,7 +22,7 @@ export default function AboutPage() {
             <div className="about-inspect__emblem">
               <Image src="/images/logo.png" alt="Álvaro Gómez emblem" fill sizes="76px" />
             </div>
-            <p className="mono about-inspect__kicker">Character Inspect</p>
+            <p className="mono about-inspect__kicker">Character</p>
             <h1 id="about-title" className="about-inspect__title">
               {about.headline}
             </h1>
@@ -71,7 +71,7 @@ export default function AboutPage() {
             <Reveal key={section.title} delay={index * 50}>
               <article className="about-lore__entry">
                 <span className="about-lore__number" aria-hidden>
-                  {String(index + 1).padStart(2, "0")}
+                  {String(index + 1).padStart(2)}
                 </span>
                 <div>
                   <p className="mono about-lore__kicker">{section.kicker}</p>

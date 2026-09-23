@@ -319,7 +319,7 @@ export const minigames: MinigameSection = {
           "one for frequency. Neither panel contains what the other one holds, and the arc " +
           "between them breaks in the middle, where the barrier label sits.",
         barrier: "Distorted voice",
-        stakes: "Timed · the clock, not the mistake, is what explodes the ship",
+        stakes: "The ship could explode",
         axes: ["Amplitude", "Frequency"],
       },
       designPoint:

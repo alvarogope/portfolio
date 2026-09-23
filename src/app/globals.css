@@ -31,24 +31,8 @@ html {
   font-size: 112.5%;
   scroll-behavior: smooth;
 
-  /* ---- the sticky header's height ----
-     The header in `layout.tsx` is `position: sticky; top: 0`, so it covers the
-     top of the viewport and a fragment link lands its target UNDERNEATH it —
-     the section heading you clicked to reach is the first thing hidden.
-
-     Its height is 1.25rem padding + a 1.7rem line box + 1.25rem padding + a 1px
-     rule ≈ 4.25rem, and everything in that stack is in rem, so this holds at
-     both root font sizes. IF THE HEADER'S PADDING OR TYPE SIZE CHANGES, CHANGE
-     THIS WITH IT — nothing enforces the relationship. */
   --header-h: 4.25rem;
 
-  /* The header, plus air, so the heading is not flush against it.
-     The air is 2.5rem rather than 1rem because `Reveal` holds an unrevealed
-     section 22px lower than its settled position: jump to one that has not
-     animated in yet and the browser aligns the pushed-down box, then the
-     reveal lifts the heading ~22px closer to the header than you asked for.
-     The buffer absorbs that in the worst case and still looks deliberate in
-     the best one. */
   --scroll-clear: calc(var(--header-h) + 2.5rem);
 }
 
@@ -56,16 +40,6 @@ html {
   html { font-size: 106.25%; }
 }
 
-/* Anything a `#fragment` can land on clears the header.
-   `[id]` rather than a hand-kept list of section classes: every id in this
-   codebase is either a scroll target or an element nobody scrolls to, and on
-   the second kind `scroll-margin-top` is inert. A list would need a new entry
-   every time a section is added, and the failure is silent — the browser
-   navigates, the heading is just invisible under the header.
-
-   DO NOT re-add inline `scrollMarginTop` on section wrappers. Inline styles
-   beat this rule, which is exactly how the pages ended up with a 2rem offset
-   that did not clear a 4.25rem header. */
 [id] {
   scroll-margin-top: var(--scroll-clear);
 }
@@ -438,42 +412,11 @@ img { max-width: 100%; display: block; }
 
 /* ============================================
    THE RIGHT GUTTER
-   (the project rail, and the consoles that reach toward it)
    ============================================ */
-
-/* THE RAIL'S GEOMETRY, STATED ONCE. `.project-nav--rail` in ProjectNav.tsx
-   reads these rather than repeating the numbers, and so does every console
-   that breaks out of the section column. That shared reading is the whole
-   point: the two used to hold their own copies of the same gutter and they
-   drifted into each other.
-
-   HOW THEY DRIFTED. The rail took 11.5rem out of a right gutter the
-   breakout consoles were already spending, so from its old 1560px
-   breakpoint to about 2140px it sat on top of the role web, the bank floor
-   plan and the detection machine — and, higher up the page, the hero's fact
-   block. Two different sizes of mistake, fixed in two places:
-
-     · The consoles were reaching past the rail. They now stop short of it,
-       and give up the difference.
-     · Below about 1782px the rail was not in the gutter at all — it stood
-       on the last of the 68rem column, over anything spanning it. No
-       console can yield its way out of that, so the rail's own breakpoint
-       moved to 1800px. See RAIL_QUERY in ProjectNav.tsx. */
 :root {
   --rail-w: 11.5rem;
-  /* Centred in the right gutter: half the gutter, less half the rail. */
   --rail-inset: max(1.25rem, calc((100vw - 68rem) / 4 - 5.75rem));
-  /* Air between the rail and whatever stops short of it. 2rem rather than
-     1.5rem because `100vw` counts the scrollbar and the rail's own `right`
-     does not: on a classic scrollbar the two disagree by ~8px, and this gap
-     is what pays for that without the console ever touching the panel. */
   --rail-gap: 2rem;
-
-  /* How much of the right gutter is spoken for. Nothing, until the rail is
-     actually on screen — below its breakpoint the nav renders in flow at
-     the foot of the page and the gutter is free, so the consoles keep every
-     pixel of it.
-     KEEP THE QUERY BELOW IN STEP WITH `RAIL_QUERY` IN ProjectNav.tsx. */
   --rail-claim: 0px;
 }
 
@@ -484,28 +427,8 @@ img { max-width: 100%; display: block; }
 }
 
 :root {
-  /* How far right of the page's centre line anything may reach. Anything
-     wider than the section column measures its right edge against this —
-     the two breakouts with their own caps (ControllerMap at 78rem,
-     NarrativeMap at 84rem) and the project hero read it directly. */
   --free-right: calc(50vw - var(--rail-claim));
 
-  /* ---- THE CONSOLE BREAKOUT ----
-     For the seven consoles too wide for the 68rem section column. Used as:
-
-       width: var(--breakout-w);
-       margin-left:  calc(50% - var(--breakout-lead));
-       margin-right: calc(50% - var(--breakout-tail));
-
-     inside the component's own `min-width: 900px` query, with the parent
-     centred so 50% is the page's centre line.
-
-     LEAD AND TAIL ARE MEASURED SEPARATELY, and only the tail knows about
-     the rail. The lead is what it always was, which means a console's LEFT
-     edge never moves — every console on a page shares that edge, and it is
-     the alignment the eye actually reads. The tail simply stops short of
-     the rail instead of running under it. With no rail the two are equal
-     and this is the old `min(92vw, 82rem)`, centred, to the pixel. */
   --breakout-lead: min(46vw, 41rem);
   --breakout-tail: min(46vw, 41rem, var(--free-right));
   --breakout-w: calc(var(--breakout-lead) + var(--breakout-tail));

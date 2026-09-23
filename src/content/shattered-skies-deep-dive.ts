@@ -34,21 +34,6 @@
 /** The main project page. */
 export const mainPath = "/shattered-skies";
 
-/** The deep-dive subpage. Sibling route, so it inherits `../layout.tsx`. */
-export const deepDivePath = "/shattered-skies/world";
-
-/**
- * Every section id on the SUBPAGE. Keys are stable; values are the DOM ids, so
- * `deepDiveAnchors.repairs` and `id={deepDiveAnchors.repairs}` cannot drift.
- */
-export const deepDiveAnchors = {
-  story: "the-story",
-  world: "the-world-of-shatterstorm",
-  document: "the-design-document",
-} as const;
-
-export type DeepDiveAnchor = keyof typeof deepDiveAnchors;
-
 /**
  * Every section id on the MAIN page that anything links TO. Not a list of the
  * page's sections — only the ones that are the target of a pointer, which is
@@ -64,10 +49,6 @@ export const mainAnchors = {
 } as const;
 
 export type MainAnchor = keyof typeof mainAnchors;
-
-/** A link into one section of the subpage, from anywhere on the site. */
-export const deepDiveHref = (anchor: DeepDiveAnchor) =>
-  `${deepDivePath}#${deepDiveAnchors[anchor]}`;
 
 /**
  * A link into one section of the MAIN page.

@@ -7,7 +7,7 @@ export const shatteredSkies: Project = {
   pillar: true,
 
   facts: { engine: "Unity", role: "Game Designer", team: "Team of 5", year: "2025" },
-  links: [{ label: "The World", url: "/shattered-skies/world" }],
+  links: [],
 
   eyebrow: "UNITY · TEAM OF 5 · 2025",
   systemsHook: "Two players share one life and cannot understand each other. What you say in five clear seconds decides how it ends.",

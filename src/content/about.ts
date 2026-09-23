@@ -48,22 +48,26 @@
 
     sections: [
       {
-        kicker: "My journey",
-        title: "From Seville, chasing a feeling",
-        body:
-          "I grew up in Seville and I always played games, but I studied Audiovisual Media, because what really pulls me is media itself: the way it makes people feel, and the stories it lets us tell. I made short films and live shows, learning how to move an audience. Then, in the final year of my degree, a module on ludology and game design changed everything. I had assumed I only liked playing games, not making them. I was completely wrong. I moved to the UK for my master's in game development, because I wanted to build a career in this, and I wanted to build it out in the world.",
-      },
-      {
-        kicker: "How I design",
+        kicker: "My Design Philosophy",
         title: "Express through mechanics, not cutscenes",
         body:
-          "The games that made me want to design were RPGs, because they hand the story to the player and let them decide who they are inside it. But the lesson I carry from everything I make is simpler: feeling should live in the mechanics, not just the cutscenes. This is a game, not a film, so I want the player to feel things by playing, not by watching. That is why I care so much about coherence. In Moon-Knight, the willow trees, the moon, the Celtic symbols, the quantum magic, and the music are all the same idea wearing different clothes, because a world only makes you feel something when every part of it agrees. And it is why I love level design: the craft of camouflaging a medium's limits until they read as the world itself, the invisible wall dressed as a cliff, the fog that hides a console's reach and becomes dread instead. That is creative problem-solving, and it is my favourite part of the job.",
+          "I love every kind of game and I have designed lots of different games, but my favourites and the ones that " +
+          "I consider that work the best in the video game media are RPGs, due to their way of handing the story to the " +
+          "player. My main approach with the all the games that I have designed are that games should tell their story " +
+          "through their mechanics, not just the cutscenes. I care a lot about coherence in all the disciplines that are " +
+          "in the games that I have developed. Finally, I try to embrace the video game media as much aas I can. Try to blend " +
+          "the limitations with the game's level design environment or making the limitations its own mechanic.",
       },
       {
-        kicker: "The instrument",
+        kicker: "The technical side",
         title: "Why I learned to build",
         body:
-          "Somewhere in my master's I realised that game design is like playing an instrument. There is the art, the feeling you are trying to express, and there is the technical craft, the chords and modes and theory that make the expression possible. The two are not in tension; they work in unison. So I decided that if I understood the engineering, I could express more. If a system has rules, there is a way to turn those rules into feeling. That is exactly how Moon-Knight's combat works: I took the real principles of quantum computing and composed them into mechanics, the way you would build a piece of music out of theory. I design the game, and I build it myself, because understanding the whole instrument is how I play it well.",
+          "While I was studying my Master's in Game Development, I focused on the technical aspect because I understood that " +
+          "game development work like an instrument: there is an artistic and a technical side and to express through it correctly " +
+          "I would need to understand both sides as much as I can, since they both work together. I developed Moon-Knight as a way " +
+          "to see what Quantum Computing technology could do to video games, without breaking the systems that makes a game. " +
+          "Understanding the technical side allows me to see solutions within the design part and vice versa. If I am able to " +
+          "tune both sides, I will be able to express myself better in the media.",
       },
     ],
 

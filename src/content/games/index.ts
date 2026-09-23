@@ -56,14 +56,3 @@ export const moonKnightNavItems: ProjectNavItem[] = [
     accent: "#c8cde0",
   },
 ];
-
-export const shatteredSkiesNavItems: ProjectNavItem[] = [
-  HOME_NAV_ITEM,
-  { label: shatteredSkies.title, slug: shatteredSkies.slug, accent: "#7ec8d8" },
-  {
-    label: "The deep dive",
-    slug: "shattered-skies-world",
-    href: "/shattered-skies/world",
-    accent: "#7ec8d8",
-  },
-];

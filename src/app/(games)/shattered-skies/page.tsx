@@ -25,10 +25,8 @@ import {
   BACKDROP_OPACITY,
   SHATTERED_SKIES_GALAXY,
 } from "@/components/effects/SubpageBackdrop";
-import RampLink from "@/components/project/RampLink";
-import CtaPanel from "@/components/project/CtaPanel";
 import { inMotionIntro, inMotionItems } from "@/content/shattered-skies-in-motion";
-import { deepDiveHref, deepDivePath, mainAnchors } from "@/content/shattered-skies-deep-dive";
+import { mainAnchors } from "@/content/shattered-skies-deep-dive";
 
 export const metadata: Metadata = {
   title: `${p.title} | Álvaro Gómez`,
@@ -109,12 +107,6 @@ export default function ShatteredSkiesPage() {
                 ]}
               />
             </div>
-
-            <div style={{ marginTop: "2rem" }}>
-              <RampLink href={deepDiveHref("story")}>
-                The whole story, the final choice and the three endings
-              </RampLink>
-            </div>
           </div>
         </Reveal>
 
@@ -152,12 +144,6 @@ export default function ShatteredSkiesPage() {
             <ShatteredSkiesSystem>
               <PlanetDossier />
             </ShatteredSkiesSystem>
-
-            <div style={{ marginTop: "2rem" }}>
-              <RampLink href={deepDiveHref("world")}>
-                The Full Description of the Planetary System and What is found there
-              </RampLink>
-            </div>
           </div>
         </Reveal>
 
@@ -222,19 +208,6 @@ export default function ShatteredSkiesPage() {
                 ]}
               />
             </div>
-          </div>
-        </Reveal>
-
-        <Reveal>
-          <div style={{ ...GAP, maxWidth: "34rem" }}>
-            <CtaPanel
-              kicker="The deep dive"
-              title="The World & the Story"
-              body=
-                "The worldbuilding and the main story unsummarsed. The full narrative, the full endings and the Shatterstorm."
-              href={deepDivePath}
-              linkLabel="Read the deep dive"
-            />
           </div>
         </Reveal>
 

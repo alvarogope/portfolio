@@ -135,7 +135,6 @@ const ICONS: Record<string, React.ReactNode> = {
   /* ---- the subpage rows. `slug` is an icon key here, not a route. ---- */
 
   "moon-knight-world": BOOK,
-  "shattered-skies-world": BOOK,
 
   /* Angle brackets: the write-up about code. */
   "moon-knight-engineering": (

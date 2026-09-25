@@ -46,7 +46,8 @@ export default function AudioDesign({
         <h3 className="mono mkm-band-title">The recordings</h3>
         <p className="mkm-lede">
           These pieces were made to make the player feel small, by focusing on the use of reverbs.
-          Both pieces are melancholic on purpose.
+          Both pieces are melancholic on purpose. The music is currently unavailable but I will submit it
+          soon and are available on request.
         </p>
         {/* 
         <div className="mkm-players">{children}</div>

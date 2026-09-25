@@ -48,7 +48,9 @@ export default function AudioDesign({
           These pieces were made to make the player feel small, by focusing on the use of reverbs.
           Both pieces are melancholic on purpose.
         </p>
+        {/* 
         <div className="mkm-players">{children}</div>
+        */}
       </section>
 
       {/* composer's reasoning */}

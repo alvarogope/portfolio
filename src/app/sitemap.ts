@@ -3,10 +3,6 @@ import path from "node:path";
 import type { MetadataRoute } from "next";
 import { SITE_URL } from "@/site";
 
-/* Built from the app directory itself, so a new page lands in the sitemap
-   without anyone remembering to list it. Runs once at build (the route is
-   static). Route groups like (games) add no URL segment; dynamic, private
-   and parallel segments are skipped — the site has none that are public. */
 const APP_DIR = path.join(process.cwd(), "src", "app");
 
 function collectRoutes(dir: string, segments: string[]): string[] {

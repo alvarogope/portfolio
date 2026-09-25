@@ -6,6 +6,7 @@ import Breadcrumb from "@/components/layout/Breadcrumb";
 import CodeBlock from "@/components/project/CodeBlock";
 import CtaPanel from "@/components/project/CtaPanel";
 import ScreenshotSlots from "@/components/project/ScreenshotSlots";
+import LoopingVideo from "@/components/project/LoopingVideo";
 import Reveal from "@/components/layout/Reveal";
 import ProjectNav from "@/components/layout/ProjectNav";
 import { moonKnightNavItems } from "@/content/games";
@@ -430,6 +431,25 @@ export default function GameEngineeringPage() {
               );
             })}
           </ul>
+
+          <figure style={{ margin: "2.5rem 0 0", maxWidth: "52rem" }}>
+            <LoopingVideo
+              src="/images/moon-knight/attack1.mp4"
+              label="The first attack of the chain: wind-up, the active frames where the sword trace is live, and the recovery window the next input has to land inside"
+            />
+            <figcaption
+              style={{
+                marginTop: "0.7rem",
+                fontSize: "0.9rem",
+                color: "var(--color-mist)",
+                lineHeight: 1.6,
+              }}
+            >
+              This is the Animation Montage of the first attack. The space between the two notifies of the animation is
+              the time that the player has to concatenate attacks. If the player presses the input outside of this time
+              the attack combo will fail. This is the connection between the animation and the Blueprints.
+            </figcaption>
+          </figure>
 
           <div style={{ marginTop: "1.75rem" }}>
             <CodeBlock

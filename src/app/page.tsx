@@ -8,7 +8,7 @@ import EngineTag from "@/components/project/EngineTag";
 import { acts, toChips, type Act } from "@/components/home/acts";
 
 export const metadata: Metadata = {
-  title: "Álvaro Gómez | Technical Designer",
+  title: "Álvaro Gómez | Video Game Portfolio",
   description:
     "I design game systems and build them myself. Unreal Engine 5, Unity, C++, Python.",
 };
@@ -107,7 +107,7 @@ export default function Home() {
               textWrap: "balance",
             }}
           >
-            I Design Game Systems. I Build Them Too.
+            I Design and Build Game Systems.
           </h1>
 
           <p

@@ -258,7 +258,7 @@ export default function ShatteredSkiesMechanics() {
           >
             <TelepathyFigure />
           </div>
-          <p className="mono mono-note ssm__scroll-note">
+          <p className="scroll-hint ssm__scroll-note">
             Scroll the flow sideways to follow it →
           </p>
           <p className="ssm__flow-note">{telepathyFlow.note}</p>
@@ -681,8 +681,6 @@ export default function ShatteredSkiesMechanics() {
         .ssm__scroll-note {
           display: none;
           margin: 0.7rem 0 0;
-          font-size: 0.71rem;
-          color: var(--ssm-quiet);
         }
         @media (max-width: 1040px) {
           .ssm__scroll-note { display: block; }

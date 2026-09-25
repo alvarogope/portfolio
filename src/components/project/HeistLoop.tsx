@@ -486,7 +486,7 @@ export default function HeistLoop() {
           >
             <ClockTrack />
           </div>
-          <p className="mono mono-note hl-scroll-note">Scroll the clock sideways to follow the run →</p>
+          <p className="scroll-hint hl-scroll-note">Scroll the clock sideways to follow the run →</p>
           <p className="hl-band-note">{phaseLevelNote}</p>
         </section>
 
@@ -626,7 +626,7 @@ export default function HeistLoop() {
           outline-offset: 2px;
         }
         .hl-track { display: block; width: 100%; min-width: 1040px; height: auto; }
-        .hl-scroll-note { display: none; margin: 0; font-size: 0.71rem; color: var(--hl-quiet); }
+        .hl-scroll-note { display: none; margin: 0; }
         @media (max-width: 1120px) { .hl-scroll-note { display: block; } }
 
         .hl-ruler { stroke: url(#hl-clock); stroke-width: 3; }

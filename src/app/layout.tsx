@@ -144,6 +144,29 @@ export default function RootLayout({
               source on GitHub
             </a>
           </span>
+          {/* Fine print */}
+          <div
+            style={{
+              flexBasis: "100%",
+              display: "grid",
+              gap: "0.35rem",
+              maxWidth: "72ch",
+              textTransform: "none",
+              letterSpacing: "0.03em",
+              fontWeight: 400,
+              fontSize: "0.66rem",
+              lineHeight: 1.6,
+            }}
+          >
+            <p>
+              Credits: some 3D assets and audio in these projects are sourced from marketplaces (Fab,
+              Quixel Megascans) or AI-generated only for faster production; all design, systems, and integration are my own.
+            </p>
+            <p>
+              Privacy: this site uses cookieless, privacy-friendly analytics (Vercel Analytics) and
+              sets no tracking cookies; the email link only opens your mail app and collects nothing.
+            </p>
+          </div>
         </footer>
       </body>
     </html>

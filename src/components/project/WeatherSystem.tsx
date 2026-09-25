@@ -421,7 +421,7 @@ export default function WeatherSystem() {
           >
             <Flip />
           </div>
-          <p className="mono mono-note sw-scroll-note">Scroll the world sideways to cross it →</p>
+          <p className="scroll-hint sw-scroll-note">Scroll the world sideways to cross it →</p>
 
           <ol className="sw-zones">
             {zones.map((zone) => (
@@ -561,8 +561,6 @@ export default function WeatherSystem() {
         .sw-scroll-note {
           display: none;
           margin: 0.7rem 0 0;
-          font-size: 0.70rem;
-          color: var(--sw-quiet);
         }
         @media (max-width: 1120px) {
           .sw-scroll-note { display: block; }

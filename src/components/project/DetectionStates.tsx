@@ -364,7 +364,7 @@ export default function DetectionStates() {
           >
             <Machine />
           </div>
-          <p className="mono mono-note ds-scroll-note">Scroll the machine sideways to follow it →</p>
+          <p className="scroll-hint ds-scroll-note">Scroll the machine sideways to follow it →</p>
         </section>
 
         <section className="ds-band">
@@ -537,7 +537,7 @@ export default function DetectionStates() {
           outline-offset: 2px;
         }
         .ds-machine { display: block; width: 100%; min-width: 1120px; height: auto; }
-        .ds-scroll-note { display: none; margin: 0; font-size: 0.71rem; color: var(--ds-quiet); }
+        .ds-scroll-note { display: none; margin: 0; }
         @media (max-width: 1200px) { .ds-scroll-note { display: block; } }
 
         .ds-node-body { fill: color-mix(in srgb, var(--color-moonlight) 4%, var(--ds-screen)); }

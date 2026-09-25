@@ -443,7 +443,7 @@ export default function NarrativeMap({ variant = "main" }: { variant?: SsVariant
             <NarrativeDiagram />
           </div>
 
-          <p className="mono mono-note nm__scroll-note">Scroll the map sideways to follow it →</p>
+          <p className="scroll-hint nm__scroll-note">Scroll the map sideways to follow it →</p>
 
           <p className="nm__map-note nm__map-note--wide">{mapNotes.main}</p>
           <p className="nm__map-note nm__map-note--narrow">{mapNotes.narrow}</p>
@@ -691,8 +691,6 @@ export default function NarrativeMap({ variant = "main" }: { variant?: SsVariant
         .nm__scroll-note {
           display: none;
           margin: 0.7rem 0 0;
-          font-size: 0.71rem;
-          color: var(--nm-quiet);
         }
         @media (max-width: 1080px) {
           .nm__scroll-note { display: block; }

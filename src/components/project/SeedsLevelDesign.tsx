@@ -145,7 +145,7 @@ export default function SeedsLevelDesign() {
           >
             <Loop />
           </div>
-          <p className="mono mono-note sl-scroll-note">Scroll the loop sideways to follow it →</p>
+          <p className="scroll-hint sl-scroll-note">Scroll the loop sideways to follow it →</p>
 
           <ul className="sl-halves">
             {halves.map((h) => (
@@ -284,8 +284,6 @@ export default function SeedsLevelDesign() {
         .sl-scroll-note {
           display: none;
           margin: 0.7rem 0 0;
-          font-size: 0.70rem;
-          color: var(--sl-quiet);
         }
         @media (max-width: 900px) {
           .sl-scroll-note { display: block; }

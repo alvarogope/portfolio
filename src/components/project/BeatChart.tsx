@@ -17,72 +17,12 @@ import {
 import { MoonPhaseGlyph } from "./MoonPhaseGlyph";
 import InteractiveHint from "./InteractiveHint";
 
-/**
- * Moon-Knight — the level design beat chart.
- *
- * The planning artifact for the whole game: four levels, six design
- * dimensions, one screen. Four bands, in the order the chart is meant to be
- * read:
- *
- *   1. THE MOON RAIL — the signature. The four levels strung along a single
- *      horizontal line, each marked by the moon phase the game is in when it
- *      is played, WAXING left to right: crescent, first quarter, gibbous,
- *      full. The moon is the spine of this project, so the level order and the
- *      lunar cycle are drawn as the same line. The rail also selects, and each
- *      station is stamped with its `stageLabel` — Prologue, then Acts I–III.
- *      That stamp plus `beatStructureNote` under the rail is what keeps four
- *      moons here from contradicting the three above the narrative arc:
- *      Centralis is a location, not an act, and the note says so.
- *   2. THE MATRIX — six dimensions against four levels. The dense view, and
- *      the one worth reading in both directions: down a column is a level,
- *      across a row is an escalation. The boss row is emphasised because it is
- *      the one row where a cell is a whole encounter.
- *   3. THE DESIGN SHEET — the selected level expanded, its dimensions
- *      regrouped into the three passes a level actually gets designed in
- *      (space & goal, cast & threat, mood), led by one line on how those
- *      layers cohere. Defaults to the Tutorial.
- *   4. THE ARC — the four levels distilled to a phrase each. The whole
- *      escalation in one line, for a reader who stops after ten seconds.
- *
- * THE RAIL IS A TABLIST. Four levels, one visible panel: that is what tabs
- * are, so the rail is `role="tablist"` with roving tabindex, arrow/Home/End
- * keys and automatic activation, and the design sheet is its `tabpanel`. The
- * matrix column headers select the same level through ordinary buttons rather
- * than a second set of tabs — two tablists driving one panel would lie to a
- * screen reader about how many panels exist.
- *
- * SELECTION IS CLICK AND FOCUS, NOT HOVER. `WorldMap` on this page selects on
- * hover because its popover opens ON the marker being pointed at. Here the
- * panel is a tall block further down the page, so hovering the rail on the way
- * to somewhere else would reflow content the reader is looking at. Hover gets
- * an affordance and nothing more.
- *
- * NO SCREENSHOTS, DELIBERATELY. This is the planning view; the real captures
- * live in the page's gallery. Every cell is a phrase, and the creatures, cast,
- * palette and score each have their own section elsewhere on the page — the
- * chart's job is the relationships between them, not their descriptions.
- *
- * MOBILE. A nine-by-four matrix cannot be honestly squeezed into 360px, and
- * CSS cannot transpose a table, so below 820px the `<table>` is swapped for
- * per-level cards built from the same arrays — same nine labels, one level per
- * card. Only one of the two is ever in the DOM's accessibility tree, because
- * `display: none` removes the other. Between 820px and roughly a laptop the
- * table keeps its natural width inside a scroller.
- */
-
-/* Dimensions pre-bucketed into the sheet's three groups. Module scope: the
-   arrays are frozen content, so this is computed once rather than per render. */
 const SHEET_GROUPS = dimensionGroups.map((group) => ({
   ...group,
   dims: beatDimensions.filter((d) => d.group === group.id),
 }));
 
-/* ---- the moon ----
-   Geometry from `MoonPhaseGlyph`, shared with the narrative arc and the
-   diegetic health readout. The halo is this section's own: a soft disc behind
-   the moon that is the selection cue, and that sits at half strength on the
-   full moon at all times — the last station is the one the whole progression
-   is walking towards, so it is lit before it is chosen. */
+/* ---- the moon ---- */
 function RailMoon({ level }: { level: BeatLevel }) {
   return (
     <span className="bc-orb">
@@ -97,7 +37,6 @@ function RailMoon({ level }: { level: BeatLevel }) {
   );
 }
 
-/** The dash a blank cell renders as, plus the words a screen reader gets. */
 function Blank() {
   return (
     <>
@@ -114,9 +53,6 @@ export default function BeatChart() {
   const tabRefs = useRef<Partial<Record<LevelId, HTMLButtonElement | null>>>({});
   const level = getBeatLevel(selected);
 
-  /* Automatic activation: the arrow keys move focus and the selection
-     together, which is the expected behaviour for a tablist whose panels are
-     already rendered and cost nothing to swap. */
   function onRailKeyDown(event: React.KeyboardEvent<HTMLButtonElement>, index: number) {
     const last = beatLevels.length - 1;
     let next: number | null = null;
@@ -162,11 +98,6 @@ export default function BeatChart() {
                 tabRefs.current[l.id] = node;
               }}
               onClick={() => setSelected(l.id)}
-              /* Focus selects. The tablist was already on automatic
-                 activation for the arrow keys; making focus do it too means a
-                 link to `#bc-tab-<level>` — which the world map above now
-                 emits — actually opens that level's sheet, because a browser
-                 focuses a focusable fragment target. */
               onFocus={() => setSelected(l.id)}
               onKeyDown={(event) => onRailKeyDown(event, i)}
             >
@@ -175,9 +106,6 @@ export default function BeatChart() {
                 <span className="bc-station-stage">{l.stageLabel}</span>
               </span>
 
-              {/* Rule, moon, rule — the same crown the narrative acts wear. The
-                  segments run edge to edge with no gutter between stations, so
-                  four of them meet as one continuous rail through the moons. */}
               <span className="bc-crown">
                 <span className="bc-rule bc-rule--l" aria-hidden="true" />
                 <RailMoon level={l} />
@@ -192,13 +120,9 @@ export default function BeatChart() {
         })}
       </div>
 
-      {/* The reconciliation, printed once and directly under the moons it
-          explains: four locations, three acts. */}
       <p className="bc-structure">{beatStructureNote}</p>
 
-      {/* 2a — the matrix, wide screens. A real table: the dimension is the row
-          header, the level is the column header, and every cell is announced
-          with both. */}
+      {/* 2a — the matrix */}
       <div className="bc-scroll">
         <table className="bc-matrix">
           <caption className="bc-sr">
@@ -259,9 +183,7 @@ export default function BeatChart() {
         </table>
       </div>
 
-      {/* 2b — the matrix, narrow screens. Same six dimensions, one level per
-          card. Not interactive: the rail above is still on screen and is the
-          only selector, so a phone gets one control surface, not two. */}
+      {/* 2b — the matrix */}
       <ul className="bc-cards">
         {beatLevels.map((l) => (
           <li
@@ -332,15 +254,10 @@ export default function BeatChart() {
           </div>
         </div>
 
-        {/* The payoff line. First, because it is the only sentence in the whole
-            artifact that argues rather than lists. */}
         <p className="bc-cohesion">{level.cohesion}</p>
 
         <div className="bc-groups">
           {SHEET_GROUPS.map((group) => {
-            /* Blanks are dashed in the matrix, where the column has to keep
-               its alignment, and simply absent here, where nothing lines up
-               and an empty row would just be noise. */
             const rows = group.dims.filter((d) => level.cells[d.id] !== null);
             if (rows.length === 0) return null;
             return (

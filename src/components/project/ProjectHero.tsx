@@ -16,20 +16,7 @@ export default function ProjectHero({
         gridTemplateColumns: "minmax(0, 1fr) minmax(0, 1.1fr)",
         gap: "clamp(2rem, 5vw, 4rem)",
         alignItems: "start",
-        /* The bottom was `clamp(2rem, 6vw, 5rem)`. It stacked with the
-           following <Section>'s own 4rem top padding and the chapter index's
-           1.75rem, so a wide screen opened with ~11rem of nothing between the
-           hero and the page's contents. Cut to a normal section break; the
-           other two halves of that stack are trimmed at their own sites. */
         padding: "clamp(1rem, 3vw, 2rem) 1.5rem clamp(1.5rem, 3vw, 2.25rem)",
-        /* `min(92vw, 78rem)` centred, written as a lead and a tail so the
-           right edge can stop short of the project rail. The rail is pinned
-           to the middle of the viewport, so on a tall hero it lands straight
-           across the fact block on the right of this grid — it did, from
-           1560px to about 1890px. Same rule the wide consoles follow: the
-           left edge does not move, the right one yields. `--free-right` is
-           defined in globals.css, under THE RIGHT GUTTER, and is a plain
-           50vw wherever the rail is not on screen. */
         width: "calc(min(46vw, 39rem) + min(46vw, 39rem, var(--free-right)))",
         marginLeft: "calc(50% - min(46vw, 39rem))",
         marginRight: "calc(50% - min(46vw, 39rem, var(--free-right)))",

@@ -2,16 +2,6 @@
 
 import { useSyncExternalStore } from "react";
 
-/* Shared scroll-progress logic for every per-project indicator.
-   Returns progress 0..1 and whether reduced-motion is on. Each
-   project's indicator is a thin visual layer over this.
-
-   Both values are read straight from the browser through
-   useSyncExternalStore rather than mirrored into state by an effect:
-   it subscribes and cleans up on its own, and it gives the server a
-   defined starting point (0 / no preference) instead of a first render
-   that disagrees with the client. */
-
 const REDUCED_QUERY = "(prefers-reduced-motion: reduce)";
 
 function subscribeScroll(onChange: () => void) {

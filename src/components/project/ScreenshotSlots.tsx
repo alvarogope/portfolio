@@ -5,36 +5,10 @@ import Image from "next/image";
 import type { ScreenshotSlot } from "@/content/moon-knight-game-engineering";
 import Lightbox, { type LightboxItem } from "./Lightbox";
 
-/**
- * The editor captures, and reserved space for any that do not exist yet.
- *
- * Each item renders a labelled empty frame until a `src` is set in the content
- * file, at which point the same slot renders the real image at the same aspect
- * ratio, so nothing about the layout moves.
- *
- * WHY `contain` AND NOT `cover`, which is the bug this component shipped with.
- *
- * The frames are 16/10 in a `minmax(27rem, 1fr)` grid — two per row on a
- * desktop container rather than three, because a node graph needs width
- * more than the section needs density — and the images are
- * Blueprint node graphs up to 1920px wide. Under `object-fit: cover` a graph
- * that wide gets scaled to fill the box and then centre-cropped, so what
- * survives is a handful of wires from the middle of the graph — unreadable,
- * and worse than no picture because it looks like a picture. `contain` gives
- * the drawing the whole frame and takes the letterbox instead.
- *
- * Fitting the graph into a narrow column still only makes it *visible*, and a
- * node graph has to be *readable*, so every filled slot is also a button into
- * the shared `Lightbox` at full resolution. That is the same viewer the
- * galleries use, portalled out to `document.body` so the `Reveal` transform on
- * the section wrapper cannot trap it.
- */
 export default function ScreenshotSlots({ items }: { items: ScreenshotSlot[] }) {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
   const rootRef = useRef<HTMLUListElement>(null);
 
-  /* Only filled slots are viewable, so the viewer's prev/next never lands on
-     an empty frame. */
   const filled = items.filter((i) => i.src);
   const lightboxItems: LightboxItem[] = filled.map((i) => ({
     src: i.src as string,
@@ -74,7 +48,6 @@ export default function ScreenshotSlots({ items }: { items: ScreenshotSlot[] }) 
                   alt={item.alt ?? item.label}
                   fill
                   sizes="(max-width: 800px) 92vw, 42rem"
-                  /* Node graphs are dense small type; 75 blurs the pin labels. */
                   quality={92}
                   style={{ objectFit: "contain" }}
                 />

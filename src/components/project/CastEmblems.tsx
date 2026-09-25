@@ -1,24 +1,5 @@
 import type { CastId } from "@/content/moon-knight-cast";
 
-/**
- * Moon-Knight — cast emblems.
- *
- * Five heraldic marks, one per character. SYMBOLS, NOT PORTRAITS: nobody in
- * this game gets a face on this page, because the interesting thing about each
- * of them is what they mean, not what they look like.
- *
- * Same rules as `BestiaryEmblems.tsx`, so the two sections sit together:
- *   - one self-contained function per character on a shared `0 0 120 120`
- *     viewBox, registered in `EMBLEMS` by `CastId`;
- *   - `url(#mkc-plate)` for steel mass, `url(#mkc-gold)` for gilt,
- *     `var(--color-void)` for cut-outs, `currentColor` for accents — the plate
- *     behind the emblem sets `currentColor` to that character's accent;
- *   - keep the mark between y 4 and y 116 and centred on x 60.
- *
- * `CastSprite` holds the shared gradients and must render exactly ONCE per
- * page (the ids are global). `Cast` does that at the top of its section.
- */
-
 export function CastSprite() {
   return (
     <svg width="0" height="0" aria-hidden focusable="false" style={{ position: "absolute" }}>
@@ -32,10 +13,6 @@ export function CastSprite() {
           <stop offset="0%" stopColor="#E8D9A8" />
           <stop offset="100%" stopColor="#B8974E" />
         </linearGradient>
-        {/* The stain is painted as a single rect clipped to the flower (see
-            DeathEmblem), so this is a plain top-to-bottom ramp across THAT
-            rect — never applied to the petals one by one, which would stain
-            each of them identically and just read as a pink rose. */}
         <linearGradient id="mkc-bleed" x1="0" y1="0" x2="0" y2="1">
           <stop offset="0%" stopColor="#8E2F3C" stopOpacity="0" />
           <stop offset="30%" stopColor="#9E2F3B" stopOpacity="0.32" />
@@ -46,7 +23,6 @@ export function CastSprite() {
           <stop offset="0%" stopColor="#E07A45" />
           <stop offset="100%" stopColor="#F0C271" />
         </linearGradient>
-        {/* Orpheus's coal: burnt crust outside, and the heat it throws. */}
         <linearGradient id="mkc-coal" x1="0" y1="0" x2="0" y2="1">
           <stop offset="0%" stopColor="#402E24" />
           <stop offset="100%" stopColor="#16100D" />
@@ -69,19 +45,6 @@ const VOID = "var(--color-void)";
 
 /* ------------------------------------------------------------- the player -- */
 
-/**
- * THE MOON-KNIGHT — a helm and a harp, either side of a seam.
- *
- * The emblem IS the character-design decision, so it is drawn as two WHOLE
- * objects rather than one hybrid: a sugarloaf great-helm on the left, a harp
- * on the right, a dashed seam between them. Half of each would have been
- * cleverer and unreadable at 140px.
- *
- * They are also drawn in two different MATERIALS on purpose — the helm is
- * solid steel plate, the harp is gold line-work — because two silver
- * silhouettes of similar mass merge into one blob at card size. The contrast
- * has to survive being small; that is the entire job of this mark.
- */
 function MoonKnightEmblem() {
   return (
     <g>
@@ -116,14 +79,7 @@ function MoonKnightEmblem() {
 }
 
 /**
- * THE HARP, on its own. Occupies roughly x 74–112, y 18–94 of the shared
- * `0 0 120 120` box, so a caller wanting it alone crops to that rather than
- * moving it — the instrument is the same object in every section it appears
- * in. `DiegeticDesign` draws it for the healing mechanic that way.
- *
- * Frame and strings take separate inks because the frame is mass and the
- * strings are detail: at emblem size they have to be told apart, and one
- * colour for both loses the strings entirely.
+ * THE HARP
  */
 export function HarpMark({
   frame = GOLD,
@@ -152,10 +108,7 @@ export function HarpMark({
 
 /* --------------------------------------------------------- the encounters -- */
 
-/* The rose recurs across the game — it is Death's mark here and the unit of
-   XP in `DiegeticDesign`, where a rose is stained per boss killed. Both are
-   the same flower, so the geometry is exported rather than redrawn: five outer
-   petals and three inner ones, each the same path rotated about (60, 56). */
+/* The rose  */
 export const ROSE_PETALS = [0, 72, 144, 216, 288];
 export const ROSE_INNER = [0, 120, 240];
 export const ROSE_PETAL = "M60 56 C44 50 41 24 60 17 C79 24 76 50 60 56 Z";
@@ -163,11 +116,6 @@ export const ROSE_PETAL_INNER = "M60 56 C51 52 49 37 60 33 C71 37 69 52 60 56 Z"
 
 /**
  * DEATH — a white rose, taking the stain.
- *
- * Her whole character is one image from the ending: she holds you, and the
- * white dress goes red from the hem up. So the rose is painted white, then the
- * IDENTICAL geometry is painted again under a bottom-weighted scarlet
- * gradient — the bleed is the same flower, not an ornament beside it.
  */
 function DeathEmblem() {
   const rose = (fill: string) => (
@@ -227,15 +175,6 @@ function DeathEmblem() {
 
 /**
  * ORPHEUS — the ember left after the fire.
- *
- * Deliberately NOT a flame. A flame is a fire still happening, and his whole
- * beat is that you come back too late: the warning was given, the village is
- * already gone. So the mark is one coal in a bed of ash — burnt crust with the
- * heat still showing through the cracks, two spent coals beside it that have
- * stopped glowing, and the last of him going up as sparks.
- *
- * The ground line is the same one that runs under the Moon-Knight's helm and
- * harp: what the world stands on, and what it takes back.
  */
 function OrpheusEmblem() {
   return (
@@ -284,12 +223,7 @@ function OrpheusEmblem() {
 }
 
 /* ------------------------------------------------------------- the mirror --
-   The Witch and the Druid share their entire frame — the same dashed sigil
-   ring, the same four cardinal diamonds, the same almond eye. Only what sits
-   INSIDE the eye differs: hers is open onto an orbital diagram, his is shut
-   under a seal. Drawing both from one shell is what makes the pair legible as
-   one question with two answers, so the shell lives here and neither emblem is
-   allowed to redraw it. */
+   The Witch and the Druid */
 
 function MirrorShell({ children }: { children: React.ReactNode }) {
   return (
@@ -322,7 +256,7 @@ function MirrorShell({ children }: { children: React.ReactNode }) {
   );
 }
 
-/** THE WITCH — the eye open, an orbital where the iris should be. */
+/** THE WITCH */
 function WitchEmblem() {
   return (
     <MirrorShell>
@@ -347,7 +281,7 @@ function WitchEmblem() {
   );
 }
 
-/** THE DRUID — the same eye, shut, with a bind-rune sealed over it. */
+/** THE DRUID */
 function DruidEmblem() {
   return (
     <MirrorShell>
@@ -390,7 +324,6 @@ const EMBLEMS: Record<CastId, () => React.JSX.Element> = {
   orpheus: OrpheusEmblem,
 };
 
-/** Decorative in every case — the card always names the character in text. */
 export function CastEmblem({ id }: { id: CastId }) {
   const Emblem = EMBLEMS[id];
   return (

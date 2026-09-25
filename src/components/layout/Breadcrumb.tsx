@@ -1,20 +1,7 @@
 import Link from "next/link";
 
-/**
- * The trail back up from a project subpage.
- *
- * EXTRACTED, NOT INVENTED. This is the breadcrumb the game-engineering page
- * has been rendering inline since it was built; the deep-dive subpage needed
- * exactly the same thing, and two hand-maintained copies of a navigation
- * control is how they drift apart. Both pages now render this.
- *
- * The last crumb is the current page and is NOT a link — it carries
- * `aria-current="page"` instead. A link to where you already are is noise for
- * everyone and a small trap for a screen-reader user paging through landmarks.
- */
 export interface Crumb {
   label: string;
-  /** Omit on the final crumb — the page you are already on. */
   href?: string;
 }
 

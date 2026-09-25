@@ -1,27 +1,3 @@
-/**
- * The sign above a figure that does something when you touch it.
- *
- * WHY IT WAS REWRITTEN. It used to read *"Interactive · Point at, tap or tab
- * any level. its full design sheet opens below the chart"* — three problems in
- * one line. "Interactive" is a category, not an instruction. "Point at" is not
- * a thing a reader thinks they are doing. And the two halves were joined with
- * a full stop, so the sentence restarted in lower case and the cause/effect
- * link between them was lost.
- *
- * It now says the action, the target and the result in that order, in one
- * sentence — *"Interactable · Choose any level — its full design sheet opens
- * below the chart."* — with the keyboard route on its own line underneath,
- * where it helps the people who need it without taxing the people who do not.
- *
- * The lead stays a LABEL for what the figure is, not an instruction: the
- * instruction is the sentence beside it, and "Click here" said the same thing
- * twice in a row. "Interactable" names the kind of thing this is, which is
- * what a badge is for.
- *
- * `what` is the singular noun for one thing in the figure ("level", "disc",
- * "seat"). `does` is what happens, phrased to follow the dash — a clause, no
- * leading capital, no full stop; this component supplies both.
- */
 export default function InteractiveHint({
   what,
   does,

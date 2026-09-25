@@ -5,32 +5,6 @@ import Image from "next/image";
 import type { BossPlate } from "@/content/moon-knight-bestiary";
 import Lightbox from "./Lightbox";
 
-/**
- * A boss's real capture, rendered INSIDE the card's reliquary arch — in the
- * exact slot every other creature's drawn emblem occupies.
- *
- * THE PROBLEM THIS SOLVES. The Werewolf is the one creature in the bestiary a
- * screenshot exists of, and the capture was placed as an extra `<figure>`
- * below its mechanic block: a whole additional band of image plus caption on
- * one card in a grid of eleven. The card did not read as "this one has more
- * evidence", it read as "the other ten are missing something" — the picture
- * drew attention to the hole rather than to itself.
- *
- * THE FIX IS TO STOP MAKING IT AN EXTRA. Every card already carries exactly
- * one visual, in exactly one place: the arch at the top. The Werewolf's arch
- * holds a photograph where the others hold a drawing. Same slot, same frame,
- * same size, so the grid stays even — and a real frame from the game sitting
- * where a sigil sits reads as the strongest card, not the odd one.
- *
- * WHAT THE CAPTION BECOMES. It moves into the viewer. A caption printed under
- * a 172px arch would be the asymmetry all over again in text, and the sentence
- * it carries is about a detail (the boss health bar) that is unreadable at
- * thumbnail size anyway. It belongs where the picture is legible.
- *
- * AFFORDANCE. The arch is a real `<button>`: a cursor, a focus ring, a hover
- * lift on the frame, and a corner tag that says the frame opens. `alt` carries
- * the description; the button's accessible name says what activating it does.
- */
 export default function BossPlateArch({
   plate,
   bossName,
@@ -52,24 +26,9 @@ export default function BossPlateArch({
         <Image
           src={plate.src}
           alt={plate.alt}
-          /* The capture's TRUE intrinsic size. It was declared 1712x950,
-             which is a different aspect ratio to the real file and made the
-             optimiser reason about a frame that does not exist. */
           width={1689}
           height={952}
-          /* NOT the 172px the arch is wide - this is a `cover` fit of a 16:9
-             source into a 3:4 box, so the browser scales the image by HEIGHT
-             (229/952) and paints it 407 CSS px wide, throwing the sides away.
-             `sizes` has to describe the width the image is PAINTED at, not the
-             width of the window you see it through, or the optimiser serves a
-             variant sized for the window and the visible slice gets upscaled
-             ~3x. 420px covers the paint width; the browser doubles it again on
-             a 2x display. */
           sizes="420px"
-          /* 92 rather than the default 75, for the same reason the Kaelum map
-             takes it: this is a detailed game frame shown small and cropped,
-             so every artefact JPEG-style quantisation leaves lands inside the
-             172px the reader actually looks at. Allow-listed in next.config. */
           quality={92}
           className="bpa-img"
         />

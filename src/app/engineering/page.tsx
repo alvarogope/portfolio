@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     "Full-stack and quantum computing work",
 };
 
-const ACCENT = "#8b7fd6"; // quantum purple-cyan
+const ACCENT = "#8b7fd6";
 
 export default function EngineeringPage() {
   return (
@@ -56,7 +56,7 @@ export default function EngineeringPage() {
         </Reveal>
       </Section>
 
-      {/* Quantum-inspired game design cross-link */}
+      {/* Quantum-inspired game design */}
       <Section>
         <Reveal>
           <div

@@ -6,53 +6,25 @@ import Lightbox, { type LightboxItem } from "./Lightbox";
 import LoopingVideo from "./LoopingVideo";
 
 export interface Plate {
-  /** Path under /public. */
   src: string;
-  /** Describe the DESIGN POINT the plate makes, not just what is depicted. */
   alt: string;
   caption: string;
-  /** Small mono eyebrow above the caption. */
   label?: string;
-  /** When set, the plate is a silent loop and `src` is unused. */
   video?: string;
 }
 
-/**
- * Labelled plates that show the WHOLE image and open it full-size.
- *
- * `contain`, NOT `cover`, and that is the whole distinction this component
- * exists to hold. A gallery of pretty frames from the game can crop to a tidy
- * grid. These are documents: floor plans, annotated level shots, node graphs.
- * Cropping one to fill a tile destroys the thing it was placed to show, so
- * every plate is `contain`, and the frame takes a letterbox rather than the
- * drawing taking a crop.
- *
- * Clicking opens the shared `Lightbox` at full resolution, because a 1920px
- * plan or a node graph has to be readable, not merely visible. Video plates
- * loop in place and do not open — a loop is already playing at the size it
- * needs, and the viewer is an image viewer.
- */
 export default function PlateGrid({
   items,
   minWidth = "26rem",
   aspect = "16 / 9",
 }: {
   items: Plate[];
-  /**
-   * Smallest column before the grid drops to fewer columns. Pass `"100%"`
-   * for a single full-content-width stack, which is what a plate carrying
-   * readable annotations needs: the callouts are burned into the image at
-   * a size that assumes the plate is nearly as wide as the page.
-   */
   minWidth?: string;
   aspect?: string;
 }) {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
   const rootRef = useRef<HTMLDivElement>(null);
 
-  /* The viewer pages through the still plates only, so a video in the middle
-     of the set does not leave a hole in the sequence. `lightboxIndex` maps a
-     plate's position in the grid to its position in that filtered list. */
   const stills = items.filter((i) => !i.video);
   const lightboxItems: LightboxItem[] = stills.map((i) => ({
     src: i.src,
@@ -67,10 +39,6 @@ export default function PlateGrid({
         ref={rootRef}
         style={{
           display: "grid",
-          /* `min(100%, X)` is what stops a fixed rem minimum from overflowing
-             a container narrower than itself — the track can never demand more
-             than the space it has. "100%" is the full-width case and is
-             written out as a single track rather than as min(100%, 100%). */
           gridTemplateColumns:
             minWidth === "100%"
               ? "minmax(0, 1fr)"
@@ -108,14 +76,7 @@ export default function PlateGrid({
                         ? "(max-width: 700px) 94vw, 58rem"
                         : "(max-width: 700px) 94vw, (max-width: 1100px) 48vw, 30rem"
                     }
-                    /* These plates are DOCUMENTS: floor plans, node graphs,
-                       and level shots with the reasoning set as type inside
-                       the image. The default quality of 75 softens small text
-                       into mush, which is the one thing a plate cannot afford.
-                       92 is the same quality the hand-drawn Kaelum map already
-                       asks for, and next.config.ts already permits it. */
                     quality={92}
-                    /* contain, never cover: these are documents. */
                     style={{ objectFit: "contain" }}
                   />
                 </div>

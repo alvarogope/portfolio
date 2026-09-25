@@ -4,59 +4,12 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import Image from "next/image";
 
-/**
- * The shared image viewer. Every gallery on the site opens this one.
- *
- * WHY IT PORTALS, which is the whole bug it was written to fix.
- *
- * The old viewer was `position: fixed; inset: 0` rendered inline, right where
- * the gallery sits in the tree. That is correct CSS and it still failed,
- * because a fixed element resolves against the VIEWPORT only while none of its
- * ancestors carries a transform, filter or containment — any of those makes
- * that ancestor the containing block instead.
- *
- * Every section on every project page is wrapped in `Reveal`, and `Reveal`
- * keeps an inline `transform: translateY(0)` on the element permanently once
- * it has revealed (not just for the length of the animation). So the overlay
- * was being laid out inside the gallery's own box: near the bottom of the page
- * it opened mostly below the fold, and the controls under the image were cut
- * off entirely. The giveaway is that it behaved correctly under
- * prefers-reduced-motion, where `Reveal` sets no inline style at all and there
- * is no transform to trap it.
- *
- * The fix is to leave that subtree. This component mounts a host div as a
- * direct child of `document.body` and renders through it, so `fixed` resolves
- * against the viewport no matter where the trigger was.
- *
- * THEME TRAVELS WITH IT. The routes theme themselves in two different places:
- * Break-In and Shattered Skies put their colour tokens on `body` (so a body
- * portal inherits them), but every route puts `--font-display` / `--font-hero`
- * on a wrapper DIV inside the layout, which a body portal would escape. So the
- * host copies the resolved value of each token off the trigger element before
- * it is appended. The viewer opened from Moon-Knight is in Cinzel; the one
- * opened from Break-In is amber and Archivo; neither knows anything about the
- * other.
- *
- * WHY THE CONTROLS CANNOT BE CLIPPED ANY MORE. The old overlay was a column of
- * image + caption + button where the image alone was capped at 82vh, so the
- * three of them plus the padding always totalled more than the screen and the
- * button was pushed off the bottom — a second, independent bug that survived
- * even when the overlay was positioned correctly. This one is a three-row grid
- * (`auto 1fr auto`): the bar and the footer take the height they need first,
- * and the image gets exactly what is left. The image can never push a control
- * off screen because it is not what decides the layout.
- */
-
 export interface LightboxItem {
   src: string;
   alt: string;
   caption?: string;
 }
 
-/* The tokens the host copies. Enumerated rather than discovered: iterating
-   custom properties off a computed style is not portable, and this list is the
-   project's whole palette (globals.css) plus everything the route layouts
-   override. A token that is not set anywhere resolves to "" and is skipped. */
 const THEME_TOKENS = [
   "--color-void",
   "--color-nightfall",
@@ -86,7 +39,6 @@ function copyTheme(from: Element, to: HTMLElement) {
 
 const FOCUSABLE = 'button:not([disabled]), [href], [tabindex]:not([tabindex="-1"])';
 
-/** Horizontal travel, in px, that counts as a swipe rather than a tap. */
 const SWIPE_PX = 48;
 
 export default function Lightbox({
@@ -97,23 +49,11 @@ export default function Lightbox({
   themeSource,
 }: {
   items: LightboxItem[];
-  /** The open item, or null when the viewer is shut. */
   index: number | null;
   onClose: () => void;
   onIndexChange: (next: number) => void;
-  /**
-   * The element to read theme tokens off — normally the gallery root, which is
-   * inside the route's font wrapper. Falls back to `body`.
-   */
   themeSource?: React.RefObject<HTMLElement | null>;
 }) {
-  /* The portal host, built once by a lazy state initialiser and kept for the
-     life of the component. Not created in an effect (that would set state
-     synchronously inside an effect and cost a second render on every open) and
-     not stashed in a ref during render (refs are not readable there). The
-     initialiser returns null on the server, where there is no document and the
-     viewer renders nothing anyway. React renders into the detached node first
-     and the effect below attaches it, which is the ordinary portal sequence. */
   const [host] = useState<HTMLElement | null>(() => {
     if (typeof document === "undefined") return null;
     const el = document.createElement("div");
@@ -123,10 +63,8 @@ export default function Lightbox({
 
   const dialogRef = useRef<HTMLDivElement>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
-  /** The element focus came from, so it can be handed back on close. */
   const returnTo = useRef<HTMLElement | null>(null);
   const touchStart = useRef<{ x: number; y: number } | null>(null);
-  /** The picture's box, used to tell a click on the art from a click beside it. */
   const frameRef = useRef<HTMLDivElement>(null);
 
   const open = index !== null;
@@ -141,14 +79,10 @@ export default function Lightbox({
     [index, items.length, onIndexChange]
   );
 
-  /* ---- the portal host ----
-     Created on open and removed on close, so nothing of this component is left
-     in the DOM while it is shut. */
+  /* ---- the portal host ---- */
   useEffect(() => {
     if (!open || !host) return;
     const el = host;
-    /* Read the palette and the faces off the trigger's subtree BEFORE the host
-       leaves it — once appended to body it can no longer inherit them. */
     copyTheme(themeSource?.current ?? document.body, el);
     document.body.appendChild(el);
     return () => {
@@ -156,9 +90,7 @@ export default function Lightbox({
     };
   }, [open, host, themeSource]);
 
-  /* ---- scroll lock ----
-     Padding compensates for the scrollbar the lock removes, so the page behind
-     does not jump sideways as the viewer opens. */
+  /* ---- scroll lock ---- */
   useEffect(() => {
     if (!open) return;
     const { body } = document;
@@ -173,19 +105,14 @@ export default function Lightbox({
     };
   }, [open]);
 
-  /* ---- focus: capture, move in, hand back ---- */
+  /* ---- focus ---- */
   useEffect(() => {
     if (!open) return;
     returnTo.current = document.activeElement as HTMLElement | null;
-    /* Captured here rather than read in the cleanup: by the time cleanup runs
-       React may already have detached the node from the ref. */
     const dialog = dialogRef.current;
-    /* Next paint, so the dialog exists to receive it. */
     const raf = requestAnimationFrame(() => closeRef.current?.focus());
     return () => {
       cancelAnimationFrame(raf);
-      /* Only hand focus back if it is still inside the viewer (or nowhere) —
-         if something else has legitimately taken it since, leave it alone. */
       const active = document.activeElement;
       if (!active || active === document.body || dialog?.contains(active)) {
         returnTo.current?.focus?.();
@@ -193,7 +120,7 @@ export default function Lightbox({
     };
   }, [open]);
 
-  /* ---- keyboard: Escape, arrows, and the tab trap ---- */
+  /* ---- keyboard ---- */
   useEffect(() => {
     if (!open) return;
     const onKey = (e: KeyboardEvent) => {
@@ -215,7 +142,6 @@ export default function Lightbox({
       const last = nodes[nodes.length - 1];
       const active = document.activeElement;
 
-      /* Wrap at both ends, and pull focus back in if it has escaped. */
       if (!dialogRef.current?.contains(active)) {
         e.preventDefault();
         first.focus();
@@ -235,16 +161,6 @@ export default function Lightbox({
 
   const counter = many ? `${index + 1} / ${items.length}` : null;
 
-  /**
-   * Conventional lightbox behaviour: clicking the dark space AROUND the picture
-   * closes; clicking the picture itself does not.
-   *
-   * The image is laid out with fill + object-fit: contain, which means the
-   * <img> element covers the whole frame even though the painted picture is
-   * letterboxed inside it — so the event target alone cannot tell the two
-   * apart. The painted rectangle is derived instead, from the natural size and
-   * the frame, and only clicks outside it close.
-   */
   const onStageClick = (e: React.MouseEvent) => {
     const frame = frameRef.current;
     const img = frame?.querySelector("img");
@@ -276,11 +192,7 @@ export default function Lightbox({
         if (e.target === e.currentTarget) onClose();
       }}
     >
-      {/* ---- top row: counter left, the close button right ----
-              Both live IN the grid rather than floating over the picture, so
-              the row reserves its own height and the image can never be laid
-              out underneath them. That is what keeps the "never clipped" fix
-              intact while the close button gets much louder. */}
+      {/* ---- top row: counter left, the close button right ---- */}
       <div className="lb__bar">
         <p className="lb__counter">{counter}</p>
         <button
@@ -364,8 +276,6 @@ export default function Lightbox({
         )}
       </div>
 
-      {/* ---- caption: its own row, so a long one shortens the picture rather
-              than running off the bottom of the screen ---- */}
       {item.caption && (
         <div className="lb__foot">
           <p className="lb__caption">{item.caption}</p>

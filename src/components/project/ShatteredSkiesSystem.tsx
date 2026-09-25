@@ -4,25 +4,6 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { planetById, type PlanetId } from "@/content/shattered-skies-planets";
 import PlanetOrrery from "./PlanetOrrery";
 
-/**
- * Shattered Skies — the orrery and the dossier, sharing one active world.
- *
- * This is the only stateful piece of the system. The dossier arrives as
- * `children`, already rendered on the server, so it stays a server component
- * with no client JavaScript: the highlight travels to it as
- * `data-active-planet` on the wrapper below, which its own CSS keys off.
- *
- * Two kinds of active:
- *   preview  — hover or focus, transient
- *   selected — click, tap, or Enter/Space, sticky (touch has no hover)
- * A preview wins while it lasts, so pointing at one world while another is
- * selected shows the one under the pointer, then falls back on leaving.
- *
- * Picking a world scrolls the page down to its dossier card, which leaves the
- * orrery's own Clear button off screen — so a selection can always be dropped
- * two other ways: the bar below the dossier, and clicking (or pressing Escape)
- * anywhere outside the system.
- */
 export default function ShatteredSkiesSystem({ children }: { children: React.ReactNode }) {
   const root = useRef<HTMLDivElement>(null);
   const [preview, setPreview] = useState<PlanetId | null>(null);
@@ -30,9 +11,6 @@ export default function ShatteredSkiesSystem({ children }: { children: React.Rea
   const active = preview ?? selected;
   const pinned = selected ? planetById[selected] : null;
 
-  /* Picking a world takes you to what you picked it for: its dossier card.
-     Clearing, or unpicking the same world, stays put — and so does keyboard
-     selection, where scrolling away would leave focus offscreen. */
   const select = useCallback((id: PlanetId | null, viaPointer = true) => {
     setSelected(id);
     if (!id || !viaPointer) return;
@@ -44,9 +22,6 @@ export default function ShatteredSkiesSystem({ children }: { children: React.Rea
     });
   }, []);
 
-  /* While something is pinned, anything clicked outside the orrery and dossier
-     drops it, and Escape works from anywhere on the page rather than only while
-     focus is still inside the orrery. */
   useEffect(() => {
     if (!selected) return;
     const onPointerDown = (event: PointerEvent) => {
@@ -83,10 +58,6 @@ export default function ShatteredSkiesSystem({ children }: { children: React.Rea
             </span>
             <span className="sss__pinned-name">{pinned.name}</span>
             <span className="sss__pinned-note">is pinned — the other worlds are dimmed</span>
-            {/* The access gate travels with the selection, so the rule is
-                readable from the orrery itself and not only from the card it
-                scrolls to. The chip prints its own word; the tone is a second
-                read of it. */}
             <span className="sss__pinned-gate" data-gate={pinned.access.gate}>
               {pinned.access.label}
             </span>

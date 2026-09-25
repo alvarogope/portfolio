@@ -45,8 +45,7 @@ export default function ArtDirection({
           ))}
       </section>
 
-      {/* 2 — what the principle decides. Deep dive only: the translation
-         moves, darkness included, are owned by /moon-knight/world. */}
+      {/* 2 — what the principle decides */}
       {!short && (
         <section className="mka-band">
           <h3 className="mono mka-band-title">How the Sublime works in the design</h3>
@@ -58,7 +57,7 @@ export default function ArtDirection({
         </section>
       )}
 
-      {/* 3 — the one visual. Deep dive only, next to the moves it explains. */}
+      {/* 3 — the one visual. */}
       {!short && (
         <section className="mka-band">
           <h3 className="mono mka-band-title">The palette</h3>
@@ -82,7 +81,7 @@ export default function ArtDirection({
         </section>
       )}
 
-      {/* 4 — framing and composition, decision */}
+      {/* 4 — framing and composition */}
       {!short && (
         <section className="mka-band">
           <h3 className="mono mka-band-title">Visual Decisions</h3>

@@ -19,76 +19,11 @@ import {
 } from "@/content/moon-knight-map";
 import InteractiveHint from "./InteractiveHint";
 
-/**
- * Moon-Knight — the world of Kaelum, over the hand-drawn map.
- *
- * The art is the thing; everything this component adds is meant to sit on top
- * of it without competing with it. Eight markers are placed in percentages of
- * the image (see `moon-knight-map.ts`), so they stay registered to the
- * coastline at every width.
- *
- * ═══ WHAT THIS USED TO BE, AND WHY IT IS NOT ═══
- *
- * Every place was rendered THREE TIMES: a hover popover over the art carrying
- * type, name, lore and profile; a readout under the art carrying the same;
- * and an eight-card list below that carrying it again, in full, always. That
- * is three copies of eight places, and it was most of the reason the world
- * section ran long enough to be the page's heaviest block. The popover was
- * also the one element on the page that covered the thing it described.
- *
- * There is now ONE detail panel, always on, under the art. What sits on the
- * map is only what the map has to say — a small label naming the selected
- * sigil — and between the two is an INDEX of eight chips, name and sigil only,
- * which is a control strip rather than a second set of cards.
- *
- * ═══ THE READING ORDER: ART → INDEX → DETAIL ═══
- *
- * The index sits directly under the art and ABOVE the detail panel, because
- * that is the order the questions arrive in: what does the world look like,
- * what places are in it, and then tell me about this one. The panel used to
- * come first, which answered the third question before the reader had been
- * shown the second — you met a page of lore about Centralis without yet
- * knowing there were seven other places to ask about.
- *
- * The chips are also the only full list of the eight places; the art hides
- * them in 30px targets. A table of contents belongs above the chapter.
- *
- * ═══ THE CONVENTIONS IT SHARES ═══
- *
- *   · ONE piece of state, and it is STICKY. Point, tab, tap and click all set
- *     the same `selected`; taking the pointer away does not clear it, so the
- *     figure holds still. There is no null state — the map opens on Centralis,
- *     which is where the game opens. Same behaviour as `QuantumSigil` and the
- *     beat chart's rail.
- *   · THE ART IS NOT THE CONTROL SURFACE. Real `<button>`s sit over it, which
- *     is what buys the tab stop, Enter/Space, a real focus ring and a
- *     finger-sized target on every browser.
- *   · A RESTING AFFORDANCE ON EVERY TARGET. Each pin carries a faint halo
- *     before it is touched, so the sigils read as controls sitting ON the art
- *     rather than as painted detail IN it, and an `InteractiveHint` above the
- *     figure says so in words. A diagram nobody knows is a diagram is a
- *     picture.
- *   · `role="status"` on the readout, because a mouse user watches it swap and
- *     a screen-reader user otherwise would not.
- *
- * ═══ WHAT THE MAP OWNS, NOW THAT IT SITS BESIDE THE BEAT CHART ═══
- *
- * The map answers WHO IS WHERE — the cast and the creatures of a place, as
- * links into the sections that describe them. It no longer prints the level's
- * objective: the chart owns what a level is like to play, and the map's last
- * profile row is a LINK into that level's sheet on the chart's own rail.
- * Neither now states a fact the other states.
- */
-
 const MAP_SRC = "/images/moon-knight/world-map.jpg";
 const MAP_W = 2048;
 const MAP_H = 1536;
 
-/* ---- sigils ----
-   One glyph per kind of place, drawn rather than typed so they stay crisp at
-   any marker size: a diamond for a land, a flame for a torch-marked fortress,
-   a rosette for the roses that mark the Old Gods quests. All three take
-   `currentColor`, so the marker's colour is set once in CSS. */
+/* ---- sigils ---- */
 function Sigil({ type }: { type: MarkerType }) {
   if (type === "fortress") {
     return (
@@ -121,23 +56,13 @@ function Sigil({ type }: { type: MarkerType }) {
   );
 }
 
-/* ---- popover placement ----
-   Derived from the marker's own coordinates so the data file stays the only
-   place a position is written down. A marker in the left quarter opens its
-   popover rightwards from itself, one in the right quarter leftwards, and
-   anything between opens centred; a marker in the top of the map opens
-   downwards. The result never leaves the frame. */
+/* ---- popover placement ---- */
 type Align = "start" | "center" | "end";
 
 const alignOf = (xPct: number): Align => (xPct <= 25 ? "start" : xPct >= 75 ? "end" : "center");
 const sideOf = (yPct: number): "above" | "below" => (yPct < 42 ? "below" : "above");
 
-/* ---- the region profile ----
-   One component, three places: over the art, in the phone readout, and in the
-   list. `linked` is the only thing that differs — see the note in the header
-   about why the popover's copy is inert. Rows are omitted rather than blanked:
-   a fortress has no residents and the dungeons have no act, and printing "—"
-   three times would make the profile look like a form nobody filled in. */
+/* ---- the region profile ---- */
 function Names({
   refs,
   linked,
@@ -151,10 +76,6 @@ function Names({
         <span key={ref.href}>
           {i > 0 && <span className="wm-sep" aria-hidden="true"> · </span>}
           {linked ? (
-            /* `href` may be a same-page fragment (the bestiary, still on this
-               page) or a full path into the deep-dive subpage (the cast, which
-               moved). `Link` handles both, so the two kinds of reference read
-               and behave identically in the list. */
             <Link className="wm-link" href={ref.href}>
               {ref.entry.name}
             </Link>
@@ -179,10 +100,6 @@ function ProfileRow({ label, children }: { label: string; children: React.ReactN
 function RegionProfileView({ region }: { region: ResolvedRegion }) {
   if (region.isEmpty) return null;
 
-  /* The hand-off into the beat chart. `bc-tab-<id>` is a real rail tab, and
-     those tabs select on focus, so following this link opens that level's
-     sheet rather than merely scrolling near it. Built from `level.id`, never
-     typed, so a renamed level breaks the build instead of the link. */
   const plan = region.level
     ? {
         href: `#bc-tab-${region.level.id}`,
@@ -227,20 +144,6 @@ function RegionProfileView({ region }: { region: ResolvedRegion }) {
   );
 }
 
-/**
- * The label pinned to the selected sigil.
- *
- * WHAT REPLACED THE POPOVER. The map used to open a full popover on hover —
- * type, name, lore and the whole profile — while a readout below the art and
- * an eight-card list further down rendered the SAME lore and the SAME profile
- * again. Three copies of every place, and the list alone ran the section to
- * roughly a screen per marker.
- *
- * Now there is one detail panel, under the art, and it is always on. What sits
- * on the map is only what the map has to say: which sigil you are reading.
- * That also fixes the thing the popover was worst at — it covered the land it
- * was describing.
- */
 function PinLabel({ marker }: { marker: MapMarker }) {
   return (
     <span className={`wm-tag align-${alignOf(marker.xPct)} side-${sideOf(marker.yPct)}`} aria-hidden="true">
@@ -250,19 +153,11 @@ function PinLabel({ marker }: { marker: MapMarker }) {
 }
 
 export default function WorldMap() {
-  /* ONE piece of state, and it is STICKY — the same convention `QuantumSigil`
-     and the beat chart's rail follow. Point at a sigil, tab to it or tap it
-     and the readout below changes; take the pointer away and the figure holds
-     still rather than emptying itself. There is no null: the map opens on
-     Centralis, which is where the game opens. */
   const [selected, setSelected] = useState<MarkerId>(mapMarkers[0].id);
 
   const marker = getMarker(selected);
   const region = resolveRegion(selected);
 
-  /* Hover on a fine pointer only. A touch fires a synthetic enter before its
-     click, and letting that through would select a marker under a finger that
-     is still travelling. */
   const hover = (id: MarkerId) => (event: React.PointerEvent) => {
     if (event.pointerType !== "touch") setSelected(id);
   };
@@ -316,13 +211,7 @@ export default function WorldMap() {
         </div>
       </div>
 
-      {/* THE INDEX, DIRECTLY UNDER THE ART. Eight chips, name and sigil only —
-          this is a control strip, not a second set of cards. It sits here, and
-          not under the detail panel, because it is the map's TABLE OF CONTENTS:
-          a reader who has just looked at the art wants to know what the eight
-          places are before they read about any one of them, and on a phone
-          this strip is how the map is read at all. Pick a chip and the panel
-          below answers. */}
+      {/* THE INDEX */}
       <div className="wm-index" role="group" aria-label="Places in Kaelum">
         {mapMarkers.map((m) => (
           <button
@@ -342,10 +231,7 @@ export default function WorldMap() {
         ))}
       </div>
 
-      {/* THE ONE DETAIL PANEL, and the answer to whatever the index or the art
-          was just asked. Always rendered, at every width, and the only place a
-          marker's lore and profile appear. `role="status"` because a mouse user
-          watches it swap and a screen-reader user otherwise would not. */}
+      {/* THE ONE DETAIL PANEL */}
       <div className="wm-readout" role="status">
         <p className="mono wm-readout-type">{markerTypeMeta[marker.type].term}</p>
         <p className="wm-readout-name">{marker.label}</p>
@@ -353,9 +239,6 @@ export default function WorldMap() {
         {region && !region.isEmpty && <RegionProfileView region={region} />}
       </div>
 
-      {/* The key decodes the three sigils AND carries what each kind of place
-          is in general, so the specific lore on a marker never has to repeat
-          it — the fortress framing would otherwise be printed three times. */}
       <div className="wm-under">
         <dl className="wm-key">
           {(Object.keys(markerTypeMeta) as MarkerType[]).map((type) => (

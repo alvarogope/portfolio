@@ -15,21 +15,6 @@ import { HOME_NAV_ITEM, type ProjectNavItem } from "@/content/games";
 
 const REDUCED_QUERY = "(prefers-reduced-motion: reduce)";
 
-/* WHERE THE GUTTER IS ACTUALLY BIG ENOUGH, which is the whole argument for
-   this number. It was 1560px, and at 1560px a 207px rail does not fit beside
-   a centred 68rem column: the column's right edge lands at 1365 and the rail
-   starts at 1331, so the rail was not in the gutter at all — it was standing
-   on the last 34px of the column, over the plate bands and any panel that
-   spans it. The column clears the rail, with the 2rem of air the gutter
-   tokens ask for, from 1782px up; 1800 is that with a round number's worth
-   of slack.
-
-   What it costs: between 1560 and 1800 the nav is the in-flow list at the
-   foot of the page, which is the fallback this component already ships and
-   the only honest answer at a width where the rail has nowhere to stand.
-
-   KEEP IN STEP WITH `--rail-claim`'s QUERY IN globals.css: below this width
-   the rail claims no gutter and the wide consoles spend the whole of it. */
 const RAIL_QUERY = "(min-width: 1800px)";
 
 function subscribeMedia(query: string) {
@@ -61,8 +46,6 @@ const THEMED_VARS = [
   "--font-body",
 ];
 
-/* The deep-dive glyph, shared by both projects that have one: an open book,
-   one leaf solid and one drawn, so it reads at 1.25em without detail. */
 const BOOK = (
   <>
     <path d="M3.6 5.2h5.6c1.5 0 2.8 1 2.8 2.2v11.4c0-.9-1.1-1.6-2.6-1.6H3.6V5.2Z" fill="currentColor" />
@@ -136,7 +119,6 @@ const ICONS: Record<string, React.ReactNode> = {
 
   "moon-knight-world": BOOK,
 
-  /* Angle brackets: the write-up about code. */
   "moon-knight-engineering": (
     <g
       fill="none"
@@ -150,7 +132,6 @@ const ICONS: Record<string, React.ReactNode> = {
     </g>
   ),
 
-  /* Two crossed orbits round a nucleus — the toolkit's own subject. */
   "moon-knight-quantum": (
     <>
       <circle cx="12" cy="12" r="2.1" fill="currentColor" />
@@ -182,7 +163,6 @@ const ICONS: Record<string, React.ReactNode> = {
 type ProjectNavProps = {
   items: ProjectNavItem[];
   currentSlug: string;
-  /** What the rail is a list OF. Subpage rails list one project's family. */
   kicker?: string;
   proximityRadius?: number;
   maxShift?: number;
@@ -345,8 +325,6 @@ function NavContent({
         >
           {items.map((item) => {
             const active = item.slug === currentSlug;
-            /* The index row is not one of the worlds, so it is ruled off
-               from them rather than listed among them. */
             const isIndex = item.slug === HOME_NAV_ITEM.slug;
 
             return (

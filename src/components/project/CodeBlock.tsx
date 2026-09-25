@@ -26,10 +26,6 @@ export default async function CodeBlock({
         pre(node) {
           node.properties.style =
             `${node.properties.style ?? ""};margin:0;padding:1.1rem 1.25rem;` +
-            /* 0.73rem = 13.1px at the 18px root: the size this was before the
-           global sizing pass, kept deliberately. Code wants to look like an
-           editor, and an editor sets code smaller than running prose — the
-           surrounding page grew, this did not. */
         `overflow-x:auto;font-size:0.73rem;line-height:1.6;` +
             `font-family:var(--font-mono)`;
         },

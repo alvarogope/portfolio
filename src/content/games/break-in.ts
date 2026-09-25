@@ -22,7 +22,6 @@ export const breakIn: Project = {
     "piece of the big puzzle that is the heist. The only way to coordinate is through some tools they are given in the " +
     "game. Steal as much as you can in eight minutes and escape together undetected. If one player gets caught, it is game over.",
 
-  // Names only: RoleTerms reads them to highlight roles in prose. Each role's kit lives in break-in-roles.ts.
   roles: [
     { name: "The Hacker" },
     { name: "The Insider" },

@@ -3,14 +3,7 @@
 import IndicatorPortal, { railStyle } from "./IndicatorPortal";
 import { useScrollProgress } from "./useScrollProgress";
 
-/* Shattered Skies scroll indicator: the Symbiochord. A vertical tether
-   on the left edge that fills top -> bottom as you scroll, with a
-   glowing node anchored at the top and a second node riding the fill
-   point — the shared-fate cord binding the two players, paying out as
-   you descend.
-
-   Accent comes from --color-silver, which this project's layout
-   re-points to HUD cyan. */
+/* Shattered Skies scroll indicator */
 
 const TRACK = 220;
 const LINE = 4;

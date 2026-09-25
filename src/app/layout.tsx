@@ -93,8 +93,6 @@ export default function RootLayout({
     >
       <body>
         <ScrollToTop />
-        {/* Reflow on resize moves the reader up to 28% of the page away from
-            what they were reading. This puts them back. See the component. */}
         <PreserveScrollOnResize />
 
         {/* Placeholder nav */}

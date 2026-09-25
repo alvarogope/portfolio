@@ -1,25 +1,5 @@
 import type { BestiaryId } from "@/content/moon-knight-bestiary";
 
-/**
- * Moon-Knight — bestiary emblems.
- *
- * Ten heraldic silhouettes, drawn as inline SVG (there is no creature art).
- * Every emblem is ONE self-contained function on a shared `0 0 120 140`
- * viewBox, registered in `EMBLEMS` by entry id — swap a creature by replacing
- * its function body and nothing else moves.
- *
- * Drawing rules, so a replacement stays consistent:
- *   - fill `url(#mkb-plate)` for the body mass (silver→gold, reads as leaded
- *     glass against the arch's tinted ground);
- *   - fill `var(--color-void)` for cut-outs — eye slits, visor slots, open mouths;
- *   - `currentColor` on accents; the arch sets it to the creature's accent;
- *   - keep the mass between y 4 and y 138 and roughly centred on x 60, so every
- *     silhouette sits the same way under the arch.
- *
- * `EmblemSprite` holds the shared gradient and must be rendered exactly ONCE
- * per page (the id is global). `Bestiary` does that at the top of its section.
- */
-
 export function EmblemSprite() {
   return (
     <svg width="0" height="0" aria-hidden focusable="false" style={{ position: "absolute" }}>
@@ -39,7 +19,6 @@ const VOID = "var(--color-void)";
 
 /* ---------------------------------------------------------------- bosses -- */
 
-/** Howling wolf's head, jaws open toward the moon. */
 function WerewolfEmblem() {
   return (
     <g>
@@ -57,7 +36,7 @@ function WerewolfEmblem() {
       <path fill={VOID} d="M60 45 L76 40 L73 50 Z" />
       {/* nose */}
       <path fill={VOID} d="M13 40 L23 36 L21 43 Z" />
-      {/* ruff, jagged along the nape */}
+      {/* ruff */}
       <path
         fill="currentColor"
         d="M99 78 L110 82 L100 88 L109 96 L97 98 L100 108 L88 105 Z"
@@ -66,7 +45,7 @@ function WerewolfEmblem() {
   );
 }
 
-/** Horse-bodied knight, lance couched. */
+/** Horse-bodied knight */
 function CentaurKnightEmblem() {
   return (
     <g>

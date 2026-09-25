@@ -7,41 +7,12 @@ import {
   joustingIntro,
 } from "@/content/moon-knight-jousting";
 
-/**
- * Moon-Knight — the jousting minigame.
- *
- * DELIBERATELY SMALL. This is a side feature on a page whose other sections are
- * pillars, and it is built to lose that comparison on purpose: no band titles,
- * no emblems, one visual. Matrix on the left, three short paragraphs on the
- * right, and the spin-out note as a slim rule underneath. On a narrow screen
- * the two columns stack and the whole thing is still under a screen.
- *
- * THE MATRIX IS A REAL TABLE. Two actions, three timings, six outcomes — that
- * is tabular data, so it is a `<table>` with a `<caption>`, `scope="col"` on
- * the timings and `scope="row"` on the actions. A grid of coloured divs would
- * have looked identical and told a screen reader nothing about which outcome
- * belonged to which pair.
- *
- * COLOUR IS NEVER THE ONLY SIGNAL. Every cell says what happens in words —
- * "Receives hit", "Dodges the attack" — so the tint is a second, faster read of
- * something the text already carries. That matters here more than usual,
- * because the tint IS the argument: the middle column lights up and the flanks
- * do not, which is the sentence "perfect timing is the skill window" told as a
- * shape before it is told as prose.
- *
- * A server component, and nothing in it moves.
- */
 export default function Jousting() {
   return (
     <div className="mkj">
       <div className="mkj-body">
-        {/* The visual first in source order as well as on screen: it is the
-            thing worth stopping for, and the prose only explains it. */}
         <figure className="mkj-figure">
           <figcaption className="mono mkj-caption">{joustMatrixCaption}</figcaption>
-          {/* Scroller, not a stacked rewrite: at 360px the table still fits,
-              but a long outcome string or a large font must never be able to
-              push the page sideways. */}
           <div className="mkj-scroll">
             <table className="mkj-matrix">
               <caption className="mkj-sr">
@@ -77,11 +48,6 @@ export default function Jousting() {
         </figure>
 
         <div className="mkj-prose">
-          {/* `joustingIntro.practice` was rendered here. The const was cut
-              from `moon-knight-jousting.ts` and this read was left behind, so
-              the page no longer type-checked; the second line is gone with the
-              copy rather than replaced with new copy this component does not
-              own. */}
           <p className="mkj-line">{joustingIntro.tournament}</p>
           <p className="mkj-design">
             <span className="mono mkj-design-key">Why</span>
@@ -90,9 +56,6 @@ export default function Jousting() {
         </div>
       </div>
 
-      {/* The hook. A rule and a kicker rather than a panel — it is an aside
-          about where the idea went, and giving it a box would make it look
-          like a bigger claim than it is. */}
       <aside className="mkj-spinout">
         <p className="mono mkj-spinout-kicker">{joustSpinout.kicker}</p>
         <p className="mkj-spinout-body">{joustSpinout.body}</p>

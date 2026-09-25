@@ -5,8 +5,6 @@ export default function ChallengeQuote({
   renderProse,
 }: {
   challenge: DesignChallenge;
-  /** Optional pass over the quote before it renders — Break-In uses it to
-      light up role names. Omitted everywhere else, which renders plain text. */
   renderProse?: (text: string) => React.ReactNode;
 }) {
   const meta = [

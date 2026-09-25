@@ -9,29 +9,13 @@ const BOTTOM_OFFSET = 32; // 2rem, matches the fixed `bottom` value below
 
 type Rgb = [number, number, number];
 
-/* ---- the waxing colour ramp -------------------------------------------
-   Three anchors, interpolated in OKLab rather than sRGB.
-
-   The ends were never the problem: measured in OKLCh, a straight lerp holds
-   hue at ~258-262° the whole way, so swapping colour space alone changes
-   almost nothing. What made mid-scroll look muddy is CHROMA — it falls
-   steadily from 3.8 at the dim end to 1.8 at the bright end, and a near-grey
-   at mid lightness reads as a dull slate. Against this page's blue-black it
-   picks up an induced warmth on top of that, which is the mauve cast.
-
-   MID holds the blue through the middle, so chroma arcs up (peak ~6.1 near
-   t=0.42) instead of sagging. Lightness still climbs linearly in L*, so the
-   moon reads as one hue getting brighter, start to finish. */
+/* ---- the waxing colour ramp ------------------------------------------- */
 const DIM: Rgb = [86, 98, 120];
 const MID: Rgb = [142, 166, 203];
 const MOONLIGHT: Rgb = [232, 240, 252];
 
-/* Rim glow. Strongest at the top of the page, gone once the moon is bright
-   enough to carry its own edge. */
 const GLOW_UNTIL = 0.6;
 const GLOW_RGB = "200, 214, 232";
-
-/* --- OKLab, just enough of it to walk the ramp above (Björn Ottosson). --- */
 
 const toLinear = (v: number) => {
   const c = v / 255;
@@ -72,10 +56,6 @@ const OK_DIM = rgbToOklab(DIM);
 const OK_MID = rgbToOklab(MID);
 const OK_MOONLIGHT = rgbToOklab(MOONLIGHT);
 
-/* Quadratic Bézier control point, placed so the curve passes exactly through
-   MID at t = 0.5. Two straight lerps joined at MID would also hit it, but they
-   reverse the chroma slope at the joint and that shows as a kink mid-scroll;
-   one Bézier arcs through instead. Verified in gamut across the whole range. */
 const OK_CTRL: Rgb = [0, 1, 2].map(
   (i) => 2 * OK_MID[i] - (OK_DIM[i] + OK_MOONLIGHT[i]) / 2
 ) as Rgb;
@@ -121,7 +101,6 @@ export default function MoonProgress() {
 
   const litColor = moonColor(progress);
 
-  /* 1 while the moon is too dim to find on its own, 0 once it isn't. */
   const glow = Math.max(0, 1 - progress / GLOW_UNTIL);
 
   const placement: React.CSSProperties =
@@ -159,8 +138,6 @@ export default function MoonProgress() {
             width={SIZE}
             height={SIZE}
             viewBox={`0 0 ${SIZE} ${SIZE}`}
-            /* Halo only — a CSS filter paints outside the 64px box without
-               taking any layout, so the indicator's footprint is unchanged. */
             style={{
               filter:
                 glow > 0
@@ -191,8 +168,6 @@ export default function MoonProgress() {
               <circle cx={r} cy={r - shadowOffset} r={r} fill="var(--color-void)" />
             </g>
 
-            {/* Rim on Top. Firms up while the disc is dim so the edge stays
-                readable, then settles back to its usual weight. */}
             <circle
               cx={r}
               cy={r}

@@ -6,41 +6,24 @@ import { Mesh, Program, Renderer, Triangle } from "ogl";
 type AnimationType = "rotate" | "hover" | "3drotate";
 
 type PrismProps = {
-  /** Apex height of the prism, in world units. */
   height?: number;
-  /** Total base width across X/Z, in world units. */
   baseWidth?: number;
-  /** Shader wobble, pointer tilt, or a full 3D spin. */
   animationType?: AnimationType;
 
   rotation?: { yaw?: number; pitch?: number; roll?: number };
-  /** Glow/bleed multiplier. Multiplies with `bloom`; they are one knob. */
   glow?: number;
-  /** Pixel offset within the canvas. Absolute px, so it does not scale. */
   offset?: { x?: number; y?: number };
-  /** Film grain added to the final colour. 0 disables. */
   noise?: number;
-  /** Whether the canvas keeps an alpha channel. */
   transparent?: boolean;
-  /** Screen-space size of the prism. Higher is LARGER. */
   scale?: number;
-  /** Hue rotation in RADIANS. */
   hueShift?: number;
-  /** Frequency of the internal colour bands. The rainbow knob; see below. */
   colorFrequency?: number;
-  /** 0 renders grey, 1 leaves the bands alone, above 1 boosts them. */
   saturation?: number;
-  /** Sensitivity of the hover tilt. */
   hoverStrength?: number;
-  /** Easing for the hover tilt, 0..1, higher is snappier. */
   inertia?: number;
-  /** Second glow multiplier, layered on the first. */
   bloom?: number;
-  /** Pause rendering while the element is off screen. */
   suspendWhenOffscreen?: boolean;
-  /** Global time multiplier. 0 freezes the shader. */
   timeScale?: number;
-  /** The dimmer. Applied to the canvas, so it scales the whole effect. */
   opacity?: number;
   className?: string;
 };

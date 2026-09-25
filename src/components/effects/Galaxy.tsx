@@ -4,36 +4,21 @@ import { useEffect, useRef, useState } from "react";
 import { Mesh, Program, Renderer, Triangle } from "ogl";
 
 type GalaxyProps = {
-  /** Origin of the field, in [0,1] of the box. */
   focal?: [number, number];
-  /** Fixed rotation of the field, as [cos, sin]. */
   rotation?: [number, number];
-  /** Pace at which layers cycle through depth, i.e. stars flying past. */
   starSpeed?: number;
-  /** Cell scale. Higher packs more, smaller stars into the same box. */
   density?: number;
-  /** Rotates every star's hue, in degrees. */
   hueShift?: number;
-  /** Global multiplier on every time-based term. */
   speed?: number;
-  /** Size of each star's halo. The contrast knob -- see the note below. */
   glowIntensity?: number;
-  /** 0 renders the field grey, 1 gives the stars their full colour. */
   saturation?: number;
-  /** 0 holds every star steady, 1 is maximum flicker. */
   twinkleIntensity?: number;
-  /** Pace of the field's own slow rotation. */
   rotationSpeed?: number;
-  /** Parallax as the pointer crosses the box. Ignored on coarse pointers. */
   mouseInteraction?: boolean;
-  /** Push stars away from the pointer instead of drifting the whole field. */
   mouseRepulsion?: boolean;
   repulsionStrength?: number;
-  /** Push stars out from the centre. Overrides mouse repulsion when > 0. */
   autoCenterRepulsion?: number;
-  /** false paints the field on solid black instead of on the page. */
   transparent?: boolean;
-  /** The dimmer. Applied to the canvas, so it scales the whole effect. */
   opacity?: number;
   className?: string;
 };
@@ -230,8 +215,6 @@ export default function Galaxy({
 }: GalaxyProps) {
   const hostRef = useRef<HTMLDivElement>(null);
 
-  /* "still" until the client has actually read the preference, so the
-     server-rendered markup and the first paint are never the animated one. */
   const [reducedMotion, setReducedMotion] = useState(true);
 
   const live = useRef({

@@ -2,26 +2,6 @@
 
 import { useEffect, useRef, useState } from "react";
 
-/**
- * A short, silent gameplay loop, sized and framed exactly like an image slot.
- *
- * WHY IT DOES NOT USE THE `autoPlay` ATTRIBUTE.
- *
- * `prefers-reduced-motion` cannot be expressed in CSS for video playback — a
- * media query can stop an animation, but it cannot stop a decoding video. If
- * the element carries `autoPlay`, a reduced-motion visitor gets the loop
- * playing on first paint and we can only pause it a frame later, which is
- * precisely the flash of motion the setting exists to prevent.
- *
- * So playback is started from the effect instead, and only when the query says
- * motion is welcome. Everyone else gets the first frame as a still (that is
- * what `preload="metadata"` buys) plus native controls, so the loop is offered
- * rather than imposed. The query is watched, not just read once: a visitor who
- * flips the OS setting with the page open gets the new behaviour immediately.
- *
- * `muted` is not decoration either. Every one of these clips is silent by
- * design, and an unmuted video is not allowed to autoplay at all.
- */
 export default function LoopingVideo({
   src,
   label,
@@ -29,7 +9,6 @@ export default function LoopingVideo({
   radius = "2px",
 }: {
   src: string;
-  /** Accessible name. Describe what the loop shows, as you would alt text. */
   label: string;
   aspect?: string;
   radius?: string;
@@ -48,9 +27,6 @@ export default function LoopingVideo({
         v.pause();
         v.currentTime = 0;
       } else {
-        /* Rejected play() is not an error worth surfacing: a browser that
-           blocks it leaves the first frame on screen, which is the same
-           fallback reduced motion gets. */
         void v.play().catch(() => {});
       }
     };

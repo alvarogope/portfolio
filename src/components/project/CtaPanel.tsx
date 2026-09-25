@@ -44,8 +44,6 @@ export default function CtaPanel({
         {title}
       </h2>
       <p style={{ margin: 0, lineHeight: 1.75, color: "var(--color-silver)" }}>{body}</p>
-      {/* The whole panel is the link, which is exactly why it needs saying:
-          a bordered block of prose does not look clickable. */}
       <span className="mono cta-panel__link">
         Click here · {linkLabel}{" "}
         <span aria-hidden="true" className="cta-panel__arrow">

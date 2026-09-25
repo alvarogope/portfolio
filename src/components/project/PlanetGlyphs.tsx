@@ -1,17 +1,8 @@
 import type { PlanetId } from "@/content/shattered-skies-planets";
 
-/**
- * Shattered Skies — the worlds, drawn as pure SVG (no image files).
- *
- * `PlanetSprite` holds every gradient and `<symbol>`; `PlanetGlyph` stamps one
- * out with `<use>`. Render the sprite exactly ONCE per page — the ids are
- * global — then place as many glyphs as you like. Stage 2's orrery shares both.
- */
-
 const CLIP = "ssp-clip";
 const CLIP_GAS = "ssp-clip-gas";
 
-/** Radial body gradients, id → [core, mid, limb]. The mid stop sits at 42%. */
 const BODY: Record<string, [string, string, string]> = {
   pyroterra: ["#FFE1A8", "#FF8A3C", "#8E1B06"],
   dunestorm: ["#F7E3BC", "#D89B4F", "#69381A"],
@@ -157,7 +148,6 @@ export function PlanetSprite() {
   );
 }
 
-/** One world, square, sized by the caller. Decorative — its name sits beside it in the markup. */
 export function PlanetGlyph({
   id,
   size,

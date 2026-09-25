@@ -10,41 +10,7 @@ import {
 } from "@/content/moon-knight-narrative";
 import { MoonPhaseGlyph } from "./MoonPhaseGlyph";
 
-/**
- * Moon-Knight — the narrative design, built to be skimmed before it is read.
- *
- * Three bands, in descending density:
- *
- *   1. THE ARC. The prologue note, then three act cards, each crowned with the
- *      moon phase that act is tuned to, then the reversal as its own panel. A
- *      reader who gives this section ten seconds gets the shape of the story
- *      and the payoff, and nothing else is asked of them.
- *   2. THEMES. Four symbols, a glyph and a line each.
- *   3. STORY THROUGH MECHANICS. The thesis, then four system-to-meaning pairs.
- *
- * The plot itself — the part that would wall-of-text the page — is folded into
- * a native `<details>` at the foot. That is deliberate: a `<summary>` is
- * keyboard-operable, screen-reader-announced and works with no JavaScript, so
- * the whole section stays a server component.
- *
- * THE MOON IS THE SPINE. Crescent, half and full are simultaneously the three
- * fragments, the three lands, the three acts and the three ages of a life, so
- * the glyph crowning each card is doing structural work rather than
- * decoration: it is the one image that indexes everything else.
- *
- * THE PROLOGUE NOTE IS LOAD-BEARING, NOT A CAPTION. Three moons here and four
- * on the beat chart is the one place the motif can look like it disagrees with
- * itself, so the note is printed BEFORE the cards: it names Centralis as a
- * level outside the act count, and it is the only sentence on the page that
- * reconciles the two readings. Do not move it below the arc or fold it away.
- */
-
-/* ---- moon phases ----
-   The geometry lives in `MoonPhaseGlyph`, shared with the diegetic-design
-   section further down the page, where the same discs are the health readout.
-   Two sections drawing their own crescents drift; one module does not. The
-   classes below are still this section's, so these moons stay silver while the
-   health gradient runs its own colours through the same shapes. */
+/* ---- moon phases ---- */
 function MoonGlyph({ phase }: { phase: MoonPhase }) {
   return (
     <MoonPhaseGlyph
@@ -56,9 +22,7 @@ function MoonGlyph({ phase }: { phase: MoonPhase }) {
   );
 }
 
-/* ---- theme glyphs ----
-   One arm of the triskelion, rotated twice: three legs spiralling out of a
-   centre, which is the rune as it is carved. */
+/* ---- theme glyphs ---- */
 const TRISKELION_ARM = "M12 12C12 8.5 13.6 6 16.1 5.5C18.2 5.1 19.6 6.7 19 8.5";
 
 function ThemeGlyphMark({ glyph }: { glyph: ThemeGlyph }) {
@@ -125,8 +89,6 @@ function ActCard({ act }: { act: (typeof narrativeActs)[number] }) {
         <span className="nd-act-stage">{act.lifeStage}</span>
       </p>
 
-      {/* Rule, moon, rule — the three crowns line up across the row and read as
-          one spine running the width of the arc. */}
       <div className="nd-crown">
         <span className="nd-rule nd-rule--l" aria-hidden="true" />
         <MoonGlyph phase={act.phase} />
@@ -150,8 +112,6 @@ export default function NarrativeDesign() {
       <section className="nd-band">
         <h3 className="mono nd-band-title">The three-act arc</h3>
 
-        {/* Before the count: what the island is, and why the chart plans one
-            more location than the story has acts. */}
         <p className="nd-prologue">
           <span className="mono nd-prologue-label">{prologueNote.label}</span>
           {prologueNote.line}
@@ -202,9 +162,6 @@ export default function NarrativeDesign() {
         </dl>
       </section>
 
-      {/* The plot, folded. Native details/summary: keyboard-operable and
-          announced without a line of JavaScript, so this stays a server
-          component and the page is skimmable by default. */}
       <details className="nd-more">
         <summary className="mono nd-more-summary">
           <span className="nd-more-caret" aria-hidden="true" />

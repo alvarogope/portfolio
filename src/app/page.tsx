@@ -92,7 +92,7 @@ export default function Home() {
               color: "var(--color-silver)",
             }}
           >
-            ÁLVARO GÓMEZ PÉREZ
+            I DESIGN & BUILD GAME SYSTEMS
           </p>
 
           <h1
@@ -107,7 +107,7 @@ export default function Home() {
               textWrap: "balance",
             }}
           >
-            I Design and Build Game Systems.
+            Álvaro Gómez
           </h1>
 
           <p

@@ -10,7 +10,7 @@ import ProjectNav from "@/components/layout/ProjectNav";
 import { moonKnightNavItems } from "@/content/games";
 
 export const metadata: Metadata = {
-  title: "The Quantum Toolkit | Álvaro Gómez",
+  title: "Moon-Knight Quantum Programming | Álvaro Gómez",
   description: q.tagline,
 };
 

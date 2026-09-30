@@ -97,7 +97,7 @@ export interface StoryBeat {
 export const storyBeats: readonly StoryBeat[] = [
   {
     id: "cooperation",
-    index: "Beat 01",
+    index: "1st Beat",
     title: "Forces Cooperation",
     mapLabel: "Forced Cooperation",
     body:
@@ -108,7 +108,7 @@ export const storyBeats: readonly StoryBeat[] = [
   },
   {
     id: "timer",
-    index: "Beat 02",
+    index: "2nd Beat",
     title: "Limited Time",
     mapLabel: "Limited Time",
     body:
@@ -118,7 +118,7 @@ export const storyBeats: readonly StoryBeat[] = [
   },
   {
     id: "doubt",
-    index: "Beat 03",
+    index: "3rd Beat",
     title: "Doubt & Misunderstanding",
     mapLabel: "Doubt & Misunderstanding",
     body:
@@ -128,7 +128,7 @@ export const storyBeats: readonly StoryBeat[] = [
   },
   {
     id: "tension",
-    index: "Beat 04",
+    index: "4th Beat",
     title: "Tensions Escalate",
     mapLabel: "Tensions Escalate",
     body:
@@ -138,7 +138,7 @@ export const storyBeats: readonly StoryBeat[] = [
   },
   {
     id: "final-choice",
-    index: "Beat 05",
+    index: "5th Beat",
     title: "The Final Choice & The Moment of Truth",
     mapLabel: "The Final Choice",
     decisive: true,

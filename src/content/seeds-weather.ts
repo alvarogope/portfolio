@@ -39,7 +39,7 @@ export const weathers: readonly Weather[] = [
     name: "Snow",
     role: "hazard",
     roleLabel: "Atmosphere & hazard",
-    where: "snow level",
+    where: "",
     body:
       "Hard weather with its own mood: a condition to survive as much as an atmosphere to feel, " +
       "and the level is built around what its sky is doing to the player.",

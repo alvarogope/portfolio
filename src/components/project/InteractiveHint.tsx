@@ -24,12 +24,12 @@ export default function InteractiveHint({
       <span className="ih-body">
         {mode === "pan" ? (
           <>
-            Drag the {what} to move it, and scroll to zoom in and out — {does}.
+            Drag the {what} to move it, and scroll to zoom in and out, {does}.
             <span className="ih-keys">Keyboard: press Tab to reach it, then the arrow keys.</span>
           </>
         ) : (
           <>
-            Choose any {what} — {does}.
+            Choose any {what} and {does}.
             <span className="ih-keys">Click, tap, or press Tab to reach it and then Enter.</span>
           </>
         )}

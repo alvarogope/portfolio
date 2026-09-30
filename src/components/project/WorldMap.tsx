@@ -137,7 +137,7 @@ function RegionProfileView({ region }: { region: ResolvedRegion }) {
           <Link href={plan.href} className="wm-link">
             {plan.label}
           </Link>{" "}
-          <span className="wm-plan-suffix">— {planLinkSuffix}</span>
+          <span className="wm-plan-suffix"></span>
         </ProfileRow>
       )}
     </dl>

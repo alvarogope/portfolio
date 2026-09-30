@@ -21,7 +21,7 @@ export default function BossPlateArch({
         type="button"
         className="bpa-btn"
         onClick={() => setOpen(true)}
-        aria-label={`${bossName}, captured in play — open the full frame`}
+        aria-label={`${bossName}, open the full picture`}
       >
         <Image
           src={plate.src}

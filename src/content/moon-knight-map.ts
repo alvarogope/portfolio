@@ -245,7 +245,7 @@ export const regionProfileLabels = {
   boss: "Boss",
 } as const;
 
-export const planLinkSuffix = "open the design sheet";
+export const planLinkSuffix = "";
 
 export const regionProfilePointer =
   "Every name here is a link. Creature names open their bestiary entry above, character names " +

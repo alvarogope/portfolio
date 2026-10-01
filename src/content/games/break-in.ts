@@ -14,7 +14,8 @@ export const breakIn: Project = {
   scope: "Lead Designer · Team of 4",
   routingVerb: "See the systems",
 
-  posterAlt: "Break-In key art placeholder",
+  posterAlt:
+    "Break-In key art. A four-person heist crew in masks crouches outside a city bank at night: a disguised guard, a hacker with a holographic tablet, an armoured operative with a duffel bag and a lockpicker at a security panel, under rain and police searchlights.",
 
   vision:
     "Break-In is a four-player co-op stealthy bank heist game whose main mechanic is that players cannot talk with each other. " +

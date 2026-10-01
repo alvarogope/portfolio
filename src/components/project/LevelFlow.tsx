@@ -404,8 +404,6 @@ function StagePanels() {
   );
 }
 
-const SPLIT_COUNT = routeNodes.filter((n) => n.kind === "split").length;
-
 export default function LevelFlow() {
   return (
     <div className="lf">

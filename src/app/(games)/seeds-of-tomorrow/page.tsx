@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { seedsOfTomorrow as p } from "@/content/games/seeds-of-tomorrow";
 import Section from "@/components/layout/Section";
 import SectionHeading from "@/components/layout/SectionHeading";
-import Breadcrumb from "@/components/layout/Breadcrumb";
 import ProjectHero from "@/components/project/ProjectHero";
 import Reveal from "@/components/layout/Reveal";
 import SeedsAudio from "@/components/project/SeedsAudio";

@@ -32,9 +32,6 @@ import QuantumSigil from "@/components/project/QuantumSigil";
 import RampLink from "@/components/project/RampLink";
 import CtaPanel from "@/components/project/CtaPanel";
 import { inMotionClips, inMotionIntro } from "@/content/moon-knight-in-motion";
-import { beatLevels } from "@/content/moon-knight-levels";
-import { bestiaryBosses, bestiaryEnemies } from "@/content/moon-knight-bestiary";
-import { narrativeActs } from "@/content/moon-knight-narrative";
 import { deepDiveHref, deepDivePath } from "@/content/moon-knight-deep-dive";
 
 export const metadata: Metadata = {

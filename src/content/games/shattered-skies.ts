@@ -14,7 +14,8 @@ export const shatteredSkies: Project = {
   scope: "Systems & World Designer · Team of 5",
   routingVerb: "See the systems",
 
-  posterAlt: "Shattered Skies key art placeholder",
+  posterAlt:
+    "Shattered Skies key art. Two soldiers from rival species stand side by side on a rock in a glowing sea, facing a ringed gas giant, surrounded by floating islands with neon cities and drifting airships.",
 
   vision:
     "Shattered Skies entwines two soldiers from enemy species that hold the same parasite, The Symbiochord. " +

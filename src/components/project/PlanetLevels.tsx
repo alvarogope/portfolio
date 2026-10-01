@@ -3,7 +3,6 @@
 import { useRef, useState } from "react";
 import {
   dimensionGroups,
-  dossierPointer,
   getLevelPlanet,
   levelDimensions,
   levelPlanets,

@@ -15,7 +15,8 @@ export const seedsOfTomorrow: Project = {
   routingVerb: "See the design",
   showcase: "Shown at Develop:Brighton 2025",
 
-  posterAlt: "Seeds of Tomorrow key art placeholder",
+  posterAlt:
+    "Seeds of Tomorrow key art. A polluted wasteland of cracked earth, smoking cooling towers and rusted barrels, where small purple flowers are starting to grow back.",
 
   vision:
     "In a future where Earth has been completely destroyed by pollution, a time traveller comes back to " +

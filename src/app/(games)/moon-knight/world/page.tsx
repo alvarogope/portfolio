@@ -87,7 +87,7 @@ export default function MoonKnightWorldPage() {
           id={deepDiveAnchors.cast}
           style={{ marginTop: "5rem" }}
         >
-          <Cast kicker="The Characters" />
+          <Cast />
         </div>
       </Reveal>
 

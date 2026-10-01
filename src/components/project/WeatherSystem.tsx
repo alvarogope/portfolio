@@ -2,7 +2,6 @@ import {
   flip,
   flipSummary,
   loopPointer,
-  rejectedReadout,
   rosterThesis,
   weatherCredit,
   weathers,
@@ -32,9 +31,6 @@ const CROSS_Y = Math.round((SKY_TOP + GROUND_Y) / 2);
 const TRIGGER_Y = 6;
 const TRIGGER_H = 26;
 
-const REJECT_Y = 366;
-const BAR_W = 232;
-const BAR_H = 11;
 
 const PLATE_FONT = 10;
 const PLATE_CHAR_W = PLATE_FONT * 0.6;
@@ -180,7 +176,6 @@ function Plate({
 
 function ZonePanel({ zone, i }: { zone: Zone; i: number }) {
   const box = panelBox(i);
-  const sky = weathers.find((w) => w.id === zone.sky);
 
   return (
     <g className={`sw-zone is-${zone.id}`}>

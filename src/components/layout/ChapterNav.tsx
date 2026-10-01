@@ -18,7 +18,7 @@ export default function ChapterNav({
       </p>
 
       <ol className="chn__list">
-        {chapters.map((c, i) => (
+        {chapters.map((c) => (
           <li key={c.id} className="chn__item">
             <Link className="chn__tile" href={chapterHref(c)}>
               <span className="chn__title">{c.title}</span>

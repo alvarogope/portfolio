@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Analytics } from "@vercel/analytics/next";
 import ScrollToTop from "@/components/layout/ScrollToTop";
 import PreserveScrollOnResize from "@/components/layout/PreserveScrollOnResize";
+import { SITE_URL } from "@/site";
 
 /* ============================================
    FONTS
@@ -72,9 +73,18 @@ const brand = Bricolage_Grotesque({
    ============================================ */
 
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: "Álvaro Gómez Pérez | Technical Designer",
   description:
     "Technical game designer. I design game systems and build them myself — Unreal Engine 5, Unity, C++, Python.",
+  openGraph: {
+    siteName: "Álvaro Gómez",
+    locale: "en_GB",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+  },
 };
 
 /* ============================================
@@ -96,7 +106,6 @@ export default function RootLayout({
         <ScrollToTop />
         <PreserveScrollOnResize />
 
-        {/* Placeholder nav */}
         <header
           style={{
             display: "flex",
@@ -122,7 +131,6 @@ export default function RootLayout({
 
         {children}
 
-        {/* Placeholder footer */}
         <footer
           className="mono"
           style={{

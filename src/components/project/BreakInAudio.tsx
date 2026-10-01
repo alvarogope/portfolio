@@ -4,7 +4,6 @@ import {
   clockRailSummary,
   cues,
   cuesNote,
-  detectionPointer,
   scoreNote,
   scoreStates,
   thesis,

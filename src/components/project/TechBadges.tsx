@@ -1,5 +1,7 @@
 "use client";
 
+import Image from "next/image";
+
 export type TechItem = { name: string; icon?: string };
 export type TechGroup = { label: string; items: TechItem[] };
 
@@ -121,7 +123,7 @@ function Badge({ item }: { item: TechItem }) {
       aria-label={name}
     >
       {icon ? (
-        <img
+        <Image
           src={`/images/tech/${encodeURIComponent(icon)}.svg`}
           alt=""
           aria-hidden

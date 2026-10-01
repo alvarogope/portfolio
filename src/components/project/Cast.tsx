@@ -9,7 +9,7 @@ import {
 } from "@/content/moon-knight-cast";
 import { CastEmblem, CastSprite } from "./CastEmblems";
 
-export default function Cast({ kicker }: { kicker?: string }) {
+export default function Cast() {
   const [witch, druid] = castMirror;
 
   return (

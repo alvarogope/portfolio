@@ -15,7 +15,6 @@ import {
   type FeedbackChannelId,
   type TransitionKind,
 } from "@/content/break-in-detection";
-import { getRole } from "@/content/break-in-roles";
 
 const PAD_X = 24;
 const NODE_W = 214;
@@ -336,15 +335,7 @@ function ChannelGlyph({ id }: { id: FeedbackChannelId }) {
   );
 }
 
-const KIND_WORD: Record<TransitionKind, string> = {
-  escalate: "Escalates",
-  deescalate: "De-escalates",
-  terminal: "Ends the run",
-};
-
 export default function DetectionStates() {
-  const hacker = getRole("hacker");
-
   return (
     <div className="ds">
       <div className="panel ds-console">

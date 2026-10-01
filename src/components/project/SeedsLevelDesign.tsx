@@ -5,7 +5,6 @@ import {
   loopSteps,
   loopSummary,
   payoffPointer,
-  puzzleNote,
   type LoopHalf,
 } from "@/content/seeds-levels";
 

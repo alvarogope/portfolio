@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Cinzel, UnifrakturCook, Spectral, JetBrains_Mono, Rajdhani, Fraunces, Archivo, Bricolage_Grotesque } from "next/font/google";
 import "./globals.css";
 import Link from "next/link";
+import { Analytics } from "@vercel/analytics/next";
 import ScrollToTop from "@/components/layout/ScrollToTop";
 import PreserveScrollOnResize from "@/components/layout/PreserveScrollOnResize";
 
@@ -166,6 +167,7 @@ export default function RootLayout({
             </p>
           </div>
         </footer>
+        <Analytics />
       </body>
     </html>
   );

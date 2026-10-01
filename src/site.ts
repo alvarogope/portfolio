@@ -1,1 +1,1 @@
-export const SITE_URL = "https://portfolio-bay-three-85.vercel.app/";
+export const SITE_URL = "https://alvarogomezgames.com";

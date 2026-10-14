@@ -25,7 +25,7 @@ export const moonKnight: Project = {
   routingVerb: "See the systems",
 
   posterAlt:
-    "Moon-Knight key art. Armoured knight beneath a full moon, moon-phase health bar on the breastplate.",
+    "The Moon-Knight title screen: a sword in a stone under a full moon and a willow tree, with the Play, Options and Exit menu.",
   showcase: "Shown at Develop:Brighton 2025",
 
   vision:

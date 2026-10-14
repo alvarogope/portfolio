@@ -16,7 +16,7 @@ export const seedsOfTomorrow: Project = {
   showcase: "Shown at Develop:Brighton 2025",
 
   posterAlt:
-    "Seeds of Tomorrow key art. A polluted wasteland of cracked earth, smoking cooling towers and rusted barrels, where small purple flowers are starting to grow back.",
+    "Hand-drawn charcoal sketch of a poisoned Earth: cooling towers venting smoke, wrecked pylons, scattered oil drums, a ringed planet and a saucer in the sky.",
 
   vision:
     "In a future where Earth has been completely destroyed by pollution, a time traveller comes back to " +

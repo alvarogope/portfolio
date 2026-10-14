@@ -48,7 +48,7 @@ const CONFIG: ActConfig[] = [
     slug: "seeds-of-tomorrow",
     label: "SOLARPUNK",
     accent: "#8fc98a",
-    poster: "/images/seeds-of-tomorrow/st-poster.png",
+    poster: "/images/seeds-of-tomorrow/sot-poster.jpg",
     side: "left",
   },
 ];

@@ -60,7 +60,7 @@ export default function SeedsOfTomorrowPage() {
           opacity={0.28}
         />
         <div className="sot-hero-content">
-          <ProjectHero project={p} posterSrc="/images/seeds-of-tomorrow/st-poster.png" />
+          <ProjectHero project={p} posterSrc="/images/seeds-of-tomorrow/sot-poster.jpg" />
         </div>
       </div>
 
@@ -210,7 +210,7 @@ export default function SeedsOfTomorrowPage() {
                   aspect="914 / 639"
                   items={[
                     {
-                      src: "/images/seeds-of-tomorrow/dying-earth-sketch.jpg",
+                      src: "/images/seeds-of-tomorrow/sot-poster.jpg",
                       label: "Sketch",
                       alt: "Hand-drawn charcoal sketch of a poisoned Earth: cooling towers venting smoke, wrecked pylons, scattered oil drums, a ringed planet and a saucer in the sky.",
                       caption:

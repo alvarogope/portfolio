@@ -3,8 +3,9 @@ import Image from "next/image";
 import Link from "next/link";
 import Reveal from "@/components/layout/Reveal";
 import Particles from "@/components/effects/Particles";
-import TiltedCard from "@/components/effects/TiltedCard";
 import EngineTag from "@/components/project/EngineTag";
+import HeroBackdrop from "@/components/home/HeroBackdrop";
+import { heroSlides } from "@/components/home/hero-slides";
 import { acts, toChips, type Act } from "@/components/home/acts";
 
 export const metadata: Metadata = {
@@ -16,7 +17,7 @@ export const metadata: Metadata = {
 const T = {
   hero: "clamp(2.75rem, 1.7rem + 5.4vw, 7.5rem)",
   displayLg: "clamp(2.5rem, 1.8rem + 3.5vw, 4.75rem)",
-  display: "clamp(2rem, 1.6rem + 2vw, 3.125rem)",
+  bandTitle: "clamp(2.25rem, 1.6rem + 2.8vw, 4rem)",
   quote: "clamp(1.75rem, 1.3rem + 2.2vw, 2.75rem)",
   lead: 20,
   bodyLg: 19,
@@ -62,28 +63,18 @@ export default function Home() {
         className="hp-hero"
         style={{
           position: "relative",
-          height: "min(100vh, 820px)",
-          minHeight: 580,
           display: "flex",
           flexDirection: "column",
-
-          justifyContent: "center",
           background: "var(--color-void)",
           overflow: "hidden",
         }}
       >
-        {/* Particles Effect for the Hero */}
-        <Particles
-          className="hp-hero-particles"
-          particleColors={acts.map((act) => act.accent)}
-          particleCount={600}
-          particleSpread={10}
-          speed={0.1}
-          particleBaseSize={100}
-          moveParticlesOnHover
-          particleHoverFactor={1}
-        />
-        <div aria-hidden className="hp-hero-contrast" />
+        {/* Rotating full-bleed stills, fading through black. The hero's
+            particle field was removed: over photographs it read as noise
+            on the image rather than depth, and it was a second WebGL
+            context competing with the first image for first paint. The
+            closer keeps its field. */}
+        <HeroBackdrop slides={heroSlides} />
         <div className="hp-hero-copy">
           <p
             style={{
@@ -98,7 +89,7 @@ export default function Home() {
           <h1
             style={{
               ...display,
-              margin: "0 auto",
+              margin: 0,
               fontWeight: DISPLAY_WEIGHT,
               fontSize: T.hero,
               lineHeight: 0.9,
@@ -116,10 +107,9 @@ export default function Home() {
               maxWidth: 620,
               fontSize: T.lead,
               lineHeight: 1.55,
-              color: "var(--color-mist)",
             }}
           >
-            Four games, four worlds, four systems. Scroll to enter them.
+            I am a technical game designer specialised in systems and level design, world-building, audio and programming.
           </p>
         </div>
       </section>
@@ -209,57 +199,41 @@ export default function Home() {
       {/* Responsive and Interactions */}
       <style>{`
         /* ---- hero ---- */
-        .hp-hero-particles {
-          position: absolute;
-          inset: 0;
-          z-index: 0;
-          pointer-events: none;
+        /* One screen below the sticky header, bounded so a very tall
+           window does not turn it into a wall. The flex alignment lives
+           here rather than inline so the narrow breakpoint can move the
+           copy to the bottom. */
+        .hp-hero {
+          height: calc(100svh - var(--header-h));
+          min-height: 560px;
+          max-height: 980px;
+          justify-content: center;
         }
-        /* The veil that protects the hero copy's contrast from the
-           particles behind it.
-
-           ⚠ CURRENTLY DISABLED, paired with the diagnostic values in
-           Particles.tsx. With it off, particles run at full strength over
-           the type and the subline does NOT meet AA.
-
-           It is off because the version below was wrong: an ellipse of
-           820x500 is a 1640x1000 area, larger than the hero itself
-           (1440x820 at most), so instead of thinning the field toward the
-           centre it smothered nearly all of it — 90-96% void across most of
-           the visible hero, which is why the particles could not be seen.
-
-           Restoring this needs the ellipse sized against the HERO, not just
-           against the text: something near "ellipse 520px 210px" covers the
-           copy block while leaving real unveiled area at the top, bottom
-           and sides. Re-measure the three text roles against it before
-           trusting it — the numbers that matter are eyebrow (silver),
-           headline (moonlight) and subline (--color-mist, the tight one, at
-           only 5.2:1 on bare void before any particle). */
-        .hp-hero-contrast {
-          position: absolute;
-          inset: 0;
-          z-index: 1;
-          pointer-events: none;
-          background: none;
-        }
-        /* Centred hero. The block is centred as a whole and each line is
-           centred within it, so the inline max-widths still bound the
-           measure — they just need auto side margins to sit on the axis. */
+        /* Left-aligned over the image, on a scrim that HeroBackdrop
+           anchors to the left edge in pixels. The shadow is not the
+           contrast — the scrim is — it only softens single bright pixels
+           (stars, engine glow) that would otherwise sit right on a stroke. */
         .hp-hero-copy {
           position: relative;
           z-index: 2;
-          padding: 0 48px;
-          text-align: center;
+          padding: 0 clamp(24px, 6vw, 112px);
+          max-width: 1100px;
+          text-align: left;
+          text-shadow: 0 1px 28px color-mix(in srgb, var(--color-void) 70%, transparent);
         }
         /* Relationship-based rhythm: the eyebrow belongs to the
            headline, so it hugs it; the subline is a separate thought
-           and gets real air. With nothing but type in the hero these
-           intervals are what give it presence, so they run generous.
-           The headline's tight line-height makes its box shorter than
-           its glyphs, so a modest margin here collapses to no visible
-           gap at all — these are sized for the optical result. */
-        .hp-hero-copy > p:first-of-type { margin: 0 auto 40px; }
-        .hp-hero-sub { margin: 40px auto 0; }
+           and gets real air. The headline's tight line-height makes its
+           box shorter than its glyphs, so a modest margin here collapses
+           to no visible gap at all — these are sized for the optical
+           result. */
+        .hp-hero-copy > p:first-of-type { margin: 0 0 32px; }
+        /* Lifted off --color-mist: mist is 5.2:1 on bare void, and over a
+           photograph the ground is never bare void. */
+        .hp-hero-sub {
+          margin: 36px 0 0;
+          color: var(--color-silver);
+        }
 
         /* ---- closer ---- */
         .hp-closer { padding: 128px 48px; }
@@ -315,54 +289,120 @@ export default function Home() {
         }
 
         /* ---- bands ---- */
-        /* The whole band is the link, so a click anywhere on the card
-           routes. It holds exactly one interactive element — the inner
-           "See the systems" affordance is a span, not a nested anchor. */
+        /* Each project is one full-bleed still with its copy laid over the
+           foot of the frame, in the hero's language: a void scrim anchored
+           in pixels from the copy's side, a floor, and the same saturation
+           pull toward the cool palette. The whole band is the link, so a
+           click anywhere on it routes. It holds exactly one interactive
+           element — the inner affordance is a span, not a nested anchor. */
         .hp-band {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          align-items: center;
-          min-height: var(--band-min-height);
-          border-top: 1px solid var(--color-nightfall);
+          --band-h: clamp(540px, 80svh, 820px);
           position: relative;
+          isolation: isolate;
+          display: flex;
+          align-items: flex-end;
+          min-height: var(--band-h);
+          border-top: 1px solid var(--color-nightfall);
+          overflow: hidden;
           color: inherit;
           text-decoration: none;
         }
-        /* The card lighting up on hover, in the band's own accent. */
+        .hp-band[data-flagship] { --band-h: clamp(620px, 92svh, 960px); }
+        .hp-band[data-side="right"] { justify-content: flex-end; }
+
+        .hp-band-media {
+          position: absolute;
+          inset: 0;
+          z-index: 0;
+          overflow: hidden;
+        }
+        .hp-band-media img {
+          filter: saturate(0.82) brightness(0.94);
+          transition:
+            transform 1400ms cubic-bezier(0.2, 0.6, 0.2, 1),
+            filter 600ms ease;
+        }
+        .hp-band-shade,
+        .hp-band-scrim { position: absolute; inset: 0; }
+
+        /* Side + floor + lid. The side stops are the hero's own, so the
+           copy column is shaded exactly as the hero's is; the floor then
+           deepens it toward the foot of the frame. The lid hands each frame
+           off from the band above it, as the hero's floor does. */
+        .hp-band[data-side="left"] .hp-band-scrim {
+          background:
+            linear-gradient(90deg,
+              color-mix(in srgb, var(--color-void) 92%, transparent) 0px,
+              color-mix(in srgb, var(--color-void) 84%, transparent) 540px,
+              color-mix(in srgb, var(--color-void) 50%, transparent) 860px,
+              color-mix(in srgb, var(--color-void) 12%, transparent) 1240px,
+              transparent 100%),
+            linear-gradient(0deg,
+              var(--color-void) 0%,
+              color-mix(in srgb, var(--color-void) 72%, transparent) 24%,
+              transparent 66%),
+            linear-gradient(180deg, var(--color-void) 0%, transparent 16%);
+        }
+        .hp-band[data-side="right"] .hp-band-scrim {
+          background:
+            linear-gradient(270deg,
+              color-mix(in srgb, var(--color-void) 92%, transparent) 0px,
+              color-mix(in srgb, var(--color-void) 84%, transparent) 540px,
+              color-mix(in srgb, var(--color-void) 50%, transparent) 860px,
+              color-mix(in srgb, var(--color-void) 12%, transparent) 1240px,
+              transparent 100%),
+            linear-gradient(0deg,
+              var(--color-void) 0%,
+              color-mix(in srgb, var(--color-void) 72%, transparent) 24%,
+              transparent 66%),
+            linear-gradient(180deg, var(--color-void) 0%, transparent 16%);
+        }
+
+        /* The band lighting up on hover, in its own accent. */
         .hp-band::after {
           content: "";
           position: absolute;
           inset: 0;
+          z-index: 1;
           background: var(--accent);
           opacity: 0;
           pointer-events: none;
           transition: opacity 320ms ease;
         }
-        .hp-band:hover::after { opacity: 0.055; }
 
-        /* This is the TiltedCard wrapper itself, so the order rules below
-           still address a direct grid child. overflow:hidden keeps the
-           poster inside its own frame as it rotates. */
-        .hp-band-media {
-          position: relative;
-          height: 100%;
-          min-height: 260px;
-          overflow: hidden;
-          will-change: transform;
+        /* The top edge, tinted with the project's accent and strongest on
+           the copy's side. It gives each band a constructed edge against
+           the one above instead of two images simply abutting. */
+        .hp-band-seam {
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          z-index: 2;
+          height: 1px;
+          opacity: 0.75;
+          transition: opacity 320ms ease;
         }
+        .hp-band[data-side="left"]  .hp-band-seam {
+          background: linear-gradient(90deg, var(--accent-59), var(--accent-0) 70%);
+        }
+        .hp-band[data-side="right"] .hp-band-seam {
+          background: linear-gradient(270deg, var(--accent-59), var(--accent-0) 70%);
+        }
+
+        /* Same side padding as the hero's copy, so the bands' text and the
+           name above them hang off one vertical line. The shadow is not
+           the contrast — the scrim is — it only softens single bright
+           pixels under a stroke, as in the hero. */
         .hp-band-copy {
+          position: relative;
+          z-index: 2;
           display: flex;
           flex-direction: column;
-          padding: 64px 48px;
-          position: relative;
-          z-index: 1;
+          width: min(100%, 780px);
+          padding: 120px clamp(24px, 6vw, 112px) clamp(56px, 9svh, 104px);
+          text-shadow: 0 1px 24px color-mix(in srgb, var(--color-void) 70%, transparent);
         }
-
-        /* Copy on the named side, poster on the other. */
-        .hp-band[data-side="left"]  .hp-band-copy  { order: 1; }
-        .hp-band[data-side="left"]  .hp-band-media { order: 2; }
-        .hp-band[data-side="right"] .hp-band-media { order: 1; }
-        .hp-band[data-side="right"] .hp-band-copy  { order: 2; }
 
         /* Metrics live here rather than inline so the narrow breakpoint
            can retune them; an inline value would outrank the media query. */
@@ -371,37 +411,19 @@ export default function Home() {
           letter-spacing: ${LABEL.act.letterSpacing};
           white-space: nowrap;
         }
-        .hp-act-rule  { flex: 1; height: 1px; }
-
-        .hp-band-scrim { position: absolute; inset: 0; }
-        .hp-band[data-side="left"]  .hp-band-scrim {
-          background: linear-gradient(90deg, var(--color-void) 0%, transparent 48%);
-        }
-        .hp-band[data-side="right"] .hp-band-scrim {
-          background: linear-gradient(270deg, var(--color-void) 0%, transparent 48%);
-        }
-
-        /* The seam where poster meets copy, tinted with the project's
-           own accent. It gives each band a constructed edge instead of
-           two halves simply abutting, and brightens on hover. */
-        .hp-band-seam {
-          position: absolute;
-          top: 0;
-          bottom: 0;
-          width: 1px;
-          background: linear-gradient(var(--accent-0), var(--accent-59), var(--accent-0));
-          opacity: 0.75;
-          transition: opacity 320ms ease;
-        }
-        .hp-band:hover .hp-band-seam { opacity: 1; }
-        .hp-band[data-side="left"]  .hp-band-seam { left: 0; }
-        .hp-band[data-side="right"] .hp-band-seam { right: 0; }
+        .hp-act-rule  { flex: 1; max-width: 240px; height: 1px; }
 
         /* ---- interaction ---- */
-        .hp-band-media img {
-          transition: transform 900ms cubic-bezier(0.2, 0.6, 0.2, 1);
+        /* Keyboard focus gets the same lift as the pointer. The zoom is
+           pointer-only so a tap on a phone does not leave it stuck. */
+        .hp-band:is(:hover, :focus-visible)::after { opacity: 0.05; }
+        .hp-band:is(:hover, :focus-visible) .hp-band-seam { opacity: 1; }
+        .hp-band:is(:hover, :focus-visible) .hp-band-media img {
+          filter: saturate(0.9) brightness(1.04);
         }
-        .hp-band:hover .hp-band-media img { transform: scale(1.035); }
+        @media (hover: hover) {
+          .hp-band:hover .hp-band-media img { transform: scale(1.04); }
+        }
 
         .hp-link {
           display: inline-flex;
@@ -411,7 +433,7 @@ export default function Home() {
           border-bottom: 1px solid currentColor;
         }
         .hp-link .hp-arrow { transition: transform 260ms ease; }
-        .hp-band:hover .hp-arrow { transform: translateX(4px); }
+        .hp-band:is(:hover, :focus-visible) .hp-arrow { transform: translateX(4px); }
 
         .hp-cta { transition: background-color 220ms ease, color 220ms ease; }
         .hp-cta:hover {
@@ -457,37 +479,53 @@ export default function Home() {
 
         /* ---- responsive ---- */
         @media (max-width: 900px) {
-          .hp-hero-copy { padding: 0 24px; }
-          .hp-hero-copy > p:first-of-type { margin: 0 auto 26px; }
-          .hp-hero-sub { margin: 30px auto 0; }
+          .hp-hero-copy > p:first-of-type { margin: 0 0 26px; }
+          .hp-hero-sub { margin: 30px 0 0; }
           .hp-closer { padding: 88px 24px; }
           .hp-avnote { padding: 48px 24px; }
 
-          /* Bands stack: poster above, copy full-width beneath. */
+          /* Bands stack: the still keeps the top of the band to itself,
+             and the copy starts just over its foot, where the floor is
+             darkest, then continues on void. */
           .hp-band {
-            grid-template-columns: 1fr;
+            display: block;
             min-height: 0;
           }
-          /* Same specificity as the side rules above, and later in the
-             sheet, so the poster always stacks on top regardless of side. */
-          .hp-band[data-side] .hp-band-media { height: 240px; min-height: 240px; order: 1; will-change: auto; }
-          .hp-band[data-side] .hp-band-copy  { order: 2; padding: 40px 24px 48px; max-width: none !important; }
-
-          /* Copy is underneath now, so the poster fades downward and the
-             seam becomes the horizontal edge between the two. */
-          .hp-band[data-side] .hp-band-scrim {
-            background: linear-gradient(180deg, transparent 45%, var(--color-void) 100%);
+          .hp-band-media {
+            position: relative;
+            inset: auto;
+            height: clamp(300px, 90vw, 560px);
           }
-          .hp-band[data-side] .hp-band-seam {
-            top: auto; bottom: 0; left: 0; right: 0;
-            width: auto; height: 1px;
-            background: linear-gradient(90deg, var(--accent-0), var(--accent-59), var(--accent-0));
+          .hp-band[data-side] .hp-band-scrim {
+            background:
+              linear-gradient(0deg,
+                var(--color-void) 0%,
+                color-mix(in srgb, var(--color-void) 90%, transparent) 22%,
+                transparent 64%),
+              linear-gradient(180deg,
+                color-mix(in srgb, var(--color-void) 80%, transparent) 0%,
+                transparent 18%);
+          }
+          .hp-band-copy {
+            width: auto;
+            margin-top: -56px;
+            padding: 0 24px 56px;
           }
 
           /* The long flagship label cannot hold one line at this width:
              let it wrap and drop the leader rule rather than clip. */
           .hp-act-label { white-space: normal; letter-spacing: 0.18em; line-height: 1.6; }
           .hp-act-rule  { display: none; }
+        }
+
+        /* Narrow: the copy drops to the bottom of the frame, where
+           HeroBackdrop's scrim turns vertical and is darkest, and the
+           image keeps the top of the screen to itself. */
+        @media (max-width: 720px) {
+          .hp-hero {
+            justify-content: flex-end;
+            padding-bottom: 56px;
+          }
         }
 
         @media (prefers-reduced-motion: reduce) {
@@ -497,7 +535,7 @@ export default function Home() {
           .hp-arrow,
           .hp-cta { transition: none; }
           .hp-band:hover .hp-band-media img { transform: none; }
-          .hp-band:hover .hp-arrow { transform: none; }
+          .hp-band:is(:hover, :focus-visible) .hp-arrow { transform: none; }
         }
       `}</style>
     </div>
@@ -507,13 +545,14 @@ export default function Home() {
 /* ------------------------------------------------------------------ */
 
 function ActBand({ act }: { act: Act }) {
-  const { project, label, accent, poster, side, flagship } = act;
+  const { project, label, accent, image, side, flagship } = act;
   const engine = project.facts.engine;
 
   return (
     <Link
       className="hp-band"
       data-side={side}
+      data-flagship={flagship ? "" : undefined}
       href={`/${project.slug}`}
       aria-label={`${project.title} — ${project.routingVerb}`}
       style={
@@ -521,33 +560,35 @@ function ActBand({ act }: { act: Act }) {
           "--accent": accent,
           "--accent-0": `${accent}00`,
           "--accent-59": `${accent}59`,
-          "--band-min-height": `${flagship ? 640 : 420}px`,
           background: bandBackground(accent),
         } as React.CSSProperties
       }
     >
-      {/* Poster Tilts */}
-      <TiltedCard
-        className="hp-band-media"
-        rotateAmplitude={6}
-        scaleOnHover={1}
-        showMobileWarning={false}
-        showTooltip={false}
-      >
+      {/* Every band is below the hero's fold, so none is preloaded: the
+          hero's first slide owns first paint, and these load lazily as
+          they approach the viewport. */}
+      <div className="hp-band-media">
         <Image
-          src={poster}
-          alt={project.posterAlt}
+          src={image.src}
+          alt={image.alt}
           fill
-          sizes="(max-width: 900px) 100vw, 50vw"
-          style={{ objectFit: "cover" }}
-          priority={flagship}
+          sizes="100vw"
+          style={{ objectFit: "cover", objectPosition: image.position }}
         />
-
+        {image.shade > 0 && (
+          <div
+            aria-hidden
+            className="hp-band-shade"
+            style={{
+              background: `color-mix(in srgb, var(--color-void) ${Math.round(image.shade * 100)}%, transparent)`,
+            }}
+          />
+        )}
         <div aria-hidden className="hp-band-scrim" />
-        <div aria-hidden className="hp-band-seam" />
-      </TiltedCard>
+      </div>
+      <div aria-hidden className="hp-band-seam" />
 
-      <div className="hp-band-copy" style={{ maxWidth: flagship ? 620 : 560 }}>
+      <div className="hp-band-copy">
 
         <div
           style={{
@@ -576,7 +617,7 @@ function ActBand({ act }: { act: Act }) {
             fontWeight: DISPLAY_WEIGHT,
             lineHeight: flagship ? 0.92 : 0.98,
             letterSpacing: flagship ? "-0.035em" : "-0.03em",
-            fontSize: flagship ? T.displayLg : T.display,
+            fontSize: flagship ? T.displayLg : T.bandTitle,
             textWrap: "balance",
           }}
         >
@@ -586,9 +627,12 @@ function ActBand({ act }: { act: Act }) {
         <p
           style={{
             margin: `${flagship ? 24 : 20}px 0 0`,
+            maxWidth: flagship ? 600 : 560,
             fontSize: flagship ? T.bodyLg : T.body,
             lineHeight: 1.6,
-            color: "var(--color-mist)",
+            /* Silver, not mist, for the hero's reason: over a photograph
+               the ground is never bare void. */
+            color: "var(--color-silver)",
             textWrap: "pretty",
           }}
         >
@@ -613,7 +657,11 @@ function ActBand({ act }: { act: Act }) {
                 ...LABEL.chip,
                 border: "1px solid color-mix(in srgb, var(--color-mist) 32%, transparent)",
                 padding: "8px 12px",
-                color: "var(--color-mist)",
+                /* Small mono text over a photograph: the chip carries its
+                   own plate, and its text is lifted a third of the way
+                   from mist toward silver. */
+                background: "color-mix(in srgb, var(--color-void) 72%, transparent)",
+                color: "color-mix(in srgb, var(--color-mist) 66%, var(--color-silver))",
                 whiteSpace: "nowrap",
               }}
             >
@@ -634,7 +682,7 @@ function ActBand({ act }: { act: Act }) {
             color: accent,
           }}
         >
-          Click here · {project.routingVerb}
+          Click here to {project.routingVerb}
           <span aria-hidden className="hp-arrow">
             →
           </span>

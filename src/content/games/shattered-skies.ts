@@ -12,7 +12,7 @@ export const shatteredSkies: Project = {
   systemsHook: "Two players share one life and cannot understand each other. What you say in five clear seconds decides how it ends.",
   disciplines: "Systems · World & level design · Traversal · Progression",
   scope: "Systems & World Designer · Team of 5",
-  routingVerb: "See the systems",
+  routingVerb: "see the project",
 
   posterAlt:
     "The Shattered Skies title screen and menu.",

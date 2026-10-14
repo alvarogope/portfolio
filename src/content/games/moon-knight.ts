@@ -22,7 +22,7 @@ export const moonKnight: Project = {
   systemsHook: "Five combat abilities built on real quantum computing principles.",
   disciplines: "Systems Design · Quantum Design · Combat Design · C++ · Level Design · UI/UX ",
   scope: "Solo · full authorship",
-  routingVerb: "See the systems",
+  routingVerb: "see the project",
 
   posterAlt:
     "The Moon-Knight title screen: a sword in a stone under a full moon and a willow tree, with the Play, Options and Exit menu.",

@@ -12,7 +12,7 @@ export const seedsOfTomorrow: Project = {
   systemsHook: "A dying world that heals as you solve it: acid rain turns clean, and life returns to the Earth you restore.",
   disciplines: "Original score · Level & puzzle design · Weather systems · Pacing",
   scope: "Composer & Level Designer · Team of 5",
-  routingVerb: "See the design",
+  routingVerb: "see the project",
   showcase: "Shown at Develop:Brighton 2025",
 
   posterAlt:

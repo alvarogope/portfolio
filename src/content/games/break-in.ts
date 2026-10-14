@@ -12,7 +12,7 @@ export const breakIn: Project = {
   systemsHook: "Four asymmetric roles, no voice chat, eight minutes. Every ability is useless without a teammate.",
   disciplines: "Systems · Multiplayer · Level design · Audio direction",
   scope: "Lead Designer · Team of 4",
-  routingVerb: "See the systems",
+  routingVerb: "see the project",
 
   posterAlt:
     "In-engine view of the basement corridor with the laser grid switched on: a dozen green beams crossing the passage at waist and chest height, and a wall keypad beside them.",

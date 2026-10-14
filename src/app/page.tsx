@@ -69,11 +69,6 @@ export default function Home() {
           overflow: "hidden",
         }}
       >
-        {/* Rotating full-bleed stills, fading through black. The hero's
-            particle field was removed: over photographs it read as noise
-            on the image rather than depth, and it was a second WebGL
-            context competing with the first image for first paint. The
-            closer keeps its field. */}
         <HeroBackdrop slides={heroSlides} />
         <div className="hp-hero-copy">
           <p
@@ -137,7 +132,6 @@ export default function Home() {
             textAlign: "left",
           }}
         >
-          {/* Particles Effect for the Closer */}
           <Particles
             className="hp-closer-particles"
             particleColors={acts.map((act) => act.accent)}
@@ -564,9 +558,6 @@ function ActBand({ act }: { act: Act }) {
         } as React.CSSProperties
       }
     >
-      {/* Every band is below the hero's fold, so none is preloaded: the
-          hero's first slide owns first paint, and these load lazily as
-          they approach the viewport. */}
       <div className="hp-band-media">
         <Image
           src={image.src}
@@ -630,8 +621,6 @@ function ActBand({ act }: { act: Act }) {
             maxWidth: flagship ? 600 : 560,
             fontSize: flagship ? T.bodyLg : T.body,
             lineHeight: 1.6,
-            /* Silver, not mist, for the hero's reason: over a photograph
-               the ground is never bare void. */
             color: "var(--color-silver)",
             textWrap: "pretty",
           }}
@@ -657,9 +646,6 @@ function ActBand({ act }: { act: Act }) {
                 ...LABEL.chip,
                 border: "1px solid color-mix(in srgb, var(--color-mist) 32%, transparent)",
                 padding: "8px 12px",
-                /* Small mono text over a photograph: the chip carries its
-                   own plate, and its text is lifted a third of the way
-                   from mist toward silver. */
                 background: "color-mix(in srgb, var(--color-void) 72%, transparent)",
                 color: "color-mix(in srgb, var(--color-mist) 66%, var(--color-silver))",
                 whiteSpace: "nowrap",

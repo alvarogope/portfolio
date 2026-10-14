@@ -15,7 +15,7 @@ export const shatteredSkies: Project = {
   routingVerb: "See the systems",
 
   posterAlt:
-    "Shattered Skies key art. Two soldiers from rival species stand side by side on a rock in a glowing sea, facing a ringed gas giant, surrounded by floating islands with neon cities and drifting airships.",
+    "The Shattered Skies title screen and menu.",
 
   vision:
     "Shattered Skies entwines two soldiers from enemy species that hold the same parasite, The Symbiochord. " +

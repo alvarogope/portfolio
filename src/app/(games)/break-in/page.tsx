@@ -64,7 +64,7 @@ export default function BreakInPage() {
           opacity={1}
         />
         <div className="bi-hero-content">
-          <ProjectHero project={p} posterSrc="/images/break-in/poster.png" />
+          <ProjectHero project={p} posterSrc="/images/break-in/Laser_security.png" />
         </div>
       </div>
 

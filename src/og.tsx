@@ -16,7 +16,8 @@ const SIGNATURE = `${about.name} · ${about.role}`;
 
 async function dataUri(publicPath: string) {
   const file = await readFile(path.join(process.cwd(), "public", publicPath));
-  return `data:image/png;base64,${file.toString("base64")}`;
+  const mime = /\.jpe?g$/i.test(publicPath) ? "image/jpeg" : "image/png";
+  return `data:${mime};base64,${file.toString("base64")}`;
 }
 
 function getAct(slug: string) {

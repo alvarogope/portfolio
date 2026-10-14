@@ -51,7 +51,7 @@ export default function MoonKnightPage() {
           opacity={BACKDROP_OPACITY.moonKnight.hero}
         />
         <div className="mk-hero-content">
-          <ProjectHero project={p} posterSrc="/images/moon-knight/poster.png" />
+          <ProjectHero project={p} posterSrc="/images/moon-knight/mk-poster.png" />
         </div>
       </div>
 

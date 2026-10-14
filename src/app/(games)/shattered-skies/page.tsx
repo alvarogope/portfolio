@@ -57,7 +57,7 @@ export default function ShatteredSkiesPage() {
           opacity={BACKDROP_OPACITY.shatteredSkies.hero}
         />
         <div className="ss-hero-content">
-          <ProjectHero project={p} posterSrc="/images/shattered-skies/poster.png" />
+          <ProjectHero project={p} posterSrc="/images/shattered-skies/sk-poster.png" />
         </div>
       </div>
 

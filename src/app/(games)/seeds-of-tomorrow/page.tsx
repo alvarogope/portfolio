@@ -60,7 +60,7 @@ export default function SeedsOfTomorrowPage() {
           opacity={0.28}
         />
         <div className="sot-hero-content">
-          <ProjectHero project={p} posterSrc="/images/seeds-of-tomorrow/poster.png" />
+          <ProjectHero project={p} posterSrc="/images/seeds-of-tomorrow/st-poster.png" />
         </div>
       </div>
 

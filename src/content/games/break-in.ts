@@ -9,8 +9,8 @@ export const breakIn: Project = {
   links: [],
 
   eyebrow: "UNITY · TEAM OF 4 · LEAD DESIGNER · 2025",
-  systemsHook: "Four asymmetric roles, no voice chat, eight minutes. Every ability is useless without a teammate.",
-  disciplines: "Systems · Multiplayer · Level design · Audio direction",
+  systemsHook: "A stealth-based heist game where four players have to rob a bank with no voice chat and under eight minutes.",
+  disciplines: "Systems Design · Cooperative Mechanics · Multiplayer Design · Level Design · Audio Design",
   scope: "Lead Designer · Team of 4",
   routingVerb: "see the project",
 

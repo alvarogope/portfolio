@@ -19,7 +19,7 @@
 --font-display: var(--font-brand), serif;
 --font-hero:    var(--font-brand), serif;
 --font-body:    var(--font-spectral), Georgia, serif;
---font-mono:    var(--font-jetbrains), monospace;
+--font-mono:    var(--font-spartan), sans-serif;
 
 --text-hero: clamp(2.75rem, 1.8rem + 4.5vw, 5.5rem);
 --text-2xl:  clamp(2rem, 1.5rem + 2.5vw, 3.5rem);

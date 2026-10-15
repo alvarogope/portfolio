@@ -29,9 +29,6 @@ export default function QuantumToolkitPage() {
       {/* Header */}
       <Reveal>
         <div style={{ marginTop: "1.5rem", maxWidth: "38rem" }}>
-          <p className="mono" style={{ fontSize: "0.72rem", color: "var(--color-silver)", marginBottom: "1rem" }}>
-            ENGINEERING DEEP-DIVE · C++17 · QUANTUM++ / EIGEN
-          </p>
           <h1 style={{ fontSize: "var(--text-hero)", margin: 0, lineHeight: 1.05, fontFamily: "var(--font-hero)" }}>
             {q.title}
           </h1>
@@ -63,10 +60,10 @@ export default function QuantumToolkitPage() {
       </Reveal>
 
       {/* Code sections */}
-      {q.sections.map((s, i) => (
+      {q.sections.map((s) => (
         <Reveal key={s.title}>
           <div style={{ marginTop: "4rem" }}>
-            <SectionHeading kicker={`${String(i + 1).padStart(2, "0")} · ${s.kicker}`} title={s.title} />
+            <SectionHeading kicker={s.kicker} title={s.title} />
             <p style={{ marginTop: "1rem", maxWidth: "38rem", lineHeight: 1.75 }}>{s.body}</p>
             <div style={{ marginTop: "1.5rem" }}>
               <CodeBlock filename={s.code.filename} language={s.code.language} code={s.code.body} />

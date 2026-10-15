@@ -69,8 +69,6 @@ export default function BreakInPage() {
       </div>
 
       <Section tight>
-        <Breadcrumb items={[{ label: "Projects", href: "/" }, { label: p.title }]} />
-
         <ChapterNav chapters={breakInChapterList} />
 
         {/* ═══ 01 · OVERVIEW ═══ */}

@@ -36,11 +36,11 @@ export const heroSlides: HeroSlide[] = [
     shade: 0.1,
   },
   {
-    src: "/images/moon-knight/environment.png",
-    alt: "Moon-Knight: a narrow forest path at night, a statue half-hidden in the trees and a strip of stars overhead.",
+    src: "/images/moon-knight/mk-poster.png",
+    alt: "Moon-Knight: a sword in a stone under a full moon and a starfield, willow branches hanging overhead.",
     project: "Moon-Knight",
-    position: "50% 45%",
-    shade: 0.12,
+    position: "60% 45%",
+    shade: 0.16,
   },
   {
     src: "/images/shattered-skies/ship-interior.png",

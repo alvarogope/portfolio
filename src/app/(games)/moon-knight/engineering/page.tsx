@@ -37,12 +37,6 @@ export default function GameEngineeringPage() {
       {/* 1 · Hero and thesis --------------------------------------- */}
       <Reveal>
         <header style={{ marginTop: "1.5rem", maxWidth: "38rem" }}>
-          <p
-            className="mono"
-            style={{ fontSize: "0.72rem", color: "var(--color-silver)", marginBottom: "1rem" }}
-          >
-            {g.eyebrow}
-          </p>
           <h1
             style={{
               fontSize: "var(--text-hero)",

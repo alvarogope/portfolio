@@ -57,7 +57,13 @@ export default function ShatteredSkiesPage() {
           opacity={BACKDROP_OPACITY.shatteredSkies.hero}
         />
         <div className="ss-hero-content">
-          <ProjectHero project={p} posterSrc="/images/shattered-skies/sk-poster.png" />
+          {/* Crop onto the title and ship, clear of the black side bar
+              on the left and the menu on the right. */}
+          <ProjectHero
+            project={p}
+            posterSrc="/images/shattered-skies/sk-poster.png"
+            posterPosition="15% 50%"
+          />
         </div>
       </div>
 

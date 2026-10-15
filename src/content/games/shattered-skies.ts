@@ -9,13 +9,13 @@ export const shatteredSkies: Project = {
   links: [],
 
   eyebrow: "UNITY · TEAM OF 5 · 2025",
-  systemsHook: "Two players share one life and cannot understand each other. What you say in five clear seconds decides how it ends.",
-  disciplines: "Systems · World & level design · Traversal · Progression",
+  systemsHook: "A Sci-Fi Co-op puzzle game where two players have to collaborate while they cannot communicate with each other.",
+  disciplines: "Systems Design · World & Level design · Traversal Mechanics · Progression System",
   scope: "Systems & World Designer · Team of 5",
   routingVerb: "see the project",
 
   posterAlt:
-    "The Shattered Skies title screen and menu.",
+    "The Shattered Skies title screen.",
 
   vision:
     "Shattered Skies entwines two soldiers from enemy species that hold the same parasite, The Symbiochord. " +

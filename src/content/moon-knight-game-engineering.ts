@@ -36,7 +36,6 @@ export interface ScreenshotSlot {
 }
 
 export const gameEngineering = {
-  eyebrow: "GAME PROGRAMMING · UNREAL ENGINE 5 · C++ & BLUEPRINTS · SOLO",
   title: "Programming Moon-Knight",
   thesis: "C++ for handling the logic. Blueprints for handling the presentation.",
 

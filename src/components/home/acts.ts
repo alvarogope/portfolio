@@ -13,7 +13,6 @@ export interface ActImage {
 
 export interface Act {
   project: Project;
-  label: string;
   accent: string;
   poster: string;
   image: ActImage;
@@ -23,7 +22,6 @@ export interface Act {
 
 interface ActConfig {
   slug: string;
-  label: string;
   accent: string;
   poster: string;
   image: ActImage | ((project: Project) => ActImage);
@@ -38,21 +36,19 @@ function heroAlt(src: string): string {
 const CONFIG: ActConfig[] = [
   {
     slug: "moon-knight",
-    label: "DARK MEDIEVAL FANTASY RPG",
     accent: "#c8cde0",
     poster: "/images/moon-knight/mk-poster.png",
-    image: {
-      src: "/images/moon-knight/willow_tree.png",
-      alt: "A white willow tree on a rise under a full night sky, a fallen winged statue below it, the knight small in the distance.",
-      position: "50% 38%",
+    image: (project) => ({
+      src: "/images/moon-knight/mk-poster.png",
+      alt: project.posterAlt,
+      position: "50% 45%",
       shade: 0.14,
-    },
+    }),
     side: "right",
     flagship: true,
   },
   {
     slug: "shattered-skies",
-    label: "SCI-FI CO-OP",
     accent: "#7ec8d8",
     poster: "/images/shattered-skies/sk-poster.png",
     image: {
@@ -65,7 +61,6 @@ const CONFIG: ActConfig[] = [
   },
   {
     slug: "break-in",
-    label: "HEIST",
     accent: "#d6a65a",
     poster: "/images/break-in/Laser_security.png",
     image: (project) => ({
@@ -78,7 +73,6 @@ const CONFIG: ActConfig[] = [
   },
   {
     slug: "seeds-of-tomorrow",
-    label: "SOLARPUNK",
     accent: "#8fc98a",
     poster: "/images/seeds-of-tomorrow/sot-poster.jpg",
     image: {
@@ -97,7 +91,6 @@ export const acts: Act[] = CONFIG.flatMap((entry) => {
   return [
     {
       project,
-      label: entry.label,
       accent: entry.accent,
       poster: entry.poster,
       image: typeof entry.image === "function" ? entry.image(project) : entry.image,

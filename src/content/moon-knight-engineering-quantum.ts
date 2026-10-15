@@ -1,6 +1,6 @@
    export const quantumToolkit = {
     title: "The Quantum Toolkit",
-    tagline: "Real quantum simulation for game combat, in C++ and proven statistically.",
+    tagline: "Real quantum simulation using Quantum++ and Eigen.",
   
   
     intro:
@@ -20,7 +20,7 @@
   
     sections: [
       {
-        kicker: "Design to physics",
+        kicker: "Matching physics",
         title: "Designers Think in Probabilities. The Toolkit in Radians",
         body:
           "As a designer, when I developed the abilities I wanted to say 'this sphere is 70% likely to amplify.' However, when I started " +
@@ -73,7 +73,7 @@
       },
       {
         kicker: "The physics",
-        title: "Simulating Decoherence by Hand",
+        title: "Simulating Decoherence",
         body:
           "The sphere decays through real quantum noise that was coded from actual physics. When it's measured the outcome is a genuine collapse. " +
           "It locks the outcome on purpose instead of creating randomness, without breaking video game rules.",
@@ -101,15 +101,15 @@
       auto [result, probs, states] =
           qpp::measure(State, qpp::gt.Z, { static_cast<qpp::idx>(qubit) });
   
-      State = states[result];   // collapse is real and irreversible
+      State = states[result]; 
       --Qubits;
       return static_cast<int>(result);
   }`,
         },
       },
       {
-        kicker: "The proof",
-        title: "Quantum-Correct",
+        kicker: "The results",
+        title: "Quantumly Correct",
         body:
           "What differentiates my designed quantum inspired mechanics from this work is that it is measurable. " +
           "Each ability is validated by a Monte Carlo control. It runs a thousand times and checks the frequency and compares it to the " +
@@ -140,7 +140,7 @@
     ],
   
     status: {
-      title: "Honest status",
+      title: "In Development",
       body:
         "The toolkit is about the Moon-Knight's five designed mechanics. The core library and two of the five are complete and statistically " + 
         "verified. The third one is in progress still. Two are designed but not yet built. Every finished mechanic is a recombination of the same " + 

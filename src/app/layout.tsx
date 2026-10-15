@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Cinzel, UnifrakturCook, Spectral, JetBrains_Mono, Rajdhani, Fraunces, Archivo, Bricolage_Grotesque } from "next/font/google";
+import { Cinzel, UnifrakturCook, Spectral, Rajdhani, Fraunces, Archivo, Bricolage_Grotesque, League_Spartan } from "next/font/google";
 import "./globals.css";
 import Link from "next/link";
 import { Analytics } from "@vercel/analytics/next";
@@ -22,13 +22,6 @@ const unifraktur = UnifrakturCook({
   subsets: ["latin"],
   weight: ["700"],
   variable: "--font-unifraktur",
-  display: "swap",
-});
-
-const jetbrains = JetBrains_Mono({
-  subsets: ["latin"],
-  weight: ["400", "500"],
-  variable: "--font-jetbrains",
   display: "swap",
 });
 
@@ -68,6 +61,12 @@ const brand = Bricolage_Grotesque({
   display: "swap",
 });
 
+const spartan = League_Spartan({
+  subsets: ["latin"],
+  variable: "--font-spartan",
+  display: "swap",
+});
+
 /* ============================================
    DATA
    ============================================ */
@@ -100,7 +99,7 @@ export default function RootLayout({
     <html
       lang="en-GB"
       data-scroll-behavior="smooth"
-        className={`${cinzel.variable} ${unifraktur.variable} ${spectral.variable} ${jetbrains.variable} ${rajdhani.variable} ${fraunces.variable} ${archivo.variable} ${brand.variable}`}
+        className={`${cinzel.variable} ${unifraktur.variable} ${spectral.variable} ${rajdhani.variable} ${fraunces.variable} ${archivo.variable} ${brand.variable} ${spartan.variable}`}
     >
       <body>
         <ScrollToTop />
@@ -146,7 +145,7 @@ export default function RootLayout({
           }}
         >
           <span>© {new Date().getFullYear()} Álvaro Gómez Pérez</span>
-          <span>Next.js + Tailwind · {" "}
+          <span>Next.js and Tailwind | {" "}
             <a href="https://github.com/alvarogope/portfolio" style={{ borderBottom: "1px solid color-mix(in srgb, var(--color-silver) 50%, transparent)" }}>
               source on GitHub
             </a>

@@ -19,13 +19,13 @@ export const moonKnight: Project = {
   ],
 
   eyebrow: "UE5 · C++ & BLUEPRINTS · SOLO PROJECT · 2025 - Present",
-  systemsHook: "Five combat abilities built on real quantum computing principles.",
+  systemsHook: "A medieval dark fantasy RPG where I designed five combat abilities built on real quantum computing principles.",
   disciplines: "Systems Design · Quantum Design · Combat Design · C++ · Level Design · UI/UX ",
   scope: "Solo · full authorship",
   routingVerb: "see the project",
 
   posterAlt:
-    "The Moon-Knight title screen: a sword in a stone under a full moon and a willow tree, with the Play, Options and Exit menu.",
+    "The Moon-Knight title screen: a sword in a stone under a full moon and a willow tree.",
   showcase: "Shown at Develop:Brighton 2025",
 
   vision:

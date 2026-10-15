@@ -5,7 +5,7 @@ const LOGOS: { match: RegExp; src: string }[] = [
   { match: /unity/i, src: "/images/engines/unity.svg" },
 ];
 
-function logoFor(engine: string): string | null {
+export function logoFor(engine: string): string | null {
   return LOGOS.find((l) => l.match.test(engine))?.src ?? null;
 }
 

@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import Reveal from "@/components/layout/Reveal";
 import Particles from "@/components/effects/Particles";
-import EngineTag from "@/components/project/EngineTag";
+import { logoFor } from "@/components/project/EngineTag";
 import HeroBackdrop from "@/components/home/HeroBackdrop";
 import { heroSlides } from "@/components/home/hero-slides";
 import { acts, toChips, type Act } from "@/components/home/acts";
@@ -16,7 +16,9 @@ export const metadata: Metadata = {
 
 const T = {
   hero: "clamp(2.75rem, 1.7rem + 5.4vw, 7.5rem)",
-  displayLg: "clamp(2.5rem, 1.8rem + 3.5vw, 4.75rem)",
+  /* Band titles are set in capitals, which run ~12% wider than
+     lowercase; this size keeps MOON-KNIGHT on one line. */
+  displayLg: "clamp(2.25rem, 1.6rem + 3vw, 4.2rem)",
   bandTitle: "clamp(2.25rem, 1.6rem + 2.8vw, 4rem)",
   quote: "clamp(1.75rem, 1.3rem + 2.2vw, 2.75rem)",
   lead: 20,
@@ -29,19 +31,9 @@ const DISPLAY_WEIGHT = 700;
 
 const LABEL = {
   eyebrow: { fontSize: 12, letterSpacing: "0.26em" },
-  act: { fontSize: 11, letterSpacing: "0.3em" },
-  chip: { fontSize: 12, letterSpacing: "0.07em" },
 } as const;
 
-const CONTACT = "alvarogomezperez.work@gmail.com";
-
-function bandBackground(accent: string): string {
-  return [
-    `linear-gradient(100deg, ${accent}0a 0%, transparent 55%)`,
-    `repeating-linear-gradient(118deg, transparent 0 20px, ${accent}07 20px 21px)`,
-    "var(--color-void)",
-  ].join(", ");
-}
+const CONTACT ="alvarogomezperez.work@gmail.com";
 
 const mono: React.CSSProperties = { fontFamily: "var(--font-mono)" };
 
@@ -71,16 +63,6 @@ export default function Home() {
       >
         <HeroBackdrop slides={heroSlides} />
         <div className="hp-hero-copy">
-          <p
-            style={{
-              ...mono,
-              ...LABEL.eyebrow,
-              color: "var(--color-silver)",
-            }}
-          >
-            I DESIGN & BUILD GAME SYSTEMS
-          </p>
-
           <h1
             style={{
               ...display,
@@ -104,7 +86,7 @@ export default function Home() {
               lineHeight: 1.55,
             }}
           >
-            I am a technical game designer specialised in systems and level design, world-building, audio and programming.
+            I am a technical game designer specialised in systems, combat, UI and level design, world-building, audio and programming.
           </p>
         </div>
       </section>
@@ -316,8 +298,11 @@ export default function Home() {
             transform 1400ms cubic-bezier(0.2, 0.6, 0.2, 1),
             filter 600ms ease;
         }
+        /* The overlays bleed 2px past the media box (which clips them) so
+           that while Reveal slides the band in, GPU rounding can't leave a
+           sliver of unshaded image along the edges. */
         .hp-band-shade,
-        .hp-band-scrim { position: absolute; inset: 0; }
+        .hp-band-scrim { position: absolute; inset: -2px; }
 
         /* Side + floor + lid. The side stops are the hero's own, so the
            copy column is shaded exactly as the hero's is; the floor then
@@ -398,14 +383,6 @@ export default function Home() {
           text-shadow: 0 1px 24px color-mix(in srgb, var(--color-void) 70%, transparent);
         }
 
-        /* Metrics live here rather than inline so the narrow breakpoint
-           can retune them; an inline value would outrank the media query. */
-        .hp-act-label {
-          font-size: ${LABEL.act.fontSize}px;
-          letter-spacing: ${LABEL.act.letterSpacing};
-          white-space: nowrap;
-        }
-        .hp-act-rule  { flex: 1; max-width: 240px; height: 1px; }
 
         /* ---- interaction ---- */
         /* Keyboard focus gets the same lift as the pointer. The zoom is
@@ -428,6 +405,54 @@ export default function Home() {
         }
         .hp-link .hp-arrow { transition: transform 260ms ease; }
         .hp-band:is(:hover, :focus-visible) .hp-arrow { transform: translateX(4px); }
+
+        /* ---- band facts ---- */
+        /* Engine | disciplines, split by one white rule. Plain type with
+           no boxes: none of it is interactive (the whole band is the
+           link), so nothing here should read as a button. */
+        .hp-facts {
+          display: grid;
+          grid-template-columns: auto 2px minmax(0, 1fr);
+          align-items: start;
+          column-gap: 28px;
+          max-width: 640px;
+        }
+        .hp-facts-engine {
+          margin: 0;
+          display: inline-flex;
+          align-items: center;
+          gap: 12px;
+          font-size: 19px;
+          font-weight: 600;
+          letter-spacing: 0.12em;
+          line-height: 1;
+          text-transform: uppercase;
+          white-space: nowrap;
+        }
+        .hp-facts-logo {
+          display: block;
+          width: 26px;
+          height: 26px;
+          flex: none;
+          filter: brightness(0) invert(1);
+        }
+        .hp-facts-rule {
+          align-self: stretch;
+          background: var(--color-moonlight);
+        }
+        /* One discipline per line: the stack itself is the separator. */
+        .hp-facts-list {
+          margin: 0;
+          padding: 0;
+          list-style: none;
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+          font-size: 17px;
+          letter-spacing: 0.04em;
+          line-height: 1.4;
+          color: var(--color-silver);
+        }
 
         .hp-cta { transition: background-color 220ms ease, color 220ms ease; }
         .hp-cta:hover {
@@ -505,11 +530,6 @@ export default function Home() {
             margin-top: -56px;
             padding: 0 24px 56px;
           }
-
-          /* The long flagship label cannot hold one line at this width:
-             let it wrap and drop the leader rule rather than clip. */
-          .hp-act-label { white-space: normal; letter-spacing: 0.18em; line-height: 1.6; }
-          .hp-act-rule  { display: none; }
         }
 
         /* Narrow: the copy drops to the bottom of the frame, where
@@ -520,6 +540,20 @@ export default function Home() {
             justify-content: flex-end;
             padding-bottom: 56px;
           }
+        }
+
+        /* Phone: too narrow for engine and list side by side at this
+           size, so the engine goes on top and the white rule moves down
+           to run beside the list. */
+        @media (max-width: 600px) {
+          .hp-facts {
+            grid-template-columns: 2px minmax(0, 1fr);
+            column-gap: 18px;
+            row-gap: 18px;
+          }
+          .hp-facts-engine { grid-column: 1 / -1; font-size: 17px; gap: 10px; }
+          .hp-facts-logo { width: 22px; height: 22px; }
+          .hp-facts-list { font-size: 16px; }
         }
 
         @media (prefers-reduced-motion: reduce) {
@@ -539,7 +573,7 @@ export default function Home() {
 /* ------------------------------------------------------------------ */
 
 function ActBand({ act }: { act: Act }) {
-  const { project, label, accent, image, side, flagship } = act;
+  const { project, accent, image, side, flagship } = act;
   const engine = project.facts.engine;
 
   return (
@@ -554,7 +588,7 @@ function ActBand({ act }: { act: Act }) {
           "--accent": accent,
           "--accent-0": `${accent}00`,
           "--accent-59": `${accent}59`,
-          background: bandBackground(accent),
+          background: "var(--color-void)",
         } as React.CSSProperties
       }
     >
@@ -564,6 +598,7 @@ function ActBand({ act }: { act: Act }) {
           alt={image.alt}
           fill
           sizes="100vw"
+          loading={flagship ? "eager" : undefined}
           style={{ objectFit: "cover", objectPosition: image.position }}
         />
         {image.shade > 0 && (
@@ -581,34 +616,17 @@ function ActBand({ act }: { act: Act }) {
 
       <div className="hp-band-copy">
 
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: 16,
-            marginBottom: flagship ? 24 : 20,
-          }}
-        >
-          <span className="hp-act-label" style={{ ...mono, color: accent }}>
-            {label}
-          </span>
-          <span
-            aria-hidden
-            className="hp-act-rule"
-            style={{
-              background: `linear-gradient(90deg, ${accent}4d, transparent)`,
-            }}
-          />
-        </div>
-
         <h2
           style={{
             ...display,
             margin: 0,
             fontWeight: DISPLAY_WEIGHT,
             lineHeight: flagship ? 0.92 : 0.98,
-            letterSpacing: flagship ? "-0.035em" : "-0.03em",
+            /* Capitals sit wider apart than lowercase, so they need
+               less negative tracking to hold the same density. */
+            letterSpacing: "-0.015em",
             fontSize: flagship ? T.displayLg : T.bandTitle,
+            textTransform: "uppercase",
             textWrap: "balance",
           }}
         >
@@ -628,33 +646,7 @@ function ActBand({ act }: { act: Act }) {
           {project.systemsHook}
         </p>
 
-        {/* GRID */}
-        <div
-          style={{
-            display: "flex",
-            flexWrap: "wrap",
-            gap: 8,
-            marginTop: flagship ? 28 : 22,
-          }}
-        >
-          <EngineTag engine={engine} accent={accent} />
-          {toChips(project.disciplines).map((chip) => (
-            <span
-              key={chip}
-              style={{
-                ...mono,
-                ...LABEL.chip,
-                border: "1px solid color-mix(in srgb, var(--color-mist) 32%, transparent)",
-                padding: "8px 12px",
-                background: "color-mix(in srgb, var(--color-void) 72%, transparent)",
-                color: "color-mix(in srgb, var(--color-mist) 66%, var(--color-silver))",
-                whiteSpace: "nowrap",
-              }}
-            >
-              {chip}
-            </span>
-          ))}
-        </div>
+        <BandFacts engine={engine} disciplines={toChips(project.disciplines)} accent={accent} flagship={flagship} />
 
         <span
           className="hp-link"
@@ -675,5 +667,43 @@ function ActBand({ act }: { act: Act }) {
         </span>
       </div>
     </Link>
+  );
+}
+function BandFacts({
+  engine,
+  disciplines,
+  accent,
+  flagship,
+}: {
+  engine: string;
+  disciplines: string[];
+  accent: string;
+  flagship: boolean;
+}) {
+  const logo = logoFor(engine);
+
+  return (
+    <div className="hp-facts" style={{ marginTop: flagship ? 36 : 28 }}>
+      <p className="hp-facts-engine" style={{ ...mono, color: accent }}>
+        {logo && (
+          <Image
+            src={logo}
+            alt=""
+            width={26}
+            height={26}
+            unoptimized
+            aria-hidden
+            className="hp-facts-logo"
+          />
+        )}
+        {engine}
+      </p>
+      <span aria-hidden className="hp-facts-rule" />
+      <ul className="hp-facts-list" style={mono}>
+        {disciplines.map((d) => (
+          <li key={d}>{d}</li>
+        ))}
+      </ul>
+    </div>
   );
 }

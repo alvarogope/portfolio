@@ -5,9 +5,15 @@ import ProjectFactsBlock from "./ProjectFacts";
 export default function ProjectHero({
   project: p,
   posterSrc,
+  posterPosition = "50% 50%",
+  posterShade = 0,
 }: {
   project: Project;
   posterSrc: string;
+  /* Where the square crop sits on a wider poster. */
+  posterPosition?: string;
+  /* 0–1: a void wash over a poster that is too bright for the page. */
+  posterShade?: number;
 }) {
   return (
     <div
@@ -41,7 +47,7 @@ export default function ProjectHero({
             fill
             priority
             sizes="(max-width: 800px) 90vw, 40vw"
-            style={{ objectFit: "cover" }}
+            style={{ objectFit: "cover", objectPosition: posterPosition }}
           />
         ) : (
           <div
@@ -58,21 +64,23 @@ export default function ProjectHero({
             </span>
           </div>
         )}
+        {posterSrc && posterShade > 0 && (
+          <div
+            aria-hidden
+            style={{
+              position: "absolute",
+              inset: 0,
+              background: `color-mix(in srgb, var(--color-void) ${Math.round(posterShade * 100)}%, transparent)`,
+            }}
+          />
+        )}
       </div>
 
       {/* Text column */}
       <div>
-        <p className="mono" style={{ color: "var(--color-mist)", fontSize: "0.75rem", marginBottom: "1rem" }}>
-          {p.eyebrow}
-        </p>
-
         <h1 style={{ fontSize: "var(--text-hero)", margin: 0, lineHeight: 1.05, fontFamily: "var(--font-hero)" }}>
           {p.title}
         </h1>
-
-        <p style={{ fontSize: "var(--text-lg)", color: "var(--color-mist)", marginTop: "1rem", maxWidth: "36rem" }}>
-          {p.tagline}
-        </p>
 
         {p.showcase && (
           <p

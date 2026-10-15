@@ -9,8 +9,8 @@ export const seedsOfTomorrow: Project = {
   links: [],
 
   eyebrow: "UNITY · TEAM OF 5 · 2025",
-  systemsHook: "A dying world that heals as you solve it: acid rain turns clean, and life returns to the Earth you restore.",
-  disciplines: "Original score · Level & puzzle design · Weather systems · Pacing",
+  systemsHook: "A time traveller comes back to a dying Earth and he tries to safe the planet by defeating enemies, planting seeds and taking care of a mysterious newborn.",
+  disciplines: "Music Composition · Level & Puzzle Design · Dynamic Weather Systems",
   scope: "Composer & Level Designer · Team of 5",
   routingVerb: "see the project",
   showcase: "Shown at Develop:Brighton 2025",

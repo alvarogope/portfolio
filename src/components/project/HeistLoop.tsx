@@ -601,7 +601,6 @@ export default function HeistLoop() {
           margin: 0;
           color: var(--color-moonlight);
         }
-        .hl-band-meta { margin: 0; font-size: 0.72rem; color: var(--hl-quiet); }
         .hl-band-note {
           margin: 0.35rem 0 0;
           max-width: 58rem;
@@ -1031,26 +1030,10 @@ export default function HeistLoop() {
           background: color-mix(in srgb, var(--color-mist) 26%, transparent);
         }
         .hl-grade-fill { display: block; height: 100%; background: var(--hl-amber); }
-        .hl-grade-body {
-          margin: 0;
-          font-size: 0.78rem;
-          line-height: 1.5;
-          color: var(--hl-quiet);
-        }
         .hl-grades-note {
           margin: 0;
           max-width: 58rem;
           font-size: 0.84rem;
-          line-height: 1.6;
-          color: var(--color-moonlight);
-        }
-
-        .hl-outcome-note {
-          margin: 0;
-          padding-top: 0.9rem;
-          border-top: 1px solid var(--hl-edge);
-          max-width: 58rem;
-          font-size: 0.86rem;
           line-height: 1.6;
           color: var(--color-moonlight);
         }

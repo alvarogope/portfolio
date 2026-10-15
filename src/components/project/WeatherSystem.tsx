@@ -516,7 +516,6 @@ export default function WeatherSystem() {
           border-bottom: 1px solid var(--sw-edge);
         }
         .sw-frame-tag { margin: 0; font-size: 0.72rem; color: var(--sw-leaf-text); }
-        .sw-frame-meta { margin: 0; font-size: 0.68rem; color: var(--sw-quiet); }
 
         .sw-band { display: grid; gap: 0.85rem; }
         .sw-band-head {
@@ -534,7 +533,6 @@ export default function WeatherSystem() {
           margin: 0;
           color: var(--color-moonlight);
         }
-        .sw-band-meta { margin: 0; font-size: 0.72rem; color: var(--sw-quiet); }
 
         .sw-screen {
           background: var(--sw-screen);
@@ -574,18 +572,6 @@ export default function WeatherSystem() {
         }
         .is-healed .sw-panel-frame { stroke: color-mix(in srgb, var(--sw-leaf) 55%, transparent); }
 
-        .sw-panel-index,
-        .sw-panel-sky {
-          font-family: var(--font-mono);
-          font-size: 10px;
-          letter-spacing: 0.14em;
-        }
-        /* The zone number takes the accent; the sky name beside it stays quiet,
-           because the word "poisoned"/"healed" next to it is the signal. */
-        .sw-panel-index { fill: var(--sw-acid); }
-        .is-healed .sw-panel-index { fill: var(--sw-leaf-text); }
-        .sw-panel-sky { fill: var(--sw-quiet); }
-
         /* The sky caption sits over falling rain, and a lit stroke crossing a
            letter would drop it to about 3.5:1. The halo puts the screen colour
            back behind every glyph, so the caption is read against the panel and
@@ -605,12 +591,6 @@ export default function WeatherSystem() {
           stroke: none;
         }
 
-        .sw-panel-reads-label {
-          font-family: var(--font-mono);
-          font-size: 9px;
-          letter-spacing: 0.16em;
-          fill: var(--sw-quiet);
-        }
         .sw-panel-reads {
           font-family: var(--font-hero);
           font-size: 14px;
@@ -701,33 +681,6 @@ export default function WeatherSystem() {
           fill: var(--color-moonlight);
         }
 
-        /* ---- the rejected readout ---- */
-        .sw-reject-rule { stroke: var(--sw-edge); stroke-width: 1; }
-        .sw-reject-rail { fill: color-mix(in srgb, var(--color-mist) 26%, transparent); }
-        .sw-reject-fill { fill: color-mix(in srgb, var(--color-mist) 52%, transparent); }
-        .sw-reject-strike {
-          stroke: color-mix(in srgb, var(--sw-acid) 78%, transparent);
-          stroke-width: 1.8;
-          stroke-linecap: round;
-        }
-        .sw-reject-label,
-        .sw-lane-label {
-          font-family: var(--font-mono);
-          font-size: 9.5px;
-          letter-spacing: 0.16em;
-          fill: var(--sw-quiet);
-        }
-        /* The rule is the diagram's thesis, so it is the one lane label that
-           takes the growth accent rather than the quiet grey. */
-        .sw-rule-label {
-          font-family: var(--font-mono);
-          font-size: 9.5px;
-          /* Tracked tighter than the other lane labels: it shares its row with
-             the trigger plate, and the plate is the one that must not move. */
-          letter-spacing: 0.1em;
-          fill: var(--sw-leaf-text);
-        }
-
         /* ---- zone cards ---- */
         .sw-zones {
           list-style: none;
@@ -774,68 +727,6 @@ export default function WeatherSystem() {
           color: var(--color-moonlight);
         }
         .sw-zone-detail {
-          margin: 0.1rem 0 0;
-          font-size: 0.86rem;
-          line-height: 1.6;
-          color: var(--sw-quiet);
-        }
-        .sw-zone-reads {
-          margin: 0.4rem 0 0;
-          padding-top: 0.65rem;
-          border-top: 1px solid var(--sw-edge);
-          font-size: 0.86rem;
-          line-height: 1.5;
-          color: var(--color-moonlight);
-        }
-        .sw-zone-reads-label {
-          display: block;
-          font-size: 0.68rem;
-          letter-spacing: 0.16em;
-          margin-bottom: 0.15rem;
-          color: var(--sw-acid);
-        }
-        .is-healed .sw-zone-reads-label { color: var(--sw-leaf-text); }
-
-        /* ---- trigger and rejected option ---- */
-        .sw-splits {
-          display: grid;
-          grid-template-columns: repeat(2, minmax(0, 1fr));
-          gap: 1rem;
-        }
-        .sw-split {
-          border: 1px solid var(--sw-edge);
-          border-radius: 12px;
-          background: var(--sw-screen);
-          padding: 1.1rem 1.2rem;
-          display: grid;
-          gap: 0.4rem;
-          align-content: start;
-        }
-        .sw-split.is-trigger { border-left: 3px solid var(--sw-leaf); }
-        .sw-split.is-reject { border-left: 3px solid color-mix(in srgb, var(--color-mist) 60%, transparent); }
-        .sw-split-tag {
-          margin: 0;
-          font-size: 0.71rem;
-          letter-spacing: 0.14em;
-          color: var(--sw-leaf-text);
-        }
-        .sw-split.is-reject .sw-split-tag { color: var(--sw-quiet); }
-        .sw-split-name {
-          font-family: var(--font-hero);
-          font-size: 1.02rem;
-          font-weight: 600;
-          margin: 0;
-          color: var(--color-moonlight);
-        }
-        /* The rejected readout is struck through in the drawing; it is struck
-           through here too, and it also says so in words above it. */
-        .sw-struck {
-          text-decoration: line-through;
-          text-decoration-thickness: 2px;
-          text-decoration-color: color-mix(in srgb, var(--sw-acid) 80%, transparent);
-          color: var(--sw-quiet);
-        }
-        .sw-split-body {
           margin: 0.1rem 0 0;
           font-size: 0.86rem;
           line-height: 1.6;
@@ -936,12 +827,6 @@ export default function WeatherSystem() {
           letter-spacing: 0.1em;
           color: var(--sw-quiet);
         }
-        .sw-weather-body {
-          margin: 0.15rem 0 0;
-          font-size: 0.82rem;
-          line-height: 1.55;
-          color: var(--sw-quiet);
-        }
         /* Every card carries this line, because every sky answers the trigger.
            It is the roster's whole argument, so it is set at full strength. */
 
@@ -986,8 +871,7 @@ export default function WeatherSystem() {
 
         /* ---- responsive ---- */
         @media (max-width: 860px) {
-          .sw-zones,
-          .sw-splits { grid-template-columns: minmax(0, 1fr); }
+          .sw-zones { grid-template-columns: minmax(0, 1fr); }
         }
         @media (max-width: 700px) {
           .sw-frame { padding: 0.9rem; }

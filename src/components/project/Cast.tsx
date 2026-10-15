@@ -186,11 +186,6 @@ function CastStyles() {
 
       /* ---- illuminated header (shares its shape with the bestiary) ---- */
       .mkc__head { text-align: center; }
-      .mkc__kicker {
-        font-size: 0.7rem;
-        color: var(--color-gold);
-        margin: 0 0 1.4rem;
-      }
       .mkc__title-row {
         display: flex;
         align-items: center;
@@ -224,12 +219,6 @@ function CastStyles() {
         letter-spacing: 0.02em;
         white-space: nowrap;
       }
-      .mkc__subtitle {
-        font-size: 0.68rem;
-        letter-spacing: 0.3em;
-        color: var(--color-gold);
-        margin: 1rem 0 0;
-      }
 
       /* ---- band headings ---- */
       .mkc__band {
@@ -247,13 +236,6 @@ function CastStyles() {
         margin: 0;
       }
       .mkc__band-rule { flex: 1 1 3rem; height: 1px; background: var(--mkc-hair); }
-      /* Casing and tracking come from the shared .mono-note modifier in
-         globals.css - this used to undo .mono's uppercase locally. */
-      .mkc__band-note {
-        font-size: 0.72rem;
-        color: var(--mkc-quiet);
-        margin: 0;
-      }
 
       /* ---- shared card shell ---- */
       .mkc__card {
@@ -441,12 +423,6 @@ function CastStyles() {
         line-height: 1.55;
         color: var(--color-moonlight);
         margin: 0.6rem 0 0.55rem;
-      }
-      .mkc__keystone-note {
-        font-size: 0.70rem;
-        letter-spacing: 0.22em;
-        color: var(--mkc-quiet);
-        margin: 0;
       }
       .mkc__keystone-stem {
         position: absolute;

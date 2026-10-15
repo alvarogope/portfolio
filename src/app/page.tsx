@@ -84,7 +84,7 @@ export default function Home() {
               lineHeight: 1.55,
             }}
           >
-            I am a technical game designer specialised in systems, combat, UI and level design, world-building, audio and programming.
+            I am a technical game designer specialised in systems, combat, UI/UX and level design, world-building, audio and programming.
           </p>
         </div>
       </section>
@@ -436,38 +436,11 @@ export default function Home() {
         }
         .hp-root a.hp-band:focus-visible { outline-offset: -6px; }
 
-        /* ---- av note ---- */
-        /* Sits between the last band and the closer, so it inherits the
-           same 1px nightfall seam the bands use to divide from each other
-           — it reads as one more rule in that stack rather than a new
-           region. Vertical padding is deliberately about half the closer's:
-           enough air to be its own thought, too little to be a section. */
-        .hp-avnote {
-          border-top: 1px solid var(--color-nightfall);
-          padding: 64px 48px;
-          display: flex;
-          flex-direction: column;
-          align-items: flex-start;
-          text-align: left;
-        }
-        /* One step below the bands' body copy (17px) so the hierarchy is
-           legible before anyone reads a word. --color-mist is 5.2:1 on
-           void, which clears AA at this size. */
-        .hp-avnote-line {
-          margin: 0;
-          max-width: 620px;
-          font-size: 15px;
-          line-height: 1.65;
-          color: var(--color-mist);
-          text-wrap: pretty;
-        }
-
         /* ---- responsive ---- */
         @media (max-width: 900px) {
           .hp-hero-copy > p:first-of-type { margin: 0 0 26px; }
           .hp-hero-sub { margin: 30px 0 0; }
           .hp-closer { padding: 88px 24px; }
-          .hp-avnote { padding: 48px 24px; }
 
           /* Bands stack: the still keeps the top of the band to itself,
              and the copy starts just over its foot, where the floor is

@@ -496,11 +496,6 @@ export default function LevelFlow() {
           font-size: 0.72rem;
           color: var(--lf-amber);
         }
-        .lf-console-meta {
-          margin: 0;
-          font-size: 0.68rem;
-          color: var(--lf-quiet);
-        }
 
         .lf-band { display: grid; gap: 0.75rem; }
         .lf-band-head {
@@ -516,11 +511,6 @@ export default function LevelFlow() {
           letter-spacing: 0.04em;
           margin: 0;
           color: var(--color-moonlight);
-        }
-        .lf-band-meta {
-          margin: 0;
-          font-size: 0.72rem;
-          color: var(--lf-quiet);
         }
 
         /* Every drawing sits on a screen: one shade below the bezel, hairline

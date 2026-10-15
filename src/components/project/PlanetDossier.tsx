@@ -562,19 +562,12 @@ export default function PlanetDossier({
           align-items: start;
         }
         .pd__gate-prose { display: grid; gap: 0.9rem; }
-        .pd__gate-lead,
-        .pd__gate-beat-body {
+        .pd__gate-lead {
           margin: 0;
           font-family: var(--font-body);
           font-size: 0.92rem;
           line-height: 1.65;
           color: var(--pd-prose);
-        }
-        .pd__gate-beat {
-          display: grid;
-          gap: 0.35rem;
-          padding-left: 0.9rem;
-          border-left: 2px solid color-mix(in srgb, var(--color-silver) 45%, transparent);
         }
         .pd__gate-beat-label {
           margin: 0;
@@ -680,17 +673,6 @@ export default function PlanetDossier({
         [data-gate="orbital"] { --pd-gate: var(--color-silver); }
         [data-gate="gravity"] { --pd-gate: var(--color-gold); }
         [data-gate="open"]    { --pd-gate: var(--pd-quiet); }
-
-        .pd__gate-credit {
-          margin: 0;
-          padding-top: 0.85rem;
-          border-top: 1px solid var(--pd-hairline);
-          font-family: var(--font-mono);
-          font-size: 0.68rem;
-          letter-spacing: 0.06em;
-          line-height: 1.6;
-          color: var(--pd-quiet);
-        }
 
         /* ---- the per-card access row ---- */
         .pd__access {

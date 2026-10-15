@@ -142,16 +142,6 @@ export const cuesNote =
   "These sounds were to help the players understand what is going on with their teammates since there is " +
   "no voice chat.";
 
-export const detectionPointer = {
-  label: "The audio channel of the detection model",
-  body:
-    "The white-noise crescendo that rises while an enemy is investigating, and resolves into the " +
-    "chase theme when it escalates, is one of the three redundant feedback channels in the " +
-    "detection system further up this page. It is designed there, with the eye and the " +
-    "investigation bar it works alongside — this section only notes that the audio channel is the " +
-    "one that reaches the other three players.",
-} as const;
-
 export const clockRailSummary =
   `An eight-minute rail. For the first ${SCORE_SHIFT_AT} minutes the clock ticks are low and even. ` +
   `At ${clockLabel(SCORE_SHIFT_AT)} a mark shows where the score changes gear, and for the last ` +

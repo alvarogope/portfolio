@@ -1,13 +1,3 @@
-export interface EngProject {
-    name:     string;
-    tagline:  string;
-    liveUrl:  string;
-    repoUrl:  string;
-    stack:  string[];
-    quantum:  string;
-    points: string[];
-}
-
 export const engineering = {
     intro: {
       kicker: "Engineering",

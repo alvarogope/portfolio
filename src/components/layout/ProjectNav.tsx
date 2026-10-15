@@ -460,7 +460,6 @@ function NavContent({
           background: var(--accent-color);
           transform: translateY(-50%) scaleY(1);
         }
-        .project-nav__link:focus-visible .project-nav__index,
         .project-nav__link:focus-visible .project-nav__label { color: var(--accent-color); }
         .project-nav__link:focus-visible .project-nav__marker { background: var(--accent-color); }
 

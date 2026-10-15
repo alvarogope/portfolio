@@ -225,33 +225,6 @@ export default function ShatterstormWorld({ variant = "main" }: { variant?: SsVa
           gap: 2.5rem;
         }
 
-        /* ---- the credit line ---- */
-        .sw__role {
-          margin: 0;
-          display: flex;
-          align-items: baseline;
-          gap: 0.6rem;
-          font-size: 0.7rem;
-          line-height: 1.6;
-          letter-spacing: 0.1em;
-          color: var(--sw-quiet);
-          max-width: 44rem;
-        }
-        .sw__role-name {
-          font-weight: 600;
-          letter-spacing: 0.14em;
-          text-transform: uppercase;
-          color: var(--sw-cyan);
-        }
-        .sw__role-mark {
-          flex: none;
-          width: 0.5rem;
-          height: 0.5rem;
-          border-radius: 50%;
-          background: var(--sw-cyan);
-          transform: translateY(-0.05rem);
-        }
-
         /* ---- 1 · the premise ----
            The one place on the page where the copy runs at lead size. It is
            the world-design idea the rest of the section is elaborating, so it

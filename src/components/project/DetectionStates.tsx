@@ -495,7 +495,6 @@ export default function DetectionStates() {
           border-bottom: 1px solid var(--ds-edge);
         }
         .ds-console-tag { margin: 0; font-size: 0.72rem; color: var(--ds-amber); }
-        .ds-console-meta { margin: 0; font-size: 0.68rem; color: var(--ds-quiet); }
 
         .ds-band { display: grid; gap: 0.75rem; }
         .ds-band-head {
@@ -670,13 +669,6 @@ export default function DetectionStates() {
         }
         .ds-plate.is-trap .ds-plate-text { fill: var(--ds-fail-text); }
 
-        .ds-lane-label {
-          font-family: var(--font-mono);
-          font-size: 9px;
-          letter-spacing: 0.2em;
-          fill: color-mix(in srgb, var(--color-mist) 45%, var(--color-moonlight));
-        }
-
         /* ---- trap cards ---- */
         .ds-traps {
           list-style: none;
@@ -743,19 +735,6 @@ export default function DetectionStates() {
           line-height: 1.55;
           color: var(--ds-quiet);
         }
-        /* The hand-off. Amber and ruled like the credit below it, because it
-           is the same kind of line — an aside about the three cards rather
-           than another fact inside them — and it sits directly under the row
-           so the answer is the next thing read after the three problems. */
-        .ds-trap-pointer {
-          margin: 0;
-          padding-left: 0.85rem;
-          border-left: 2px solid var(--ds-amber);
-          max-width: 58rem;
-          font-size: 0.84rem;
-          line-height: 1.6;
-          color: var(--color-moonlight);
-        }
         .ds-trap-credit {
           margin: 0;
           padding-left: 0.85rem;
@@ -766,65 +745,6 @@ export default function DetectionStates() {
           color: var(--ds-quiet);
         }
 
-
-        /* ---- 2 · transitions ---- */
-        .ds-transitions {
-          list-style: none;
-          margin: 0;
-          padding: 0;
-          display: grid;
-          gap: 1px;
-          background: var(--ds-edge);
-          border: 1px solid var(--ds-edge);
-        }
-        .ds-transition {
-          background: var(--ds-screen);
-          padding: 0.95rem 1rem;
-          display: grid;
-          grid-template-columns: minmax(0, 15rem) minmax(0, 9rem) minmax(0, 1fr);
-          gap: 0.4rem 1.5rem;
-          align-items: start;
-        }
-        .ds-transition-path {
-          display: flex;
-          flex-wrap: wrap;
-          align-items: baseline;
-          gap: 0.4rem;
-          margin: 0;
-          font-size: 0.72rem;
-          letter-spacing: 0.04em;
-          color: var(--color-moonlight);
-        }
-        .ds-transition-arrow { color: var(--ds-quiet); }
-        .ds-transition.is-terminal .ds-transition-to { color: var(--ds-fail-text); }
-        .ds-transition.is-deescalate .ds-transition-to { color: var(--ds-calm-text); }
-
-        .ds-transition-kind {
-          display: flex;
-          align-items: center;
-          gap: 0.5rem;
-          margin: 0;
-          font-size: 0.71rem;
-          letter-spacing: 0.06em;
-          color: var(--ds-quiet);
-        }
-        /* The legend swatch and the conduit are the same object: a short run of
-           the exact line style the edge is drawn with. */
-        .ds-rule { display: block; width: 1.5rem; height: 0; flex: none; }
-        .ds-rule.is-escalate { border-top: 2px solid var(--ds-steel); }
-        .ds-rule.is-deescalate {
-          border-top: 2px dashed color-mix(in srgb, var(--ds-calm) 70%, var(--color-moonlight));
-        }
-        .ds-rule.is-terminal { border-top: 3px solid var(--color-scarlet); }
-
-        .ds-transition-body { display: grid; gap: 0.2rem; min-width: 0; }
-        .ds-transition-trigger { margin: 0; font-size: 0.70rem; color: var(--ds-amber); }
-        .ds-transition-detail {
-          margin: 0;
-          font-size: 0.84rem;
-          line-height: 1.55;
-          color: var(--color-moonlight);
-        }
 
         /* ---- 3 · the states ---- */
         .ds-states {
@@ -956,14 +876,6 @@ export default function DetectionStates() {
           color: var(--ds-quiet);
         }
 
-        .ds-note {
-          margin: 0;
-          max-width: 58rem;
-          font-size: 0.86rem;
-          line-height: 1.6;
-          color: var(--color-moonlight);
-        }
-
         /* ---- 5 · constraint and credit ---- */
         .ds-band--split {
           grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1000,18 +912,10 @@ export default function DetectionStates() {
           line-height: 1.6;
           color: var(--color-moonlight);
         }
-        .ds-constraint-foot {
-          margin: 0;
-          padding-top: 0.6rem;
-          border-top: 1px solid var(--ds-edge);
-          font-size: 0.72rem;
-          color: var(--ds-quiet);
-        }
 
         /* ---- responsive ---- */
         @media (max-width: 1100px) {
           .ds-states { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-          .ds-transition { grid-template-columns: minmax(0, 1fr); gap: 0.5rem; }
         }
         @media (max-width: 860px) {
           .ds-channels { grid-template-columns: minmax(0, 1fr); }

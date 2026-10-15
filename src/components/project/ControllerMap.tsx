@@ -312,7 +312,6 @@ export default function ControllerMap() {
           line-height: 1.65;
           color: color-mix(in srgb, var(--color-moonlight) 55%, var(--color-mist));
         }
-        .cm__hint { margin: 0; font-size: 0.72rem; color: var(--cm-quiet); }
 
         /* ---- the pairing ---- */
         .cm__grid {

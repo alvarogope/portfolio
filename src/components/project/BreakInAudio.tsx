@@ -231,17 +231,6 @@ export default function BreakInAudio() {
           display: grid;
           gap: 1.75rem;
         }
-        .ba-console-head {
-          display: flex;
-          flex-wrap: wrap;
-          justify-content: space-between;
-          align-items: baseline;
-          gap: 0.5rem 1.5rem;
-          padding-bottom: 0.85rem;
-          border-bottom: 1px solid var(--ba-edge);
-        }
-        .ba-console-tag { margin: 0; font-size: 0.72rem; color: var(--ba-amber); }
-        .ba-console-meta { margin: 0; font-size: 0.68rem; color: var(--ba-quiet); }
 
         .ba-band { display: grid; gap: 0.85rem; }
         .ba-band-head {
@@ -258,7 +247,6 @@ export default function BreakInAudio() {
           margin: 0;
           color: var(--color-moonlight);
         }
-        .ba-band-meta { margin: 0; font-size: 0.72rem; color: var(--ba-quiet); }
 
         .ba-prose {
           margin: 0;
@@ -472,27 +460,6 @@ export default function BreakInAudio() {
         }
         .ba-cue-sound { color: var(--ba-quiet); }
         .ba-table tbody tr.is-warning th { border-left: 2px solid var(--ba-alert); padding-left: 0.75rem; }
-
-        /* ---- the crossing ---- */
-        .ba-pointer {
-          border: 1px solid var(--ba-edge);
-          border-left: 2px solid color-mix(in srgb, var(--ba-quiet) 55%, transparent);
-          padding: 0.95rem 1.1rem;
-          display: grid;
-          gap: 0.4rem;
-        }
-        .ba-pointer-tag {
-          margin: 0;
-          font-size: 0.71rem;
-          letter-spacing: 0.14em;
-          color: var(--ba-quiet);
-        }
-        .ba-pointer-body {
-          margin: 0;
-          font-size: 0.84rem;
-          line-height: 1.65;
-          color: var(--ba-quiet);
-        }
 
         /* ---- responsive ---- */
         @media (max-width: 860px) {

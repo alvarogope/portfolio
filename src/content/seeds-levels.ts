@@ -74,15 +74,6 @@ export const payoffPointer = {
   body: "",
 };
 
-export const puzzleNote = {
-  tag: "Level & puzzle design",
-  body:
-    "I co-designed the levels and the puzzles the player solves to recover and plant the seeds, " +
-    "building each space around the same rhythm: clear what the pollution left in it, then do " +
-    "the work that brings it back. The puzzle is the hinge — it is what the fight resolves into " +
-    "and what the sky answers.",
-};
-
 export const loopSummary =
   "A four-step loop: fight the monsters, recover the seed, solve the place and plant it, and then " +
   "the sky turns clean over it. The loop then returns to the first step at the next place. The " +

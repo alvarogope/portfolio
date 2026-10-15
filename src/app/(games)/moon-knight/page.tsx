@@ -534,38 +534,8 @@ export default function MoonKnightPage() {
           margin-top: 0.5rem;
         }
         .mk-overview-prose { max-width: 35rem; }
-        .mk-scoreboard {
-          margin: 0;
-          display: grid;
-          gap: 0.85rem;
-          padding-left: 1.25rem;
-          border-left: 1px solid color-mix(in srgb, var(--color-mist) 24%, transparent);
-        }
-        .mk-scoreboard-row {
-          display: grid;
-          grid-template-columns: 2.6rem minmax(0, 1fr);
-          align-items: baseline;
-          gap: 0.75rem;
-        }
-        .mk-scoreboard-n {
-          margin: 0;
-          font-size: 1.35rem;
-          line-height: 1;
-          color: var(--color-lunar-gold);
-          font-variant-numeric: tabular-nums;
-        }
-        .mk-scoreboard-label {
-          margin: 0;
-          font-size: 0.85rem;
-          line-height: 1.5;
-          /* Lifted steel: --color-mist is 4.41:1 on this ground, under the AA
-             bar for small type. */
-          color: #93A0B3;
-        }
         @media (max-width: 900px) {
           .mk-overview { grid-template-columns: minmax(0, 1fr); }
-          .mk-scoreboard { padding-left: 0; border-left: 0; padding-top: 1.25rem;
-            border-top: 1px solid color-mix(in srgb, var(--color-mist) 24%, transparent); }
         }
 
         /* ---- §07 band headings ----

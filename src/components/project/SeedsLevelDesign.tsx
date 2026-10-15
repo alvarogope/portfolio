@@ -234,7 +234,6 @@ export default function SeedsLevelDesign() {
           border-bottom: 1px solid var(--sl-edge);
         }
         .sl-frame-tag { margin: 0; font-size: 0.72rem; color: var(--sl-leaf-text); }
-        .sl-frame-meta { margin: 0; font-size: 0.68rem; color: var(--sl-quiet); }
 
         .sl-band { display: grid; gap: 0.85rem; }
         .sl-band-head {
@@ -252,7 +251,6 @@ export default function SeedsLevelDesign() {
           margin: 0;
           color: var(--color-moonlight);
         }
-        .sl-band-meta { margin: 0; font-size: 0.72rem; color: var(--sl-quiet); }
 
         .sl-thesis {
           margin: 0;
@@ -316,13 +314,6 @@ export default function SeedsLevelDesign() {
           fill: color-mix(in srgb, var(--sl-leaf) 12%, var(--sl-screen));
         }
         .sl-loop-node.is-payoff .sl-loop-frame { stroke: var(--sl-leaf); stroke-width: 1.6; }
-        .sl-loop-index {
-          font-family: var(--font-mono);
-          font-size: 9.5px;
-          letter-spacing: 0.16em;
-          fill: var(--sl-quiet);
-        }
-        .sl-loop-node.is-payoff .sl-loop-index { fill: var(--sl-leaf-text); }
         .sl-loop-name {
           font-family: var(--font-hero);
           font-size: 16px;
@@ -344,12 +335,6 @@ export default function SeedsLevelDesign() {
         .sl-loop-edge.is-return {
           stroke: var(--sl-leaf-text);
           stroke-dasharray: 6 5;
-        }
-        .sl-lane-label {
-          font-family: var(--font-mono);
-          font-size: 9.5px;
-          letter-spacing: 0.16em;
-          fill: var(--sl-quiet);
         }
 
         .sl-halves {
@@ -460,7 +445,6 @@ export default function SeedsLevelDesign() {
           grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
           gap: 1rem;
         }
-        .sl-puzzle,
         .sl-credit {
           border: 1px solid var(--sl-edge);
           border-radius: 12px;
@@ -470,21 +454,13 @@ export default function SeedsLevelDesign() {
           gap: 0.5rem;
           align-content: start;
         }
-        .sl-puzzle { border-left: 3px solid var(--sl-amber); }
         .sl-credit { border-left: 3px solid var(--sl-leaf); }
-        .sl-puzzle-tag {
-          margin: 0;
-          font-size: 0.72rem;
-          letter-spacing: 0.14em;
-          color: var(--sl-amber-text);
-        }
         .sl-credit-tag {
           margin: 0;
           font-size: 0.72rem;
           letter-spacing: 0.14em;
           color: var(--sl-leaf-text);
         }
-        .sl-puzzle-body,
         .sl-credit-body {
           margin: 0;
           font-size: 0.88rem;

@@ -391,35 +391,6 @@ export default function ShatteredSkiesMechanics() {
           min-width: 0;
         }
 
-        /* ---- the credit ----
-           One line, not a panel: the team attribution for the game itself is
-           already up the page. This one says who designed these systems. */
-        .ssm__role {
-          margin: 0;
-          display: flex;
-          align-items: baseline;
-          gap: 0.6rem;
-          font-size: 0.7rem;
-          line-height: 1.6;
-          letter-spacing: 0.1em;
-          color: var(--ssm-quiet);
-          max-width: 46rem;
-        }
-        .ssm__role-mark {
-          flex: none;
-          width: 0.5rem;
-          height: 0.5rem;
-          border-radius: 50%;
-          background: var(--ssm-cyan);
-          transform: translateY(-0.05rem);
-        }
-        .ssm__role-name {
-          font-weight: 600;
-          letter-spacing: 0.14em;
-          text-transform: uppercase;
-          color: var(--ssm-cyan);
-        }
-
         /* ---- the spine ----
            The section's thesis. It is the only panel with a gradient edge, and
            the gradient is the two hosts' colours, because the claim is about
@@ -591,17 +562,6 @@ export default function ShatteredSkiesMechanics() {
           letter-spacing: 0.14em;
           color: var(--ssm-quiet);
         }
-        .ssm__channel-badge {
-          margin: 0;
-          grid-column: 2;
-          justify-self: start;
-          font-size: 0.70rem;
-          letter-spacing: 0.16em;
-          padding: 0.25rem 0.5rem;
-          border: 1px solid var(--ssm-edge);
-          color: var(--ssm-warm);
-        }
-        .ssm__channel[data-emphasis="payoff"] .ssm__channel-badge { color: var(--ssm-cyan); }
         .ssm__channel-body {
           margin: 0;
           max-width: 46rem;

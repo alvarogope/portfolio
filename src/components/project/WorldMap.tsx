@@ -541,15 +541,6 @@ export default function WorldMap() {
           outline-offset: 2px;
         }
 
-        .wm-pointer {
-          margin: 0;
-          font-family: var(--font-body);
-          font-size: 0.8rem;
-          line-height: 1.55;
-          color: var(--wm-quiet);
-          max-width: 52rem;
-        }
-
         /* On a narrow screen a label pinned to a sigil would cover the land it
            names, and there is no room for it anyway. The chips and the readout
            do the whole job there. */

@@ -125,10 +125,6 @@ export const flip = {
   rule: "Acid rain stops being acid · hard weather stops",
 };
 
-export const rejectedReadout = {
-  label: "Progress bar",
-};
-
 export const loopPointer = {
   label: "the gameplay loop it relates to",
   href: "#level-design",

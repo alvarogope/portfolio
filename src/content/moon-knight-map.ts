@@ -245,13 +245,6 @@ export const regionProfileLabels = {
   boss: "Boss",
 } as const;
 
-export const planLinkSuffix = "";
-
-export const regionProfilePointer =
-  "Every name here is a link. Creature names open their bestiary entry above, character names " +
-  "open their card on the deep dive, and the level a place is played as opens its own design " +
-  "sheet on the chart below.";
-
 export const mapAlt =
   "Hand-drawn map of Kaelum: the Frozen Mountains in grey across the north, The Woods in green to " +
   "the south-west, the small green island of Centralis at the centre with a boat beside it, and the " +

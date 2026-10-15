@@ -178,15 +178,6 @@ export default function QuantumSigil({
         }
         .qs-stage img { border-radius: 2px; }
 
-        .qs-hint {
-          margin: 0;
-          font-size: 0.7rem;
-          letter-spacing: 0.1em;
-          line-height: 1.5;
-          color: var(--qs-quiet);
-          text-align: center;
-        }
-
         /* ---- the hit targets ----
            Visible by default, and that is the point: a hotspot nobody can see
            is a hotspot nobody uses. A hairline ring sits on every disc, the

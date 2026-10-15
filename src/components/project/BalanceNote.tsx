@@ -347,7 +347,6 @@ export default function BalanceNote() {
           border-bottom: 1px solid var(--bn-edge);
         }
         .bn-console-tag { margin: 0; font-size: 0.72rem; color: var(--bn-amber); }
-        .bn-console-meta { margin: 0; font-size: 0.68rem; color: var(--bn-quiet); }
 
         .bn-intro {
           margin: 0;

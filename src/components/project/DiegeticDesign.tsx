@@ -749,15 +749,6 @@ function DiegeticStyles() {
             letter-spacing: 0.1em;
             color: var(--mkd-quiet);
           }
-          .mkd-branch-note {
-            margin: 0.2rem 0 0;
-            font-family: var(--font-body);
-            font-size: 0.85rem;
-            line-height: 1.6;
-            color: var(--color-silver);
-            max-width: 60ch;
-          }
-          .mkd-branch-currency { color: var(--mkd-quiet); }
 
           /* ---- 5 · invisible design ---- */
           .mkd-decisions {

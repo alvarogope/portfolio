@@ -716,33 +716,6 @@ export default function ShatteredSkiesCoop() {
           min-width: 0;
         }
 
-        /* ---- the credit ---- */
-        .ssc__role {
-          margin: 0;
-          display: flex;
-          align-items: baseline;
-          gap: 0.6rem;
-          font-size: 0.7rem;
-          line-height: 1.6;
-          letter-spacing: 0.1em;
-          color: var(--ssc-quiet);
-          max-width: 46rem;
-        }
-        .ssc__role-mark {
-          flex: none;
-          width: 0.5rem;
-          height: 0.5rem;
-          border-radius: 50%;
-          background: var(--ssc-cyan);
-          transform: translateY(-0.05rem);
-        }
-        .ssc__role-name {
-          font-weight: 600;
-          letter-spacing: 0.14em;
-          text-transform: uppercase;
-          color: var(--ssc-cyan);
-        }
-
         /* ---- the thesis ---- */
         .ssc__thesis {
           position: relative;

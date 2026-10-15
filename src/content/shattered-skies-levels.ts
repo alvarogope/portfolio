@@ -360,9 +360,6 @@ export const teachingThesis =
   "Each planet teaches a different skill and challenges the players. The last planet is the ultimate " +
   "challenge, since it combines everything the players learn through the whole journey.";
 
-export const dossierPointer =
-  "";
-
 export const progressionCaption =
   "The teaching progression: what it teaches · what you hear · what it demands.";
 

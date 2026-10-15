@@ -99,12 +99,6 @@ export default function ChapterNav({
           outline-offset: 2px;
         }
 
-        .chn__index {
-          font-size: 0.66rem;
-          letter-spacing: 0.16em;
-          color: var(--color-gold);
-        }
-
         .chn__title {
           font-family: var(--font-display);
           font-size: 0.95rem;

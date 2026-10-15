@@ -172,7 +172,6 @@ export default function Jousting() {
           color: var(--color-moonlight);
           max-width: 44rem;
         }
-        .mkj-line--quiet { color: var(--color-silver); font-size: 0.88rem; }
         .mkj-design {
           margin: 0.15rem 0 0;
           padding-left: 0.85rem;

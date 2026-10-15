@@ -148,26 +148,6 @@ export default function Expansions() {
           color: var(--color-moonlight);
         }
 
-        /* The rule is what separates the story from the reasoning, and the
-           gold key is the skim path through the whole section. */
-        .ex-why {
-          margin: 0.6rem 0 0;
-          padding-top: 0.85rem;
-          border-top: 1px solid var(--ex-hair);
-          font-family: var(--font-body);
-          font-size: 0.88rem;
-          line-height: 1.6;
-          color: var(--color-silver);
-        }
-        .ex-why-key {
-          display: block;
-          margin-bottom: 0.3rem;
-          font-size: 0.68rem;
-          letter-spacing: 0.14em;
-          text-transform: uppercase;
-          color: var(--color-gold);
-        }
-
         @media (max-width: 820px) {
           .ex-list { grid-template-columns: minmax(0, 1fr); }
           .ex-card { padding: 1.05rem 1.05rem 1.15rem; }

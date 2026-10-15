@@ -671,13 +671,6 @@ export default function NarrativeMap({ variant = "main" }: { variant?: SsVariant
           align-items: baseline;
           gap: 0.35rem 1.5rem;
         }
-        .nm__figcap-meta {
-          margin: 0;
-          font-size: 0.68rem;
-          letter-spacing: 0.14em;
-          text-transform: uppercase;
-          color: var(--nm-quiet);
-        }
 
         /* Below 1180px the drawing scrolls rather than shrinking: the small
            mono tags are 10px in viewBox units, and past about 0.9 scale they

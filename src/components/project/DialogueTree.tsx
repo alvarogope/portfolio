@@ -125,12 +125,6 @@ export default function DialogueTree({ lines }: { lines: Line[] }) {
             radial-gradient(circle at 50% 40%, color-mix(in srgb, var(--color-gold) 12%, transparent), transparent 66%),
             var(--color-nightfall);
         }
-        .dlg-avatar-alcove__label {
-          color: var(--color-silver);
-          font-family: var(--font-mono);
-          font-size: 0.70rem;
-          letter-spacing: 0.14em;
-        }
 
         @media (max-width: 640px) {
           .dlg-exchange { grid-template-columns: 1fr; gap: 1rem; }

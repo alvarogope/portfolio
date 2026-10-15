@@ -469,16 +469,6 @@ export default function PlanetLevels() {
           line-height: 1.7;
           color: var(--color-moonlight);
         }
-        /* Says what this section is NOT, so the dossier above is not re-read. */
-        .pl-pointer {
-          margin: 0;
-          padding-left: 0.85rem;
-          border-left: 2px solid var(--pl-warm);
-          font-size: 0.72rem;
-          line-height: 1.65;
-          letter-spacing: 0.03em;
-          color: var(--pl-quiet);
-        }
 
         /* ---- 3 · the curriculum rail --------------------------------------
            Five equal columns, NO gap: each station carries its own half of the
@@ -907,7 +897,6 @@ export default function PlanetLevels() {
           border-left: 1px solid color-mix(in srgb, var(--pl-warm) 45%, transparent);
         }
         .pl-hazard-name { font-weight: 600; color: var(--color-moonlight); }
-        .pl-hazard-effect { font-size: 0.83rem; line-height: 1.55; color: var(--pl-quiet); }
 
         .pl-audio-char {
           display: block;

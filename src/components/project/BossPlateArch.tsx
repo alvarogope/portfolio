@@ -33,7 +33,7 @@ export default function BossPlateArch({
           className="bpa-img"
         />
         <span className="mono bpa-tag" aria-hidden="true">
-          In play
+          Open
           <svg viewBox="0 0 12 12" width="9" height="9" focusable="false">
             <path
               d="M4.5 1.5h6v6M10.5 1.5 5 7M7.5 9.5v1h-6v-6h1"

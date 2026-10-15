@@ -4,19 +4,10 @@ import {
   bestiaryEnemies,
   type BossEntry,
   type EnemyEntry,
-  type MechanicDiagramId,
   type WeaknessType,
 } from "@/content/moon-knight-bestiary";
 import { CreatureEmblem, EmblemSprite } from "./BestiaryEmblems";
 import BossPlateArch from "./BossPlateArch";
-
-const INK = {
-  gold: "#C9A961",
-  silver: "#B8C4D4",
-  emerald: "#57A886",
-  scarlet: "#CE727E",
-  quiet: "#93A0B3",
-};
 
 export default function Bestiary({ kicker }: { kicker?: string }) {
   return (
@@ -254,12 +245,6 @@ export default function Bestiary({ kicker }: { kicker?: string }) {
           line-height: 1.6;
           color: var(--mkb-prose);
         }
-        .mkb__diagram {
-          display: block;
-          width: 100%;
-          height: auto;
-          margin-top: 0.9rem;
-        }
 
         /* ---- prose ---- */
         .mkb__gameplay {
@@ -349,7 +334,6 @@ function BossCard({ boss }: { boss: BossEntry }) {
         <p className="mono mkb__mech-kicker">Quantum mechanic</p>
         <p className="mkb__mech-name">{boss.mechanic.name}</p>
         <p className="mkb__mech-desc">{boss.mechanic.description}</p>
-        <MechanicDiagram id={boss.mechanic.diagram} />
       </div>
 
       <div className="mkb__foot">
@@ -468,234 +452,4 @@ function WeaknessTag({ type, label }: { type: WeaknessType; label: string }) {
       {label}
     </span>
   );
-}
-
-/* -------------------------------------------------------------- diagrams -- */
-
-function MechanicDiagram({ id }: { id: MechanicDiagramId }) {
-  const common = {
-    className: "mkb__diagram",
-    viewBox: "0 0 260 112",
-    preserveAspectRatio: "xMidYMid meet",
-    "aria-hidden": true,
-    focusable: "false" as const,
-  };
-  const label = {
-    fontFamily: "var(--font-mono), monospace",
-    fontSize: 10.5,
-    letterSpacing: "0.1em",
-  } as const;
-
-  switch (id) {
-    /* Instability — the orb mutates on contact with the environment. */
-    case "instability":
-      return (
-        <svg {...common}>
-          <text x="6" y="16" fill={INK.quiet} {...label}>
-            STABLE
-          </text>
-          <text x="256" y="16" textAnchor="end" fill={INK.scarlet} {...label}>
-            Δ SIZE · Δ SPEED
-          </text>
-          {/* incoming path */}
-          <path
-            d="M8 66 H112"
-            stroke={INK.quiet}
-            strokeWidth="1.2"
-            strokeDasharray="5 5"
-            fill="none"
-          />
-          <circle cx="34" cy="66" r="7" fill="none" stroke={INK.silver} strokeWidth="1.6" />
-          <path d="M58 60l6 6-6 6M74 60l6 6-6 6" stroke={INK.silver} strokeWidth="1.4" fill="none" />
-          {/* the environment */}
-          <path d="M124 12 V102" stroke={INK.gold} strokeWidth="2" />
-          <path
-            d="M124 18 l-9 8M124 34 l-9 8M124 50 l-9 8M124 66 l-9 8M124 82 l-9 8"
-            stroke={INK.gold}
-            strokeWidth="1.1"
-            opacity="0.75"
-          />
-          {/* impact */}
-          <g stroke={INK.scarlet} strokeWidth="1.6">
-            <path d="M124 66 l-11-11M124 66 l-11 11M124 66 l-15 0" />
-          </g>
-          {/* outgoing, larger and faster */}
-          <path
-            d="M126 64 Q170 58 214 44"
-            stroke={INK.scarlet}
-            strokeWidth="1.2"
-            strokeDasharray="7 4"
-            fill="none"
-          />
-          <path
-            d="M152 78l7 7-7 7M170 76l7 7-7 7M188 74l7 7-7 7"
-            stroke={INK.scarlet}
-            strokeWidth="1.4"
-            fill="none"
-          />
-          <circle cx="226" cy="42" r="14" fill="none" stroke={INK.scarlet} strokeWidth="2" />
-          <circle cx="226" cy="42" r="21" fill="none" stroke={INK.scarlet} strokeWidth="0.9" opacity="0.5" />
-          <text x="88" y="106" fill={INK.gold} {...label}>
-            CONTACT
-          </text>
-        </svg>
-      );
-
-    /* Master of Matters — several states of matter, one blade. */
-    case "matters": {
-      const states = [
-        { x: 40, name: "SOLID" },
-        { x: 100, name: "LIQUID" },
-        { x: 160, name: "GAS" },
-        { x: 220, name: "PLASMA" },
-      ];
-      return (
-        <svg {...common}>
-          {states.map((s, i) => (
-            <g key={s.name}>
-              <text x={s.x} y="14" fill={INK.quiet} textAnchor="middle" {...label}>
-                {s.name}
-              </text>
-              <circle cx={s.x} cy="42" r="15" fill="none" stroke={INK.emerald} strokeWidth="1.5" />
-              <MatterGlyph index={i} x={s.x} y={42} />
-              <path
-                d={`M${s.x} 57 Q${s.x} 76 130 82`}
-                stroke={INK.emerald}
-                strokeWidth="1.1"
-                strokeDasharray="4 4"
-                fill="none"
-                opacity="0.8"
-              />
-            </g>
-          ))}
-          <rect x="96" y="84" width="68" height="6" fill={INK.gold} />
-          <path d="M164 84 L184 87 L164 90 Z" fill={INK.gold} />
-          <rect x="88" y="82" width="8" height="10" fill={INK.silver} />
-          <text x="130" y="106" fill={INK.gold} textAnchor="middle" {...label}>
-            ONE BLADE
-          </text>
-        </svg>
-      );
-    }
-
-    /* Inversion — an undodgeable area, answered only by a counter. */
-    case "inversion":
-      return (
-        <svg {...common}>
-          <text x="6" y="14" fill={INK.scarlet} {...label}>
-            UNDODGEABLE AREA
-          </text>
-          {/* caster */}
-          <circle cx="26" cy="58" r="8" fill="none" stroke={INK.scarlet} strokeWidth="1.8" />
-          <path d="M26 66 V88 M16 96 L26 88 L36 96" stroke={INK.scarlet} strokeWidth="1.5" fill="none" />
-          {/* expanding front */}
-          <g stroke={INK.scarlet} fill="none" opacity="0.85">
-            <path d="M74 24 A48 48 0 0 1 74 92" strokeWidth="1.6" />
-            <path d="M96 20 A66 66 0 0 1 96 96" strokeWidth="1.3" opacity="0.75" />
-            <path d="M118 16 A84 84 0 0 1 118 98" strokeWidth="1.1" opacity="0.55" />
-          </g>
-          {/* the counter, thrown back */}
-          <g stroke={INK.emerald} fill="none" strokeWidth="1.8">
-            <path d="M214 44 A34 34 0 1 0 190 78" />
-            <path d="M186 66 L190 79 L203 75" />
-          </g>
-          <circle cx="204" cy="61" r="6" fill={INK.emerald} />
-          {/* player */}
-          <circle cx="240" cy="58" r="8" fill="none" stroke={INK.silver} strokeWidth="1.8" />
-          <path d="M240 66 V88 M230 96 L240 88 L250 96" stroke={INK.silver} strokeWidth="1.5" fill="none" />
-          <text x="130" y="108" fill={INK.emerald} textAnchor="middle" {...label}>
-            COUNTER ⇄ COUNTERED
-          </text>
-        </svg>
-      );
-
-    /* Elliptical Force — sun and moon converge on one point. */
-    case "elliptical":
-      return (
-        <svg {...common}>
-          <ellipse
-            cx="130"
-            cy="56"
-            rx="86"
-            ry="34"
-            fill="none"
-            stroke={INK.gold}
-            strokeWidth="1.3"
-            strokeDasharray="6 5"
-            transform="rotate(-16 130 56)"
-          />
-          <ellipse
-            cx="130"
-            cy="56"
-            rx="86"
-            ry="34"
-            fill="none"
-            stroke={INK.silver}
-            strokeWidth="1.3"
-            strokeDasharray="6 5"
-            transform="rotate(16 130 56)"
-          />
-          {/* sun */}
-          <circle cx="52" cy="76" r="9" fill={INK.gold} />
-          <text x="52" y="104" textAnchor="middle" fill={INK.gold} {...label}>
-            SOL
-          </text>
-          {/* moon */}
-          <circle cx="208" cy="76" r="9" fill="none" stroke={INK.silver} strokeWidth="2.4" />
-          <path
-            d="M208 67 A9 9 0 0 0 208 85 A7 7 0 0 1 208 67Z"
-            fill={INK.silver}
-          />
-          <text x="208" y="104" textAnchor="middle" fill={INK.silver} {...label}>
-            LUNA
-          </text>
-          {/* the point they meet on */}
-          <g stroke={INK.scarlet} strokeWidth="1.7">
-            <path d="M130 30 v-14M130 82 v14M104 56 h-14M156 56 h14" />
-          </g>
-          <circle cx="130" cy="56" r="12" fill="none" stroke={INK.scarlet} strokeWidth="2" />
-          <circle cx="130" cy="56" r="4" fill={INK.scarlet} />
-          <text x="130" y="14" fill={INK.scarlet} textAnchor="middle" {...label}>
-            COLLISION · YOU
-          </text>
-        </svg>
-      );
-  }
-}
-
-/** The four matter-state marks inside the Centaur-Knight's nodes. */
-function MatterGlyph({ index, x, y }: { index: number; x: number; y: number }) {
-  switch (index) {
-    case 0: // solid — a fixed lattice
-      return (
-        <g fill={INK.silver}>
-          {[-5, 0, 5].map((dx) =>
-            [-5, 0, 5].map((dy) => <circle key={`${dx}:${dy}`} cx={x + dx} cy={y + dy} r="1.5" />)
-          )}
-        </g>
-      );
-    case 1: 
-      return (
-        <g stroke={INK.silver} strokeWidth="1.4" fill="none">
-          <path d={`M${x - 8} ${y + 1} q4 -4 8 0 t8 0`} />
-          <path d={`M${x - 8} ${y + 6} q4 -4 8 0 t8 0`} />
-        </g>
-      );
-    case 2: 
-      return (
-        <g fill={INK.silver}>
-          <circle cx={x - 6} cy={y - 5} r="1.6" />
-          <circle cx={x + 4} cy={y - 6} r="1.6" />
-          <circle cx={x - 3} cy={y + 3} r="1.6" />
-          <circle cx={x + 7} cy={y + 4} r="1.6" />
-          <circle cx={x - 8} cy={y + 6} r="1.6" />
-        </g>
-      );
-    default: 
-      return (
-        <g stroke={INK.silver} strokeWidth="1.4" fill="none" strokeLinecap="round">
-          <path d={`M${x} ${y - 8} v16M${x - 7} ${y - 4} l14 8M${x + 7} ${y - 4} l-14 8`} />
-        </g>
-      );
-  }
 }

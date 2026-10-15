@@ -14,12 +14,9 @@ export type BestiaryTier = "boss" | "enemy";
 
 export type WeaknessType = "fire" | "lightning" | "light" | "ice" | "melee" | "none";
 
-export type MechanicDiagramId = "instability" | "matters" | "inversion" | "elliptical";
-
 export interface QuantumMechanic {
   name: string;
   description: string;
-  diagram: MechanicDiagramId;
 }
 
 export interface Weakness {
@@ -73,7 +70,6 @@ export const bestiaryBosses: readonly BossEntry[] = [
       name: "Instability",
       description:
         "Throws an orb that changes speed and size on contact with anything from the environment.",
-      diagram: "instability",
     },
     lore:
       "It was sent by the Sun-Knight, captured and tortured. It turns on the soldiers that are coming to get you.",
@@ -97,7 +93,6 @@ export const bestiaryBosses: readonly BossEntry[] = [
       name: "Inversion",
       description:
         "An undodgeable attack. The player must parry it with the Inversion ability. He can counter yours in return.",
-      diagram: "inversion",
     },
     lore: "Once a servant of the Moon, he turned against her.",
   },
@@ -112,8 +107,7 @@ export const bestiaryBosses: readonly BossEntry[] = [
     epithet: "Hidden all his life, until he found alchemy.",
     mechanic: {
       name: "Master of Matters",
-      description: "Attacks using several states of matter.",
-      diagram: "matters",
+      description: "Attacks using four states of matter: Solid, Liquid, Gas and Plasma.",
     },
     lore:
       "Hid all his life because of his appearance. He found strength in alchemy, and alchemy drew him to the Sun-Knight.",
@@ -131,7 +125,6 @@ export const bestiaryBosses: readonly BossEntry[] = [
       name: "Elliptical Force",
       description:
         "Throws two orbs, a Sun and a Moon, on elliptical circles that collide on the player.",
-      diagram: "elliptical",
     },
     lore:
       "Once the Moon-Knight's partner, he betrayed the Moon. The last fight in the game: every soldier the player has fought against followed him.",

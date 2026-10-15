@@ -311,8 +311,7 @@ export default function Prism({
       u.uPxScale.value = 1 / ((gl.drawingBufferHeight || 1) * 0.1 * sc);
       offsetPxBuf[0] = (p.offset?.x ?? 0) * dpr;
       offsetPxBuf[1] = (p.offset?.y ?? 0) * dpr;
-      /* Only "rotate" leaves the matrix free; the other two modes write it
-         from the loop, and overwriting it here would cancel them out. */
+
       if (animationType === "rotate") {
         setMat3FromEuler(
           p.rotation?.yaw ?? 0,

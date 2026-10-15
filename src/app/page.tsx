@@ -16,8 +16,6 @@ export const metadata: Metadata = {
 
 const T = {
   hero: "clamp(2.75rem, 1.7rem + 5.4vw, 7.5rem)",
-  /* Band titles are set in capitals, which run ~12% wider than
-     lowercase; this size keeps MOON-KNIGHT on one line. */
   displayLg: "clamp(2.25rem, 1.6rem + 3vw, 4.2rem)",
   bandTitle: "clamp(2.25rem, 1.6rem + 2.8vw, 4rem)",
   quote: "clamp(1.75rem, 1.3rem + 2.2vw, 2.75rem)",
@@ -590,8 +588,6 @@ function ActBand({ act }: { act: Act }) {
             margin: 0,
             fontWeight: DISPLAY_WEIGHT,
             lineHeight: flagship ? 0.92 : 0.98,
-            /* Capitals sit wider apart than lowercase, so they need
-               less negative tracking to hold the same density. */
             letterSpacing: "-0.015em",
             fontSize: flagship ? T.displayLg : T.bandTitle,
             textTransform: "uppercase",

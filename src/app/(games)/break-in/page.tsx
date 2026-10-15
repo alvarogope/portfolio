@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { breakIn as p } from "@/content/games/break-in";
 import Section from "@/components/layout/Section";
 import SectionHeading from "@/components/layout/SectionHeading";
-import Breadcrumb from "@/components/layout/Breadcrumb";
 import ProjectHero from "@/components/project/ProjectHero";
 import ChallengeQuote from "@/components/project/ChallengeQuote";
 import Reveal from "@/components/layout/Reveal";

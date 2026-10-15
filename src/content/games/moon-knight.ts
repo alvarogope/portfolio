@@ -19,7 +19,7 @@ export const moonKnight: Project = {
   ],
 
   eyebrow: "UE5 · C++ & BLUEPRINTS · SOLO PROJECT · 2025 - Present",
-  systemsHook: "A medieval dark fantasy RPG where I designed five combat abilities built on real quantum computing principles.",
+  systemsHook: "A medieval dark fantasy RPG where I designed five combat abilities inspired in real quantum computing principles.",
   disciplines: "Systems Design · Quantum Design · Combat Design · C++ · Level Design · UI/UX ",
   scope: "Solo · full authorship",
   routingVerb: "see the project",

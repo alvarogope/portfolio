@@ -118,9 +118,6 @@ function Glyph({ glyph }: { glyph: DiegeticGlyph }) {
   return <MoonHudGlyph />;
 }
 
-/* The decisions with no surface at all. One band, two render sites: inside the
-   full diegetic write-up on the deep dive, and on its own on the main page,
-   where the page heading already names it. */
 function InvisibleDesignBand({ heading = true }: { heading?: boolean }) {
   return (
     <section className="mkd-band">

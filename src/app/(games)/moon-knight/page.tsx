@@ -431,7 +431,7 @@ export default function MoonKnightPage() {
             <ArtDirection variant="short" />
 
             <div style={{ marginTop: "2rem" }}>
-              <RampLink href={deepDiveHref("art")}>
+              <RampLink href={deepDiveHref("art")} size="lg">
                 The Full Sublime Artstyle Direction and art decisions
               </RampLink>
             </div>
@@ -460,10 +460,10 @@ export default function MoonKnightPage() {
                   gap: "0.85rem",
                 }}
               >
-                <RampLink href="/moon-knight/engineering">
+                <RampLink href="/moon-knight/engineering" size="lg">
                   How I programmed the game: the C++ and Blueprint architecture
                 </RampLink>
-                <RampLink href="/moon-knight/engineering/quantum" tone="silver">
+                <RampLink href="/moon-knight/engineering/quantum" tone="silver" size="lg">
                   The Quantum Research and the C++ Quantum Toolkit
                 </RampLink>
               </div>
@@ -480,7 +480,7 @@ export default function MoonKnightPage() {
             </AudioDesign>
 
             <div style={{ marginTop: "2rem" }}>
-              <RampLink href={deepDiveHref("score")}>
+              <RampLink href={deepDiveHref("score")} size="lg">
                 How the soundtrack and the audio design were done and its reasoning.
               </RampLink>
             </div>
@@ -498,8 +498,8 @@ export default function MoonKnightPage() {
             }}
           >
             <CtaPanel
-              kicker="The deep dive"
-              title="The World, the Story and the Music"
+              kicker="The World"
+              title="The World of Kaelum"
               body= 
                 "The full length of the project. The Narrative Design, the NPCs and their story, the worldbuilding and its symbolism, and the full art-direction argument. How the music and the audio design was planned, the jousting minigame and the potential DLCs."
               href={deepDivePath}

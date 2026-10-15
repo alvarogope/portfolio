@@ -4,8 +4,15 @@ import SectionHeading from "@/components/layout/SectionHeading";
 import Breadcrumb from "@/components/layout/Breadcrumb";
 import Reveal from "@/components/layout/Reveal";
 import ProjectNav from "@/components/layout/ProjectNav";
+import ChapterNav from "@/components/layout/ChapterNav";
+import {
+  moonKnightWorldChapters as ch,
+  moonKnightWorldChapterList,
+  moonKnightChapters as mainCh,
+} from "@/content/project-chapters";
 import { moonKnightNavItems } from "@/content/games";
 import CtaPanel from "@/components/project/CtaPanel";
+import RampLink from "@/components/project/RampLink";
 import NarrativeDesign from "@/components/project/NarrativeDesign";
 import Cast from "@/components/project/Cast";
 import ArtDirection from "@/components/project/ArtDirection";
@@ -16,7 +23,7 @@ import Jousting from "@/components/project/Jousting";
 import { deepDiveAnchors } from "@/content/moon-knight-deep-dive";
 
 export const metadata: Metadata = {
-  title: "The World | Moon-Knight",
+  title: "The World of Kaelum | Moon-Knight",
   description:
     "The deep dive: Moon-Knight's three-act arc and its reversal, the cast, the symbolism, the jousting minigame, and the full art-direction and score arguments.",
 };
@@ -27,7 +34,7 @@ export default function MoonKnightWorldPage() {
       <Breadcrumb
         items={[
           { label: "Moon-Knight", href: "/moon-knight" },
-          { label: "The deep dive" },
+          { label: "The World" },
         ]}
       />
 
@@ -35,9 +42,9 @@ export default function MoonKnightWorldPage() {
         <header style={{ marginTop: "1.5rem", maxWidth: "40rem" }}>
           <p
             className="mono"
-            style={{ fontSize: "0.72rem", color: "var(--color-silver)", marginBottom: "1rem" }}
+            style={{ fontSize: "0.9rem", color: "var(--color-silver)", marginBottom: "1rem" }}
           >
-            MOON-KNIGHT · STORY, SYMBOL & MUSIC
+            MOON-KNIGHT: NARRATIVE, ART & MUSIC
           </p>
           <h1
             style={{
@@ -47,24 +54,23 @@ export default function MoonKnightWorldPage() {
               fontFamily: "var(--font-hero)",
             }}
           >
-            The World, the Story and the Music
+            The World of Kaelum
           </h1>
           <p style={{ fontSize: "var(--text-lg)", color: "var(--color-mist)", marginTop: "1rem" }}>
-            This other half of the project is mainly focused on its narrative, the NPCs and their stories,
+            This other half of the project mainly showcases its narrative, the NPCs and their stories,
             the pagan symbolism it was built from, the artistic decisions and the music and audio design in depth.
-            Finally, it focuses on how to monetise the game after its release with a Jousting minigame that outgrew the game
-            and the potential expansions.
           </p>
         </header>
       </Reveal>
 
+      <div style={{ marginTop: "3rem" }}>
+        <ChapterNav chapters={moonKnightWorldChapterList} />
+      </div>
+
       {/* 1 — the arc, the reversal, and the plot */}
       <Reveal>
-        <div
-          id={deepDiveAnchors.narrative}
-          style={{ marginTop: "4rem" }}
-        >
-          <SectionHeading kicker="The Three Acts" title="The Narrative Design" />
+        <div id={ch.narrative.id}>
+          <SectionHeading kicker="The Three Acts" title={ch.narrative.title} />
           <p
             style={{
               color: "var(--color-mist)",
@@ -84,7 +90,7 @@ export default function MoonKnightWorldPage() {
       {/* 02 — THE CAST */}
       <Reveal>
         <div
-          id={deepDiveAnchors.cast}
+          id={ch.cast.id}
           style={{ marginTop: "5rem" }}
         >
           <Cast />
@@ -94,21 +100,26 @@ export default function MoonKnightWorldPage() {
       {/* 03 — art direction */}
       <Reveal>
         <div
-          id={deepDiveAnchors.art}
+          id={ch.art.id}
           style={{ marginTop: "5rem" }}
         >
-          <SectionHeading kicker="The Sublime" title="Art Direction" />
+          <SectionHeading kicker="The Sublime" title={ch.art.title} />
           <ArtDirection />
+          <div style={{ marginTop: "2rem" }}>
+            <RampLink href={`/moon-knight#${mainCh.art.id}`} prefix="Click here to" size="lg">
+              see how the design worked
+            </RampLink>
+          </div>
         </div>
       </Reveal>
 
       {/* 04 — the music */}
       <Reveal>
         <div
-          id={deepDiveAnchors.score}
+          id={ch.score.id}
           style={{ marginTop: "5rem" }}
         >
-          <SectionHeading kicker="The Soundtrack" title="The Music of Kaelum" />
+          <SectionHeading kicker="The Soundtrack" title={ch.score.title} />
           <p
             style={{
               color: "var(--color-mist)",
@@ -123,6 +134,11 @@ export default function MoonKnightWorldPage() {
           <AudioDesign>
             <MoonKnightAudio />
           </AudioDesign>
+          <div style={{ marginTop: "2rem" }}>
+            <RampLink href={`/moon-knight#${mainCh.audio.id}`} prefix="Click here to" size="lg">
+              see how the design worked
+            </RampLink>
+          </div>
         </div>
       </Reveal>
 

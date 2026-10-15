@@ -4,23 +4,27 @@ export default function RampLink({
   href,
   children,
   tone = "gold",
+  prefix = "Click here for",
+  size = "md",
 }: {
   href: string;
   children: React.ReactNode;
   tone?: "gold" | "silver";
+  prefix?: string;
+  size?: "md" | "lg";
 }) {
   const color = tone === "gold" ? "var(--color-gold)" : "var(--color-silver)";
   return (
     <Link
       href={href}
-      className="mono ramp"
+      className={size === "lg" ? "mono ramp ramp--lg" : "mono ramp"}
       style={
         {
           "--ramp-color": color,
         } as React.CSSProperties
       }
     >
-      <span className="ramp__key">Click here for</span>
+      <span className="ramp__key">{prefix}</span>
       <span className="ramp__label">
         {children} <span aria-hidden="true">→</span>
       </span>
@@ -41,6 +45,8 @@ export default function RampLink({
           text-transform: uppercase;
           opacity: 0.85;
         }
+        .ramp--lg { font-size: 0.9rem; }
+        .ramp--lg .ramp__key { font-size: 0.72rem; }
         .ramp__label {
           border-bottom: 1px solid color-mix(in srgb, var(--ramp-color) 50%, transparent);
           padding-bottom: 2px;

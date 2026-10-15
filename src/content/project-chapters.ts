@@ -3,6 +3,7 @@ import { inMotionIntro as biInMotion } from "./break-in-in-motion";
 import { inMotionIntro as sotInMotion } from "./seeds-in-motion";
 import { inMotionIntro as ssInMotion } from "./shattered-skies-in-motion";
 import { mainAnchors as ssMain } from "./shattered-skies-deep-dive";
+import { deepDiveAnchors as mkWorld } from "./moon-knight-deep-dive";
 
 export interface Chapter {
   id: string;
@@ -76,6 +77,24 @@ export const moonKnightChapterList: readonly Chapter[] = [
   moonKnightChapters.art,
   moonKnightChapters.development,
   moonKnightChapters.audio,
+];
+
+/* ═══════════════════════════════════════════════════════════════════════
+   MOON-KNIGHT · THE WORLD (deep dive)
+   ═══════════════════════════════════════════════════════════════════════ */
+
+export const moonKnightWorldChapters = {
+  narrative: { id: mkWorld.narrative, title: "The Narrative Design", note: "The three acts and the story" },
+  cast: { id: mkWorld.cast, title: "The Characters", note: "The player & the NPCs" },
+  art: { id: mkWorld.art, title: "Art Direction", note: "The sublime art style" },
+  score: { id: mkWorld.score, title: "The Music of Kaelum", note: "The Soundtrack" },
+} as const satisfies Record<string, Chapter>;
+
+export const moonKnightWorldChapterList: readonly Chapter[] = [
+  moonKnightWorldChapters.narrative,
+  moonKnightWorldChapters.cast,
+  moonKnightWorldChapters.art,
+  moonKnightWorldChapters.score,
 ];
 
 /* ═══════════════════════════════════════════════════════════════════════

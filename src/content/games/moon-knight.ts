@@ -15,7 +15,7 @@ export const moonKnight: Project = {
   links: [
     { label: "Game Engineering", url: "/moon-knight/engineering" },
     { label: "Quantum Toolkit", url: "/moon-knight/engineering/quantum" },
-    { label: "The World & The Music", url: "/moon-knight/world" },
+    { label: "The World & Story of Kaelum", url: "/moon-knight/world" },
   ],
 
   eyebrow: "UE5 · C++ & BLUEPRINTS · SOLO PROJECT · 2025 - Present",

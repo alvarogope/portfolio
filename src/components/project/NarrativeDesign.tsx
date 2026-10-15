@@ -110,7 +110,7 @@ export default function NarrativeDesign() {
     <div className="nd">
       {/* 1 — the arc */}
       <section className="nd-band">
-        <h3 className="mono nd-band-title">The three-act arc</h3>
+        <h3 className="mono nd-band-title">Three Acts</h3>
 
         <p className="nd-prologue">
           <span className="mono nd-prologue-label">{prologueNote.label}</span>
@@ -128,7 +128,6 @@ export default function NarrativeDesign() {
           <h4 className="nd-reversal-title">{reversal.title}</h4>
           <p className="nd-reversal-body">{reversal.body}</p>
           <p className="nd-reversal-body nd-reversal-payoff">{reversal.payoff}</p>
-          <p className="nd-reversal-note">{reversal.note}</p>
         </div>
       </section>
 
@@ -329,16 +328,6 @@ export default function NarrativeDesign() {
           max-width: 46rem;
         }
         .nd-reversal-payoff { color: var(--color-silver); }
-        .nd-reversal-note {
-          margin: 0.9rem 0 0;
-          padding-top: 0.8rem;
-          border-top: 1px solid var(--nd-hair);
-          font-family: var(--font-body);
-          font-size: 0.85rem;
-          line-height: 1.6;
-          color: var(--nd-quiet);
-          max-width: 46rem;
-        }
 
         /* ---- 2 · themes ---- */
         .nd-themes {
@@ -430,7 +419,7 @@ export default function NarrativeDesign() {
           display: inline-flex;
           align-items: center;
           gap: 0.55rem;
-          font-size: 0.7rem;
+          font-size: 0.9rem;
           color: var(--color-gold);
           cursor: pointer;
           list-style: none;

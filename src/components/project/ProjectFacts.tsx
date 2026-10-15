@@ -47,7 +47,7 @@ export default function ProjectFactsBlock({
           {/* "Links" named the category and said nothing about what to do with
               it. The column label is the cheapest place on the page to say it,
               because it costs no extra line. */}
-          <span className="mono" style={{ fontSize: "0.7rem", color: "var(--color-mist)" }}>
+          <span className="mono" style={{ fontSize: "0.85rem", color: "var(--color-mist)" }}>
             Click here for
           </span>
           <div style={{ display: "flex", flexWrap: "wrap", gap: "1rem" }}>
@@ -56,7 +56,7 @@ export default function ProjectFactsBlock({
                 key={l.label}
                 href={l.url}
                 style={{
-                  fontSize: "0.95rem",
+                  fontSize: "1.15rem",
                   color: "var(--color-gold)",
                   borderBottom: "1px solid transparent",
                 }}

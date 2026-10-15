@@ -359,12 +359,9 @@ export default function AudioDesign({
           padding: 0;
           display: flex;
           flex-wrap: wrap;
-          gap: 0.5rem;
+          gap: 0.5rem 1.75rem;
         }
         .mkm-action {
-          padding: 0.32rem 0.6rem;
-          border: 1px solid var(--mkm-edge);
-          background: color-mix(in srgb, var(--color-nightfall) 70%, transparent);
           font-size: 0.70rem;
           letter-spacing: 0.14em;
           text-transform: uppercase;

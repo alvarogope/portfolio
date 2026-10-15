@@ -38,7 +38,7 @@ export const moonKnightNavItems: ProjectNavItem[] = [
   HOME_NAV_ITEM,
   { label: "Back to the design", slug: moonKnight.slug, accent: "#c8cde0" },
   {
-    label: "The deep dive",
+    label: "The World & Story",
     slug: "moon-knight-world",
     href: "/moon-knight/world",
     accent: "#c8cde0",

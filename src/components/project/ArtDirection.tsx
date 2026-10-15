@@ -211,8 +211,6 @@ export default function ArtDirection({
           text-transform: uppercase;
         }
         .mka-move-chip {
-          padding: 0.1rem 0.45rem;
-          border: 1px solid color-mix(in srgb, var(--color-gold) 55%, transparent);
           font-size: 0.68rem;
           letter-spacing: 0.14em;
           text-transform: uppercase;
@@ -379,9 +377,6 @@ export default function ArtDirection({
         .mka-pillar {
           display: grid;
           gap: 0.15rem;
-          padding: 0.5rem 0.7rem;
-          border: 1px solid var(--mka-edge);
-          background: color-mix(in srgb, var(--color-nightfall) 70%, transparent);
           min-width: 0;
         }
         .mka-pillar-subject {

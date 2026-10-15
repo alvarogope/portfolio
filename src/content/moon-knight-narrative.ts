@@ -59,13 +59,11 @@ export const narrativeActs: readonly NarrativeAct[] = [
 ];
 
 export const prologueNote = {
-  label: "Prologue · Centralis",
+  label: "Prologue in Centralis",
   line:
-    "The waking on the lake island is the prologue: a level to play, but not an act — no fragment " +
-    "is taken there and no land is claimed. The three acts are the three lands that follow it, one " +
-    "fragment each, which is why the beat chart plans four locations while the arc tells three " +
-    "acts. The moons above are the fragments recovered; the moons on the chart are the skies they " +
-    "are taken under.",
+    "The Moon-Knight wakes on a lake island. This functions as the prologue of the game. " +
+    "The three acts begin after this one. Each act is represented by a different stage of the moon and " +
+    "the fragments that need to be recovered by the player.",
 };
 
 const actById = new Map(narrativeActs.map((a) => [a.id, a]));
@@ -77,22 +75,16 @@ export function getNarrativeAct(id: NarrativeActId): NarrativeAct {
 }
 
 export const reversal = {
-  kicker: "The turn · spoilers, deliberately",
-  title: "The errand was the villain's nightmare",
+  kicker: "The end",
+  title: "The Sun-Knight's Vision",
   body:
-    "The Sun-Knight is no dark lord. He was the Moon-Knight's comrade, from when the Sun and the Moon " +
-    "worked as one and the first in Kaelum to discover the Gods of the Gaps fallacy. What " +
-    "he then saw in the moon frightened him into breaking it apart and hiding the pieces. When the " +
-    "Moon-Knight found out, they fought. The Moon-Knight lost and, eventually, woke with no memory of it.",
+    "The Sun-Knight is not a villain. He was the Moon-Knight's comrade before he discovered the Gods of the Gaps fallacy. " +
+    "After finding this out, he broke the Moon into different fragments out of fear and then got confronted by the Moon-Knight. " +
+    "When the battle ended, the Sun-Knight couldn't bring himself to kill the Moon-Knight, who fell into a coma and woke with no memory of anything.",
   payoff:
-    "Which means the errand the player has been running for three acts, to try to put the Moon Goddess back " +
-    "together, was the exact thing the villain broke the world to prevent. Death's revivals were " +
-    "never out of mercy, but they were a loan against unfinished business. Fulfil it and you go back. The " +
-    "Moon-Knight does, and finally embraces Death when it comes.",
-  note:
-    "The reversal sits in the last act by design. It costs nothing to hold, and it re-reads every " +
-    "fragment the player has already carried up until the last part. It turns a collect-three quest into a " +
-    "question about whether it should have been run at all.",
+    "This way of having the character discover the world at the same time as the player is the best approach for an " +
+    "unknown new world and has a narrative excuse to explain how the world functions. This explanation of the story " +
+    "gave me several narrative and design excuses for my ideas for the game while avoiding the classic good vs evil story",
 };
 
 /* ---- themes & symbolism ------------------------------------------------- */

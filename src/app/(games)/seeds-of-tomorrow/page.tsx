@@ -121,7 +121,7 @@ export default function SeedsOfTomorrowPage() {
           </div>
         </Reveal>
 
-        {/* ═══ 04 · ORIGINAL SCORE ═══ */}
+        {/* ═══ 04 · ORIGINAL MUSIC ═══ */}
         <Reveal>
           <div id={ch.score.id} style={GAP}>
             <SectionHeading kicker="Original Music" title={ch.score.title} />

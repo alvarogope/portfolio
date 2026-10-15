@@ -9,7 +9,7 @@ export const seedsOfTomorrow: Project = {
   links: [],
 
   eyebrow: "UNITY · TEAM OF 5 · 2025",
-  systemsHook: "A time traveller comes back to a dying Earth and he tries to safe the planet by defeating enemies, planting seeds and taking care of a mysterious newborn.",
+  systemsHook: "A time traveller comes back to a dying Earth and he tries to save the planet by defeating enemies, planting seeds and taking care of a mysterious newborn.",
   disciplines: "Music Composition · Level & Puzzle Design · Dynamic Weather Systems",
   scope: "Composer & Level Designer · Team of 5",
   routingVerb: "see the project",

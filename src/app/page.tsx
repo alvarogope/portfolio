@@ -213,48 +213,16 @@ export default function Home() {
 
         /* ---- closer ---- */
         .hp-closer { padding: 128px 48px; }
-        /* The closer's field does not stop at the closer. It carries on
-           past the section's bottom edge and finishes at the very bottom of
-           the page, behind the footer, so the sky the page opened on is
-           still there under "© Álvaro Gómez / source on GitHub" instead of
-           ending on a hard horizontal seam above it.
-
-           --hp-footer-reach is exactly the footer's outer height, and the
-           footer is the last element in the document — so the canvas lands
-           flush with the end of the page and adds no scrollable overflow.
-           The parts are the ones set inline on <footer> in layout.tsx:
-             4rem      margin-top
-             1px       border-top
-             3rem      padding-top
-             1.275rem  one line of 0.75rem text at the body's 1.7
-             3rem      padding-bottom
-           If that footer changes, this is the one number to update. */
-        .hp-closer {
-          --hp-footer-reach: calc(4rem + 1px + 3rem + 1.275rem + 3rem);
-        }
-        /* The footer is a wrapping flex row, so below ~490px its two spans
-           stack and it grows by one line plus the 1rem gap; below ~340px
-           the second span wraps internally and it grows by one line again.
-           Measured at 181 / 218 / 238px against the three rules here. */
-        @media (max-width: 520px) {
-          .hp-closer { --hp-footer-reach: calc(4rem + 1px + 3rem + 1rem + 2.55rem + 3rem); }
-        }
-        @media (max-width: 340px) {
-          .hp-closer { --hp-footer-reach: calc(4rem + 1px + 3rem + 1rem + 3.825rem + 3rem); }
-        }
+        /* The field ends with the closer and fades out over its last
+           third, so it is gone by the time the footer comes into view
+           rather than stopping on a hard edge. */
         .hp-closer-particles {
           position: absolute;
-          inset: 0 0 calc(-1 * var(--hp-footer-reach)) 0;
+          inset: 0;
           z-index: 0;
           pointer-events: none;
-        }
-        /* The canvas is positioned and the footer is not, so without this
-           the field would paint over the footer's text rather than behind
-           it. Scoped to the homepage: this style block only exists while
-           the homepage is mounted. */
-        body > footer {
-          position: relative;
-          z-index: 1;
+          -webkit-mask-image: linear-gradient(to bottom, #000 65%, transparent 100%);
+          mask-image: linear-gradient(to bottom, #000 65%, transparent 100%);
         }
         /* Lifts the quote, the line under it and the CTA above the field.
            Written as "everything that is not the canvas" so the closer's

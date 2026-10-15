@@ -131,48 +131,31 @@ export default function RootLayout({
         {children}
 
         <footer
-          className="mono"
+          className="mono site-footer"
           style={{
-            padding: "3rem 1.5rem",
-            marginTop: "4rem",
+            padding: "1.75rem 1.5rem 3rem",
+            marginTop: "5.25rem",
             borderTop: "1px solid var(--color-nightfall)",
             color: "var(--color-mist)",
             fontSize: "0.75rem",
-            display: "flex",
-            flexWrap: "wrap",
-            gap: "1rem",
-            justifyContent: "space-between",
           }}
         >
           <span>© {new Date().getFullYear()} Álvaro Gómez Pérez</span>
+          <div className="site-footer-notes">
+            <p className="site-footer-note">
+              Credits: some 3D assets and audio in these projects are sourced from marketplaces (Fab,
+              Quixel Megascans) or AI-generated only for faster production; all design, systems, and integration are my own.
+            </p>
+            <p className="site-footer-note">
+              Privacy: this site uses cookieless, privacy-friendly analytics (Vercel Analytics) and
+              sets no tracking cookies; the email link only opens your mail app and collects nothing.
+            </p>
+          </div>
           <span>Next.js and Tailwind | {" "}
             <a href="https://github.com/alvarogope/portfolio" style={{ borderBottom: "1px solid color-mix(in srgb, var(--color-silver) 50%, transparent)" }}>
               source on GitHub
             </a>
           </span>
-          {/* Fine print */}
-          <div
-            style={{
-              flexBasis: "100%",
-              display: "grid",
-              gap: "0.35rem",
-              maxWidth: "72ch",
-              textTransform: "none",
-              letterSpacing: "0.03em",
-              fontWeight: 400,
-              fontSize: "0.66rem",
-              lineHeight: 1.6,
-            }}
-          >
-            <p>
-              Credits: some 3D assets and audio in these projects are sourced from marketplaces (Fab,
-              Quixel Megascans) or AI-generated only for faster production; all design, systems, and integration are my own.
-            </p>
-            <p>
-              Privacy: this site uses cookieless, privacy-friendly analytics (Vercel Analytics) and
-              sets no tracking cookies; the email link only opens your mail app and collects nothing.
-            </p>
-          </div>
         </footer>
         <Analytics />
       </body>

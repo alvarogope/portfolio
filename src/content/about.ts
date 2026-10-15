@@ -14,7 +14,7 @@
     characterFile: {
         name: "Álvaro Gómez",
         role: "Technical Game Designer",
-        focus: "Systems  Level design  World-building  Audio  Engineering",
+        focus: "Systems · Level design · World-building · Audio · Engineering",
       },
 
     tech: [

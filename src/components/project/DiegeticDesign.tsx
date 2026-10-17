@@ -177,15 +177,6 @@ export default function DiegeticDesign({
   withInvisible = true,
 }: {
   variant?: "full" | "short";
-  /**
-   * Whether the full write-up carries the invisible-design band itself.
-   *
-   * The main page renders that band as a section of its own, with its own
-   * heading — so when the full write-up moved onto the main page too, the four
-   * decisions would have printed twice on one screen. This turns the inner
-   * copy off rather than deleting the band, because the band is still the
-   * right shape inside a full write-up anywhere it renders alone.
-   */
   withInvisible?: boolean;
 }) {
   const [hud, ...rest] = diegeticMechanics;

@@ -148,7 +148,7 @@ export default function RootLayout({
             </p>
             <p className="site-footer-note">
               Privacy: this site uses cookieless, privacy-friendly analytics (Vercel Analytics) and
-              sets no tracking cookies; the email link only opens your mail app and collects nothing.
+              sets no tracking cookies.
             </p>
           </div>
           <span>Next.js and Tailwind | {" "}

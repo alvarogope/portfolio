@@ -7,6 +7,7 @@ import { logoFor } from "@/components/project/EngineTag";
 import HeroBackdrop from "@/components/home/HeroBackdrop";
 import { heroSlides } from "@/components/home/hero-slides";
 import { acts, toChips, type Act } from "@/components/home/acts";
+import ConnectLinks from "@/components/layout/ConnectLinks";
 
 export const metadata: Metadata = {
   title: "Álvaro Gómez | Video Game Portfolio",
@@ -30,8 +31,6 @@ const DISPLAY_WEIGHT = 700;
 const LABEL = {
   eyebrow: { fontSize: 12, letterSpacing: "0.26em" },
 } as const;
-
-const CONTACT ="alvarogomezperez.work@gmail.com";
 
 const mono: React.CSSProperties = { fontFamily: "var(--font-mono)" };
 
@@ -153,20 +152,18 @@ export default function Home() {
             and I build them myself.
           </p>
 
-          <a
-            className="hp-cta"
-            href={`mailto:${CONTACT}`}
+          <p
+            id="connect"
             style={{
               ...mono,
               ...LABEL.eyebrow,
-              marginTop: 48,
+              margin: "56px 0 0",
               color: "var(--color-silver)",
-              border: "1px solid var(--color-silver)",
-              padding: "16px 30px",
             }}
           >
-            GET IN TOUCH
-          </a>
+            {"Open to opportunities. Let's connect"}
+          </p>
+          <ConnectLinks className="hp-connect" />
         </section>
       </Reveal>
 
@@ -420,11 +417,7 @@ export default function Home() {
           color: var(--color-silver);
         }
 
-        .hp-cta { transition: background-color 220ms ease, color 220ms ease; }
-        .hp-cta:hover {
-          background: var(--color-silver);
-          color: var(--color-void);
-        }
+        .hp-connect { margin-top: 20px; }
 
         /* A visible keyboard state everywhere, in the site's accent.
            The card's ring is inset because the band is full-bleed and
@@ -499,8 +492,7 @@ export default function Home() {
           .hp-band-media img,
           .hp-band::after,
           .hp-band-seam,
-          .hp-arrow,
-          .hp-cta { transition: none; }
+          .hp-arrow { transition: none; }
           .hp-band:hover .hp-band-media img { transform: none; }
           .hp-band:is(:hover, :focus-visible) .hp-arrow { transform: none; }
         }

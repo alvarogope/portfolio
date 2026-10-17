@@ -5,6 +5,7 @@ import Section from "@/components/layout/Section";
 import Reveal from "@/components/layout/Reveal";
 import DialogueTree from "@/components/project/DialogueTree";
 import TechBadges from "@/components/project/TechBadges";
+import ConnectLinks from "@/components/layout/ConnectLinks";
 
 export const metadata: Metadata = {
   title: "About | Álvaro Gómez",
@@ -79,6 +80,16 @@ export default function AboutPage() {
             </Reveal>
           ))}
         </section>
+
+        <Reveal>
+          <section className="about-connect" aria-labelledby="connect-title">
+            <p id="connect-title" className="mono about-inspect__section-label" style={{ margin: 0 }}>
+              Connect
+            </p>
+            <p className="about-connect__line">{"Open to opportunities. Let's talk."}</p>
+            <ConnectLinks />
+          </section>
+        </Reveal>
       </main>
     </Section>
   );

@@ -35,9 +35,9 @@ export const moonKnight: Project = {
     "also design every single aspect of it.",
 
   built:
-    "I developed a prototype. The Tutorial is fully playable where the main mechanics and systems are introduced." +
-    " I built all the systems, the level design, the enemies, the interface, the C++ and the Blueprints that make the game " +
-    " and the music and audio design of the game.",
+    "I developed a prototype. The Tutorial is fully playable where the main mechanics and systems are introduced. " +
+    "I built all the systems, the level design, the enemies, the interface, the C++ and the Blueprints that make the game " +
+    "and the music and audio design of the game.",
 
   contributions: [
     {
@@ -101,7 +101,7 @@ export const moonKnight: Project = {
     {
       name: "Elliptical Force",
       body: "This ability is based on the entanglement of two qubits. It casts two orbs moving in circles, but leaves the enemy in the middle " +
-            "and eventually converging. As a blocking method, if a sphere attack is thrown to the player, they can protect themselves" + 
+            "and eventually converging. As a blocking method, if a sphere attack is thrown to the player, they can protect themselves " + 
             "using this ability, making the entanglement happen.",
       annotation: "Quantum basis · entanglement · correlated qubit convergence",
       availableTo: ["Player", "Enemy"],

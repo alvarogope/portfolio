@@ -4,10 +4,10 @@ import Image from "next/image";
 import { useEffect, useState, useSyncExternalStore } from "react";
 import type { HeroSlide } from "./hero-slides";
 
-const FADE_IN = 1800;
-const HOLD = 5200;
-const FADE_OUT = 1600;
-const BLACK = 900;
+const FADE_IN = 1400;
+const HOLD = 1000;
+const FADE_OUT = 1200;
+const BLACK = 600;
 
 type Phase = "pending" | "lit" | "fading";
 

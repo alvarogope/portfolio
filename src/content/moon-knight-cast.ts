@@ -45,7 +45,7 @@ export const castPlayer: PlayerMember = {
   title: "The Player",
   accent: "#B8C4D4",
   role:
-    "It is fully customizable and wakes up with no memory, making the player and the character learn about the world at the same time.",
+    "It is fully customisable and wakes up with no memory, making the player and the character learn about the world at the same time.",
   contrast: [
     {
       label: "Does not speak",
@@ -85,10 +85,10 @@ export const castEncounters: readonly EncounterMember[] = [
     title: "The Warrior",
     accent: "#E07A45",
     role:
-      "A fallen soldier in The Woods village who gave up being a knight." + 
+      "A fallen soldier in The Woods village who gave up being a knight. " + 
       "He introduces the jousting minigame; when you finish jousting, he points you at the enemies in The Woods.",
     designPurpose:
-      "If you follow his story, he thanks you for eliminating the enemies in The Woods. But, when you come back to him " +
+      "If you follow his story, he thanks you for eliminating the enemies in The Woods. But when you come back to him " +
       "you find him dead with wounds made by thieves. His village is reduced to ashes.",
   },
 ];
@@ -125,7 +125,7 @@ export const castMirror: readonly [MirrorMember, MirrorMember] = [
       "In a Misty Lands village, he asks for help with defeating banshees. If you agree, he reveals a hidden fortress. He comes back in the Frozen Mountains.",
     answer: "Keep it buried. The world is not ready to know.",
     designPurpose:
-      "He discovers the fallacy, but asks you to hide it for keeping the state of the world. It is your call if you want to hide the information or expose it.",
+      "He discovers the fallacy, but asks you to hide it to keep the state of the world. It is your call if you want to hide the information or expose it.",
   },
 ];
 

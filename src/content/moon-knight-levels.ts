@@ -142,7 +142,7 @@ export const emptyCellLabel = "Not part of this level";
 
 export const beatChartThesis =
   "Four levels: a prologue on the lake island, then one act per land. Each " +
-  "represents each moon phase that the game is in. From a silent island to a full moon over the Sun-Knight. " +
+  "represents one moon phase that the game is in. From a silent island to a full moon over the Sun-Knight. " +
   "The world should feel like it is from an epic novel.";
 
 export const beatStructureNote =

@@ -19,7 +19,7 @@ export const weathers: readonly Weather[] = [
     name: "Acid rain",
     role: "signal",
     roleLabel: "The poisoned sky",
-    where: "Every polluted rainy area",
+    where: "every polluted rainy area",
     body:
       "It falls on everything the player has not solved yet.",
   },
@@ -144,5 +144,5 @@ export const weatherCredit = {
   body:
     "I designed the weather system and I also composed the music that is played during " +
     "the puzzle-completion side of the levels. I wanted the player to feel the progress in each world and that " +
-    "all of them have their own personality",
+    "all of them have their own personality.",
 };

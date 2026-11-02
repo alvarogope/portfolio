@@ -23,7 +23,7 @@ export const shatteredSkies: Project = {
     "in a dangerous and dynamic planetary system forcing them to cooperate to survive and decide whether to trust " +
     "the person they were raised to hate. I mainly designed the world they move through and the systems that force them to " +
     "stay together. Planets and their physics, interdependent puzzles, the traversal mechanics and their power-ups and the " +
-    "progression based in the learning and understanding of the universe.",
+    "progression based on the learning and understanding of the universe.",
 
   designChallenge: {
     quote:
@@ -35,14 +35,14 @@ export const shatteredSkies: Project = {
       "advancing through systems observation.",
     engine: "Unity",
     system: "World design / physics / progression",
-    resolution: "Make physics realistic for a better pattern recognition and progression based on knowledge.",
+    resolution: "Make physics realistic for better pattern recognition and progression based on knowledge.",
   },
 
   contributions: [
     {
       label: "The planetary system & the world design",
       description:
-        "Researched real gravity, orbit and tide behaviour for the five worlds, so the physics are as natural and easier to learn for the players.",
+        "Researched real gravity, orbit and tide behaviour for the five worlds, so the physics are more natural and easier to learn for the players.",
     },
     {
       label: "Interdependent puzzle design",
@@ -57,7 +57,7 @@ export const shatteredSkies: Project = {
     {
       label: "Progression based on knowledge",
       description:
-        "Inspired by metroidvania's world comprehension instead of systems upgrades. Players need to understand the world for powering-up and progressing.",
+        "Inspired by metroidvania's world comprehension instead of system upgrades. Players need to understand the world for powering-up and progressing.",
     },
   ],
 };

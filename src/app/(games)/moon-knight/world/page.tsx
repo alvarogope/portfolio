@@ -80,7 +80,7 @@ export default function MoonKnightWorldPage() {
             }}
           >
             The game tells its story through the gameplay, mechanics, quests and combats and not through
-            cutscenes. Centralis is the tutorial and prologue, the following levels are the three acts of the story.
+            cutscenes. Centralis is the tutorial and prologue; the following levels are the three acts of the story.
             Each is represented by three moon phases, three ages of life and an ending to the story at the highest peak of the world.
           </p>
           <NarrativeDesign />

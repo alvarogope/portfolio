@@ -17,8 +17,8 @@ export const lead = {
 export const metaphor = {
   title: "The Shatterstorm",
   body:
-    "The main event of the game is a metaphor of the relationship of the characters. " +
-    "This event broke the world into pieces that stay together. The same as Aevi and Drayk.",
+    "The main event of the game is a metaphor for the relationship of the characters. " +
+    "This event broke the world into pieces that stay together. It is the same as Aevi and Drayk.",
   note:
     "Designing this setting was an important world design decision. The environment of the world has the same patterns as " +
     "their characters. Broken by war, but fully connected.",

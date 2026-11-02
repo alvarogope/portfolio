@@ -68,7 +68,7 @@ export const controlBindings: readonly ControlBinding[] = [
     group: "sticks",
     action: "Stealth",
     note:
-      "Having the stealth in the moving button allows the player to access this move quickly.",
+      "Having the stealth on the moving button allows the player to access this move quickly.",
     source: "alvaro",
   },
   {

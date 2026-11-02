@@ -2,7 +2,7 @@ export const engineering = {
     intro: {
       kicker: "Engineering",
       title: "I build the systems, not just design them.",
-      lead: "Beyond game design, I build full-stack applications and quantum computing prototypes. The same instinct drives both: understand a system deeply enough to make it real. Here is a quieter, more technical companion to the games work.",
+      lead: "Beyond game design, I build full-stack applications and Quantum Computing prototypes. The same instinct drives both: understand a system deeply enough to make it real. Here is a quieter, more technical companion to the games work.",
     },
     quantumNote: {
       title: "Quantum-inspired game design",

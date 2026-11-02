@@ -101,7 +101,7 @@ export default function ShatteredSkiesPage() {
                     label: "The narrative structure",
                     alt: "The narrative structure chart: two backstories for Drayk and Aevi converging through four story beats into three endings — Unity, two Betrayal variants, and Extinction.",
                     caption:
-                      "The narrative structure that all designers had access to in the GDD. The beats, the character backstories and the three endings possibilities.",
+                      "The narrative structure that all designers had access to in the GDD. The beats, the character backstories and the three possible endings.",
                   },
                   {
                     src: "/images/shattered-skies/hub-planet-wall.png",

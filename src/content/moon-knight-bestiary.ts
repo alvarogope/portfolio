@@ -75,7 +75,7 @@ export const bestiaryBosses: readonly BossEntry[] = [
       "It was sent by the Sun-Knight, captured and tortured. It turns on the soldiers that are coming to get you.",
     plate: {
       src: "/images/moon-knight/boss-werewolf.png",
-      alt: "The Werewolf boss encounter at night: the knight facing the werewolf, with the named enemy health bar across the top of the screen.",
+      alt: "The Werewolf boss encounter at night: the knight facing The Werewolf, with the named enemy health bar across the top of the screen.",
       caption:
         "The encounter as the player meets it. The named health bar is the one piece of conventional UI a boss fight is allowed — it marks the fight as an event.",
     },
@@ -110,7 +110,7 @@ export const bestiaryBosses: readonly BossEntry[] = [
       description: "Attacks using four states of matter: Solid, Liquid, Gas and Plasma.",
     },
     lore:
-      "Hid all his life because of his appearance. He found strength in alchemy, and alchemy drew him to the Sun-Knight.",
+      "He hid all his life because of his appearance. He found strength in alchemy, and alchemy drew him to the Sun-Knight.",
   },
   {
     id: "sun-knight",
@@ -166,7 +166,7 @@ export const bestiaryEnemies: readonly EnemyEntry[] = [
     tier: "enemy",
     accent: "#C9A961",
     gameplay:
-      "They hide in the fog and sing a beautiful song to attract you then strike with claws. The fastest enemy in the game.",
+      "They hide in the fog and sing a beautiful song to attract you, then strike with claws. The fastest enemy in the game.",
     weakness: { type: "lightning", label: "Lightning" },
     lore: "Cursed royalty, turned into monsters.",
   },

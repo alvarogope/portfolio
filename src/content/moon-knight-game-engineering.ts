@@ -40,12 +40,12 @@ export const gameEngineering = {
   thesis: "C++ for handling the logic. Blueprints for handling the presentation.",
 
   tagline:
-    "A solo UE5 dark-fantasy RPG with every core system designed and built from scratch: combat, AI, persistence, and equipment.",
+    "A solo UE5 dark fantasy RPG with every core system designed and built from scratch: combat, AI, persistence, and equipment.",
 
   intro:
     "Moon-Knight is a solo project, meaning I functioned as a designer and as an engineer and I had to code, debug and tune every aspect of the game. " +
     "My approach for combining C++ and Unreal's Blueprints was a matter of timing and visuals. I used C++ for the states, lifetime, damage, " +
-    "and every logic system, while I used Blueprints for combo animations, trace windows or behaviour trees. " +
+    "and every logic system, while I used Blueprints for combo animations, trace windows or Behaviour Trees. " +
     "The reasoning was the speed in development and what needed to be delivered. Below this are the decisions.",
 
   stack: [
@@ -69,7 +69,7 @@ export const gameEngineering = {
     title: "What is in a Blueprint. What is in C++",
     intro:"I followed this rule for translating part of the code into C++: " +
           "If something needed to exist, be tuned or feel right on a specific frame, I managed it in the Blueprints. " +
-          "If the level needed to load the system, it went go to C++. " +
+          "If the level needed to load the system, it had to go to C++. " +
           "This is how the code architecture was distributed:",
     rows: [
       {
@@ -125,7 +125,7 @@ export const gameEngineering = {
         "When I prototyped the game for the first time, I used Blueprints. Then I decided to transition part of the code to C++, so " +
         "I had to make the Blueprints call down into C++, through BlueprintCallable; and C++ call up to a Blueprint using BlueprintImplementableEvent.",
       why: [
-        "One of the reasons for this was to reduce ambiguity when a bug appeared. If the wrong thing happened it was a C++ issue, " +
+        "One of the reasons for this was to reduce ambiguity when a bug appeared. If the wrong thing happened it was a C++ issue; " +
         "however, if the right thing happened but looked weird, it was a Blueprint issue. ",
         "I could also tune animations quicker without having to compile the whole code every single time.",
       ],
@@ -280,7 +280,7 @@ namespace MoonKnightConstants
       decision:
         "The health is subtracted inside the engine. All the damage is handled in the game, swords or enemies' attacks, just overrides TakeDamage.",
       why: [
-        "This puts all the system in one place. The parry negation and death are inside the TakeDamage, so any new damage source will just inherit both.",
+        "This puts all the systems in one place. The parry negation and death are inside the TakeDamage, so any new damage source will just inherit both.",
         "It keeps DamageCauser, EventInstigator and any other damage types available, keeping the code easy to read.",
         "The parry was easy to test as the addition after the migration to C++. I could isolate the mechanic and tune it.",
       ],
@@ -296,7 +296,7 @@ namespace MoonKnightConstants
     }
 
     //==================================//
-    //--- PARRY TO HUMANOIDS ENEMIES ---//  
+    //--- PARRY TO HUMANOID ENEMIES ---//  
     //==================================//
     if (CombatState == ECombatState::Parrying)
     {
@@ -321,7 +321,7 @@ namespace MoonKnightConstants
       kicker: "AI",
       title: "Enemy Perception in C++",
       decision:
-        "The AI controller sets the sight and hearing stimulus in C++, writing Blackboard keys like TargetActor, InvestigateLocation. I just needed to change from the Behaviour Tree.",
+        "The AI controller sets the sight and hearing stimulus in C++, writing Blackboard keys like TargetActor, InvestigateLocation. I only needed to change it in the Behaviour Tree.",
       why: [
         "The perception had so many things that needed to be tuned and C++ was the right decision. Things like radii, peripheral angle, affiliation or stimulus age are numerical and shared and sometimes needed to be the same for different enemies.",
         "The design side was already decided, so I didn't need to reorder selectors or add investigate branches. That could just happen in the Behaviour Trees.",
@@ -487,7 +487,7 @@ protected:
       {
         name: "Attacking",
         detail:
-          "Up to a 4-hit combo chain. ComboCounter advances the animations and an auto-reset timer returns to Idle when it gets to last move.",
+          "Up to a 4-hit combo chain. ComboCounter advances the animations and an auto-reset timer returns to Idle when it gets to the last move.",
         exits: "Attacking (next hit) · Idle (timer lapse)",
         accent: "gold",
       },
@@ -607,8 +607,8 @@ void AMKPlayerCharacter::Respawn()
     kicker: "From the editor",
     title: "The Blueprints",
     intro:
-      "These are the Blueprints that I used for the prototype. Some of them are the old blueprints that were eventually moved to " +
-      "the C++, like the combat combo and the sword trace. I built them first in Blueprints to have the build ready firstly and I " +
+      "These are the Blueprints that I used for the prototype. Some of them are the old Blueprints that were eventually moved to " +
+      "the C++, like the combat combo and the sword trace. I built them first in Blueprints to have the build ready first and I " +
       "decided to code them in the C++ later. However, what remains as a Blueprint are the Behaviour Trees, the generation and the tuning. " +
       "Click to read in full size.",
     items: [
@@ -628,7 +628,7 @@ void AMKPlayerCharacter::Respawn()
           "The boss class. Same Blackboard with a different decision structure and a more aggressive chase decorator, which is the point of keeping the contract in C++ and the decisions in the tree.",
         src: "/images/moon-knight/BT_Werewolf.png",
         alt:
-          "Unreal Behaviour Tree for the werewolf boss: the same Blackboard keys as the standard enemy driving a shallower, more aggressive branch structure.",
+          "Unreal Behaviour Tree for The Werewolf boss: the same Blackboard keys as the standard enemy driving a shallower, more aggressive branch structure.",
       },
       {
         id: "combo-chain",
@@ -668,13 +668,13 @@ void AMKPlayerCharacter::Respawn()
           "It was built in UMG against the DB_Items data table, so every new item is a row and not a widget.",
         src: "/images/moon-knight/WB_Equipment.png",
         alt:
-          "The WB_Equipment widget open in Unreal's UMG designer: a canvas with the character viewport in the centre and labelled Bow, Sword and Armor equipment slots down the right, with the widget hierarchy listed beside it.",
+          "The WB_Equipment widget open in Unreal's UMG designer: a canvas with the character viewport in the centre and labelled Bow, Sword and Armour equipment slots down the right, with the widget hierarchy listed beside it.",
       },
       {
         id: "pcg-forest",
         label: "PCG Forest · The Level's Ground Cover",
         caption:
-          "The three objects are rocks, trees and grass, molding the terrain and differentiating them so it wouldn't spawn inside anything else. " +
+          "The three objects are rocks, trees and grass, moulding the terrain and differentiating them so it wouldn't spawn inside anything else. " +
           "This graph is related to the level design section stating that the forest is generated with a purpose but not randomised." +
           "It was made in Blueprints because nobody would want to tune this in code having Blueprints.",
         src: "/images/moon-knight/PCG_Forest.png",
@@ -690,7 +690,7 @@ void AMKPlayerCharacter::Respawn()
     kicker: "Researching Quantum Computing",
     title: "The Quantum Research for Building this Game",
     body:
-      "The programming in this page is the foundation of the game. Making it shippable and playable. However, there is a second " +
+      "The programming on this page is the foundation of the game. Making it shippable and playable. However, there is a second " +
       "piece of engineering: The Quantum Abilities using actual quantum programming, using a C++17 toolkit that wraps up Quantum++ and Eigen " +
       "and validating it statistically. This work has its own deep-dive.",
     href: "/moon-knight/engineering/quantum",

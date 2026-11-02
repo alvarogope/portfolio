@@ -123,7 +123,7 @@ function InvisibleDesignBand({ heading = true }: { heading?: boolean }) {
     <section className="mkd-band">
       {heading && <h3 className="mono mkd-band-title">Invisible design</h3>}
       <p className="mkd-lede">
-        Four key design decisions and their reason.
+        Four key design decisions and their reasons.
       </p>
       <dl className="mkd-decisions">
         {invisibleDesign.map((d) => (

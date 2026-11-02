@@ -26,7 +26,7 @@ export const inMotionItems: readonly MotionItem[] = [
     label: "The spaceship in the game",
     alt: "The ship in flight between worlds, carrying the weight and inertia the flight model gives it.",
     caption:
-      "This is the main traversal mechanics between the planets, carrying real in-game mass",
+      "This is the main traversal mechanic between the planets, carrying real in-game mass",
   },
   {
     src: "/images/shattered-skies/ship-interior.png",

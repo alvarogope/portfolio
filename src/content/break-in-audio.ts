@@ -15,7 +15,7 @@ export const thesis = {
   tag: "",
   line: "No voice channel made the coordination rely on the sound.",
   body:
-    "The music and sound are what tells the player the state they are in, the state the enemies are in " +
+    "The music and sound are what tell the player the state they are in, the state the enemies are in " +
     "and the clock ticking reminding the players to consider it the whole time.",
 } as const;
 

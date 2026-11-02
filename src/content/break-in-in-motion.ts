@@ -36,6 +36,6 @@ export const inMotionItems: readonly MotionItem[] = [
     alt: "In-engine view of the basement corridor with the laser grid switched on: a dozen green beams crossing the passage at waist and chest height, and a wall keypad beside them.",
     caption:
       "The main trap in the basement: laser grid. In a normal run, it is invisible until one of the players " +
-      "throw a smoking can.",
+      "throws a smoking can.",
   },
 ];

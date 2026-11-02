@@ -4,17 +4,17 @@
   
   
     intro:
-      "In my game Moon-Knight, I designed combat mechanics that were built on quantum computing principles trying to demonstrate " +
-      "how this technology could change this media. At the beginning I only designed them and couldn't code them, but I started " +
+      "In my game Moon-Knight, I designed combat mechanics that were built on Quantum Computing principles trying to demonstrate " +
+      "how this technology could change this medium. At the beginning I only designed them and couldn't code them, but I started " +
       "programming this combat system using a C++17 library that wraps Quantum++ and Eigen that models qubits, gates, measurements, " +
-      "and noise. It then exposes an API so designers could tune them without knowing what quantum computing is." +
+      "and noise. It then exposes an API so designers could tune them without knowing what Quantum Computing is. " +
       "This page is the engineering behind the design.",
   
     architecture: {
       title: "Why a Density Matrix and Not a State Vector",
       body:
         "The primary decision of the whole toolkit is that the core register stores a density matrix and not a state vector. " +
-        "Because a state vector can only represent pure states and my mechanics, like Instability, require decoherence: a sphere " +
+        "This is because a state vector can only represent pure states, while my mechanics, like Instability, require decoherence: a sphere " +
         "whose outcome is randomised the longer it stays in flight. A density matrix is the only thing that could express a partially mixed state.",
     },
   
@@ -111,7 +111,7 @@
         kicker: "The results",
         title: "Quantumly Correct",
         body:
-          "What differentiates my designed quantum inspired mechanics from this work is that it is measurable. " +
+          "What differentiates my designed quantum-inspired mechanics from this work is that it is measurable. " +
           "Each ability is validated by a Monte Carlo control. It runs a thousand times and checks the frequency and compares it to the " +
           "analytic prediction. The parry mechanic, Inversion, rotates an attack Damage parameter with a Heal, using a NOT gate at the right time, " +
           "so it follows the Born rule. The endpoints are deterministic and the interior points land within one or two standard errors of sin squared.",
@@ -143,7 +143,7 @@
       title: "In Development",
       body:
         "The toolkit is about the Moon-Knight's five designed mechanics. The core library and two of the five are complete and statistically " + 
-        "verified. The third one is in progress still. Two are designed but not yet built. Every finished mechanic is a recombination of the same " + 
+        "verified. The third one is still in progress. Two are designed but not yet built. Every finished mechanic is a recombination of the same " + 
         "verified mechanics, so the remaining work is just composition.",
       rows: [
         { component: "QuantumRegister (core library)", ability: "—", state: "Complete · verified" },

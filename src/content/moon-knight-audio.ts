@@ -8,12 +8,12 @@ export const composerCredit = {
 
 export const silenceThesis = {
   kicker: "Main audio design decisions",
-  line: "Most of the game, the player is alone with their own footsteps.",
+  line: "For most of the game, the player is alone with their own footsteps.",
   body: [
     "The absence of music is intentional. Silence is building the solitude I was looking for. " +
       "It also builds tension and makes the player focus fully on the game.",
-    "It also makes the musical moments more special. If the player doesn't know when the music is " +
-      "going to be played makes certain moments more memorable and some places feel special. " + 
+    "It also makes the musical moments more special. Not knowing when the music will play makes " +
+      "gcertain moments more memorable and some places feel special. " + 
       "If the music is played in certain scenarios, those places become more important for the player.",
   ],
 } as const;
@@ -43,7 +43,7 @@ export const villageThemes: readonly VillageTheme[] = [
     place: "The Misty Lands",
     instrumentation: "Reverb",
     sound:
-      "Still calm, but a lot of reverb. It feels like echo in the wind and from somewhere the player will never be.",
+      "Still calm, but a lot of reverb. It feels like an echo in the wind and from somewhere the player will never be.",
     why:
       "This place used to be great, but long ago. The reverb gives distance and they sound like people " +
       "talking in memories from the past. The people that lived here are gone with nobody remembering them.",
@@ -58,7 +58,7 @@ export const villageThemes: readonly VillageTheme[] = [
     why:
       "I consider these musical resources the closest to ice and glass for their coldness. " +
       "The suspended chords make the player feel they need resolution and an ending. " +
-      "It also relates to the level, making the player feel they have progressed and the" + 
+      "It also relates to the level, making the player feel they have progressed and the " + 
       "journey is about to end epically.",
   },
 ];
@@ -91,7 +91,7 @@ export const instrumentMeanings: readonly InstrumentMeaning[] = [
       "The moment the player uses one of the old gods' powers, synths are played.",
     why:
       "The same reason as the piano, but further away. The gods' powers are not supposed to be " +
-      "from this world and it is arriving from another one, letting the player realise these things on their own.",
+      "from this world and they are arriving from another one, letting the player realise these things on their own.",
   },
   {
     id: "harp-healing",
@@ -112,13 +112,13 @@ export const instrumentMeanings: readonly InstrumentMeaning[] = [
       "One piece for each. Fast-paced and driving and each written to that knight in particular. " +
       "Through its melody and its instrumentation is where their stories are described.",
     why:
-      "Boss fights look for the opposite effect to the rest of the game and keeps the player in tension in another way. " +
+      "Boss fights look for the opposite effect to the rest of the game and keep the player in tension in another way. " +
       "It is also the only context the player is given about the boss's story.",
   },
 ];
 
 export const soundFeedback = {
-  kicker: "feedback",
+  kicker: "Feedback",
   line:
     "I sought organic and realistic sound feedback, so the game feels natural where it has to.",
   actions: ["Hits & impacts", "Sword swoosh", "Dodge", "Pickups"],

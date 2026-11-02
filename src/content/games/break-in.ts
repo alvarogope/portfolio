@@ -19,7 +19,7 @@ export const breakIn: Project = {
 
   vision:
     "Break-In is a four-player co-op stealthy bank heist game whose main mechanic is that players cannot talk with each other. " +
-    "Instead, players can choose between four asymmetric roles (Hacker, Insider, Vaultsnatcher and the Lockpicker) to solve one " +
+    "Instead, players can choose between four asymmetric roles (Hacker, Insider, Vaultsnatcher and Lockpicker) to solve one " +
     "piece of the big puzzle that is the heist. The only way to coordinate is through some tools they are given in the " +
     "game. Steal as much as you can in eight minutes and escape together undetected. If one player gets caught, it is game over.",
 
@@ -33,7 +33,7 @@ export const breakIn: Project = {
   designChallenge: {
     quote:
       "When we started designing the game, we thought to remove the voice channel from the very start. Therefore, coordination " +
-      "had to become a mechanic itself and then I designed tools so this could be translated in-game. The Hacker's Vision became " +
+      "had to become a mechanic itself and then I designed tools so this could be translated in-game. The Hacker Vision became " +
       "a shared danger, for example. I wanted players to achieve communication through the systems that they were given, and my " +
       "job was to provide those systems.",
     engine: "Unity",
@@ -45,7 +45,7 @@ export const breakIn: Project = {
     {
       label: "Lead design & direction",
       description:
-        "Led the design team and communicated with the engineering team. Designed most of the design documents, like the roles, the mechanics, the puzzle and the balancing.",
+        "Led the design team and communicated with the engineering team. Designed most of the design documents, like the roles, the mechanics, the puzzles and the balancing.",
     },
     {
       label: "Role & interdependency design",

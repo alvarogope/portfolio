@@ -107,7 +107,7 @@ export const levelPlanets: readonly LevelPlanet[] = [
       },
     ],
     visuals:
-      "Intense red and orange predominant in the world, magma rivers cutting through black rock, grey skies with " +
+      "Intense red and orange are predominant in the world, magma rivers cutting through black rock, grey skies with " +
       "eruptions going off on the horizon. So it's clear that the environment is dangerous.",
     audio: {
       character: "Fast-paced and aggressive",
@@ -116,7 +116,7 @@ export const levelPlanets: readonly LevelPlanet[] = [
         "",
     },
     cohesion:
-      "Forces the players to learn quick to survive. The environment tries to kill constantly, " +
+      "Forces the players to learn quickly to survive. The environment tries to kill constantly, " +
       "through lava rivers and eruptions, but these are dodgeable since they come in patterns. " +
       "The audio sets the tone: human lines in a world in which nothing human is left.",
     arc: "lava · choir · timing",
@@ -350,7 +350,7 @@ export const spaceAudio = {
   gem: {
     label: "Silence in space",
     body:
-      "Since no sound can travel through void, when the players are in the space, there is no sound. " +
+      "Since no sound can travel through the void, when the players are in the space, there is no sound. " +
       "This also creates the sensation of being in front of everything and nothing at the same time. " +
       "When there are collisions with the spaceship, it sounds, making them seem massive when it impacts.",
   },
@@ -364,7 +364,7 @@ export const progressionCaption =
   "The teaching progression: what it teaches · what you hear · what it demands.";
 
 export const levelsCredit = {
-  headline: "Team project · team of five",
+  headline: "Team project · team of 5",
   role: "Systems & World Designer",
   lines: [
     {

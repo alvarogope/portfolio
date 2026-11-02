@@ -8,7 +8,7 @@ import { engineering as e } from "@/content/engineering/engineering";
 export const metadata: Metadata = {
   title: "Engineering",
   description:
-    "Full-stack and quantum computing work",
+    "Full-stack and Quantum Computing work",
 };
 
 const ACCENT = "#8b7fd6";

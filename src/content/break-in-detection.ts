@@ -36,7 +36,7 @@ export const detectionStates: readonly DetectionState[] = [
     footer: "",
     detail:
       "The enemy has seen something and its bar starts to fill up. Players can escape enemies in this state " +
-      "by hiding and making them go back to their idle state.",
+      "by hiding and making them go back to their Idle State.",
   },
   {
     id: "chasing",
@@ -191,7 +191,7 @@ export const alarmTriggers: readonly AlarmTrigger[] = [
     mistake: "",
     escalatesTo: "chasing",
     consequenceTag: "15s escape",
-    consequence: "Alarm sets off and the escape window cut to 15 seconds",
+    consequence: "Alarm sets off and the escape window is cut to 15 seconds",
     detail:
       "If any of the players is reached by any laser, the alarm will go off. They will have 15 seconds " +
       "to get out, leaving the unfinished tasks.",
@@ -208,7 +208,7 @@ export const alarmTriggers: readonly AlarmTrigger[] = [
     detail:
       "If the player fails to replace the ingot with a similar weight object an alarm will set off. " +
       "This is per ingot and the players know about this, making this trap even a deliberate option to get out. " +
-      "However, the more gold the player has stolen, the slower he gets and they only have 30 seconds to get out.",
+      "However, the more gold the player has stolen, the slower they gets and they only have 30 seconds to get out.",
   },
   {
     id: "failed-lockpick",
@@ -240,7 +240,7 @@ export const voiceConstraint = {
     "Break-In was designed with no voice chat, preventing players from warning each other. The state " +
     "in which the heist is at the moment appears in the HUD. All the detection states appear in each of " +
     "the players' HUD. This also made me think of a way to make the players communicate with each other " +
-    "without words. That's how the Hacker's Vision was born, which highlights enemies in red through the walls. " +
+    "without words. That's how the Hacker Vision was born, which highlights enemies in red through the walls. " +
     "It is a way of communicating WARNING without any words, just because the Hacker triggered it.",
 };
 
@@ -249,7 +249,7 @@ export const designNote = {
   team: "Team of 4",
   body:
     "This system and the way I designed it was to make the players know when they are in danger and " +
-    "allowing them to make decisions in a way that won't be punished harshly. This made the player " +
+    "to allow them to make decisions in a way that won't be punished harshly. This made the player " +
     "accountable for their own decisions instead of blaming the game system. Nothing escalates instantly, " +
     "players can hide and see enemies making them the owner of their decisions completely and putting them " +
     "in the centre of the game.",

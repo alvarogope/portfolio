@@ -429,7 +429,7 @@ export default function DetectionStates() {
 
         <section className="ds-band ds-band--split">
           <aside className="ds-constraint">
-            <p className="mono ds-constraint-tag">Design Decision · {voiceConstraint.headline}</p>
+            <p className="mono ds-constraint-tag">Design Decision - {voiceConstraint.headline}</p>
             <p className="ds-constraint-body">{voiceConstraint.body}</p>
           </aside>
 

@@ -173,7 +173,7 @@ export const breakInRoles: readonly BreakInRole[] = [
       {
         name: "Replace the Ingot",
         body:
-          "A similar weight decoy has to be placed in place of the ingot within one second of it coming off of it.",
+          "A similar weight decoy has to be placed in place of the ingot within one second of it coming off it.",
         tuning: "1s window per ingot",
         note: "Fail to do so and the alarm trips, leaving the whole team thirty seconds to get out.",
       },
@@ -184,7 +184,7 @@ export const breakInRoles: readonly BreakInRole[] = [
         "Find objects around the bank whose shape and weight match the ingots, and place them " +
         "as decoys. The amount that is needed is randomised, and only two can be " +
         "carried at a time, so the trip has to be made more than once.",
-      fail: "Come up short and limits how many ingots can be taken without the alarm going off.",
+      fail: "Coming up short limits how many ingots can be taken without the alarm going off.",
     },
   },
 ];
@@ -192,7 +192,7 @@ export const breakInRoles: readonly BreakInRole[] = [
 export const puzzleAsymmetryNote = {
   headline: "Three puzzles",
   body:
-    "Each character has their own minigame but one. The Insider's own task is their ability to disguise, " +
+    "Each character has their own minigame but one. The Insider's own task is their ability to disguise and " +
     "their route reading to find paths. So, adding a minigame would have put too much weight on this character. ",
   credit: "A Lead Designer call on balance.",
 };
@@ -240,7 +240,7 @@ export const roleLinks: readonly RoleLink[] = [
     to: "lockpicker",
     type: "counters",
     trap: "failed-lockpick",
-    label: "T3 - hacker vision reads the room first",
+    label: "T3 - Hacker Vision reads the room first",
   },
   {
     id: "vaultsnatcher-all",
@@ -281,11 +281,11 @@ export const selectionRule = {
   headline: "No ability duplication",
   body:
     "Each role can only be chosen once per play. The abilities were designed to complement each other, " +
-    "knowing their strengths and weaknesses. Having two of the same role would make a weaker team and even " +
-    "not letting the team complete the game at all.",
+    "knowing their strengths and weaknesses. Having two of the same role would make a weaker team and might even " +
+    "stop the team completing the game.",
   credit:
     "As the Lead Designer, the dependency and balance of the roles had to be forced into the players from the " +
-    "character selection screen. This made the cooperation key for winning.",
+    "character selection screen. This made cooperation the key for winning.",
 };
 
 const byId = new Map(breakInRoles.map((r) => [r.id, r]));

@@ -166,7 +166,7 @@ export default function BreakInPage() {
                 }}
               >
                 The bank layout. Firstly, it was sketched on paper by me and the level designer, focused
-                on the two floors. We had to think where the players had to operate and always give them 
+                on the two floors. We had to think about where the players had to operate and always give them 
                 a solution to a potential problem depending on where they were in the map.
               </p>
               <PlateGrid

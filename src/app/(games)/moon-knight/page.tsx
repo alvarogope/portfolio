@@ -124,7 +124,7 @@ export default function MoonKnightPage() {
             >
               <SectionHeading kicker="The Quantum Abilities" title={ch.abilities.title} />
               <p style={{ color: "var(--color-mist)", maxWidth: "35rem", marginTop: "1.5rem", marginBottom: "2rem" }}>
-                Five abilities built on a real quantum computing principle. One
+                Five abilities built on a real Quantum Computing principle. One
                 equipped at a time with high risk and high reward.
               </p>
 
@@ -148,7 +148,7 @@ export default function MoonKnightPage() {
                   margin: "0 0 1.25rem",
                 }}
               >
-                AI Blueprints Systems
+                AI Blueprint Systems
               </h3>
               <PlateGrid
                 minWidth="26rem"
@@ -156,17 +156,17 @@ export default function MoonKnightPage() {
                   {
                     src: "/images/moon-knight/BP_AIController_SightDetection.png",
                     label: "Blueprint · Triggering enemies through sight detection",
-                    alt: "The AI sight-detection graph: a Sight Detection event breaks the AI stimulus, branches on Successfully Sensed, and on the true path writes the player into the Target Actor Blackboard key and calls Activate Mini Boss Combat — while the false path clears the key and calls Deactivate Miniboss Combat.",
+                    alt: "The AI sight-detection graph: a Sight Detection event breaks the AI stimulus, branches on Successfully Sensed, and on the true path writes the player into the Target Actor Blackboard key and calls Activate Mini Boss Combat — while the false path clears the key and calls Deactivate Mini-boss Combat.",
                     caption:
                       "The detection system that the majority of the enemies share. The sensed stimulus writes you into the Target Actor key that the Behaviour Tree reads. " +
                       "This system lets the player deactivate the stimulus, leaving the fight whenever needed."
                   },
                   {
                     src: "/images/moon-knight/MiniBoss_Combat.png",
-                    label: "Blueprint · Boss bar only appearing during the bossfight",
-                    alt: "The mini-boss combat graph: Activate MiniBoss Combat creates the WB Boss Health bar widget and adds it to the viewport, a tick divides current health by max health into Set Percent, and Deactivate Miniboss Combat removes the widget from its parent.",
+                    label: "Blueprint · Boss bar only appearing during the boss fight",
+                    alt: "The mini-boss combat graph: Activate Mini-boss Combat creates the WB Boss Health bar widget and adds it to the viewport, a tick divides current health by max health into Set Percent, and Deactivate Mini-boss Combat removes the widget from its parent.",
                     caption:
-                      "With this Blueprint, the boss' health bar only appears when they are triggered. This HUD disappears when the boss is defeated or when they lose sight of the player." 
+                      "With this Blueprint, the boss's health bar only appears when they are triggered. This HUD disappears when the boss is defeated or when they lose sight of the player." 
                   },
                 ]}
               />
@@ -196,7 +196,7 @@ export default function MoonKnightPage() {
                 }}
               >
                 This is the Animation Montage of the first attack. The space between the two notifies of the animation is 
-                the time that the player has to concatenate attacks. If the player presses the input outside of this time 
+                the time that the player has to chain attacks. If the player presses the input outside of this time 
                 the attack combo will fail. This is the connection between the animation and the Blueprints.
               </figcaption>
             </figure>
@@ -282,13 +282,13 @@ export default function MoonKnightPage() {
                     label: "Centralis · the forest",
                     alt: "Annotated night shot from inside the forest: callouts on the moon as both light source and compass, and on enemy placement in the dark between the trees.",
                     caption:
-                      "The same level from the floor. The moon serves a double function by giving natural light to the level and the direction towards" +
+                      "The same level from the floor. The moon serves a double function by giving natural light to the level and the direction towards " +
                       "where the player should go. The enemies are placed in the dark between the trees, which is what makes the combat short-range and fast.",
                   },
                   {
                     src: "/images/moon-knight/boss_arena.png",
-                    label: "The werewolf boss arena",
-                    alt: "Annotated boss arena: the werewolf placed on a raised mound so it stays readable from anywhere in the arena, with the arena sized for dodging room.",
+                    label: "The Werewolf boss arena",
+                    alt: "Annotated boss arena: the Werewolf placed on a raised mound so it stays readable from anywhere in the arena, with the arena sized for dodging room.",
                     caption:
                       "The boss stands on a hill so it is seen from anywhere in the arena, and the arena gives space so the player has space to dodge.",
                   },
@@ -348,7 +348,7 @@ export default function MoonKnightPage() {
                   },
                   {
                     src: "/images/moon-knight/BP_DieMechanic.png",
-                    label: "Diying sequence",
+                    label: "Dying sequence",
                     alt: "The Die Blueprint sequence: disable input, set the mesh to simulate physics, start a camera fade through the player camera manager, delay, then open the current level again by name.",
                     caption:
                       "For the death sequence I decided to make all the characters go to ragdoll and if the player dies, have a fade to black screen. " +
@@ -381,7 +381,7 @@ export default function MoonKnightPage() {
           <div id={ch.art.id} style={{ marginTop: "5rem" }}>
             <SectionHeading kicker="The Sublime" title={ch.art.title} />
             <p style={{ color: "var(--color-mist)", maxWidth: "35rem", marginTop: "1.5rem", marginBottom: "1.75rem" }}>
-              The Sublime and their way of romanticising the medieval ages is what inspired the artstyle direction.
+              The Sublime and its way of romanticising the medieval ages is what inspired the art direction.
               This art philosophy adapted to games, exposes the player to solitude, open spaces and big challenges whether internal or external.
             </p>
 
@@ -395,7 +395,7 @@ export default function MoonKnightPage() {
                     label: "Landscapes",
                     alt: "The knight seen from behind, alone in a moonlit meadow of foxgloves, ruined statues either side, a full moon low on the horizon under a dense starfield.",
                     caption:
-                      "This screenshot shows a miniboss next to ruins and under the moonlight. Big landscapes and big challenges turned epic.",
+                      "This screenshot shows a Mini-boss next to ruins and under the moonlight. Big landscapes and big challenges turned epic.",
                   },
                   {
                     src: "/images/moon-knight/environment.png",
@@ -501,7 +501,7 @@ export default function MoonKnightPage() {
               kicker="The World"
               title="The World of Kaelum"
               body= 
-                "The full length of the project. The Narrative Design, the NPCs and their story, the worldbuilding and its symbolism, and the full art-direction argument. How the music and the audio design was planned, the jousting minigame and the potential DLCs."
+                "The full length of the project. The Narrative Design, the NPCs and their story, the worldbuilding and its symbolism, and the full art-direction argument. How the music and the audio design were planned, the jousting minigame and the potential DLCs."
               href={deepDivePath}
               linkLabel="Read the deep dive"
             />

@@ -118,7 +118,7 @@ export const heistPhases: readonly HeistPhase[] = [
       },
       {
         role: "lockpicker",
-        text: "Use the smoke bombs to reveal the laser grid. It is the only way that the Vaultsnatcher gets in.",
+        text: "Uses the smoke bombs to reveal the laser grid. It is the only way that the Vaultsnatcher gets in.",
       },
       {
         role: "hacker",
@@ -165,7 +165,7 @@ export const heistPhases: readonly HeistPhase[] = [
       },
     ],
     tasks: ["USB plant", "Server access", "Timed word puzzle", "Funds transfer"],
-    risk: "The second path doesn't mean that it is safer, but allows the team to get the bigger score, while risking that the hacker will fail.",
+    risk: "The second path doesn't mean that it is safer, but allows the team to get the bigger score, while risking that The Hacker will fail.",
     pressure: 0.7,
   },
   {
@@ -184,7 +184,7 @@ export const heistPhases: readonly HeistPhase[] = [
       },
       {
         role: "insider",
-        text: "The route scouted back in phase 1 appears here. The team that skipped it is searching with the clock in red.",
+        text: "The route scouted back in Phase 1 appears here. The team that skipped it is searching with the clock in red.",
       },
       {
         role: "hacker",

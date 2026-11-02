@@ -19,7 +19,7 @@ export const moonKnight: Project = {
   ],
 
   eyebrow: "UE5 · C++ & BLUEPRINTS · SOLO PROJECT · 2025 - Present",
-  systemsHook: "A medieval dark fantasy RPG where I designed five combat abilities inspired in real quantum computing principles.",
+  systemsHook: "A medieval dark fantasy RPG where I designed five combat abilities inspired by real Quantum Computing principles.",
   disciplines: "Systems Design · Quantum Design · Combat Design · C++ · Level Design · UI/UX ",
   scope: "Solo · full authorship",
   routingVerb: "see the project",
@@ -32,7 +32,7 @@ export const moonKnight: Project = {
     "Moon-Knight is an action RPG where I tried to think about how Quantum Computing principles could change RPG mechanics. " + 
     "I designed five combat abilities from these principles and built the systems. " + 
     "It began as my MA dissertation to research how this cutting-edge technology could change the designing side of video games, while " + 
-    "also design every single aspect of it.",
+    "also designing every single aspect of it.",
 
   built:
     "I developed a prototype. The Tutorial is fully playable where the main mechanics and systems are introduced. " +
@@ -48,7 +48,7 @@ export const moonKnight: Project = {
     {
       label: "Quantum abilities design",
       description:
-        "Extrapolated quantum computing principles and translated them into video games. " + 
+        "Extrapolated Quantum Computing principles and translated them into video games. " + 
         "Each of them has their own risks and rewards, making the player learn how to use them.",
     },
     {
@@ -118,11 +118,11 @@ export const moonKnight: Project = {
 
   designChallenge: {
     quote:
-      "The game was designed to have video game mechanics inspired by quantum computing, trying to imagine how this technology could change the media " +
+      "The game was designed to have video game mechanics inspired by Quantum Computing, trying to imagine how this technology could change the media " +
       "without breaking the main rules of video games and interactive media. Unreal Engine's Blueprints don't have a way to represent them properly. " +
-      "I documented where this technology could excel in the video game media and where it felt like quantum computing was unnecessary. " +
-      "The quantum skill tree was the best way to translate these principles. I am rebuilding the codebase using a C++17 library called QPP that " + 
-      "wraps Quantum++ and Eigen, as well as researching how to use this technology to improve the media.",
+      "I documented where this technology could excel in the video game media and where it felt like Quantum Computing was unnecessary. " +
+      "The quantum skill tree was the best way to translate these principles. I am rebuilding the codebase using a C++17 library that " + 
+      "wraps Quantum++ (QPP) and Eigen, as well as researching how to use this technology to improve the media.",
     engine: "Unreal Engine 5",
     system: "Blueprints / C++",
     resolution: "Documented the technology limitations and carried it into a C++17 quantum toolkit.",

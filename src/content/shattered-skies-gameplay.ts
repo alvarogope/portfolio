@@ -25,7 +25,7 @@ export const thesis: Thesis = {
     "The minigames in the ship are always divided into two. Knowledge and control, giving one to each player, " +
     "and expecting them to collaborate without talking with each other.",
   note:
-    "The puzzles are not a skill test, they are a communication test. The difficulty comes from the lack of " +
+    "The puzzles are not a skill test; they are a communication test. The difficulty comes from the lack of " +
     "conversation that they could have. The way they communicate is completely up to the players and the way " +
     "they have to express ideas. The time they take to solve them depends fully on them.",
   moves: [
@@ -186,7 +186,7 @@ export const minigames: MinigameSection = {
     {
       id: "hull",
       order: "2",
-      name: "Seal The Breach",
+      name: "Seal the Breach",
       tag: "Hull repair · control split",
       premise:
         "A crack opens in the hull and has to be welded shut in zero-g, following the shape of the " +
@@ -258,7 +258,7 @@ export const minigames: MinigameSection = {
     {
       id: "sensors",
       order: "3",
-      name: "Calibratig Sensors",
+      name: "Calibrating Sensors",
       tag: "Navigation · waveform · knowledge and control division",
       premise:
         "Navigation comes back when the sensor output is matched to a target waveform. Two " +
@@ -357,7 +357,7 @@ export const puzzlePattern: PuzzleSection = {
     kicker: "The pattern",
     title: "The Puzzle Structure",
     standfirst:
-      "Puzzles cannot be solved by players individually. The way they were designed follow these ways: ",
+      "Puzzles cannot be solved by players individually. The way they were designed follows these ways: ",
   },
 
   lead:
@@ -387,7 +387,7 @@ export const puzzlePattern: PuzzleSection = {
       label: "The Symbiochord limiting the distance",
       body:
         "The parasite lets the characters distance from each other in a limited way. If they are too " +
-        "far apart, they die. Some puzzles' solutions put this into risk and positioning is key.",
+        "far apart, they die. Some puzzles' solutions put this at risk and positioning is key.",
     },
     {
       id: "exposure",

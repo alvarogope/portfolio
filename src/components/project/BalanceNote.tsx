@@ -137,7 +137,7 @@ function AdaptiveChart() {
         height={bandBottom - bandTop}
       />
       <text className="bn-band-label" x={A_L + 6} y={A_TOP + 16}>
-        TARGETTED TENSION
+        TARGETED TENSION
       </text>
 
       <line className="bn-baseline" x1={A_L} y1={A_BASE} x2={A_R} y2={A_BASE} />

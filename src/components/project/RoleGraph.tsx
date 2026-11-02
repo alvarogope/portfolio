@@ -515,7 +515,7 @@ export default function RoleGraph({
           </li>
         </ul>
         <p className="rg-key-pointer">
-          The explanation of each trap is explained in the Detection State Machine
+          Each trap is explained in the Detection State Machine
         </p>
       </div>
 
@@ -527,7 +527,7 @@ export default function RoleGraph({
         </aside>
 
         <aside className="rg-note">
-          <p className="mono rg-note-tag">Design decision - {puzzleAsymmetryNote.headline}</p>
+          <p className="mono rg-note-tag">Design Decision - {puzzleAsymmetryNote.headline}</p>
           <p className="rg-note-body">{puzzleAsymmetryNote.body}</p>
           <p className="rg-note-credit">{puzzleAsymmetryNote.credit}</p>
         </aside>

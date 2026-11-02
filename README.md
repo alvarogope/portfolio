@@ -32,16 +32,16 @@ It presents four games I designed, two of which were shown at **Develop:Brighton
 
 | Game | Genre | Engine | My role | Team | Year | Page |
 | --- | --- | --- | --- | --- | --- | --- |
-| **Moon-Knight** | Dark-fantasy action RPG | Unreal Engine 5 | Solo developer, full authorship | Solo | 2025 to present | [/moon-knight](https://alvarogomezgames.com/moon-knight) |
+| **Moon-Knight** | Dark fantasy action RPG | Unreal Engine 5 | Solo developer, full authorship | Solo | 2025 to present | [/moon-knight](https://alvarogomezgames.com/moon-knight) |
 | **Shattered Skies** | Sci-fi co-op | Unity | Systems and world designer | 5 | 2025 | [/shattered-skies](https://alvarogomezgames.com/shattered-skies) |
 | **Break-In** | Four-player stealth heist | Unity | Lead designer | 4 | 2025 | [/break-in](https://alvarogomezgames.com/break-in) |
 | **Seeds of Tomorrow** | Solarpunk adventure | Unity | Composer and level designer | 5 | 2025 | [/seeds-of-tomorrow](https://alvarogomezgames.com/seeds-of-tomorrow) |
 
-### Moon-Knight: combat built on quantum computing principles
+### Moon-Knight: combat built on Quantum Computing principles
 
 *Solo · Unreal Engine 5 · C++ and Blueprints · shown at Develop:Brighton 2025*
 
-Moon-Knight is an action RPG that asks a research question: **how could quantum computing principles change RPG mechanics without breaking the rules that make a game work?** It began as my MA dissertation. I designed and built everything: the systems, the level design, the enemies and bosses, the interface, the C++ and Blueprint code, and the music and audio. The tutorial is fully playable and introduces every core mechanic.
+Moon-Knight is an action RPG that asks a research question: **how could Quantum Computing principles change RPG mechanics without breaking the rules that make a game work?** It began as my MA dissertation. I designed and built everything: the systems, the level design, the enemies and bosses, the interface, the C++ and Blueprint code, and the music and audio. The tutorial is fully playable and introduces every core mechanic.
 
 **The five quantum abilities.** Each ability maps to a real quantum principle, and each has its own risk and reward:
 
@@ -62,7 +62,7 @@ Moon-Knight is an action RPG that asks a research question: **how could quantum 
 
 **The quantum toolkit (documented on [/moon-knight/engineering/quantum](https://alvarogomezgames.com/moon-knight/engineering/quantum)).** Blueprints could not represent the quantum mechanics faithfully. I documented that limit, then started building a C++17 toolkit on QPP, a library that wraps Quantum++ and Eigen. It simulates real qubits, gates, measurement and noise. The key decisions:
 - **A density matrix, not a state vector.** Instability needs *decoherence*: an orb's outcome should become more random the longer it flies. A state vector can only represent pure states. A density matrix can represent the partially mixed states this mechanic needs.
-- **Designers think in probabilities; the physics thinks in angles.** A designer sets "70% likely to amplify". The toolkit converts that to an `Ry` rotation, `θ = 2·arccos(√(1−p))`, so that `P(|1⟩) = p` exactly. Designers can tune abilities without knowing any quantum computing.
+- **Designers think in probabilities; the physics thinks in angles.** A designer sets "70% likely to amplify". The toolkit converts that to an `Ry` rotation, `θ = 2·arccos(√(1−p))`, so that `P(|1⟩) = p` exactly. Designers can tune abilities without knowing any Quantum Computing.
 - **Decoherence is simulated from real physics.** It uses a trace-preserving depolarizing channel that pulls the qubit toward the maximally mixed state over the orb's flight.
 - **Each ability is checked statistically.** A Monte Carlo test runs it a thousand times and compares the observed frequencies with the analytic prediction. For Inversion, the endpoints are deterministic and the interior points fall within one to two standard errors of `sin²`, which is the Born rule.
 
@@ -81,7 +81,7 @@ Two soldiers from enemy species share one parasite, the Symbiochord, and so shar
 *Team of 4 · Unity · lead designer*
 
 A four-player stealth bank heist with one rule: **players cannot talk to each other.** Each player picks one of four asymmetric roles (the Hacker, the Insider, the Vaultsnatcher or the Lockpicker), and every ability is useless without a teammate. The team has eight minutes to steal as much as possible and escape. If anyone is caught, the run is over.
-- **Coordination became a mechanic.** We removed voice chat on day one, so I designed three in-game coordination systems to replace it. For example, the Hacker's Vision became a danger signal shared by the whole team.
+- **Coordination became a mechanic.** We removed voice chat on day one, so I designed three in-game coordination systems to replace it. For example, the Hacker Vision became a danger signal shared by the whole team.
 - I led the design team, acted as the link to the engineering team, and wrote most of the design documents: roles, mechanics, the puzzle and balancing.
 - I designed the **detection state machine**, the **eight-minute pressure loop** and its risk/reward curve, and the balance data that stops any single role from carrying the team.
 - I directed the audio (clock and action cues) and co-designed the bank layout with the team's level designer.
@@ -99,7 +99,7 @@ A time traveller returns to an Earth destroyed by pollution and plants the seeds
 
 ## Engineering beyond games
 
-The site also documents two full-stack quantum computing applications:
+The site also documents two full-stack Quantum Computing applications:
 
 | Project | What it does | Stack | Links |
 | --- | --- | --- | --- |

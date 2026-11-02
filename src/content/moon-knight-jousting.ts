@@ -45,11 +45,10 @@ export const joustMatrixCaption =
 
 export const joustDesignNote =
   "It replicates how jousting works in this world and follows the most basic structure in games. " +
-  "It depends on the player to get better at it and get the timing correctly.";
+  "It depends on the player to get better at it and get the timing right.";
 
 export const joustSpinout = {
   kicker: "Next Project",
   body:
-    "I found potential in this jousting game and I have been developing it as a side project " +
-    "as a standalone game.",
+    "I found potential in this jousting game and I have been developing it as a standalone side project.",
 } as const;

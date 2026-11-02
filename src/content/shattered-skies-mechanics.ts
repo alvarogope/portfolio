@@ -24,7 +24,7 @@ export const spine: Spine = {
     "The two characters belong to two different species. They don't share language, so when we built " +
     "these systems we had to consider this barrier and the way cooperation should work without communication. " +
     "So the players could feel comfortable with the system we decided to enhance this cooperation by having it " +
-    "through the whole game, like in the ship and the jetpack boost.",
+    "throughout the whole game, like in the ship and the jetpack boost.",
   note:
     "The design reasoning was more centred on “how do we make trust cost something”. Then the system " +
     "had to be around not having a voice chat and design problems they can solve without them.",
@@ -87,7 +87,7 @@ export const communication: CommunicationSection = {
           "as it gives the players different stories that they cannot share through any channel.",
         impact:
           "We noticed that the players focused on playing and not on talking. Voice could have a specific tone but " +
-          "does not have any meaning at all. This builds-up mistrust or the opposite when reading the others behaviour.",
+          "does not have any meaning at all. This builds up mistrust or the opposite when reading the others' behaviour.",
       },
     },
     {
@@ -105,7 +105,7 @@ export const communication: CommunicationSection = {
         why:
           "The game design decisions were focused on miscommunication and this is also part of the story. " +
           "We expect the players to respect these rules. Shattered Skies could have had a voice chat like " +
-          "most co-op game do, but the ambiguity is what this game was built from and every decision was taken " +
+          "most co-op games do, but the ambiguity is what this game was built from and every decision was taken " +
           "towards that direction. Players can break it, but they will not experience the game properly.",
         impact:
           "Players become part of the barrier the games require. This is the first cooperative mechanic. " +
@@ -152,7 +152,7 @@ export const communication: CommunicationSection = {
           "saying? Connecting it to the ending is what makes it an interesting mechanic since they " +
           "can also lie to each other, which was impossible during the game.",
         impact:
-          "These five seconds of communication becomes a prisoner's dilemma. Players used this window " +
+          "These five seconds of communication become a prisoner's dilemma. Players used this window " +
           "for warning, planning, confession or lying, getting to the ending they wanted.",
       },
     },
@@ -300,8 +300,8 @@ export const ship: ShipSection = {
 
   lead:
     "The ship is the way players navigate through planets, but it is also the main hub and their safe place. " +
-    "To control it, it takes both of them, as steering, shields, cannons and radars are in separate rooms, making " +
-    "the players to physically move and coordinate: one is steering while the other one turns on the shields. " +
+    "To control it, it takes both of them, as steering, shields, cannons and radars is in separate rooms, making " +
+    "the players physically move and coordinate: one is steering while the other one turns on the shields. " +
     "We gave the ship realistic weight and inertia, making the navigation difficult even through communication.",
 
   dualControl: {
@@ -312,7 +312,7 @@ export const ship: ShipSection = {
       "navigation a kind of communication.",
     impact:
       "Players ended up auto-organising in roles and then when the ship got damaged, they would change them. " +
-      "This kind of cooperation to one of the most important mechanics helped them in future puzzles.",
+      "This kind of cooperation in one of the most important mechanics helped them in future puzzles.",
   },
 
   stationsLabel: "The main ship systems",
@@ -330,7 +330,7 @@ export const ship: ShipSection = {
     {
       id: "cannons",
       name: "Cannons",
-      role: "Clears asteroids and hostiles, can be aimed independently of where the ship points to.",
+      role: "Clears asteroids and hostiles, can be aimed independently of where the ship points.",
     },
     {
       id: "radar",
@@ -352,7 +352,7 @@ export const ship: ShipSection = {
 
   designPoint:
     "We were trying to make cooperation as mechanical and intuitive as possible in the spaceship. " +
-    "Helpful for future puzzles and forcing it in the most important mechanic.",
+    "Helpful for future puzzles and forcing it into the most important mechanic.",
 };
 
 /* ==========================================================================
@@ -424,8 +424,8 @@ export const traversal: TraversalSection = {
   jetpackLabel: "Jetpacks",
   jetpackBody:
     "Both have access to a jetpack from the very beginning, permitting this move from the start. " +
-    "They are limited by fuel and they are sensitive to the character's weight. Aevi being lighter than " +
-    "Drayk and balancing the jumping mechanics. They are also used in some puzzles.",
+    "They are limited by fuel and they are sensitive to the character's weight. Aevi, being lighter than " +
+    "Drayk, balances the jumping mechanics. They are also used in some puzzles.",
   jetpackUses: [
     {
       id: "underwater",

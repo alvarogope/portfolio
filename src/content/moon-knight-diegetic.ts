@@ -4,7 +4,7 @@ export const diegeticThesis = {
     "The health, the progression and healing are alive in the world.",
   body:
     "These could have been a bar or an overlay, but instead they are an action in the world. " +
-    "By making the systems like this, I prioritise the player's on screen view and make the game have more amplitude. " +
+    "By making the systems like this, I prioritise the player's on-screen view and make the game have more amplitude. " +
     "Health is always in the centre and can be seen easily. The progression doesn't tell where to go exactly, just to which direction. " +
     "Making the healing process play an instrument creates a bond with the melody and the player, especially if it's done in the safe space.",
   scope:
@@ -36,7 +36,7 @@ export const moonHudStates: readonly HudState[] = [
   {
     phase: "new",
     label: "waxing crescent",
-    note: "A small light in the circle, health is very low.",
+    note: "A small light in the circle; health is very low.",
   },
 ];
 
@@ -75,7 +75,7 @@ export const diegeticMechanics: readonly DiegeticMechanic[] = [
       "XP comes only from defeating enemies and following objectives. The player has to stain " +
       "a white rose with the boss's blood, making each one of them one XP.",
     why:
-      "I wanted to prevent farming XPs, so I conditioned these levels to objectives and bosses. " +
+      "I wanted to prevent farming XP, so I conditioned these levels to objectives and bosses. " +
       "This also makes it easier to tune the difficulty since there are limited XP across the levels. " +
       "It also relates to the narrative instead of guessing how much XP each enemy costs.",
   },
@@ -88,9 +88,9 @@ export const diegeticMechanics: readonly DiegeticMechanic[] = [
       "There is no map or compass, so I had to think of how to tell the player where to go. " +
       "Raising the sword to catch moonlight points to the next Moon Fragment.",
     why:
-      "I wanted the player to experience the world rather than look in a map for directions. " +
+      "I wanted the player to experience the world rather than look at a map for directions. " +
       "It forces the player to recognise the places and puts a lot of weight on the level design, " + 
-      "which has to guide with the environment",
+      "which has to guide the player through the environment",
   },
   {
     id: "harp-healing",
@@ -130,7 +130,7 @@ export const skillTree = {
       kind: "Sword",
       body:
         "This upgrade grants the player a normal upgrade in their sword's attacks.",
-      pin: { value: "Last tier costs 2 XPs", source: "Diegetic design" },
+      pin: { value: "Last tier costs 2 XP", source: "Diegetic design" },
     },
     {
       id: "bow",
@@ -162,7 +162,7 @@ export const invisibleDesign: readonly DesignDecision[] = [
     id: "camouflaged-loading",
     decision: "Loading screens",
     why:
-      "Elevators, the environment covering spaces and doors could help as loading screen while " +
+      "Elevators, the environment covering spaces and doors could help as a loading screen while " +
       "the player is doing something else. Trying to smooth gameplay as much as possible.",
   },
   {
@@ -170,7 +170,7 @@ export const invisibleDesign: readonly DesignDecision[] = [
     decision: "No blocking",
     why:
       "I wanted the players to be aggressive while they play and blocking created the opposite circumstance. " +
-      "Removing it I had to also tune the combat: dodging doesn't consume stamina, adding a parry and constant movement.",
+      "Removing it, I also had to tune the combat: dodging doesn't consume stamina, adding a parry and constant movement.",
   },
   {
     id: "willow-saves",

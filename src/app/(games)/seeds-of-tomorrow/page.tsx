@@ -127,7 +127,7 @@ export default function SeedsOfTomorrowPage() {
             <SectionHeading kicker="Original Music" title={ch.score.title} />
             <p style={LEAD}>
               I composed and recorded original tracks for the game. The main theme can be listened 
-              to while exploring this page down below. The rest can be found in this section.
+              to while exploring this page below. The rest can be found in this section.
             </p>
             <SeedsAudio />
 
@@ -154,7 +154,7 @@ export default function SeedsOfTomorrowPage() {
           <div id={ch.levels.id} style={GAP}>
             <SectionHeading kicker="Combats and puzzles" title={ch.levels.title} />
             <p style={LEAD}>
-              I co-designed the levels and the puzzles with members of the team. I designed the pace
+              I co-designed the levels and the puzzles with members of the team. I designed the pace at which
               the gameplay runs.
             </p>
             <SeedsLevelDesign />
@@ -214,7 +214,7 @@ export default function SeedsOfTomorrowPage() {
                       label: "Sketch",
                       alt: "Hand-drawn charcoal sketch of a poisoned Earth: cooling towers venting smoke, wrecked pylons, scattered oil drums, a ringed planet and a saucer in the sky.",
                       caption:
-                        "Another concept art that represents the cover of the game.",
+                        "Another piece of concept art that represents the cover of the game.",
                     },
                   ]}
                 />

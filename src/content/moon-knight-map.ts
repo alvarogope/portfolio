@@ -47,7 +47,7 @@ export const markerTypeMeta: Record<MarkerType, { term: string; gloss: string }>
     term: "Land",
     gloss:
       "Centralis, the lake island where the journey begins, and the three great levels. " +
-      "Each area covers one act in the narrative, they are listed in the order they are played.",
+      "Each area covers one act in the narrative; they are listed in the order they are played.",
   },
   fortress: {
     term: "Fortress · Moon Fragments",

@@ -73,7 +73,7 @@ export default function BossPlateArch({
            everywhere else — deliberately. The other plates here are DOCUMENTS
            whose callouts a crop would destroy. This is a photograph, and the
            arch is 3:4 against a 16:9 source, so covering it keeps the FULL
-           HEIGHT and trims the sides: the werewolf and the knight below it are
+           HEIGHT and trims the sides: The Werewolf and the knight below it are
            both dead centre and both survive. The whole frame is one click away
            regardless. */
         .bpa-img {

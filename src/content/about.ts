@@ -14,7 +14,7 @@
     characterFile: {
         name: "Álvaro Gómez",
         role: "Technical Game Designer",
-        focus: "Systems · Level design · World-building · Audio · Engineering",
+        focus: "Systems · Level design · Worldbuilding · Audio · Engineering",
       },
 
     tech: [
@@ -77,7 +77,7 @@
         answer: 
           "I was always drawn to games because they put the player in the centre of the media. They become the hero, the villain, " +
           "or whatever they would like, but through the mechanics. I came from film and audiovisual media where I familiarised myself with part " +
-          "of the language games use and expressing feeling through it. Games are just the best way to do it, because the person " +
+          "of the language games use to express feeling through it. Games are just the best way to do it, because the person " +
           "on the other side is not just a passive consumer, but the main reason this story even exists.",
       },
       {

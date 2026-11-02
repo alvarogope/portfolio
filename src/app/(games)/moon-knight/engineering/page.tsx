@@ -440,7 +440,7 @@ export default function GameEngineeringPage() {
               }}
             >
               This is the Animation Montage of the first attack. The space between the two notifies of the animation is
-              the time that the player has to concatenate attacks. If the player presses the input outside of this time
+              the time that the player has to chain attacks. If the player presses the input outside of this time
               the attack combo will fail. This is the connection between the animation and the Blueprints.
             </figcaption>
           </figure>

@@ -32,6 +32,6 @@ export const inMotionClips: readonly MotionClip[] = [
     label: "Boss fight",
     alt: "The Werewolf boss fight: dodging through an attack and answering it in the recovery window",
     caption:
-      "The Werewolf fight. Dodging and attacking in a fast-paced combat.",
+      "The Werewolf fight. Dodging and attacking in fast-paced combat.",
   },
 ];

@@ -53,7 +53,7 @@ export const narrativeActs: readonly NarrativeAct[] = [
     fragment: "Full Moon Fragment",
     guardian: "The Sun-Knight",
     beat:
-      "After escaping, the Moon-Knight climbs to the last fortress and their comrade waiting inside of it. " +
+      "After escaping, the Moon-Knight climbs to the last fortress and their comrade waiting inside it. " +
       "Once defeated, the player has two options: let the God of the Gaps stand or end the world.",
   },
 ];
@@ -84,7 +84,7 @@ export const reversal = {
   payoff:
     "This way of having the character discover the world at the same time as the player is the best approach for an " +
     "unknown new world and has a narrative excuse to explain how the world functions. This explanation of the story " +
-    "gave me several narrative and design excuses for my ideas for the game while avoiding the classic good vs evil story",
+    "gave me several narrative and design excuses for my ideas for the game while avoiding the classic good vs evil story.",
 };
 
 /* ---- themes & symbolism ------------------------------------------------- */
@@ -121,7 +121,7 @@ export const narrativeThemes: readonly NarrativeTheme[] = [
     title: "A piano underground",
     line:
       "The score is medieval folk everywhere but the dungeons, where a piano " +
-      "plays. This is an instrument that sounds odd in a medieval world and does not belong there," + 
+      "plays. This is an instrument that sounds odd in a medieval world and does not belong there, " + 
       "hinting something is odd. Nothing tells the player something is wrong down " +
       "there. The instrument does.",
   },
@@ -174,12 +174,12 @@ export const storyThroughMechanics = {
 export const fullStory: readonly string[] = [
   "Kaelum is a dark fantasy medieval world in three great regions: The Woods, The Misty Lands and " +
     "the Frozen Mountains. For most of the game the Moon-Knight walks through it on their own. " +
-    "Loneliness is an important part of the story, as the player will walk through ruins, ancient temples," + 
-    "castles, fortresses and swamps and will explore them on their own. It contrasts with a fast close combat" + 
+    "Loneliness is an important part of the story, as the player will walk through ruins, ancient temples, " + 
+    "castles, fortresses and swamps and will explore them on their own. It contrasts with a fast close combat " + 
     "with knights, banshees, ghosts, goblins and wizards.",
 
   "They wake from a coma on Centralis, a lake island in the middle of the continent, and meet Death, " +
-    "a strange figure who promises to revive them every time they die. The island is the prologue, " +
+    "a strange figure who promises to revive them every time they die. The island is the prologue; " +
     "the three acts begin when they leave Centralis. The task is to restore the Moon Goddess by recovering " +
     "the three fragments.",
 
@@ -191,7 +191,7 @@ export const fullStory: readonly string[] = [
 
   "The Sun-Knight was the Moon-Knight's partner, back when the Sun and the Moon worked together. He was the first to " +
     "see the Gods of the Gaps fallacy for what it is: the Power of the Gods is a manipulation of " +
-    "quantum states, not divinity and Kaelum built its faith in the gap. What he saw in the moon was " +
+    "quantum states, not divinity, and Kaelum built its faith in the gap. What he saw in the moon was " +
     "dark enough that he broke it apart and hid the pieces. When the Moon-Knight discovered it, they " +
     "faced each other and the Moon-Knight got sent into a coma.",
 

@@ -6,9 +6,9 @@ export const artThesis = {
     "Moon-Knight art direction is based on the Romantic idea of the medieval times. " + 
       "The Sublime is the feeling of standing before something immense and indifferent " + 
       "and being attracted and frightened at once. It is not based on medieval art, but " + 
-      "its romanticisation during the 19th Century.",
+      "its romanticisation during the 19th century.",
     "The game is made for making the player feel small and alone. The world the player experiences " +
-      "is in decay, no civilisation remains and everything has been forgotten. Life is not valued " +
+      "is in decay; no civilisation remains and everything has been forgotten. Life is not valued " +
       "because nobody remembers. The moon is always present, but being nearly the only light in a " + 
       "world that is already dead.",
   ],
@@ -44,7 +44,7 @@ export const sublimeTranslations: readonly SublimeTranslation[] = [
       "sanctuaries, are just an echo of what once was and will never be again.",
     why:
       "The feeling of things ending is what made the Sublime real. Death, decay, oblivion " +
-      "and sorrow is what the player finds and making them walk through a world full of this " +
+      "and sorrow are what the player finds and making them walk through a world full of this " +
       "sets the tone perfectly. All things end, whether we like it or not. ",
   },
   {
@@ -55,7 +55,7 @@ export const sublimeTranslations: readonly SublimeTranslation[] = [
       "Cold colours are predominant. The game is set at night with, basically, not any warmth in colours.",
     why:
       "The same colour palette appears in the Romantic paintings that inspired the art approach. " +
-      "These colours relate to the topics explored in the sublime, like death and feeling small against a big force. " +
+      "These colours relate to the topics explored in the Sublime, like death and feeling small against a big force. " +
       "It also makes contrast easier, like the piano, if warmth appears it is fully intentional and noticeable by the player.",
   },
   {
@@ -103,9 +103,9 @@ export const visualDecisions: readonly VisualDecision[] = [
     id: "menu-is-place",
     decision: "The main menu is the starting location",
     why:
-      "The menu is where the games begin, being also a perfect setting. The moonlight reflecting on the " +
+      "The menu is where the games begins, being also a perfect setting. The moonlight reflecting on the " +
       "sword, and the sword being placed in a stone, like Excalibur, next to a Willow Tree. " +
-      "Three of the most important motifs of the game and representing the parts of the game: " +
+      "Three of the most important motifs of the game, representing the parts of the game: " +
       "the mechanics, the checkpoints and the story and progression.",
     pillars: [
       { subject: "The moon", stands: "Narrative & Progression" },
@@ -126,6 +126,6 @@ export const visualDecisions: readonly VisualDecision[] = [
     decision: "Camera and character working towards visibility",
     why: 
       "Both the camera and the character work together to give the player as much view as possible. " +
-      "This also relates to the UI Design, prioritising what the players see and can scan in one glance of the screen ",
+      "This also relates to the UI Design, prioritising what the players see and can scan in one glance of the screen.",
   },
 ];

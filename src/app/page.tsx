@@ -83,7 +83,7 @@ export default function Home() {
               lineHeight: 1.55,
             }}
           >
-            I am a technical game designer specialised in systems, combat, UI/UX and level design, world-building, audio and programming.
+            I am a technical game designer specialised in systems, combat, UI/UX and level design, worldbuilding, audio and programming.
           </p>
         </div>
       </section>

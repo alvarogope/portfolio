@@ -196,8 +196,8 @@ function RewardChart() {
     >
       <title id="bn-reward-title">How a run&rsquo;s take is paid out</title>
       <desc id="bn-reward-desc">
-        A single bar representing the whole payout, split in two. Seventy per cent is a team share
-        divided evenly across all four players; thirty per cent is an individual role bonus. The
+        A single bar representing the whole payout, split in two. Seventy percent is a team share
+        divided evenly across all four players; thirty percent is an individual role bonus. The
         shared base is deliberately the larger of the two.
       </desc>
 

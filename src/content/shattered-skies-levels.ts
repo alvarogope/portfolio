@@ -365,7 +365,7 @@ export const progressionCaption =
 
 export const levelsCredit = {
   headline: "Team project · team of 5",
-  role: "Systems & World Designer",
+  role: "Game Systems & World Designer",
   lines: [
     {
       id: "audio",

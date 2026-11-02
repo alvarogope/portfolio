@@ -54,7 +54,7 @@ export const narrativeActs: readonly NarrativeAct[] = [
     guardian: "The Sun-Knight",
     beat:
       "After escaping, the Moon-Knight climbs to the last fortress and their comrade waiting inside it. " +
-      "Once defeated, the player has two options: let the God of the Gaps stand or end the world.",
+      "Once defeated, the player has two options: let the Gods of the Gaps stand or end the world.",
   },
 ];
 

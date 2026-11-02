@@ -6,7 +6,7 @@ export interface TeamNote {
 
 export const teamNote: TeamNote = {
   headline: "Team project · Team of 5",
-  role: "Systems & World Designer",
+  role: "Game Systems & World Designer",
   body:
     "This section shows how we worked together as a team for the same goal. The premise, the world and the narrative " +
     "were designed together, as a team. This section is mainly for context that represents our work as a team.",

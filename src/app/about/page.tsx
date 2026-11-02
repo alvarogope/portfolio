@@ -86,7 +86,7 @@ export default function AboutPage() {
             <p id="connect-title" className="mono about-inspect__section-label" style={{ margin: 0 }}>
               Connect
             </p>
-            <p className="about-connect__line">{"Open to opportunities. Let's talk."}</p>
+            <p className="about-connect__line">{"Open to opportunities. Let's connect."}</p>
             <ConnectLinks />
           </section>
         </Reveal>

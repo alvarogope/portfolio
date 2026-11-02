@@ -96,7 +96,7 @@ export const castEncounters: readonly EncounterMember[] = [
 /* ------------------------------------------------------------- The Witch / Druid -- */
 
 export const mirrorTruth = {
-  label: "The God of the Gaps",
+  label: "The Gods of the Gaps",
   line: "Two ways for the player to solve the world",
 } as const;
 

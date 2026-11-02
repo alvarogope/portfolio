@@ -11,7 +11,7 @@ export const shatteredSkies: Project = {
   eyebrow: "UNITY · TEAM OF 5 · 2025",
   systemsHook: "A Sci-Fi Co-op puzzle game where two players have to collaborate while they cannot communicate with each other.",
   disciplines: "Systems Design · World & Level design · Traversal Mechanics · Progression System",
-  scope: "Systems & World Designer · Team of 5",
+  scope: "Game Systems & World Designer · Team of 5",
   routingVerb: "see the project",
 
   posterAlt:

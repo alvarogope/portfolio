@@ -107,7 +107,7 @@ export const zones: readonly Zone[] = [
     name: "A healed place",
     stateLabel: "Healed",
     sky: "clean-rain",
-    skyLine: "Cleansed rain",
+    skyLine: "Clean rain",
     groundLine: "Life returning to the ground",
     readout: "This place was fixed",
     detail:

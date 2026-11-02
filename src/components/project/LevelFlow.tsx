@@ -238,7 +238,7 @@ export function TensionCurve() {
           <title id="lf-curve-title">Intended tension across the five stages</title>
           <desc id="lf-curve-desc">
             {`Intended tension, calm to peak, across the five stages in run order. ${tensionPoints
-              .map((p) => `${p.name}: ${tensionBand(p.y)}, ${Math.round(p.y * 100)} percent`)
+              .map((p) => `${p.name}: ${tensionBand(p.y)}, ${Math.round(p.y * 100)} %`)
               .join(". ")}.`}
           </desc>
 

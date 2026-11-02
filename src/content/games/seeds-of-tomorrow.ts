@@ -28,7 +28,7 @@ export const seedsOfTomorrow: Project = {
     quote:
       "I wanted the world to reflect the world as realistically as possible. For that, as weather designer, I wanted to make " +
       "the weather dynamic. I tied the weather to the story: acid rain falls in the rain level and when the player solves " +
-      "the level it changes to normal rain. Each of the weather levels had their own hazard and mood, adding to the level design.",
+      "the level it changes to clean rain. Each of the weather levels had their own hazard and mood, adding to the level design.",
     engine: "Unity",
     system: "Weather and Level Design",
     resolution: "Made the weather the diegetic signal of the world healing.",

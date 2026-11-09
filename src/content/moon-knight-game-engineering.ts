@@ -233,8 +233,8 @@ protected:
 #pragma once
 
 #include "CoreMinimal.h"
-#include "MoonKnightRPG.generated.h"
 #include <cstdint>
+#include "MoonKnightRPG.generated.h"
 
 
 UENUM(BlueprintType)
@@ -248,7 +248,7 @@ enum class ECombatState : uint8
     Dead            UMETA(DisplayName = "Dead")
 };
 
-ENUM(BlueprintType)
+UENUM(BlueprintType)
 enum class EWeaponType : uint8
 {
     Sword   UMETA(DisplayName = "Sword"),

@@ -162,6 +162,9 @@ public:
     UFUNCTION(BlueprintCallable, Category = "Combat")
     void ResetCombatState();
 
+    UFUNCTION(BlueprintCallable, Category = "Combat")
+    void EquipWeapon(EWeaponType Weapon);
+
     //--- NO HEALING IN COMBAT ---//
     UFUNCTION(BlueprintCallable, Category = "Health")
     bool TryHealth(float Amount);
@@ -183,13 +186,18 @@ protected:
 
     void HandleDeath();
     void Respawn();
+    void EndStagger();
+
+    //--- Combat flag: cleared after OutOfCombatDelay without attacking or taking damage ---//
+    void EnterCombat();
+    void LeaveCombat();
 
     //--- STATE ---//
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Health")
-    float MaxHealth = 100.f;
+    float MaxHealth = MoonKnightConstants::PlayerMaxHealth;
 
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Health")
-    float CurrentHealth = 100.f;
+    float CurrentHealth = MoonKnightConstants::PlayerMaxHealth;
 
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Combat")
     ECombatState CombatState = ECombatState::Idle;
@@ -198,16 +206,20 @@ protected:
     EWeaponType EquippedWeapon = EWeaponType::Sword;
 
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Combat")
-	  int32 ComboCounter = 0;
+    int32 ComboCounter = 0;
 
     UPROPERTY(EditAnywhere, Category = "Combat")
-	  int32 MaxComboLength = 4;
+    int32 MaxComboLength = MoonKnightConstants::MaxComboHits;
 
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Combat")
-	  bool bInCombat = false;
+    bool bInCombat = false;
+
+    //--- Fallback respawn point when no willow tree has been registered ---//
+    FVector SpawnLocation = FVector::ZeroVector;
 
     FTimerHandle RespawnTimerHandle;
-    FTimerHandle ComboResetTimerHandle;
+    FTimerHandle CombatStateTimerHandle;
+    FTimerHandle LeaveCombatTimerHandle;
 };
 `,
       },
@@ -243,8 +255,8 @@ enum class ECombatState : uint8
     Idle            UMETA(DisplayName = "Idle"),
     Attacking       UMETA(DisplayName = "Attacking"),  
     Dodging         UMETA(DisplayName = "Dodging"),    
-    Parrying	      UMETA(DisplayName = "Parrying"),
-	  Staggered	      UMETA(DisplayName = "Staggered"),
+    Parrying	    UMETA(DisplayName = "Parrying"),
+	Staggered	    UMETA(DisplayName = "Staggered"),
     Dead            UMETA(DisplayName = "Dead")
 };
 
@@ -258,18 +270,33 @@ enum class EWeaponType : uint8
 
 namespace MoonKnightConstants 
 {
+    //--- Player ---
+    constexpr float PlayerMaxHealth          = 100.0f;
+    constexpr int32 MaxComboHits             = 4;
+
     //--- Death and Respawn ---
-    constexpr float DeathFadeDuration      = 5.0f;
-    constexpr float RespawnDelay           = 4.9f;
+    constexpr float DeathFadeDuration        = 5.0f;
+    constexpr float RespawnDelay             = 4.9f;
 
     //--- Enemy Perception (sound and sight) ---
-    constexpr float EnemySightRadius       = 1200.0f;
-    constexpr float EnemySightAngleDegrees = 90.0f;
-    constexpr float EnemyHearingRadius     = 800.0f;
+    constexpr float EnemySightRadius         = 1200.0f;
+    constexpr float EnemyLoseSightMultiplier = 1.25f;
+    constexpr float EnemySightAngleDegrees   = 90.0f;
+    constexpr float EnemySightMaxAge         = 5.0f;
+    constexpr float EnemyHearingRadius       = 800.0f;
+    constexpr float EnemyHearingMaxAge       = 3.0f;
     
     //--- Skill tree caps ---
-    constexpr float MaxBowDamageBonus      = 100.0f;
+    constexpr float MaxBowDamageBonus        = 100.0f;
+    
+    //--- Combat ---
+    constexpr float ComboResetDelay          = 1.2f;
+    constexpr float DodgeDuration            = 0.6f;
+    constexpr float ParryWindow              = 0.4f;
+    constexpr float StaggerDuration          = 0.5f;
+    constexpr float OutOfCombatDelay         = 5.0f;
 }
+
 `,
       },
     },
@@ -295,23 +322,58 @@ namespace MoonKnightConstants
         return 0.f;
     }
 
-    //==================================//
-    //--- PARRY TO HUMANOID ENEMIES ---//  
-    //==================================//
+    //======================================//
+    //--- PARRY NEGATES ANY INCOMING HIT ---//
+    //======================================//
     if (CombatState == ECombatState::Parrying)
     {
         return 0.f;
     }
 
+    //====================================//
+    //--- DODGE INVULNERABILITY FRAMES ---//
+    //====================================//
+    if (CombatState == ECombatState::Dodging)
+    {
+        return 0.f;
+    }
+
     const float Applied = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
+    if (Applied <= 0.f)
+    {
+        return 0.f;
+    }
+
     CurrentHealth = FMath::Clamp(CurrentHealth - Applied, 0.f, MaxHealth);
-    bInCombat = true;
+    EnterCombat();
 
     if (CurrentHealth <= 0.f)
     {
         HandleDeath();
+        return Applied;
     }
+
+    //============================================//
+    //--- STAGGER: INPUT LOCKED UNTIL RECOVERY ---//
+    //============================================//
+    CombatState = ECombatState::Staggered;
+    ComboCounter = 0;
+    DisableInput(Cast<APlayerController>(GetController()));
+    GetWorldTimerManager().SetTimer(CombatStateTimerHandle, this,
+        &AMKPlayerCharacter::EndStagger, MoonKnightConstants::StaggerDuration, false);
+
     return Applied;
+}
+
+void AMKPlayerCharacter::EndStagger()
+{
+    if (CombatState != ECombatState::Staggered)
+    {
+        return;
+    }
+
+    EnableInput(Cast<APlayerController>(GetController()));
+    ResetCombatState();
 }
 `,
       },
@@ -334,6 +396,7 @@ namespace MoonKnightConstants
 #include "Perception/AIPerceptionComponent.h"
 #include "Perception/AISenseConfig_Sight.h"
 #include "Perception/AISenseConfig_Hearing.h"
+#include "Perception/AISense_Sight.h"
 #include "BehaviorTree/BehaviorTree.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "MKPlayerCharacter.h"
@@ -350,8 +413,9 @@ AMKEnemyAIController::AMKEnemyAIController()
 //===================================================//
     SightConfig = CreateDefaultSubobject<UAISenseConfig_Sight>(TEXT("SightConfig"));
     SightConfig->SightRadius = MoonKnightConstants::EnemySightRadius;
-    SightConfig->LoseSightRadius = MoonKnightConstants::EnemySightRadius * 1.25f;
+    SightConfig->LoseSightRadius = MoonKnightConstants::EnemySightRadius * MoonKnightConstants::EnemyLoseSightMultiplier;
     SightConfig->PeripheralVisionAngleDegrees = MoonKnightConstants::EnemySightAngleDegrees;
+    SightConfig->SetMaxAge(MoonKnightConstants::EnemySightMaxAge);
     SightConfig->DetectionByAffiliation.bDetectEnemies = true;
     SightConfig->DetectionByAffiliation.bDetectNeutrals = true;
     SightConfig->DetectionByAffiliation.bDetectFriendlies = false;
@@ -361,8 +425,10 @@ AMKEnemyAIController::AMKEnemyAIController()
 //===================================================//
     HearingConfig = CreateDefaultSubobject<UAISenseConfig_Hearing>(TEXT("HearingConfig"));
     HearingConfig->HearingRange = MoonKnightConstants::EnemyHearingRadius;
+    HearingConfig->SetMaxAge(MoonKnightConstants::EnemyHearingMaxAge);
     HearingConfig->DetectionByAffiliation.bDetectEnemies = true;
     HearingConfig->DetectionByAffiliation.bDetectNeutrals = true;
+
 
     PerceptionComp->ConfigureSense(*SightConfig);
     PerceptionComp->ConfigureSense(*HearingConfig);
@@ -385,24 +451,31 @@ void AMKEnemyAIController::OnPossess(APawn* InPawn)
 void AMKEnemyAIController::OnTargetPerceptionUpdated(AActor* Actor, FAIStimulus Stimulus)
 {
     UBlackboardComponent* BB = GetBlackboardComponent();
-    if(!BB)
+    if (!BB)
     {
         return;
     }
 
+    const bool bIsPlayer = Cast<AMKPlayerCharacter>(Actor) != nullptr;
 
-    if (AMKPlayerCharacter* Player = Cast<AMKPlayerCharacter>(Actor))
+    //--- Every pawn is neutral, so ignore other pawns in sight (their noises still get investigated) ---//
+    if (!bIsPlayer && Stimulus.Type == UAISense::GetSenseID<UAISense_Sight>())
     {
-        if (Stimulus.WasSuccessfullySensed())
-        {
-            BB->SetValueAsObject(TargetActorKey, Actor);
-            BB->SetValueAsVector(InvestigateLocationKey, Stimulus.StimulusLocation);
-        }
         return;
     }
 
     if (Stimulus.WasSuccessfullySensed())
     {
+        if (bIsPlayer)
+        {
+            BB->SetValueAsObject(TargetActorKey, Actor);
+        }
+        BB->SetValueAsVector(InvestigateLocationKey, Stimulus.StimulusLocation);
+    }
+    else if (bIsPlayer)
+    {
+        //--- LOST SIGHT: drop the target, investigate the last known position ---//
+        BB->ClearValue(TargetActorKey);
         BB->SetValueAsVector(InvestigateLocationKey, Stimulus.StimulusLocation);
     }
 }
@@ -427,7 +500,6 @@ void AMKEnemyAIController::OnTargetPerceptionUpdated(AActor* Actor, FAIStimulus 
 
 #include "CoreMinimal.h"
 #include "Engine/GameInstance.h"
-#include "MKPlayerCharacter.h"
 #include "MoonKnightRPG.h"
 #include "MKGameInstance.generated.h"
 
@@ -520,31 +592,109 @@ protected:
     code: {
       filename: "MKPlayerCharacter.cpp",
       language: "cpp",
-      code: `void AMKPlayerCharacter::LightAttack()
+      code: `void AMKPlayerCharacter::BeginPlay()
 {
-    if (CombatState == ECombatState::Dead || CombatState == ECombatState::Staggered)
+    Super::BeginPlay();
+
+    SpawnLocation = GetActorLocation();
+    CurrentHealth = MaxHealth;
+
+    //--- RESTORE THE WEAPON SAVED IN THE GAME INSTANCE ---//
+    if (UMKGameInstance* GI = Cast<UMKGameInstance>(UGameplayStatics::GetGameInstance(this)))
+    {
+        EquippedWeapon = GI->GetSavedWeapon();
+    }
+}
+
+void AMKPlayerCharacter::LightAttack()
+
+float AMKPlayerCharacter::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent,
+    AController* EventInstigator, AActor* DamageCauser)
+{
+    if (CombatState == ECombatState::Dead)
+    {
+        return 0.f;
+    }
+
+    //======================================//
+    //--- PARRY NEGATES ANY INCOMING HIT ---//
+    //======================================//
+    if (CombatState == ECombatState::Parrying)
+    {
+        return 0.f;
+    }
+
+    //====================================//
+    //--- DODGE INVULNERABILITY FRAMES ---//
+    //====================================//
+    if (CombatState == ECombatState::Dodging)
+    {
+        return 0.f;
+    }
+
+    const float Applied = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
+    if (Applied <= 0.f)
+    {
+        return 0.f;
+    }
+
+    CurrentHealth = FMath::Clamp(CurrentHealth - Applied, 0.f, MaxHealth);
+    EnterCombat();
+
+    if (CurrentHealth <= 0.f)
+    {
+        HandleDeath();
+        return Applied;
+    }
+
+    //============================================//
+    //--- STAGGER: INPUT LOCKED UNTIL RECOVERY ---//
+    //============================================//
+    CombatState = ECombatState::Staggered;
+    ComboCounter = 0;
+    DisableInput(Cast<APlayerController>(GetController()));
+    GetWorldTimerManager().SetTimer(CombatStateTimerHandle, this,
+        &AMKPlayerCharacter::EndStagger, MoonKnightConstants::StaggerDuration, false);
+
+    return Applied;
+}
+
+void AMKPlayerCharacter::EndStagger()
+{
+    if (CombatState != ECombatState::Staggered)
     {
         return;
     }
 
-    //===================================//
-    //---------- ADVANCE COMBO ---------//
-    //==================================//
-    ComboCounter = (ComboCounter % MaxComboLength) + 1;
+    EnableInput(Cast<APlayerController>(GetController()));
+    ResetCombatState();
+}
+
+void AMKPlayerCharacter::LightAttack()
+{
+    if (CombatState != ECombatState::Idle && CombatState != ECombatState::Attacking)
+    {
+        return;
+    }
+
+    if (ComboCounter >= MaxComboLength)
+    {
+        return;
+    }
+
+    ++ComboCounter;
     CombatState = ECombatState::Attacking;
-    bInCombat = true;
+    EnterCombat();
     OnComboAttack(ComboCounter);
 
-    //=========================================//
-    //--- RESET THE COMBO WITHOUT FOLLOW-UP ---//
-    //=========================================//
-    GetWorldTimerManager().SetTimer(ComboResetTimerHandle, this,
-        &AMKPlayerCharacter::ResetCombatState, 1.2f, false);
+    GetWorldTimerManager().SetTimer(CombatStateTimerHandle, this,
+        &AMKPlayerCharacter::ResetCombatState, MoonKnightConstants::ComboResetDelay, false);
 }
 
 void AMKPlayerCharacter::Dodge()
 {
-    if (CombatState == ECombatState::Dead)
+    //--- Only from Idle or mid-combo: no dodge spam, no dodge out of stagger or parry ---//
+    if (CombatState != ECombatState::Idle && CombatState != ECombatState::Attacking)
     {
         return;
     }
@@ -553,13 +703,20 @@ void AMKPlayerCharacter::Dodge()
     //------------ NO STAMINA LOSS ------------//
     //=========================================//
     CombatState = ECombatState::Dodging;
+
+    //--- Shares the combo timer handle, so a pending combo reset can't cut the dodge short ---//
+    GetWorldTimerManager().SetTimer(CombatStateTimerHandle, this,
+        &AMKPlayerCharacter::ResetCombatState, MoonKnightConstants::DodgeDuration, false);
 }
 
 void AMKPlayerCharacter::StartParry()
 {
-    if (CombatState == ECombatState::Idle || CombatState == ECombatState::Dodging)
+    if (CombatState == ECombatState::Idle)
     {
         CombatState = ECombatState::Parrying;
+
+        GetWorldTimerManager().SetTimer(CombatStateTimerHandle, this,
+            &AMKPlayerCharacter::ResetCombatState, MoonKnightConstants::ParryWindow, false);
     }
 }
 
@@ -572,9 +729,42 @@ void AMKPlayerCharacter::ResetCombatState()
 	}
 }
 
+void AMKPlayerCharacter::EquipWeapon(EWeaponType Weapon)
+{
+    EquippedWeapon = Weapon;
+
+    if (UMKGameInstance* GI = Cast<UMKGameInstance>(UGameplayStatics::GetGameInstance(this)))
+    {
+        GI->SaveEquippedWeapon(Weapon);
+    }
+}
+
+bool AMKPlayerCharacter::TryHealth(float Amount)
+{
+    if (bInCombat || CombatState == ECombatState::Dead)
+    {
+        return false;
+    }
+    CurrentHealth = FMath::Clamp(CurrentHealth + Amount, 0.f, MaxHealth);
+    return true;
+}
+
+void AMKPlayerCharacter::EnterCombat()
+{
+    bInCombat = true;
+    GetWorldTimerManager().SetTimer(LeaveCombatTimerHandle, this,
+        &AMKPlayerCharacter::LeaveCombat, MoonKnightConstants::OutOfCombatDelay, false);
+}
+
+void AMKPlayerCharacter::LeaveCombat()
+{
+    bInCombat = false;
+}
+
 void AMKPlayerCharacter::HandleDeath()
 {
     CombatState = ECombatState::Dead;
+    GetWorldTimerManager().ClearTimer(CombatStateTimerHandle);
     DisableInput(Cast<APlayerController>(GetController()));
 
     OnDeathFadeStart(MoonKnightConstants::DeathFadeDuration);
@@ -589,12 +779,22 @@ void AMKPlayerCharacter::HandleDeath()
 //=========================================//
 void AMKPlayerCharacter::Respawn()
 {
-    if (UMKGameInstance* GI = Cast<UMKGameInstance>(UGameplayStatics::GetGameInstance(this)))
+    UMKGameInstance* GI = Cast<UMKGameInstance>(UGameplayStatics::GetGameInstance(this));
+    if (GI && GI->HasCheckpoint())
     {
         GI->RespawnAtLastWillowTree(this);
     }
+    else
+    {
+        SetActorLocation(SpawnLocation, false, nullptr, ETeleportType::TeleportPhysics);
+    }
+
+    //--- Set directly: ResetCombatState() ignores the Dead state ---//
     CurrentHealth = MaxHealth;
-    ResetCombatState();
+    CombatState = ECombatState::Idle;
+    ComboCounter = 0;
+    GetWorldTimerManager().ClearTimer(LeaveCombatTimerHandle);
+    bInCombat = false;
     EnableInput(Cast<APlayerController>(GetController()));
 }
 `,

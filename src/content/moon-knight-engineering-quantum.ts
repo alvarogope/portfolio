@@ -52,7 +52,7 @@
       if (Collapsed) { return; }
   
       // Longer flight = more decoherence = the skill bias erodes toward 25/25/25/25.
-      const double strength = Profile.NoisePerSecond * deltaSeconds;
+      const double strength = 1.0 - std::exp(-Profile.NoisePerSecond * deltaSeconds);
       Reg.ApplyDepolarizing(0, strength);
       Reg.ApplyDepolarizing(1, strength);
   }
